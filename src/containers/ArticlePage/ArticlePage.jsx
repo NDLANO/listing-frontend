@@ -55,14 +55,13 @@ const mapDispatchToProps = {
   fetchArticle: actions.fetchArticle,
 };
 
-const makeMapStateToProps = (_, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
   const articleId = ownProps.params.articleId;
-  const getArticleSelector = getArticle(articleId);
-  return state => ({
-    article: getArticleSelector(state),
+  return {
+    article: getArticle(articleId)(state),
     locale: getLocale(state),
-  });
+  };
 };
 
 
-export default connect(makeMapStateToProps, mapDispatchToProps)(ArticlePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlePage);

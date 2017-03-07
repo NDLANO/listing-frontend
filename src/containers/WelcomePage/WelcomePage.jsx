@@ -12,8 +12,8 @@ import { OneColumn } from 'ndla-ui';
 import { injectT } from '../../i18n';
 
 export const WelcomePage = ({ t }) =>
-  <OneColumn cssModifier="narrow">
-    <h2>{t('welcomePage.chooseSubject')}</h2>
+  <OneColumn >
+    <h1>{t('welcomePage.hello')}</h1>
   </OneColumn>
 ;
 

@@ -10,13 +10,8 @@ const phrases = {
   meta: {
     description: 'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
   },
-  message: 'message',
-  messages: 'messages',
   welcomePage: {
-    chooseSubject: 'Velg fag',
-  },
-  subjectsPage: {
-    chooseSubject: 'Velg fag',
+    hello: 'Hallo verden!',
   },
   logo: {
     altText: 'Nasjonal digital læringsarena',
@@ -26,14 +21,6 @@ const phrases = {
     search: 'Søk',
     contact: 'Kontakt',
     help: 'Hjelp',
-  },
-  article: {
-    author: 'Forfatter',
-    published: 'Publisert',
-    created: 'Opprettet',
-    lastUpdated: 'Sist oppdatert',
-    closeLicenseBox: 'Lukk boks',
-    openLicenseBox: 'Gjenbruk {contentType}',
   },
   footer: {
     aboutNDLA: 'Om NDLA',

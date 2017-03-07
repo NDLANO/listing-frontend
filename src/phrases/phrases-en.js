@@ -11,10 +11,7 @@ const phrases = {
     description: 'Norwegian Digital Learning Arena, Open Educational Resources',
   },
   welcomePage: {
-    chooseSubject: 'Choose subject',
-  },
-  subjectsPage: {
-    chooseSubject: 'Choose subject',
+    hello: 'Hello world!',
   },
   logo: {
     altText: 'The Norwegian Digital Learning Arena',
@@ -24,14 +21,6 @@ const phrases = {
     search: 'Search',
     contact: 'Contact',
     help: 'Help',
-  },
-  article: {
-    author: 'Author',
-    published: 'Published',
-    created: 'Created',
-    lastUpdated: 'Last updated',
-    closeLicenseBox: 'Close box',
-    openLicenseBox: 'Cite or use {contentType}',
   },
   footer: {
     aboutNDLA: 'About NDLA',
