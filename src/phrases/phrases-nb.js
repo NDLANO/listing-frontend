@@ -11,7 +11,7 @@ const phrases = {
     description: 'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
   },
   welcomePage: {
-    hello: 'Hallo verden!',
+    hello: 'Hallo verden! Jeg liker å liste opp ting.',
   },
   logo: {
     altText: 'Nasjonal digital læringsarena',
