@@ -11,10 +11,12 @@ import { routerReducer } from 'react-router-redux';
 
 import locale from './containers/Locale/localeReducer';
 import articles from './containers/ArticlePage/articlesReducer';
+import subjects from './containers/SubjectPage/subjectsReducer';
 
 const rootReducers = combineReducers({
   articles,
   locale,
+  subjects,
   routing: routerReducer,
 });
 
