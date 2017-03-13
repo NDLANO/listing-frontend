@@ -14,6 +14,7 @@ import * as actions from './subjectActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { SubjectShape } from '../../shapes';
 import { getSubject } from './subjectSelectors';
+import Subject from './components/Subject';
 
 
 class SubjectPage extends Component {
@@ -44,7 +45,10 @@ class SubjectPage extends Component {
         <Helmet
           title={`NDLA | ${subject.title}`}
         />
-        <p>make a grid here</p>
+        <p>make a grid here with react component ...
+            {`${JSON.stringify(subject)}`}
+        </p>
+          <Subject subject={subject} />
       </OneColumn>
     );
   }
