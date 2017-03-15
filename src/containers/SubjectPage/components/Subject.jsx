@@ -35,9 +35,7 @@ class Subject extends Component {
     }
 
     render () {
-        console.log("subject component render this.props:", this.props);
         const { subject } = this.props;
-        console.log("component Subject", subject);
 
         return (
             <UIArticle>

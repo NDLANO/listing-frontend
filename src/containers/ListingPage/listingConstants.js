@@ -6,5 +6,5 @@
  *
  */
 
-export const FETCH_SUBJECT = 'FETCH_SUBJECT';
-export const SET_SUBJECT = 'SET_SUBJECT';
+export const FETCH_LISTING = 'FETCH_LISTING';
+export const SET_LISTING = 'SET_LISTING';
