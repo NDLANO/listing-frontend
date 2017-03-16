@@ -12,6 +12,12 @@
   --font-size--medium: 18px;
 }
 
+.main-content {
+    width: auto;
+    max-width: 620px;
+    min-width: 500px;
+}
+
 .emneomrade-row {
     display: -webkit-box;
     display: -webkit-flex;
@@ -101,4 +107,143 @@
     text-decoration: none;
     cursor: pointer;
     border-radius: 0;
+}
+
+.visnings-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.velgfag-div {
+    width: 33%;
+}
+
+.w-icon-slider-right:before {
+    content: "\e600";
+}
+.w-icon-slider-left:before {
+    content: "\e601";
+}
+.w-icon-nav-menu:before {
+    content: "\e602";
+}
+.w-icon-arrow-down:before,
+.w-icon-dropdown-toggle:before {
+    content: "\e603";
+}
+
+.w-dropdown {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 900;
+}
+
+.w-dropdown-btn,
+.w-dropdown-toggle,
+.w-dropdown-link {
+    position: relative;
+    vertical-align: top;
+    text-decoration: none;
+    color: #222222;
+    padding: 20px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+}
+.w-dropdown-toggle {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: inline-block;
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+.w-icon-dropdown-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    margin-right: 20px;
+    width: 1em;
+    height: 1em;
+}
+
+.dropdown {
+    display: block;
+    min-width: 200px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #fff;
+}
+
+.dropdown-list.w--open {
+    background-color: #fff;
+}
+.w-dropdown-list.w--open {
+    display: block;
+}
+.w-dropdown-link {
+    padding: 10px 20px;
+    display: block;
+    color: #222222;
+}
+.dropdown-outer {
+    display: block;
+    margin-bottom: 32px;
+}
+
+.dropdown-lenke {
+    -webkit-transition: background-color 300ms ease;
+    transition: background-color 300ms ease;
+}
+
+.filter-tittler {
+    display: block;
+    color: rgba(48, 48, 48, .8);
+    font-size: 1em;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+.visningsvalg-div {
+    width: 33%;
+    text-align: center;
+}
+
+.visnings-btn {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(77, 77, 77, .18);
+    background-color: #fff;
+}
+
+.visnings-btn.middle {
+    padding-top: 4px;
+    border-right: 0px solid rgba(77, 77, 77, .5);
+    border-left: 0px solid rgba(77, 77, 77, .5);
+}
+
+
+.w-inline-block {
+    max-width: 100%;
+    display: inline-block;
+}
+
+.visning-icon {
+    fill:#9c9b9b;
 }
