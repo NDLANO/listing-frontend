@@ -32,9 +32,7 @@ function mockListing(id) {
 
 //Mock data enn så lenge
 export const fetchListing = (id, locale) => {
-    console.log("listingApi fetchListing for: ", id);
     const mockListings = [1,2,3,4,5,6,7].map(i => mockListing(i+id));
-    console.log("listingApi mockListings: ", mockListings);
     return mockListings;
 }
 

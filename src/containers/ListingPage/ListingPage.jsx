@@ -14,28 +14,25 @@ import {getListing} from "./listingSelectors";
 import {getLocale} from "../Locale/localeSelectors";
 import {ListingShape} from "../../shapes";
 import Listing from './components/Listing';
+import FilterBar from './components/FilterBar';
 
 
 class ListingPage extends Component {
 
     componentWillMount() {
         const {fetchListing, params: { listingId } } = this.props;
-        console.log("LP ", listingId);
         fetchListing(listingId);
     }
 
     render() {
         const { listings, locale } = this.props;
-        console.log("LP listing: ", listings);
         if(!listings) {
-            console.log("Maybe you need inital state?")
+            return null;
         }
         return (
             <OneColumn>
                 <Helmet title={`NDLA Utlisting`} />
-                <p>
-                    Render cards of things in a grid...
-                </p>
+                <FilterBar/>
                 <Listing listings={listings} />
             </OneColumn>
         );
@@ -56,14 +53,11 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-    console.log("mapStateToProps ", ownProps);
     const listingId = ownProps.params.listingId;
-    console.log("listingPage state: ",state);
     return {
         listings: state.listings, //this getListing(listingId)(state) leads to TypeError: Cannot read property 'betongfaget' of undefined Don't know why ...
         locale: getLocale(state),
     };
-    // return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListingPage)

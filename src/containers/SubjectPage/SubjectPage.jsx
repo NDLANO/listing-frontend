@@ -47,7 +47,6 @@ class SubjectPage extends Component {
 
 const mapDispatchToProps = {
   fetchSubject: actions.fetchSubject,
-    // setSubject: actions.setSubject,
 };
 
 SubjectPage.propTypes = {
@@ -61,12 +60,6 @@ SubjectPage.propTypes = {
 
 const mapStateToProps = (state, ownProps ) => {
   const subjectId = ownProps.params.subjectId;
-  // const sub = getSubject(ownProps.params.subjectId);
-
-  //   return {
-  //   subject: getSubject(subjectId)(state),
-  //   locale: getLocale(state),
-  // };
     return {
         subject: state.subjects,
         locale: getLocale(state),

@@ -40,7 +40,7 @@ class Listing extends Component {
                     </div>
                     <div className="inner">
                         <a className="h2-tittel-lenke" href={thing.articleApiId}>
-                            {thing.title.substr(0, 13)}
+                            {thing.title.substr(0, 16)}
                         </a>
                         <div className="type-txt">Personlig verktøy</div>
                         <p>{thing.description}</p>
@@ -58,21 +58,20 @@ class Listing extends Component {
             )
             ;
         return (
-            <div className="emneomrade-row">{listItems}</div>
+            <div className="main-content">
+
+                <div className="emneomrade-row">{listItems}</div>
+            </div>
         );
     }
 }
 
 function printSubjects(elem) {
-    console.log("elem ", elem);
     let findSubject = elem.find(isSubject);
-    console.log("findSubject", findSubject);
     return findSubject.labels
 }
 
 function isSubject(labelTuppel) {
-    console.log("element in", labelTuppel);
-    console.log('labelTuppel.type === "subject"', labelTuppel.type === "subject");
     return labelTuppel.type === "subject"
 }
 

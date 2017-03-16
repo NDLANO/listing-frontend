@@ -24,6 +24,10 @@ export function toSubject(subjectId) {
   return `/subject/${subjectId}`;
 }
 
+export function toListing(listingId) {
+    return `/listing/${listingId}`;
+}
+
 export default function () {
   return (
     <Route path="/" component={App}>
