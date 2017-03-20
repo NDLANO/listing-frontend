@@ -39,20 +39,27 @@ class FilterBar extends Component {
                 <div className="velgfag-div">
                     <div className="filter-tittler">VELG FAG:</div>
 
-                    <div className="dropdown-outer w-dropdown" data-delay="100">
-                        <div className="dropdown w-dropdown-toggle">
-                            <div>Murerfaget</div>
-                            <div className="w-icon-dropdown-toggle"></div>
-                        </div>
-                        <nav className="dropdown-list w-dropdown-list">
-                            <a className="dropdown-lenke w-dropdown-link" href="betongfaget">Betongfaget</a>
-                            <a className="dropdown-lenke w-dropdown-link" href="murerfaget">Murerfaget</a>
-                            <a className="dropdown-lenke w-dropdown-link" href="tømrerfaget">Tømrerfaget</a>
-                            <a className="dropdown-lenke w-dropdown-link" href="rørleggerfaget">Rørleggerfaget</a>
-                            <a className="dropdown-lenke w-dropdown-link" href="rørleggerfaget">Rørleggerfaget</a>
-                            <a className="dropdown-lenke w-dropdown-link" href="Kokke- og servitørfag">Kokke- og
-                                servitørfag</a>
-                        </nav>
+                    <div className="dropdown-outer w-dropdown">
+                        <select>
+                            <option>Betongfaget</option>
+                            <option>Murerfaget</option>
+                            <option>Tømrerfaget</option>
+                            <option>Rørleggerfaget</option>
+                            <option>Kokke- og servitørfag</option>
+                        </select>
+                        {/*<div className="dropdown w-dropdown-toggle">*/}
+                            {/*<div>Murerfaget</div>*/}
+                            {/*<div className="w-icon-dropdown-toggle"></div>*/}
+                        {/*</div>*/}
+                        {/*<nav className="dropdown-list w-dropdown-list">*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="betongfaget">Betongfaget</a>*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="murerfaget">Murerfaget</a>*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="tømrerfaget">Tømrerfaget</a>*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="rørleggerfaget">Rørleggerfaget</a>*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="rørleggerfaget">Rørleggerfaget</a>*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="Kokke- og servitørfag">Kokke- og*/}
+                                {/*servitørfag</a>*/}
+                        {/*</nav>*/}
                     </div>
                 </div>
                 <div className="visningsvalg-div">
@@ -63,17 +70,23 @@ class FilterBar extends Component {
                 </div>
                 <div className="standard-filter-div">
                     <div className="filter-tittler">Sorter etter:</div>
-                    <div className="dropdown-outer w-dropdown" data-delay="100">
-                        <div className="dropdown w-dropdown-toggle">
-                            <div>Sorter etter</div>
-                            <div className="w-icon-dropdown-toggle"></div>
-                        </div>
-                        <nav className="dropdown-list w-dropdown-list">
-                            <a className="dropdown-lenke w-dropdown-link" href="index.html">Alfabetisk a-å</a>
-                            <a className="dropdown-lenke w-dropdown-link" href="index.html">Alfabetisk å–a</a>
-                            <a className="dropdown-lenke w-dropdown-link" href="#">Etter type</a>
-                            <a className="dropdown-lenke w-dropdown-link" href="#">Etter yrkesfag</a>
-                        </nav>
+                    <div className="dropdown-outer w-dropdown">
+                        <select>
+                            <option>Alfabetisk a-å</option>
+                            <option>Alfabetisk å–a</option>
+                            <option>Etter ... </option>
+                            <option>Etter ...</option>
+                        </select>
+                        {/*<div className="dropdown w-dropdown-toggle">*/}
+                            {/*<div>Sorter etter</div>*/}
+                            {/*<div className="w-icon-dropdown-toggle"></div>*/}
+                        {/*</div>*/}
+                        {/*<nav className="dropdown-list w-dropdown-list">*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="index.html">Alfabetisk a-å</a>*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="index.html">Alfabetisk å–a</a>*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="#">Etter type</a>*/}
+                            {/*<a className="dropdown-lenke w-dropdown-link" href="#">Etter yrkesfag</a>*/}
+                        {/*</nav>*/}
                     </div>
                 </div>
             </div>
@@ -82,4 +95,4 @@ class FilterBar extends Component {
 
 }
 
-export default injectT(FilterBar)
+export default injectT(FilterBar);

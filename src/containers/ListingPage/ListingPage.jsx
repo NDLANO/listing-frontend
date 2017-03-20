@@ -5,38 +5,70 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { PropTypes, Component } from 'react';
+import React, {PropTypes, Component} from "react";
 import {connect} from "react-redux";
-import Helmet from 'react-helmet';
+import Helmet from "react-helmet";
 import {OneColumn} from "ndla-ui";
 import * as actions from "./listingActions";
-import {getListing} from "./listingSelectors";
 import {getLocale} from "../Locale/localeSelectors";
 import {ListingShape} from "../../shapes";
-import Listing from './components/Listing';
-import FilterBar from './components/FilterBar';
-
+import Listing from "./components/Listing";
+import FilterBar from "./components/FilterBar";
+import FilterChoices from "./components/FilterChoices";
 
 class ListingPage extends Component {
 
     componentWillMount() {
-        const {fetchListing, params: { listingId } } = this.props;
+        const {fetchListing, params: {listingId}} = this.props;
         fetchListing(listingId);
     }
 
     render() {
-        const { listings, locale } = this.props;
-        if(!listings) {
+        const {listings, locale} = this.props;
+        if (!listings) {
             return null;
         }
+
         return (
             <OneColumn>
-                <Helmet title={`NDLA Utlisting`} />
+                <Helmet title={`NDLA Utlisting`}/>
                 <FilterBar/>
-                <Listing listings={listings} />
+                <FilterChoices filters={mapLabels(listings)}/>
+                <Listing listings={listings}/>
             </OneColumn>
         );
     }
+
+
+}
+
+function mapLabels(docketList) {
+    let myMap = new Map();
+    let allLabels = [];
+
+    //Make a map witch has flattend all the labels arrays of all the dockets
+    docketList.forEach(docket => {
+        docket.labels.forEach(l => {
+            function theType() {
+                switch (l.type) {
+                    case undefined:
+                        return "Annet";
+                    case null:
+                        return "Annet";
+                    default:
+                        return l.type;
+                }
+            }
+            myMap.set(theType(), [... new Set(myMap.has(theType()) ? myMap.get(theType()).concat(l.labels) : l.labels)]);
+        });
+    });
+
+    //Flatten the map to an array for listing in the view component
+    myMap.forEach((value, key) => {
+        allLabels = allLabels.concat([{type: key, labels: value}])
+    });
+
+    return allLabels;
 }
 
 ListingPage.propTypes = {

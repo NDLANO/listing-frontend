@@ -99,9 +99,6 @@
 
 .w-button {
     display: inline-block;
-    /*padding: 9px 15px;*/
-    /*background-color: #3898EC;*/
-    /*color: white;*/
     border: 0;
     line-height: inherit;
     text-decoration: none;
@@ -181,6 +178,38 @@
     height: 1em;
 }
 
+.w-form {
+    margin: 0 0 15px;
+}
+
+.w-checkbox,
+.w-radio {
+    display: block;
+    margin-bottom: 5px;
+    padding-left: 20px;
+}
+
+.w-form-label {
+    display: inline-block;
+    cursor: pointer;
+    font-weight: normal;
+    margin-bottom: 0px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.filter-tittler {
+    display: block;
+    color: rgba(48, 48, 48, .8);
+    font-size: 1em;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
 .dropdown {
     display: block;
     min-width: 200px;
@@ -222,6 +251,20 @@
     text-align: center;
 }
 
+.vis-ressurs-btn {
+    display: block;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    border: 1px solid #4d4d4d;
+    background-color: #fff;
+    -webkit-transition: background-color 400ms ease;
+    transition: background-color 400ms ease;
+    color: #4d4d4d;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+}
+
 .visnings-btn {
     width: 40px;
     height: 40px;
@@ -246,4 +289,12 @@
 
 .visning-icon {
     fill:#9c9b9b;
+}
+
+.visfilter-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #eee;
+    color: #000;
+    text-align: center;
 }

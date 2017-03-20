@@ -33,37 +33,40 @@ class Listing extends Component {
     render() {
         const {listings} = this.props;
         console.log("VIEW listings", listings);
-        const listItems = listings.map((thing, index) =>
-                <div className="produkt-container">
+        const listItems = listings.filter(_ => listings.length > 0).map((docket, index) =>
+                <div className="produkt-container" key={index}>
                     <div className="verktoy-bilde-div">
-                        <img className="verktoy-img" alt={thing.coverPhoto} src={thing.coverPhoto}/>
+                        <img className="verktoy-img" alt={docket.coverPhoto} src={docket.coverPhoto}/>
                     </div>
                     <div className="inner">
-                        <a className="h2-tittel-lenke" href={thing.articleApiId}>
-                            {thing.title.substr(0, 16)}
+                        <a className="h2-tittel-lenke" href={docket.articleApiId}>
+                            {docket.title.substr(0, 16)}
                         </a>
-                        <div className="type-txt">Personlig verktøy</div>
-                        <p>{thing.description}</p>
-                        <a href={'/article/' + thing.articleApiId}>Les mer...</a>
+                        <div className="type-txt">{findCategoryLabel(docket.labels)}</div>
+                        <p>{docket.description}</p>
+                        <a href={'/article/' + docket.articleApiId}>Les mer...</a>
                         <div>
-
-                            {printSubjects(thing.labels).map((s, i) => {
-                                return <div><a className="tag-btn w-button" href="#">{s}</a></div>
+                            {printSubjects(docket.labels).map((s, i) => {
+                                return <div><a className="tag-btn w-button" key={i} href="#">{s}</a></div>
                             })}
-
-
                         </div>
                     </div>
                 </div>
-            )
-            ;
+            );
+
         return (
             <div className="main-content">
-
                 <div className="emneomrade-row">{listItems}</div>
             </div>
         );
     }
+}
+
+function findCategoryLabel(labels) {
+    return labels
+        .filter(_ => _.type === 'category')
+        .map(_ => _.labels)
+        .map(cleanLabel => cleanLabel.join(', '));
 }
 
 function printSubjects(elem) {
