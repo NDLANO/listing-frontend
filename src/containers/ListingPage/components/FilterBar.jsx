@@ -13,21 +13,15 @@ import { injectT } from '../../../i18n';
 const FilterBar = () =>
 
     // Dette er hentet rått fra eksempelspekken og så gjort om til så enkle html elementer som mulig ...
-      // Det kommer egene issues på funksjonalitet til nedtrekkslistene.
+    // Det er egne issues på funksjonalitet til nedtrekkslistene. De er fjernet foreløpig, vi venter på avklaringer.
 
      (
        <div className="visnings-container">
          <div className="velgfag-div">
-           <div className="filter-tittler">VELG FAG:</div>
+           <div className="filter-tittler">-</div>
 
            <div className="dropdown-outer w-dropdown">
-             <select>
-               <option>Betongfaget</option>
-               <option>Murerfaget</option>
-               <option>Tømrerfaget</option>
-               <option>Rørleggerfaget</option>
-               <option>Kokke- og servitørfag</option>
-             </select>
+             -
            </div>
          </div>
          <div className="visningsvalg-div">
@@ -37,14 +31,9 @@ const FilterBar = () =>
            <a className="visnings-btn w-inline-block" href="/listing/visKompakt"><Icon.VisningKompakt className="visning-icon" /></a>
          </div>
          <div className="standard-filter-div">
-           <div className="filter-tittler">Sorter etter:</div>
+           <div className="filter-tittler">-</div>
            <div className="dropdown-outer w-dropdown">
-             <select>
-               <option>Alfabetisk a-å (not working yet)</option>
-               <option>Alfabetisk å–a (not working yet)</option>
-               <option>Etter ...  (not working yet)</option>
-               <option>Etter ...  (not working yet)</option>
-             </select>
+            -
            </div>
          </div>
        </div>

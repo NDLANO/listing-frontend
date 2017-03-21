@@ -15,15 +15,19 @@ function mockListing(id) {
      "articleApiId": 187, 
      "labels": [
        {
-        "type": "subject", 
+        "type": "Fag", 
         "labels": ["betongfaget", "murerfaget", "tømrerfaget"]
         },
         {
-         "type": "category",
+         "type": "Kategori",
          "labels": ["personlig verktøy"]
         },
         {
-         "labels" : ["jan", "feb", "mai"]
+         "type": "Nyttig hjemme",
+         "labels": ["oppussing", "forsvar"]
+        },
+        {
+         "labels" : ["myke fag", "voksenlivet", "metalurgi"]
         }
      ]
      }`);
@@ -37,18 +41,18 @@ function mockListing2(id) {
      "articleApiId": 188, 
      "labels": [
        {
-        "type": "subject", 
+        "type": "Fag", 
         "labels": ["betongfaget", "tømrerfaget", "elektrofaget" ]
         },
         {
-         "type": "category",
+         "type": "Kategori",
          "labels": ["måleverktøy", "personlig verktøy"]
         },
         { "type": null,
-         "labels" : ["jan", "feb", "aug"]
+         "labels" : ["voksenlivet", "oppussing"]
         },
         { 
-         "labels" : ["jan", "MAI"]
+         "labels" : ["dugnadsånd"]
         }
      ]
      }`);

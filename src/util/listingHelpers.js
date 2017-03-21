@@ -14,7 +14,8 @@ export function findCategoryLabel(labels) {
 }
 
 export function isSubject(labelTuppel) {
-  return labelTuppel.type === 'subject';
+  // Dette er foreløpig for v1 til vi får avklaringer i #252 #253
+  return labelTuppel.type === 'subject' || labelTuppel.type === 'Fag';
 }
 
 export function printSubjects(elem) {
