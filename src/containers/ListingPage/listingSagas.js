@@ -5,31 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import {take, call, put, select} from "redux-saga-effects";
-import {getLocale} from "../Locale/localeSelectors";
-import {getListing} from "./listingSelectors"
-import * as constants from "./listingConstants";
-import * as actions from "./listingActions";
-import * as api from "./listingApi";
+import { take, call, put, select } from 'redux-saga-effects';
+import { getLocale } from '../Locale/localeSelectors';
+import { getListing } from './listingSelectors';
+import * as constants from './listingConstants';
+import * as actions from './listingActions';
+import * as api from './listingApi';
 
 
 export function* fetchListing(id) {
-        const locale = yield select(getLocale);
-        const listing = yield call(api.fetchListing, id, locale);
-        yield put(actions.setListing(listing));
+  const locale = yield select(getLocale);
+  const listing = yield call(api.fetchListing, id, locale);
+  yield put(actions.setListing(listing));
 }
 
 export function* watchFetchListing() {
-    while (true) {
-        const {payload: id} = yield take(constants.FETCH_LISTING);
+  while (true) {
+    const { payload: id } = yield take(constants.FETCH_LISTING);
         // const id = yield take(constants.FETCH_LISTING);
         // const current = yield select(getListing(id));
         // console.log("current: ", current);
 
-        yield call(fetchListing, id);
-    }
+    yield call(fetchListing, id);
+  }
 }
 
 export default [
-    watchFetchListing,
+  watchFetchListing,
 ];

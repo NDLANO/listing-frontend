@@ -22,8 +22,8 @@ export const getListing = listingId => createSelector(
     [getListingById(listingId), getLocale],
     (listing, locale) => (
         listing ? {
-                ...listing,
-                title: titleI18N(listing, locale, true),
-            } : undefined
+          ...listing,
+          title: titleI18N(listing, locale, true),
+        } : undefined
     ),
 );

@@ -19,9 +19,9 @@ import Subject from './components/Subject';
 
 class SubjectPage extends Component {
   componentWillMount() {
-    const { fetchSubject, params: { subjectId }} = this.props;
+    const { fetchSubject, params: { subjectId } } = this.props;
     fetchSubject(subjectId);
-    //todo -> fetchSubjects
+    // todo -> fetchSubjects
   }
 
   render() {
@@ -39,7 +39,7 @@ class SubjectPage extends Component {
         <p>make a grid here with react component ...
             {`${JSON.stringify(subject)}`}
         </p>
-          <Subject subject={subject} />
+        <Subject subject={subject} />
       </OneColumn>
     );
   }
@@ -58,12 +58,12 @@ SubjectPage.propTypes = {
   fetchSubject: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps ) => {
+const mapStateToProps = (state, ownProps) => {
   const subjectId = ownProps.params.subjectId;
-    return {
-        subject: state.subjects,
-        locale: getLocale(state),
-    };
+  return {
+    subject: state.subjects,
+    locale: getLocale(state),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubjectPage);

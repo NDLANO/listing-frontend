@@ -13,8 +13,8 @@ const converterBaseUrl = apiResourceUrl('/subject-converter/raw');
 const baseUrl = apiResourceUrl('/subject-api/v1/subjects');
 
 export const fetchSubject = (id, locale) => {
-    const sub = JSON.parse(`{"id": "${id.payload}", "title": "no ${id.payload} Subject/Fag Tittle for ${locale}"}`);
-    return sub;
+  const sub = JSON.parse(`{"id": "${id.payload}", "title": "no ${id.payload} Subject/Fag Tittle for ${locale}"}`);
+  return sub;
 };
 
 export const fetchSubjects = ids => fetch(`${baseUrl}?ids=${ids.join(',')}`).then(resolveJsonOrRejectWithError);

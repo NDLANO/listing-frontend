@@ -14,7 +14,7 @@ import App from './containers/App/App';
 import ArticlePage from './containers/ArticlePage/ArticlePage';
 import NotFoundPage from './containers/NotFoundPage/NotFoundPage';
 import SubjectPage from './containers/SubjectPage/SubjectPage';
-import ListingPage from './containers/ListingPage/ListingPage'
+import ListingPage from './containers/ListingPage/ListingPage';
 
 export function toArticle(articleId) {
   return `/article/${articleId}`;
@@ -25,7 +25,7 @@ export function toSubject(subjectId) {
 }
 
 export function toListing(listingId) {
-    return `/listing/${listingId}`;
+  return `/listing/${listingId}`;
 }
 
 export default function () {

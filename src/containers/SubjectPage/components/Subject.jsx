@@ -6,9 +6,9 @@
  *
  */
 
-import React, {PropTypes, Component} from 'react';
+import React, { PropTypes, Component } from 'react';
 
-//Trenger sansynligvis noe styling subject/listing/kort/topic fra ndla-ui.... men hva...
+// Trenger sansynligvis noe styling subject/listing/kort/topic fra ndla-ui.... men hva...
 import { Article as UIArticle } from 'ndla-ui';
 
 import {
@@ -22,34 +22,34 @@ import { injectT } from '../../../i18n';
 
 class Subject extends Component {
 
-    componentDidMount() {
-        addEventListenerForResize();
-        updateIFrameDimensions();
-        addAsideClickListener();
-    }
+  componentDidMount() {
+    addEventListenerForResize();
+    updateIFrameDimensions();
+    addAsideClickListener();
+  }
 
 
-    componentWillUnmount() {
-        removeEventListenerForResize();
-        removeAsideClickListener();
-    }
+  componentWillUnmount() {
+    removeEventListenerForResize();
+    removeAsideClickListener();
+  }
 
-    render () {
-        const { subject } = this.props;
+  render() {
+    const { subject } = this.props;
 
-        return (
-            <UIArticle>
-                <h1>{subject.title}</h1>
-            </UIArticle>
-        );
-    }
+    return (
+      <UIArticle>
+        <h1>{subject.title}</h1>
+      </UIArticle>
+    );
+  }
 }
 
 Subject.propTypes = {
   subject: PropTypes.shape({
-      title: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
   }).isRequired,
-    locale: PropTypes.string.isRequired,
+  locale: PropTypes.string.isRequired,
 };
 
-export default injectT(Subject)
+export default injectT(Subject);

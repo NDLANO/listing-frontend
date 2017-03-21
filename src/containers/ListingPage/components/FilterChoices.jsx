@@ -5,59 +5,58 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import React, {PropTypes, Component} from "react";
 import {
     addEventListenerForResize,
     updateIFrameDimensions,
     addAsideClickListener,
     removeEventListenerForResize,
-    removeAsideClickListener
-} from "ndla-article-scripts";
-import {injectT} from "../../../i18n";
+    removeAsideClickListener,
+} from 'ndla-article-scripts';
+import React, { PropTypes, Component } from 'react';
+import { injectT } from '../../../i18n';
 
 class FilterChoices extends Component {
 
-    componentDidMount() {
-        addEventListenerForResize();
-        updateIFrameDimensions();
-        addAsideClickListener();
-    }
+  componentDidMount() {
+    addEventListenerForResize();
+    updateIFrameDimensions();
+    addAsideClickListener();
+  }
 
-    componentWillUnmount() {
-        removeEventListenerForResize();
-        removeAsideClickListener();
-    }
+  componentWillUnmount() {
+    removeEventListenerForResize();
+    removeAsideClickListener();
+  }
 
-    render() {
+  render() {
+    const { filters } = this.props;
 
-        const {filters} = this.props;
-
-        filters.map((docket, index) => console.log("docket ", docket));
-
-        const t = filters.map((docket, index) =>
-            <div>
-                <label>{docket.type}:</label>
-                {docket.labels.map((s, i) => {
-                    return ( <div className="w-checkbox">
-                        <label className="w-form-label" key={i}>
-                            <input className="w-checkbox-input" type="checkbox"/>{s}</label>
-                    </div>);
-                })}
-            </div>
+    const choices = filters.map(docket =>
+      <div>
+        <label htmlFor={docket.type}>{docket.type}:</label>
+        {docket.labels.map(choice => (<div className="w-checkbox">
+          <label className="w-form-label" key={choice} htmlFor={docket.type.concat('filterChoices')}>
+            <input className="w-checkbox-input" type="checkbox" key={choice} value={choice} name={docket.type.concat('filterChoices')} />{choice}</label>
+        </div>))}
+      </div>,
         );
 
-        return (
-            <div className="w-form">
-                <a className="visfilter-btn w-button" href="#">Vis filter</a>
-                <div>
-                    <div className="filter-tittler">Filter:</div>
-                    <div className="what">{t}</div>
-                </div>
-                <a className="vis-ressurs-btn w-button" href="annen-side.html">Oppdatert utvalg</a>
-            </div>
-        );
-    }
+    return (
+      <div className="w-form">
+        <a className="visfilter-btn w-button" href="/listing/visFilter">Vis filter</a>
+        <div>
+          <div className="filter-tittler">Filter:</div>
+          <div className="w-checkbox">{choices}</div>
+        </div>
+        <a className="vis-ressurs-btn w-button" href="/listing/oppdaterUtvlag">Oppdatert utvalg</a>
+      </div>
+    );
+  }
 }
 
-export default injectT(FilterChoices)
+FilterChoices.propTypes = {
+  filters: PropTypes.arrayOfStrings,
+};
+
+export default injectT(FilterChoices);
 

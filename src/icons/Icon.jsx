@@ -7,15 +7,15 @@
  */
 
 import React, { createElement } from 'react';
-import classNames from 'classnames'
+import classNames from 'classnames';
 
 import VisningFull from './VisningFull';
 import VisningKompakt from './VisningKompakt';
 import VisningListe from './VisningListe';
 
 function Icon(props) {
-    const { icon, ...rest } = props;
-    return createElement(icon, { classNames: classNames('icon', rest.className)})
+  const { icon, ...rest } = props;
+  return createElement(icon, { classNames: classNames('icon', rest.className) });
 }
 
 Icon.VisningFull = props => (<Icon {...props} icon={VisningFull} />);

@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import {handleActions} from "redux-actions";
-import * as constants from "./listingConstants";
+import { handleActions } from 'redux-actions';
+import * as constants from './listingConstants';
 
 const initalState = [];
 
 export default handleActions({
-    [constants.SET_LISTING]: {
-        next: (state, action) => action.payload,
-        throw: state => state,
-    },
+  [constants.SET_LISTING]: {
+    next: (state, action) => action.payload,
+    throw: state => state,
+  },
 }, initalState);

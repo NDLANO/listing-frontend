@@ -10,10 +10,10 @@ import { handleActions } from 'redux-actions';
 import * as constants from './subjectConstants';
 
 const initalState = {
-    subject: {
-        id: "0",
-        title: "Initial Title State",
-    }
+  subject: {
+    id: '0',
+    title: 'Initial Title State',
+  },
 };
 
 export default handleActions({
