@@ -18,15 +18,11 @@ export const ArticleShape = PropTypes.shape({
   updated: PropTypes.string.isRequired,
 });
 
-export const SubjectShape = PropTypes.shape({
-  title: PropTypes.string.isRequired,
-});
-
 export const ListingShape = PropTypes.shape({
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  coverPhoto: PropTypes.string.isRequired, // Dette er en URL til et bilde...
-  articleApiId: PropTypes.number.isRequired, // Dette er en id som kan brukes mot artikel apiet
+  coverPhoto: PropTypes.string.isRequired,
+  articleApiId: PropTypes.number.isRequired,
   labels: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string,
     labels: PropTypes.arrayOfStrings,
