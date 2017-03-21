@@ -8,13 +8,11 @@
 
 import React from 'react';
 import Icon from '../../../icons/Icon';
-import { injectT } from '../../../i18n';
 
 const FilterBar = () =>
 
-    // Dette er hentet rått fra eksempelspekken og så gjort om til så enkle html elementer som mulig ...
-    // Det er egne issues på funksjonalitet til nedtrekkslistene. De er fjernet foreløpig, vi venter på avklaringer.
-
+    // Det er egne issues på funksjonalitet til nedtrekkslistene som er fjernet sammenliknet med eksempelspekken.
+    // De er fjernet foreløpig, vi venter på avklaringer.
      (
        <div className="visnings-container">
          <div className="velgfag-div">
@@ -39,4 +37,4 @@ const FilterBar = () =>
        </div>
     );
 
-export default injectT(FilterBar);
+export default FilterBar;

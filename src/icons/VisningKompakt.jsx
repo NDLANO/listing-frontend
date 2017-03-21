@@ -20,7 +20,7 @@ const VisningKompakt = ({ className }) => (
 );
 
 VisningKompakt.propTypes = {
-  style: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default VisningKompakt;
