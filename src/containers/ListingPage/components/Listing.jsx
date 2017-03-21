@@ -14,6 +14,7 @@ import {
     removeAsideClickListener,
 } from 'ndla-article-scripts';
 import { injectT } from '../../../i18n';
+import { findCategoryLabel, printSubjects } from '../../../util/listingHelpers';
 
 class Listing extends Component {
 
@@ -31,22 +32,6 @@ class Listing extends Component {
 
 
   render() {
-    function findCategoryLabel(labels) {
-      return labels
-              .filter(_ => _.type === 'category')
-              .map(_ => _.labels)
-              .map(cleanLabel => cleanLabel.join(', '));
-    }
-
-    function isSubject(labelTuppel) {
-      return labelTuppel.type === 'subject';
-    }
-
-    function printSubjects(elem) {
-      const findSubject = elem.find(isSubject);
-      return findSubject.labels;
-    }
-
     const { listings } = this.props;
     const listItems = listings.filter(() => listings.length > 0).map(cover =>
       <div className="produkt-container">

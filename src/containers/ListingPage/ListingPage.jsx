@@ -15,6 +15,8 @@ import { ListingShape } from '../../shapes';
 import Listing from './components/Listing';
 import FilterBar from './components/FilterBar';
 import FilterChoices from './components/FilterChoices';
+import { mapLabels } from '../../util/listingHelpers';
+
 
 class ListingPage extends Component {
 
@@ -24,36 +26,6 @@ class ListingPage extends Component {
   }
 
   render() {
-    function mapLabels(coverList) {
-      const myMap = new Map();
-      let allLabels = [];
-
-          // Make a map witch has flattend all the labels arrays of all the dockets
-      coverList.forEach((cover) => {
-        cover.labels.forEach((l) => {
-          function theType() {
-            switch (l.type) {
-              case undefined:
-                return 'Annet';
-              case null:
-                return 'Annet';
-              default:
-                return l.type;
-            }
-          }
-          myMap.set(theType(), [...new Set(myMap.has(theType()) ? myMap.get(theType()).concat(l.labels) : l.labels)]);
-        });
-      });
-
-          // Flatten the map to an array for listing in the view component
-      myMap.forEach((value, key) => {
-        allLabels = allLabels.concat([{ type: key, labels: value }]);
-      });
-
-      return allLabels;
-    }
-
-
     const { listings } = this.props;
     if (!listings) {
       return null;
@@ -69,8 +41,6 @@ class ListingPage extends Component {
       </OneColumn>
     );
   }
-
-
 }
 
 
