@@ -13,7 +13,6 @@ import { OneColumn } from 'ndla-ui';
 import * as actions from './subjectActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { SubjectShape } from '../../shapes';
-import { getSubject } from './subjectSelectors';
 import Subject from './components/Subject';
 
 
@@ -25,11 +24,10 @@ class SubjectPage extends Component {
   }
 
   render() {
-    const { subject, locale } = this.props;
+    const { subject } = this.props;
     if (!subject) {
       return null;
     }
-    // const scripts = article.requiredLibraries ? article.requiredLibraries.map(lib => ({ src: lib.url, type: lib.mediaType })) : [];
 
     return (
       <OneColumn>
@@ -58,12 +56,9 @@ SubjectPage.propTypes = {
   fetchSubject: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const subjectId = ownProps.params.subjectId;
-  return {
-    subject: state.subjects,
-    locale: getLocale(state),
-  };
-};
+const mapStateToProps = state => ({
+  subject: state.subjects,
+  locale: getLocale(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubjectPage);

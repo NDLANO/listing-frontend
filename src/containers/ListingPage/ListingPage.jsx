@@ -24,7 +24,37 @@ class ListingPage extends Component {
   }
 
   render() {
-    const { listings, locale } = this.props;
+    function mapLabels(docketList) {
+      const myMap = new Map();
+      let allLabels = [];
+
+          // Make a map witch has flattend all the labels arrays of all the dockets
+      docketList.forEach((docket) => {
+        docket.labels.forEach((l) => {
+          function theType() {
+            switch (l.type) {
+              case undefined:
+                return 'Annet';
+              case null:
+                return 'Annet';
+              default:
+                return l.type;
+            }
+          }
+          myMap.set(theType(), [...new Set(myMap.has(theType()) ? myMap.get(theType()).concat(l.labels) : l.labels)]);
+        });
+      });
+
+          // Flatten the map to an array for listing in the view component
+      myMap.forEach((value, key) => {
+        allLabels = allLabels.concat([{ type: key, labels: value }]);
+      });
+
+      return allLabels;
+    }
+
+
+    const { listings } = this.props;
     if (!listings) {
       return null;
     }
@@ -43,39 +73,12 @@ class ListingPage extends Component {
 
 }
 
-function mapLabels(docketList) {
-  const myMap = new Map();
-  let allLabels = [];
-
-    // Make a map witch has flattend all the labels arrays of all the dockets
-  docketList.forEach((docket) => {
-    docket.labels.forEach((l) => {
-      function theType() {
-        switch (l.type) {
-          case undefined:
-            return 'Annet';
-          case null:
-            return 'Annet';
-          default:
-            return l.type;
-        }
-      }
-      myMap.set(theType(), [...new Set(myMap.has(theType()) ? myMap.get(theType()).concat(l.labels) : l.labels)]);
-    });
-  });
-
-    // Flatten the map to an array for listing in the view component
-  myMap.forEach((value, key) => {
-    allLabels = allLabels.concat([{ type: key, labels: value }]);
-  });
-
-  return allLabels;
-}
 
 ListingPage.propTypes = {
   params: PropTypes.shape({
     listingId: PropTypes.string.isRequired,
   }).isRequired,
+  listings: PropTypes.arrayOf(ListingShape),
   listing: ListingShape,
   locale: PropTypes.string.isRequired,
   fetchListing: PropTypes.func.isRequired,
@@ -85,12 +88,9 @@ const mapDispatchToProps = {
   fetchListing: actions.fetchListing,
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const listingId = ownProps.params.listingId;
-  return {
-    listings: state.listings, // this getListing(listingId)(state) leads to TypeError: Cannot read property 'betongfaget' of undefined Don't know why ...
-    locale: getLocale(state),
-  };
-};
+const mapStateToProps = state => ({
+  listings: state.listings,
+  locale: getLocale(state),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListingPage);

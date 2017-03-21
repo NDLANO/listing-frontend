@@ -31,10 +31,25 @@ class Listing extends Component {
 
 
   render() {
+    function findCategoryLabel(labels) {
+      return labels
+              .filter(_ => _.type === 'category')
+              .map(_ => _.labels)
+              .map(cleanLabel => cleanLabel.join(', '));
+    }
+
+    function isSubject(labelTuppel) {
+      return labelTuppel.type === 'subject';
+    }
+
+    function printSubjects(elem) {
+      const findSubject = elem.find(isSubject);
+      return findSubject.labels;
+    }
+
     const { listings } = this.props;
-    console.log('VIEW listings', listings);
-    const listItems = listings.filter(_ => listings.length > 0).map((docket, index) =>
-      <div className="produkt-container" key={index}>
+    const listItems = listings.filter(() => listings.length > 0).map(docket =>
+      <div className="produkt-container">
         <div className="verktoy-bilde-div">
           <img className="verktoy-img" alt={docket.coverPhoto} src={docket.coverPhoto} />
         </div>
@@ -46,7 +61,7 @@ class Listing extends Component {
           <p>{docket.description}</p>
           <a href={`/article/${docket.articleApiId}`}>Les mer...</a>
           <div>
-            {printSubjects(docket.labels).map((s, i) => <div><a className="tag-btn w-button" key={i} href="#">{s}</a></div>)}
+            {printSubjects(docket.labels).map(subject => <div><a className="tag-btn w-button" key={subject} href={`/listing/${subject}`}>{subject}</a></div>)}
           </div>
         </div>
       </div>,
@@ -60,24 +75,9 @@ class Listing extends Component {
   }
 }
 
-function findCategoryLabel(labels) {
-  return labels
-        .filter(_ => _.type === 'category')
-        .map(_ => _.labels)
-        .map(cleanLabel => cleanLabel.join(', '));
-}
-
-function printSubjects(elem) {
-  const findSubject = elem.find(isSubject);
-  return findSubject.labels;
-}
-
-function isSubject(labelTuppel) {
-  return labelTuppel.type === 'subject';
-}
 
 Listing.propTypes = {
-  listing: PropTypes.shape({
+  listings: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     coverPhoto: PropTypes.string.isRequired,
@@ -86,7 +86,7 @@ Listing.propTypes = {
       type: PropTypes.string,
       labels: PropTypes.arrayOfStrings,
     })),
-  }).isRequired,
+  })).isRequired,
   locale: PropTypes.string,
 };
 

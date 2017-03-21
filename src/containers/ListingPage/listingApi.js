@@ -55,7 +55,7 @@ function mockListing2(id) {
 }
 
 // Mock data enn så lenge
-export const fetchListing = (id, locale) => {
+export const fetchListing = (id) => {
   const mockListings = [1, 2, 3, 4, 5, 6, 7].map(i => mockListing(i + id)).concat([8, 9, 10].map(i => mockListing2(i + id)));
   return mockListings;
 };

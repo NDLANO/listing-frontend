@@ -6,7 +6,7 @@
  *
  */
 
-import React, { createElement } from 'react';
+import React, { createElement, PropTypes } from 'react';
 import classNames from 'classnames';
 
 import VisningFull from './VisningFull';
@@ -21,5 +21,9 @@ function Icon(props) {
 Icon.VisningFull = props => (<Icon {...props} icon={VisningFull} />);
 Icon.VisningKompakt = props => (<Icon {...props} icon={VisningKompakt} />);
 Icon.VisningListe = props => (<Icon {...props} icon={VisningListe} />);
+
+Icon.propTypes = {
+  icon: PropTypes.string,
+};
 
 export default Icon;

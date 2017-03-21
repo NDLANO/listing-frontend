@@ -8,8 +8,7 @@
 
 import { createSelector } from 'reselect';
 import { getLocale } from '../Locale/localeSelectors';
-import { titleI18N, metaDescriptionI18N } from '../../util/i18nFieldFinder';
-import formatDate from '../../util/formatDate';
+import { titleI18N } from '../../util/i18nFieldFinder';
 
 const getListingFromState = state => state.listings;
 
