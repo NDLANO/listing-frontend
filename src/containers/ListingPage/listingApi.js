@@ -9,8 +9,8 @@
 
 function mockListing(id) {
   return JSON.parse(`
-    {"title": "Hammer ${id}",
-     "description": "kort tekst for ${id}", 
+    {"title": "Hammer",
+     "description": "Kort tekst for Hammer for subject ${id}", 
      "coverPhoto": "https://test.api.ndla.no/image-api/v1/raw/skyss_vergrei_plakater_a3-4.jpg?cropStart=200,200&cropEnd=400,400", 
      "articleApiId": 187, 
      "labels": [
@@ -31,8 +31,8 @@ function mockListing(id) {
 
 function mockListing2(id) {
   return JSON.parse(`
-    {"title": "Meter og blyant ${id}",
-     "description": "kort tekst for ${id} Meter og blyant", 
+    {"title": "Meter og blyant",
+     "description": "Kort tekst for Meter og blyant for subject ${id}", 
      "coverPhoto": "https://test.api.ndla.no/image-api/v1/raw/sp7a2995.jpg?cropStart=200,200&cropEnd=400,400", 
      "articleApiId": 188, 
      "labels": [
@@ -56,6 +56,6 @@ function mockListing2(id) {
 
 // Mock data enn så lenge
 export const fetchListing = (id) => {
-  const mockListings = [1, 2, 3, 4, 5, 6, 7].map(i => mockListing(i + id)).concat([8, 9, 10].map(i => mockListing2(i + id)));
+  const mockListings = [1, 2, 3, 4, 5, 6, 7].map(() => mockListing(id)).concat([8, 9, 10].map(() => mockListing2(id)));
   return mockListings;
 };
