@@ -10,9 +10,7 @@ import React, { PropTypes } from 'react';
 import { injectT } from '../../../i18n';
 
 
-const FilterChoices = (props) => {
-  const { filters } = props;
-
+const FilterChoices = ({ filters }) => {
   const choices = filters.map(cover =>
     <div>
       <label htmlFor={cover.type}>{cover.type}:</label>

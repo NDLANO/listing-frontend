@@ -10,8 +10,7 @@ import React, { PropTypes } from 'react';
 import { injectT } from '../../../i18n';
 import { findCategoryLabel, printSubjects } from '../../../util/listingHelpers';
 
-const Listing = (props) => {
-  const { listings } = props;
+const Listing = ({ listings }) => {
   const listItems = listings.filter(() => listings.length > 0).map(cover =>
     <div className="produkt-container">
       <div className="verktoy-bilde-div">
