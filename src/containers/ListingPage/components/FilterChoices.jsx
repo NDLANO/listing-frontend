@@ -31,12 +31,12 @@ class FilterChoices extends Component {
   render() {
     const { filters } = this.props;
 
-    const choices = filters.map(docket =>
+    const choices = filters.map(cover =>
       <div>
-        <label htmlFor={docket.type}>{docket.type}:</label>
-        {docket.labels.map(choice => (<div className="w-checkbox">
-          <label className="w-form-label" key={choice} htmlFor={docket.type.concat('filterChoices')}>
-            <input className="w-checkbox-input" type="checkbox" key={choice} value={choice} name={docket.type.concat('filterChoices')} />{choice}</label>
+        <label htmlFor={cover.type}>{cover.type}:</label>
+        {cover.labels.map(choice => (<div className="w-checkbox">
+          <label className="w-form-label" key={choice} htmlFor={cover.type.concat('filterChoices')}>
+            <input className="w-checkbox-input" type="checkbox" key={choice} value={choice} name={cover.type.concat('filterChoices')} />{choice}</label>
         </div>))}
       </div>,
         );

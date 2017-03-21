@@ -24,13 +24,13 @@ class ListingPage extends Component {
   }
 
   render() {
-    function mapLabels(docketList) {
+    function mapLabels(coverList) {
       const myMap = new Map();
       let allLabels = [];
 
           // Make a map witch has flattend all the labels arrays of all the dockets
-      docketList.forEach((docket) => {
-        docket.labels.forEach((l) => {
+      coverList.forEach((cover) => {
+        cover.labels.forEach((l) => {
           function theType() {
             switch (l.type) {
               case undefined:

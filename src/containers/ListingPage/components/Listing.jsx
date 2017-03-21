@@ -48,20 +48,20 @@ class Listing extends Component {
     }
 
     const { listings } = this.props;
-    const listItems = listings.filter(() => listings.length > 0).map(docket =>
+    const listItems = listings.filter(() => listings.length > 0).map(cover =>
       <div className="produkt-container">
         <div className="verktoy-bilde-div">
-          <img className="verktoy-img" alt={docket.coverPhoto} src={docket.coverPhoto} />
+          <img className="verktoy-img" alt={cover.coverPhoto} src={cover.coverPhoto} />
         </div>
         <div className="inner">
-          <a className="h2-tittel-lenke" href={docket.articleApiId}>
-            {docket.title.substr(0, 16)}
+          <a className="h2-tittel-lenke" href={cover.articleApiId}>
+            {cover.title.substr(0, 16)}
           </a>
-          <div className="type-txt">{findCategoryLabel(docket.labels)}</div>
-          <p>{docket.description}</p>
-          <a href={`/article/${docket.articleApiId}`}>Les mer...</a>
+          <div className="type-txt">{findCategoryLabel(cover.labels)}</div>
+          <p>{cover.description}</p>
+          <a href={`/article/${cover.articleApiId}`}>Les mer...</a>
           <div>
-            {printSubjects(docket.labels).map(subject => <div><a className="tag-btn w-button" key={subject} href={`/listing/${subject}`}>{subject}</a></div>)}
+            {printSubjects(cover.labels).map(subject => <div><a className="tag-btn w-button" key={subject} href={`/listing/${subject}`}>{subject}</a></div>)}
           </div>
         </div>
       </div>,
