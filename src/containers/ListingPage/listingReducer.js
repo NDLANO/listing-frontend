@@ -6,12 +6,12 @@
  *
  */
 import { handleActions } from 'redux-actions';
-import * as constants from './listingConstants';
+import * as actions from './listingActions';
 
 const initalState = [];
 
 export default handleActions({
-  [constants.SET_LISTING]: {
+  [actions.setListing]: {
     next: (state, action) => action.payload,
     throw: state => state,
   },

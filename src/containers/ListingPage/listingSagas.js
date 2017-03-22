@@ -7,8 +7,6 @@
  */
 import { take, call, put, select } from 'redux-saga-effects';
 import { getLocale } from '../Locale/localeSelectors';
-// import { getListing } from './listingSelectors';
-import * as constants from './listingConstants';
 import * as actions from './listingActions';
 import * as api from './listingApi';
 
@@ -21,7 +19,7 @@ export function* fetchListing(id) {
 
 export function* watchFetchListing() {
   while (true) {
-    const { payload: id } = yield take(constants.FETCH_LISTING);
+    const { payload: id } = yield take(actions.FETCH_LISTING);
         // const id = yield take(constants.FETCH_LISTING);
         // const current = yield select(getListing(id));
         // console.log("current: ", current);
