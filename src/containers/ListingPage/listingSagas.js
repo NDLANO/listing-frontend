@@ -19,7 +19,7 @@ export function* fetchListing(id) {
 
 export function* watchFetchListing() {
   while (true) {
-    const { payload: id } = yield take(actions.FETCH_LISTING);
+    const { payload: id } = yield take(actions.fetchListing);
         // const id = yield take(constants.FETCH_LISTING);
         // const current = yield select(getListing(id));
         // console.log("current: ", current);

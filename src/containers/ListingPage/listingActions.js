@@ -8,8 +8,5 @@
 
 import { createAction } from 'redux-actions';
 
-export const FETCH_LISTING = 'FETCH_LISTING';
-export const SET_LISTING = 'SET_LISTING';
-
-export const fetchListing = createAction(FETCH_LISTING);
-export const setListing = createAction(SET_LISTING);
+export const fetchListing = createAction('FETCH_LISTING');
+export const setListing = createAction('SET_LISTING');
