@@ -11,7 +11,7 @@ const phrases = {
     description: 'Norwegian Digital Learning Arena, Open Educational Resources',
   },
   welcomePage: {
-    hello: 'Hello world! I like to show things.',
+    hello: 'Hello world!',
   },
   logo: {
     altText: 'The Norwegian Digital Learning Arena',

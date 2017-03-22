@@ -11,3 +11,306 @@
 :root {
   --font-size--medium: 18px;
 }
+
+.main-content {
+    width: auto;
+    max-width: 620px;
+    min-width: 500px;
+}
+
+.emneomrade-row {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+}
+
+.produkt-container {
+    width: 32%;
+    margin-bottom: 2%;
+    background-color: #fff;
+    box-shadow: 0 0 6px 1px rgba(51, 51, 51, .21);
+}
+.inner {
+    overflow: hidden;
+    height: auto;
+    padding: 20px;
+}
+
+.h2-tittel-lenke {
+    color: #303030;
+    font-size: 2em;
+    line-height: 1.5em;
+    text-decoration: none;
+}
+
+.type-txt {
+    margin-top: -11px;
+    margin-bottom: 7px;
+    color: rgba(77, 77, 77, .97);
+    font-size: 0.8em;
+    text-transform: uppercase;
+}
+
+.verktoy-bilde-div {
+    overflow: hidden;
+    height: 160px;
+    border-bottom: 1px dotted #e0e0e0;
+}
+
+.verktoy-img {
+    display: block;
+    min-height: 100%;
+    min-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+.tag-btn {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 1px 4px;
+    background-color: #dfecfa;
+    font-family: 'Open Sans', sans-serif;
+    color: #4d4d4d;
+    font-size: 0.9em;
+    font-weight: 400;
+}
+
+.w-button {
+    display: inline-block;
+    border: 0;
+    line-height: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.visnings-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.velgfag-div {
+    width: 33%;
+}
+
+.w-icon-slider-right:before {
+    content: "\e600";
+}
+.w-icon-slider-left:before {
+    content: "\e601";
+}
+.w-icon-nav-menu:before {
+    content: "\e602";
+}
+.w-icon-arrow-down:before,
+.w-icon-dropdown-toggle:before {
+    content: "\e603";
+}
+
+.w-dropdown {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 900;
+}
+
+.w-dropdown-btn,
+.w-dropdown-toggle,
+.w-dropdown-link {
+    position: relative;
+    vertical-align: top;
+    text-decoration: none;
+    color: #222222;
+    padding: 20px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+}
+.w-dropdown-toggle {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: inline-block;
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+.w-icon-dropdown-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    margin-right: 20px;
+    width: 1em;
+    height: 1em;
+}
+
+.w-form {
+    margin: 0 0 15px;
+}
+
+.w-checkbox,
+.w-radio {
+    display: block;
+    margin-bottom: 5px;
+    padding-left: 20px;
+}
+
+.w-checkbox-input,
+.w-radio-input {
+    margin: 4px 0 0;
+    margin-top: 1px \9;
+    line-height: normal;
+    float: left;
+    margin-left: -20px;
+}
+
+.w-form-label {
+    display: inline-block;
+    cursor: pointer;
+    font-weight: normal;
+    margin-bottom: 0px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.filter-tittler {
+    display: block;
+    color: rgba(48, 48, 48, .8);
+    font-size: 1em;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.dropdown {
+    display: block;
+    min-width: 200px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #fff;
+}
+
+.dropdown-list.w--open {
+    background-color: #fff;
+}
+.w-dropdown-list.w--open {
+    display: block;
+}
+.w-dropdown-link {
+    padding: 10px 20px;
+    display: block;
+    color: #222222;
+}
+.dropdown-outer {
+    display: block;
+    margin-bottom: 32px;
+}
+
+.dropdown-lenke {
+    -webkit-transition: background-color 300ms ease;
+    transition: background-color 300ms ease;
+}
+
+.filter-tittler {
+    display: block;
+    color: rgba(48, 48, 48, .8);
+    font-size: 1em;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+.visningsvalg-div {
+    width: 33%;
+    text-align: center;
+}
+
+.vis-ressurs-btn {
+    display: block;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    border: 1px solid #4d4d4d;
+    background-color: #fff;
+    -webkit-transition: background-color 400ms ease;
+    transition: background-color 400ms ease;
+    color: #4d4d4d;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+}
+
+.visnings-btn {
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(77, 77, 77, .18);
+    background-color: #fff;
+}
+
+.visnings-btn.middle {
+    padding-top: 4px;
+    border-right: 0px solid rgba(77, 77, 77, .5);
+    border-left: 0px solid rgba(77, 77, 77, .5);
+}
+
+
+.w-inline-block {
+    max-width: 100%;
+    display: inline-block;
+}
+
+.visning-icon {
+    fill:#9c9b9b;
+}
+
+.visfilter-btn {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: #eee;
+    color: #000;
+    text-align: center;
+}
+
+.visfilter {
+    padding: 10px;
+    background-color: #ffffff;
+    border: solid 1px;
+
+}

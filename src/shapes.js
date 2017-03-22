@@ -17,3 +17,16 @@ export const ArticleShape = PropTypes.shape({
   created: PropTypes.string.isRequired,
   updated: PropTypes.string.isRequired,
 });
+
+export const LabelShape = PropTypes.shape({
+  type: PropTypes.string,
+  labels: PropTypes.arrayOfStrings,
+});
+
+export const ListingShape = PropTypes.shape({
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  coverPhoto: PropTypes.string.isRequired,
+  articleApiId: PropTypes.number.isRequired,
+  labels: PropTypes.arrayOf(LabelShape),
+});
