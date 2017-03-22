@@ -14,7 +14,6 @@ import { injectT } from '../../i18n';
 export const WelcomePage = ({ t }) =>
   <OneColumn >
     <h1>{t('welcomePage.hello')}</h1>
-    <p>{t('welcomePage.morehello')}</p>
   </OneColumn>
 ;
 
