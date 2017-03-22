@@ -9,7 +9,6 @@
 import React, { PropTypes } from 'react';
 import { injectT } from '../../../i18n';
 
-
 const FilterChoices = ({ filters }) => (
   <div className="w-form">
     <a className="visfilter-btn w-button visfilter" href="/listing/visFilter">Vis filter</a>
