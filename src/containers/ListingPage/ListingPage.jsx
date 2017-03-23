@@ -31,13 +31,12 @@ class ListingPage extends Component {
       return null;
     }
 
-    const labels = mapLabels(listings);
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'} />
         <h2>NB! WORK IN PROGRESS - ONLY MOCK DATA</h2>
         <ViewBar />
-        <ToggleFilterChoices filters={labels} />
+        <ToggleFilterChoices filters={ mapLabels(listings)} />
         <Listing listings={listings} />
       </OneColumn>
     );
