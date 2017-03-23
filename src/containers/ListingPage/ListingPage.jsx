@@ -14,8 +14,8 @@ import { getLocale } from '../Locale/localeSelectors';
 import { ListingShape } from '../../shapes';
 import Listing from './components/Listing';
 import ViewBar from './components/ViewBar';
-import FilterChoices from './components/FilterChoices';
 import { mapLabels } from '../../util/listingHelpers';
+import ToggleFilterChoices from './components/ToggleFilterChoices';
 
 
 class ListingPage extends Component {
@@ -31,12 +31,13 @@ class ListingPage extends Component {
       return null;
     }
 
+    const labels = mapLabels(listings);
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'} />
         <h2>NB! WORK IN PROGRESS - ONLY MOCK DATA</h2>
         <ViewBar />
-        <FilterChoices filters={mapLabels(listings)} />
+        <ToggleFilterChoices filters={labels} />
         <Listing listings={listings} />
       </OneColumn>
     );
