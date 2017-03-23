@@ -36,7 +36,7 @@ class ListingPage extends Component {
         <Helmet title={'NDLA Utlisting'} />
         <h2>NB! WORK IN PROGRESS - ONLY MOCK DATA</h2>
         <ViewBar />
-        <ToggleFilterChoices filters={ mapLabels(listings)} />
+        <ToggleFilterChoices filters={mapLabels(listings)} />
         <Listing listings={listings} />
       </OneColumn>
     );
