@@ -26,8 +26,6 @@ class FilterChoices extends Component {
     this.state = {
       labels: [],
     };
-
-    // this.filterListings = this.filterListings.bind(this);
   }
 
   componentDidMount() {
@@ -40,11 +38,6 @@ class FilterChoices extends Component {
     removeEventListenerForResize();
     removeAsideClickListener();
   }
-
-  // filterListings() {
-  //   console.log('### hallo');
-  //   // console.log('this state', this);
-  // }
 
   render() {
     const { filters, onChoiceChange, selectedFilters, filterByChoices } = this.props;
@@ -68,7 +61,6 @@ class FilterChoices extends Component {
       </div>
     );
   }
-
 }
 
 

@@ -58,9 +58,24 @@ function mockListing2(id) {
      }`);
 }
 
+function mockListing3(id) {
+  return JSON.parse(`
+    {"title": "Noe annet",
+     "description": "Kort tekst for Meter og blyant for subject ${id}", 
+     "coverPhoto": "https://test.api.ndla.no/image-api/v1/raw/tad7ebce.jpg?cropStart=200,200&cropEnd=400,400", 
+     "articleApiId": 188, 
+     "labels": [
+       {
+        "type": "Fag", 
+        "labels": ["other"]
+        }
+     ]
+     }`);
+}
+
 // Mock data enn så lenge
 export const fetchListing = (id) => {
-  const mockListings = [1, 2].map(() => mockListing(id)).concat([8].map(() => mockListing2(id)));
+  const mockListings = [1, 2].map(() => mockListing(id)).concat([8].map(() => mockListing2(id))).concat([3,6].map(() => mockListing3(id)));
   console.log('mock fetchListing', mockListings);
   return mockListings;
 };

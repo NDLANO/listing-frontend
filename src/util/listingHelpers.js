@@ -53,5 +53,10 @@ export function mapLabels(coverList) {
 }
 
 export function choiceIdent(typeName, choiceName) {
-  return typeName.concat('+').concat(choiceName).replace(/\s/g, '_');
+  const name = () => {
+    if (typeName === undefined || typeName === null) return 'Annet';
+    return typeName;
+  };
+
+  return name().concat('+').concat(choiceName).replace(/\s/g, '_');
 }
