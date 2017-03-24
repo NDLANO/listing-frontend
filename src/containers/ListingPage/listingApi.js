@@ -60,6 +60,7 @@ function mockListing2(id) {
 
 // Mock data enn så lenge
 export const fetchListing = (id) => {
-  const mockListings = [1, 2, 3, 4, 5, 6, 7].map(() => mockListing(id)).concat([8, 9, 10].map(() => mockListing2(id)));
+  const mockListings = [1, 2].map(() => mockListing(id)).concat([8].map(() => mockListing2(id)));
+  console.log('mock fetchListing', mockListings);
   return mockListings;
 };

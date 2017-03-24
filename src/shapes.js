@@ -23,7 +23,7 @@ export const LabelShape = PropTypes.shape({
   labels: PropTypes.arrayOfStrings,
 });
 
-export const ListingShape = PropTypes.shape({
+export const CoverShape = PropTypes.shape({
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   coverPhoto: PropTypes.string.isRequired,

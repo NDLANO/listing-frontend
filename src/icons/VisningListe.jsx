@@ -21,7 +21,7 @@ const VisningListe = ({ className }) => (
 );
 
 VisningListe.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default VisningListe;

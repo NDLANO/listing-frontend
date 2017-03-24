@@ -5,44 +5,70 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import React, { PropTypes } from 'react';
+
+import {
+  addEventListenerForResize,
+  updateIFrameDimensions,
+  addAsideClickListener,
+  removeEventListenerForResize,
+  removeAsideClickListener,
+} from 'ndla-article-scripts';
+
+import React, { PropTypes, Component } from 'react';
 
 import { injectT } from '../../../i18n';
-import { findCategoryLabel, printSubjects } from '../../../util/listingHelpers';
-import { ListingShape } from '../../../shapes';
+import { mapLabels } from '../../../util/listingHelpers';
+import { CoverShape } from '../../../shapes';
+import ToggleFilterChoices from './ToggleFilterChoices';
+import CoverList from './CoverList';
 
-const Listing = ({ listings }) => (
-  <div className="main-content">
-    <div className="emneomrade-row">{listings.map(item => <ListingItem listing={item} />)}</div>
-  </div>
-  );
+class Listing extends Component {
 
-const ListingItem = ({ listing }) => (
-  <div className="produkt-container">
-    <div className="verktoy-bilde-div">
-      <img className="verktoy-img" alt={listing.coverPhoto} src={listing.coverPhoto} />
-    </div>
-    <div className="inner">
-      <a className="h2-tittel-lenke" href={listing.articleApiId}>
-        {listing.title.substr(0, 16)}
-      </a>
-      <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
-      <p>{listing.description}</p>
-      <a href={`/article/${listing.articleApiId}`}>Les mer...</a>
+  constructor(props) {
+    super(props);
+    this.filterByChoices = this.filterByChoices.bind(this);
+  }
+
+  componentDidMount() {
+    addEventListenerForResize();
+    updateIFrameDimensions();
+    addAsideClickListener();
+  }
+
+  componentWillUnmount() {
+    removeEventListenerForResize();
+    removeAsideClickListener();
+  }
+
+  filterByChoices(checkedBoxes) {
+    console.log('yes filter that shit! ');
+    console.log('yes filter that shit! checkedBoxes', checkedBoxes);
+
+  }
+
+  render() {
+    const { listings } = this.props;
+
+    console.log('#### Listing props.listings', listings);
+    console.log('#### Listing props.filterByChoices', this.filterByChoices);
+
+    return (
       <div>
-        {printSubjects(listing.labels).map(subject => <div><a className="tag-btn w-button" key={subject} href={`/listing/${subject}`}>{subject}</a></div>)}
+        <ToggleFilterChoices
+          filters={mapLabels(listings)}
+          filterByChoices={this.filterByChoices}
+        />
+        <div className="main-content">
+          <CoverList listings={listings} />
+        </div>
       </div>
-    </div>
+    );
+  }
 
-  </div>
-);
-
-ListingItem.propTypes = {
-  listing: PropTypes.shape(ListingShape),
-};
+}
 
 Listing.propTypes = {
-  listings: PropTypes.arrayOf(ListingShape).isRequired,
+  listings: PropTypes.arrayOf(CoverShape).isRequired,
   locale: PropTypes.string,
 };
 

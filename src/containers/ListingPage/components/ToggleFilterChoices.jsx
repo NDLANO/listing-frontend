@@ -15,7 +15,7 @@ import {
 } from 'ndla-article-scripts';
 
 import React, { PropTypes, Component } from 'react';
-import { ListingShape } from '../../../shapes';
+import { CoverShape } from '../../../shapes';
 import FilterChoices from './FilterChoices';
 
 
@@ -60,18 +60,9 @@ class ToggleFilterChoices extends Component {
     const choicesMade = this.state.selectedFilters;
 
     if (value) {
-      console.log('ADD choice', choice);
       this.setState({ selectedFilters: this.state.selectedFilters.concat(choice) });
     } else {
-      console.log('REMOVE choice', choice);
-
-      const reduced = choicesMade.filter((c) => {
-        console.log('filter', c);
-        return c !== choice;
-      });
-
-      console.log('reduced filterd', reduced);
-
+      const reduced = choicesMade.filter(c => c !== choice);
       this.setState({ selectedFilters: reduced });
     }
 
@@ -86,11 +77,17 @@ class ToggleFilterChoices extends Component {
   render() {
     console.log('render state selectedFilters', this.state.selectedFilters);
 
-    const { filters } = this.props;
+    const { filters, filterByChoices } = this.props;
     const { isVisFilter } = this.state;
     // console.log('ToggleFilterChoices this.handleClick', this.handleClick);
-    // console.log('ToggleFilterChoices this.onChoiceChange', this.onChoiceChange);
-    const child = <FilterChoices onChoiceChange={this.onChoiceChange} filters={filters} selectedFilters={this.state.selectedFilters} />;
+    console.log('ToggleFilterChoices filterByChoices', filterByChoices);
+    const child = (
+      <FilterChoices
+        onChoiceChange={this.onChoiceChange}
+        filters={filters}
+        selectedFilters={this.state.selectedFilters}
+        filterByChoices={filterByChoices}
+      />);
 
     return (
       <div className="w-form">
@@ -102,7 +99,8 @@ class ToggleFilterChoices extends Component {
 }
 
 ToggleFilterChoices.propTypes = {
-  filters: PropTypes.arrayOf(ListingShape),
+  filterByChoices: PropTypes.func.isRequired,
+  filters: PropTypes.arrayOf(CoverShape),
 };
 
 export default ToggleFilterChoices;
