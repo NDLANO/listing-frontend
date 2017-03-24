@@ -6,40 +6,77 @@
  *
  */
 
-import React, { PropTypes } from 'react';
+import {
+    addEventListenerForResize,
+    updateIFrameDimensions,
+    addAsideClickListener,
+    removeEventListenerForResize,
+    removeAsideClickListener,
+} from 'ndla-article-scripts';
+
+import React, { PropTypes, Component } from 'react';
 import { injectT } from '../../../i18n';
+import ChoiceGroup from './ChoiceGroup';
 
-const FilterChoices = ({ filters }) => (
-  <div>
-    <div>
-      <div className="filter-tittler">Filter:</div>
-      <div className="w-checkbox">{filters.map(filter => <ChoiceGroup filter={filter} />)}</div>
-    </div>
-    <a className="vis-ressurs-btn w-button" href="/listing/oppdaterUtvlag">Oppdatert utvalg</a>
-  </div>
-  );
 
-const ChoiceGroup = ({ filter }) => (
-  <div>
-    <label htmlFor={filter.type}>{filter.type}:</label>
-    {filter.labels.map(choice => (
-      <div className="w-checkbox">
-        <label className="w-form-label" htmlFor={choice}>
-          <input className="w-checkbox-input" type="checkbox" value={choice} />
-          {choice}</label>
+class FilterChoices extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      labels: [],
+    };
+
+    this.filterListings = this.filterListings.bind(this);
+  }
+
+  componentDidMount() {
+    addEventListenerForResize();
+    updateIFrameDimensions();
+    addAsideClickListener();
+  }
+
+  componentWillUnmount() {
+    removeEventListenerForResize();
+    removeAsideClickListener();
+  }
+
+  filterListings() {
+    console.log('### hallo');
+    // this.setState({ labels: ['more', 'stuff'] });
+    // console.log('this state', this);
+  }
+
+  render() {
+    const { filters, onChoiceChange, selectedFilters } = this.props;
+    console.log('FilterChoices filters', filters);
+    console.log('FilterChoices onChoiceChange', onChoiceChange);
+    console.log('FilterChoices selectedFilters', selectedFilters);
+
+    return (
+      <div>
+        <form>
+          <div>
+            <div className="filter-tittler">Filter:</div>
+            <div className="w-checkbox">{filters.map(filter =>
+              <ChoiceGroup
+                filter={filter}
+                handleChoiceChange={onChoiceChange}
+                selectedFilters={selectedFilters}
+              />)}</div>
+          </div>
+          <button className="vis-ressurs-btn w-button" type="submit" onClick={this.filterListings}>Oppdatert utvalg</button>
+        </form>
       </div>
-      ))}
-  </div>
-);
+    );
+  }
 
-ChoiceGroup.propTypes = {
-  filter: PropTypes.shape({
-    type: PropTypes.string,
-    labels: PropTypes.arrayOfStrings,
-  }),
-};
+}
+
 
 FilterChoices.propTypes = {
+  selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChoiceChange: PropTypes.func,
   filters: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.string,
     labels: PropTypes.arrayOfStrings,

@@ -51,3 +51,7 @@ export function mapLabels(coverList) {
 
   return allLabels;
 }
+
+export function choiceIdent(typeName, choiceName) {
+  return typeName.concat('+').concat(choiceName).replace(/\s/g, '_');
+}
