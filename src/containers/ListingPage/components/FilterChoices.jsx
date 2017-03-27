@@ -17,7 +17,7 @@ import {
 import React, { PropTypes, Component } from 'react';
 import { injectT } from '../../../i18n';
 import ChoiceGroup from './ChoiceGroup';
-import {LabelShape} from './../../../shapes';
+import { LabelShape } from './../../../shapes';
 
 
 class FilterChoices extends Component {
