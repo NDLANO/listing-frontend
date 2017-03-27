@@ -40,25 +40,19 @@ class FilterChoices extends Component {
   }
 
   render() {
-    const { filters, onChoiceChange, selectedFilters, filterByChoices } = this.props;
-    console.log('FilterChoices filters', filters);
-    console.log('FilterChoices onChoiceChange', onChoiceChange);
-    console.log('FilterChoices selectedFilters', selectedFilters);
-    console.log('FilterChoices filterByChoices', filterByChoices);
+    const { filters, onChoiceChange, selectedFilters } = this.props;
 
     return (
       <div>
-        <div>
-          <div className="filter-tittler">Filter:</div>
-          <div className="w-checkbox">{filters.map(filter =>
-            <ChoiceGroup
-              filter={filter}
-              handleChoiceChange={onChoiceChange}
-              selectedFilters={selectedFilters}
-            />)}</div>
-        </div>
-        <button className="visfilter-btn w-button visfilter c-button" onClick={filterByChoices}>Oppdatert utvalg</button>
+        <div className="filter-tittler">Filter:</div>
+        <div className="w-checkbox">{filters.map(filter =>
+          <ChoiceGroup
+            filter={filter}
+            handleChoiceChange={onChoiceChange}
+            selectedFilters={selectedFilters}
+          />)}</div>
       </div>
+
     );
   }
 }

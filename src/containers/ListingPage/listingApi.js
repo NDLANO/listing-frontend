@@ -7,6 +7,8 @@
  */
 // Foreløpig rigget for mock objekter. Egen oppgave gjøre det faktiske kallet til nye listing-api .
 
+import { choiceIdent } from '../../util/listingHelpers';
+
 function mockListing(id) {
   return JSON.parse(`
     {"title": "Hammer",
@@ -73,9 +75,28 @@ function mockListing3(id) {
      }`);
 }
 
+/*
+ * For optemizing, labels are flattend to a array of options which are the id's of the filter checkboxes,
+ * so that this does not need to be done for every filter choice.
+ * */
+function listingsFlattLabels(labels) {
+  // console.log('labels', labels);
+  return labels.map(label =>
+    // console.log('label:', label);
+     label.labels.map(l => choiceIdent(label.type, l)));
+}
+
 // Mock data enn så lenge
 export const fetchListing = (id) => {
-  const mockListings = [1, 2].map(() => mockListing(id)).concat([8].map(() => mockListing2(id))).concat([3,6].map(() => mockListing3(id)));
+  const mockListings = [1, 2].map(() => mockListing(id)).concat([8].map(() => mockListing2(id))).concat([3, 6].map(() => mockListing3(id)));
   console.log('mock fetchListing', mockListings);
-  return mockListings;
+
+  const m = mockListings.map((listing) => {
+    const listingsFlattLabels2 = listingsFlattLabels(listing.labels);
+    listing.filterChoices = listingsFlattLabels2.reduce((a, b) => a.concat(b), []);
+    return listing;
+  });
+  console.log('mocklisting flattend labels for options:', m);
+
+  return m;
 };

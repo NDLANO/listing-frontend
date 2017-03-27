@@ -29,4 +29,5 @@ export const CoverShape = PropTypes.shape({
   coverPhoto: PropTypes.string.isRequired,
   articleApiId: PropTypes.number.isRequired,
   labels: PropTypes.arrayOf(LabelShape),
+  filterChoices: PropTypes.arrayOfStrings,
 });

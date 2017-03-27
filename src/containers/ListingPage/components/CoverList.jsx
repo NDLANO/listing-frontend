@@ -42,7 +42,6 @@ CoverItem.propTypes = {
 };
 
 CoverList.propTypes = {
-  filterByChoices: PropTypes.func.isRequired,
   listings: PropTypes.arrayOf(CoverShape).isRequired,
   locale: PropTypes.string,
 };

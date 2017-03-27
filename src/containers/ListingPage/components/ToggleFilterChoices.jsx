@@ -29,7 +29,6 @@ class ToggleFilterChoices extends Component {
     };
 
     this.handleClick = this.handleClick.bind(this);
-    // this.onChoiceChange = this.onChoiceChange.bind(this);
   }
 
   componentDidMount() {
@@ -49,15 +48,16 @@ class ToggleFilterChoices extends Component {
   }
 
   render() {
-    const { filters, filterByChoices, onChoiceChange } = this.props;
+    const { filters, onChoiceChange } = this.props;
     const { isVisFilter } = this.state;
+
+    console.log('ToggleFilterChoices filters', filters);
 
     const child = (
       <FilterChoices
         onChoiceChange={onChoiceChange}
         filters={filters}
         selectedFilters={this.state.selectedFilters}
-        filterByChoices={filterByChoices}
       />);
 
     return (
@@ -71,7 +71,6 @@ class ToggleFilterChoices extends Component {
 
 ToggleFilterChoices.propTypes = {
   onChoiceChange: PropTypes.func.isRequired,
-  filterByChoices: PropTypes.func.isRequired,
   filters: PropTypes.arrayOf(CoverShape),
 };
 
