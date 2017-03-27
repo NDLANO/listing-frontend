@@ -9,7 +9,7 @@
 import React from 'react';
 import Icon from '../../../icons/Icon';
 
-const FilterBar = () =>
+const ViewBar = () =>
 
     // Det er egne issues på funksjonalitet til nedtrekkslistene som er fjernet sammenliknet med eksempelspekken.
     // De er fjernet foreløpig, vi venter på avklaringer.
@@ -37,4 +37,4 @@ const FilterBar = () =>
        </div>
     );
 
-export default FilterBar;
+export default ViewBar;

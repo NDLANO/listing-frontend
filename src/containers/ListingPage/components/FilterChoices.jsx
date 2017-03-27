@@ -9,10 +9,8 @@
 import React, { PropTypes } from 'react';
 import { injectT } from '../../../i18n';
 
-
 const FilterChoices = ({ filters }) => (
-  <div className="w-form">
-    <a className="visfilter-btn w-button visfilter" href="/listing/visFilter">Vis filter</a>
+  <div>
     <div>
       <div className="filter-tittler">Filter:</div>
       <div className="w-checkbox">{filters.map(filter => <ChoiceGroup filter={filter} />)}</div>
