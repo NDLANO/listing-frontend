@@ -62,8 +62,5 @@ export function choiceIdent(typeName, choiceName) {
 }
 
 export function listingsFlattLabels(labels) {
-  // console.log('labels', labels);
-  return labels.map(label =>
-    // console.log('label:', label);
-    label.labels.map(l => choiceIdent(label.type, l)));
+  return labels.map(label => label.labels.map(l => choiceIdent(label.type, l)));
 }

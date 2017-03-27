@@ -46,7 +46,6 @@ ListingPage.propTypes = {
     listingId: PropTypes.string.isRequired,
   }).isRequired,
   listings: PropTypes.arrayOf(CoverShape),
-  // listing: CoverShape,
   locale: PropTypes.string.isRequired,
   fetchListing: PropTypes.func.isRequired,
 };

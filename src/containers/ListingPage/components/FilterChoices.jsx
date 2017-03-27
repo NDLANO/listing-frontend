@@ -17,6 +17,7 @@ import {
 import React, { PropTypes, Component } from 'react';
 import { injectT } from '../../../i18n';
 import ChoiceGroup from './ChoiceGroup';
+import {LabelShape} from './../../../shapes';
 
 
 class FilterChoices extends Component {
@@ -61,10 +62,7 @@ class FilterChoices extends Component {
 FilterChoices.propTypes = {
   selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChoiceChange: PropTypes.func,
-  filters: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.string,
-    labels: PropTypes.arrayOfStrings,
-  })),
+  filters: PropTypes.arrayOf(LabelShape),
 };
 
 export default injectT(FilterChoices);

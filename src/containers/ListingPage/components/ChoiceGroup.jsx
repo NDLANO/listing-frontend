@@ -10,7 +10,6 @@ import React, { PropTypes } from 'react';
 import { injectT } from '../../../i18n';
 import { choiceIdent } from '../../../util/listingHelpers';
 
-                         // checked={selectedFilters.find(f => f === choice)}
 const ChoiceGroup = ({ filter, handleChoiceChange, selectedFilters }) => (
   <div>
     <label htmlFor={filter.type}>{filter.type}:</label>
