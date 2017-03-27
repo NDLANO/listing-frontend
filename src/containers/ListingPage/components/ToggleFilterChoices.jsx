@@ -5,15 +5,6 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-
-import {
-    addEventListenerForResize,
-    updateIFrameDimensions,
-    addAsideClickListener,
-    removeEventListenerForResize,
-    removeAsideClickListener,
-} from 'ndla-article-scripts';
-
 import React, { PropTypes, Component } from 'react';
 import { ListingShape } from '../../../shapes';
 import FilterChoices from './FilterChoices';
