@@ -27,7 +27,7 @@ export function mapLabels(coverList) {
   const myMap = new Map();
   let allLabels = [];
 
-    // Make a map witch has flattend all the labels arrays of all the dockets
+    // Make a map witch has flattend all the labels arrays of all the covers
   coverList.forEach((cover) => {
     cover.labels.forEach((l) => {
       function theType() {

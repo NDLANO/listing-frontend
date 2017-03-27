@@ -5,15 +5,6 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-
-import {
-    addEventListenerForResize,
-    updateIFrameDimensions,
-    addAsideClickListener,
-    removeEventListenerForResize,
-    removeAsideClickListener,
-} from 'ndla-article-scripts';
-
 import React, { PropTypes, Component } from 'react';
 import { CoverShape } from '../../../shapes';
 import FilterChoices from './FilterChoices';
@@ -37,9 +28,6 @@ class ToggleFilterChoices extends Component {
   render() {
     const { filters, onChoiceChange, selectedFilters } = this.props;
     const { isVisFilter } = this.state;
-
-    console.log('ToggleFilterChoices filters', filters);
-    console.log('ToggleFilterChoices selectedFilters', selectedFilters);
 
     const child = (
       <FilterChoices

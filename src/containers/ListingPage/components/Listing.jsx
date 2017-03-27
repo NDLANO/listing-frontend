@@ -61,28 +61,18 @@ class Listing extends Component {
     const { listings } = this.props;
 
     function isSelected(selectedFilters, choices) {
-      console.log('selectedFilters', selectedFilters);
-      console.log('choices', choices);
       if (choices === undefined) {
         return false;
       }
       return selectedFilters.find(wanted => choices.includes(wanted));
     }
 
-    console.log('listings.filterChoices', listings.filterChoices);
-    console.log('this.state.selectedFilters', this.state.selectedFilters);
-
-
     const theWantedListings = () => {
       if (this.state.selectedFilters.length > 0) {
-        const filterdListings = listings.filter(cover => isSelected(this.state.selectedFilters, cover.filterChoices));
-        console.log('%%%% yup have checked choices, so we need to filter that listings list', filterdListings);
-        return filterdListings;
+        return listings.filter(cover => isSelected(this.state.selectedFilters, cover.filterChoices));
       }
-      console.log('%%%% is compleatly new listing no filter on', listings);
       return listings;
     };
-
 
     return (
       <div>

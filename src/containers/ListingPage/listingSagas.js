@@ -11,9 +11,9 @@ import * as actions from './listingActions';
 import * as api from './listingApi';
 import { listingsFlattLabels } from './../../util/listingHelpers';
 
-
-export function* fetchListing(id) {
-  console.log('ignoring id in v1', id);
+/* eslint-disable no-param-reassign*/
+export function* fetchListing() {
+  // This is to be done better in issue #256, its's like this for the demo.
   const locale = yield select(getLocale);
   const listing1 = yield call(api.fetchListing, 1, locale);
   const listing2 = yield call(api.fetchListing, 2, locale);
@@ -32,9 +32,9 @@ export function* fetchListing(id) {
     return listing;
   });
 
-  console.log('arrayWithfilterChoices', arrayWithfilterChoices);
   yield put(actions.setListing(arrayWithfilterChoices));
 }
+/* eslint-disable no-param-reassign*/
 
 export function* watchFetchListing() {
   while (true) {
