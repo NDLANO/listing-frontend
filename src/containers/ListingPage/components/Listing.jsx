@@ -61,9 +61,18 @@ class Listing extends Component {
     const { listings } = this.props;
 
     function isSelected(selectedFilters, choices) {
+      console.log('selectedFilters', selectedFilters);
+      console.log('choices', choices);
+      if (choices === undefined) {
+        return false;
+      }
       return selectedFilters.find(wanted => choices.includes(wanted));
     }
-    // TODO Må/Skal bli flyttet og optimalisert
+
+    console.log('listings.filterChoices', listings.filterChoices);
+    console.log('this.state.selectedFilters', this.state.selectedFilters);
+
+
     const theWantedListings = () => {
       if (this.state.selectedFilters.length > 0) {
         const filterdListings = listings.filter(cover => isSelected(this.state.selectedFilters, cover.filterChoices));
@@ -80,6 +89,7 @@ class Listing extends Component {
         <ToggleFilterChoices
           filters={mapLabels(listings)}
           onChoiceChange={this.onChoiceChange}
+          selectedFilters={this.state.selectedFilters}
         />
         <div className="main-content">
           <CoverList listings={theWantedListings()} />

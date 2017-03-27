@@ -20,11 +20,11 @@ const CoverList = ({ listings }) => (
 const CoverItem = ({ listing }) => (
   <div className="produkt-container">
     <div className="verktoy-bilde-div">
-      <img className="verktoy-img" alt={listing.coverPhoto} src={listing.coverPhoto} />
+      <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
     <div className="inner">
       <a className="h2-tittel-lenke" href={listing.articleApiId}>
-        {listing.title.substr(0, 16)}
+        {listing.title}
       </a>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>

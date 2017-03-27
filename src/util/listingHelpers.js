@@ -60,3 +60,10 @@ export function choiceIdent(typeName, choiceName) {
 
   return name().concat('+').concat(choiceName).replace(/\s/g, '_');
 }
+
+export function listingsFlattLabels(labels) {
+  // console.log('labels', labels);
+  return labels.map(label =>
+    // console.log('label:', label);
+    label.labels.map(l => choiceIdent(label.type, l)));
+}

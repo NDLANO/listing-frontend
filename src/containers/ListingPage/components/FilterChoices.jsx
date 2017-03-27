@@ -59,7 +59,6 @@ class FilterChoices extends Component {
 
 
 FilterChoices.propTypes = {
-  filterByChoices: PropTypes.func.isRequired,
   selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChoiceChange: PropTypes.func,
   filters: PropTypes.arrayOf(PropTypes.shape({
