@@ -23,12 +23,13 @@ const CoverItem = ({ listing }) => (
       <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
     <div className="inner">
-      <a className="h2-tittel-lenke" href={listing.articleApiId}>
+      <a className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
         {listing.title}
       </a>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>
-      <a href={`/article/${listing.articleApiId}`}>Les mer...</a>
+      <a href={`/article/${listing.articleApiId}`}>
+        Les mer...</a>
       <div>
         {printSubjects(listing.labels).map(subject => <div><a className="tag-btn w-button" key={subject} href={`/listing/${subject}`}>{subject}</a></div>)}
       </div>

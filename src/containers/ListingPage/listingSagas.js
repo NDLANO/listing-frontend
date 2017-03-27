@@ -20,13 +20,11 @@ export function* fetchListing(id) {
   const listing3 = yield call(api.fetchListing, 3, locale);
   const listing4 = yield call(api.fetchListing, 4, locale);
   const listing5 = yield call(api.fetchListing, 5, locale);
-  console.log('listingSagas ', listing1);
-  console.log('listingSagas ', listing2);
-  console.log('listingSagas ', listing3);
-  console.log('listingSagas ', listing4);
-  console.log('listingSagas ', listing5);
+  const listing6 = yield call(api.fetchListing, 6, locale);
+  const listing7 = yield call(api.fetchListing, 7, locale);
 
-  const listingArray = [listing1].concat(listing2, listing3, listing4, listing5);
+
+  const listingArray = [listing1].concat(listing2, listing3, listing4, listing5, listing6, listing7);
 
   const arrayWithfilterChoices = listingArray.map((listing) => {
     const listingsFlattLabels2 = listingsFlattLabels(listing.labels);
@@ -35,7 +33,6 @@ export function* fetchListing(id) {
   });
 
   console.log('arrayWithfilterChoices', arrayWithfilterChoices);
-  // return arrayWithfilterChoices;
   yield put(actions.setListing(arrayWithfilterChoices));
 }
 
