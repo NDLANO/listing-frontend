@@ -30,19 +30,8 @@ class ToggleFilterChoices extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-    addEventListenerForResize();
-    updateIFrameDimensions();
-    addAsideClickListener();
-  }
-
-  componentWillUnmount() {
-    removeEventListenerForResize();
-    removeAsideClickListener();
-  }
-
   handleClick() {
-    this.setState({ isVisFilter: !this.state.isVisFilter });
+    this.setState(prevState => ({ isVisFilter: !prevState.isVisFilter }));
   }
 
   render() {
