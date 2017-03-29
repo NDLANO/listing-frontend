@@ -6,14 +6,6 @@
  *
  */
 
-import {
-  addEventListenerForResize,
-  updateIFrameDimensions,
-  addAsideClickListener,
-  removeEventListenerForResize,
-  removeAsideClickListener,
-} from 'ndla-article-scripts';
-
 import React, { PropTypes, Component } from 'react';
 
 import { injectT } from '../../../i18n';
@@ -30,17 +22,6 @@ class Listing extends Component {
       selectedFilters: [],
     };
     this.onChoiceChange = this.onChoiceChange.bind(this);
-  }
-
-  componentDidMount() {
-    addEventListenerForResize();
-    updateIFrameDimensions();
-    addAsideClickListener();
-  }
-
-  componentWillUnmount() {
-    removeEventListenerForResize();
-    removeAsideClickListener();
   }
 
   onChoiceChange(event, choice) {

@@ -5,15 +5,6 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-
-import {
-    addEventListenerForResize,
-    updateIFrameDimensions,
-    addAsideClickListener,
-    removeEventListenerForResize,
-    removeAsideClickListener,
-} from 'ndla-article-scripts';
-
 import React, { PropTypes, Component } from 'react';
 import { injectT } from '../../../i18n';
 import ChoiceGroup from './ChoiceGroup';
@@ -29,17 +20,6 @@ class FilterChoices extends Component {
     };
   }
 
-  componentDidMount() {
-    addEventListenerForResize();
-    updateIFrameDimensions();
-    addAsideClickListener();
-  }
-
-  componentWillUnmount() {
-    removeEventListenerForResize();
-    removeAsideClickListener();
-  }
-
   render() {
     const { filters, onChoiceChange, selectedFilters } = this.props;
 
@@ -53,7 +33,6 @@ class FilterChoices extends Component {
             selectedFilters={selectedFilters}
           />)}</div>
       </div>
-
     );
   }
 }
