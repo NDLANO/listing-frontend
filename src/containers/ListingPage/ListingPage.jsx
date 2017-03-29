@@ -11,11 +11,9 @@ import Helmet from 'react-helmet';
 import { OneColumn } from 'ndla-ui';
 import * as actions from './listingActions';
 import { getLocale } from '../Locale/localeSelectors';
-import { ListingShape } from '../../shapes';
+import { CoverShape } from '../../shapes';
 import Listing from './components/Listing';
 import ViewBar from './components/ViewBar';
-import { mapLabels } from '../../util/listingHelpers';
-import ToggleFilterChoices from './components/ToggleFilterChoices';
 
 
 class ListingPage extends Component {
@@ -36,7 +34,6 @@ class ListingPage extends Component {
         <Helmet title={'NDLA Utlisting'} />
         <h2>NB! WORK IN PROGRESS - ONLY MOCK DATA</h2>
         <ViewBar />
-        <ToggleFilterChoices filters={mapLabels(listings)} />
         <Listing listings={listings} />
       </OneColumn>
     );
@@ -48,8 +45,7 @@ ListingPage.propTypes = {
   params: PropTypes.shape({
     listingId: PropTypes.string.isRequired,
   }).isRequired,
-  listings: PropTypes.arrayOf(ListingShape),
-  listing: ListingShape,
+  listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string.isRequired,
   fetchListing: PropTypes.func.isRequired,
 };

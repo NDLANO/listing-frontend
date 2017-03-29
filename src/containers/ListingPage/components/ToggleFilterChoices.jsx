@@ -6,7 +6,7 @@
  *
  */
 import React, { PropTypes, Component } from 'react';
-import { ListingShape } from '../../../shapes';
+import { CoverShape } from '../../../shapes';
 import FilterChoices from './FilterChoices';
 
 
@@ -26,9 +26,15 @@ class ToggleFilterChoices extends Component {
   }
 
   render() {
-    const { filters } = this.props;
+    const { filters, onChoiceChange, selectedFilters } = this.props;
     const { isVisFilter } = this.state;
-    const child = <FilterChoices filters={filters} />;
+
+    const child = (
+      <FilterChoices
+        onChoiceChange={onChoiceChange}
+        filters={filters}
+        selectedFilters={selectedFilters}
+      />);
 
     return (
       <div className="w-form">
@@ -40,7 +46,9 @@ class ToggleFilterChoices extends Component {
 }
 
 ToggleFilterChoices.propTypes = {
-  filters: PropTypes.arrayOf(ListingShape),
+  selectedFilters: PropTypes.arrayOfStrings,
+  onChoiceChange: PropTypes.func.isRequired,
+  filters: PropTypes.arrayOf(CoverShape),
 };
 
 export default ToggleFilterChoices;

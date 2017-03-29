@@ -18,7 +18,7 @@ const VisningFull = ({ className }) => (
 );
 
 VisningFull.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default VisningFull;

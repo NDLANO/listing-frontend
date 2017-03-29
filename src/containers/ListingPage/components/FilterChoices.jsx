@@ -5,45 +5,43 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { injectT } from '../../../i18n';
+import ChoiceGroup from './ChoiceGroup';
+import { LabelShape } from './../../../shapes';
 
-const FilterChoices = ({ filters }) => (
-  <div>
-    <div>
-      <div className="filter-tittler">Filter:</div>
-      <div className="w-checkbox">{filters.map(filter => <ChoiceGroup filter={filter} />)}</div>
-    </div>
-    <a className="vis-ressurs-btn w-button" href="/listing/oppdaterUtvlag">Oppdatert utvalg</a>
-  </div>
-  );
 
-const ChoiceGroup = ({ filter }) => (
-  <div>
-    <label htmlFor={filter.type}>{filter.type}:</label>
-    {filter.labels.map(choice => (
-      <div className="w-checkbox">
-        <label className="w-form-label" htmlFor={choice}>
-          <input className="w-checkbox-input" type="checkbox" value={choice} />
-          {choice}</label>
+class FilterChoices extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      labels: [],
+    };
+  }
+
+  render() {
+    const { filters, onChoiceChange, selectedFilters } = this.props;
+
+    return (
+      <div>
+        <div className="filter-tittler">Filter:</div>
+        <div className="w-checkbox">{filters.map(filter =>
+          <ChoiceGroup
+            filter={filter}
+            handleChoiceChange={onChoiceChange}
+            selectedFilters={selectedFilters}
+          />)}</div>
       </div>
-      ))}
-  </div>
-);
+    );
+  }
+}
 
-ChoiceGroup.propTypes = {
-  filter: PropTypes.shape({
-    type: PropTypes.string,
-    labels: PropTypes.arrayOfStrings,
-  }),
-};
 
 FilterChoices.propTypes = {
-  filters: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.string,
-    labels: PropTypes.arrayOfStrings,
-  })),
+  selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChoiceChange: PropTypes.func,
+  filters: PropTypes.arrayOf(LabelShape),
 };
 
 export default injectT(FilterChoices);

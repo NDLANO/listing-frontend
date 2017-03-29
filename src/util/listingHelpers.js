@@ -27,7 +27,7 @@ export function mapLabels(coverList) {
   const myMap = new Map();
   let allLabels = [];
 
-    // Make a map witch has flattend all the labels arrays of all the dockets
+    // Make a map witch has flattend all the labels arrays of all the covers
   coverList.forEach((cover) => {
     cover.labels.forEach((l) => {
       function theType() {
@@ -50,4 +50,17 @@ export function mapLabels(coverList) {
   });
 
   return allLabels;
+}
+
+export function choiceIdent(typeName, choiceName) {
+  const name = () => {
+    if (typeName === undefined || typeName === null) return 'Annet';
+    return typeName;
+  };
+
+  return name().concat('+').concat(choiceName).replace(/\s/g, '_');
+}
+
+export function listingsFlattLabels(labels) {
+  return labels.map(label => label.labels.map(l => choiceIdent(label.type, l)));
 }

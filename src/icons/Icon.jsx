@@ -23,7 +23,7 @@ Icon.VisningKompakt = props => (<Icon {...props} icon={VisningKompakt} />);
 Icon.VisningListe = props => (<Icon {...props} icon={VisningListe} />);
 
 Icon.propTypes = {
-  icon: PropTypes.string,
+  icon: PropTypes.func,
 };
 
 export default Icon;
