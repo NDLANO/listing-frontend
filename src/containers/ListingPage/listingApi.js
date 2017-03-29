@@ -19,7 +19,7 @@ function mockListing(id) {
   return JSON.parse(`
     {"title": "Hammer",
      "description": "Kort tekst for Hammer for subject ${id}", 
-     "coverPhoto": "https://test.api.ndla.no/image-api/v1/raw/skyss_vergrei_plakater_a3-4.jpg?cropStart=200,200&cropEnd=400,400", 
+     "coverPhotoUrl": "https://test.api.ndla.no/image-api/v1/raw/skyss_vergrei_plakater_a3-4.jpg?cropStart=200,200&cropEnd=400,400", 
      "articleApiId": 187, 
      "labels": [
        {
@@ -45,7 +45,7 @@ function mockListing2(id) {
   return JSON.parse(`
     {"title": "Meter og blyant",
      "description": "Kort tekst for Meter og blyant for subject ${id}", 
-     "coverPhoto": "https://test.api.ndla.no/image-api/v1/raw/sp7a2995.jpg?cropStart=200,200&cropEnd=400,400", 
+     "coverPhotoUrl": "https://test.api.ndla.no/image-api/v1/raw/sp7a2995.jpg?cropStart=200,200&cropEnd=400,400", 
      "articleApiId": 188, 
      "labels": [
        {
@@ -70,7 +70,7 @@ function mockListing3(id) {
   return JSON.parse(`
     {"title": "Noe annet",
      "description": "Kort tekst for Meter og blyant for subject ${id}", 
-     "coverPhoto": "https://test.api.ndla.no/image-api/v1/raw/tad7ebce.jpg?cropStart=200,200&cropEnd=400,400", 
+     "coverPhotoUrl": "https://test.api.ndla.no/image-api/v1/raw/tad7ebce.jpg?cropStart=200,200&cropEnd=400,400", 
      "articleApiId": 188, 
      "labels": [
        {
