@@ -35,6 +35,10 @@ const apiBaseUrl = (() => {
 
 export { apiBaseUrl };
 
+export function headerWithAccessToken(token) {
+  return { Authorization: `Bearer ${token}` };
+}
+
 export function apiResourceUrl(path) { return apiBaseUrl + path; }
 
 export function createErrorPayload(status, message, json) {

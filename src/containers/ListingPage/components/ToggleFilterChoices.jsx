@@ -46,7 +46,7 @@ class ToggleFilterChoices extends Component {
 }
 
 ToggleFilterChoices.propTypes = {
-  selectedFilters: PropTypes.arrayOfStrings,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
   onChoiceChange: PropTypes.func.isRequired,
   filters: PropTypes.arrayOf(CoverShape),
 };

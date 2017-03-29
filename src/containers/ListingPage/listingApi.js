@@ -9,11 +9,11 @@
 
 import fetch from 'isomorphic-fetch';
 import { choiceIdent } from '../../util/listingHelpers';
-import { resolveJsonOrRejectWithError, apiResourceUrl } from '../../util/apiHelpers';
+import { resolveJsonOrRejectWithError, apiResourceUrl, headerWithAccessToken } from '../../util/apiHelpers';
 
-const baseUrl = apiResourceUrl('/listing-api/v1/listing/');
+const baseUrl = apiResourceUrl('/listing-api/v1/listing');
 
-export const fetchListing = id => fetch(`${baseUrl}/${id}`).then(resolveJsonOrRejectWithError);
+export const fetchListing = (id, locale, token) => fetch(`${baseUrl}/${id}`, { headers: headerWithAccessToken(token) }).then(resolveJsonOrRejectWithError);
 
 function mockListing(id) {
   return JSON.parse(`
