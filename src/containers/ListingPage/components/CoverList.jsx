@@ -34,7 +34,6 @@ const CoverItem = ({ listing }) => (
         {printSubjects(listing.labels).map(subject => <div><a className="tag-btn w-button" key={subject} href={`/listing/${subject}`}>{subject}</a></div>)}
       </div>
     </div>
-
   </div>
 );
 
