@@ -1,7 +1,7 @@
 {
-  "name": "ndla-frontend",
-  "version": "0.1.16",
-  "description": "NDLA Frontend",
+  "name": "listing-frontend",
+  "version": "0.1.1",
+  "description": "NDLA Utlisting",
   "scripts": {
     "pretest": "npm run lint",
     "clean": "rimraf ./htdocs/assets/*",
