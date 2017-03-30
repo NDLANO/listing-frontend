@@ -6,7 +6,7 @@
  *
  */
 import React, { PropTypes, Component } from 'react';
-import { CoverShape } from '../../../shapes';
+import { LabelShape } from '../../../shapes';
 import FilterChoices from './FilterChoices';
 
 
@@ -48,7 +48,7 @@ class ToggleFilterChoices extends Component {
 ToggleFilterChoices.propTypes = {
   selectedFilters: PropTypes.arrayOf(PropTypes.string),
   onChoiceChange: PropTypes.func.isRequired,
-  filters: PropTypes.arrayOf(CoverShape),
+  filters: PropTypes.arrayOf(LabelShape),
 };
 
 export default ToggleFilterChoices;
