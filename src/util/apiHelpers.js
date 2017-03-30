@@ -29,6 +29,7 @@ const apiBaseUrl = (() => {
     return 'http://ndla-api';
   }
 
+  console.log('NDLA_API_URL', NDLA_API_URL);
   return NDLA_API_URL;
 })();
 
@@ -39,17 +40,22 @@ export function headerWithAccessToken(token) {
   return { Authorization: `Bearer ${token}` };
 }
 
-export function apiResourceUrl(path) { return apiBaseUrl + path; }
+export function apiResourceUrl(path) {
+  console.log('apiResourceUrl ', apiBaseUrl+ path);
+  return apiBaseUrl + path; }
 
 export function createErrorPayload(status, message, json) {
   return Object.assign(new Error(message), { status, json });
 }
 
 export function resolveJsonOrRejectWithError(res) {
+  console.log('resolveJsonOrRejectWithError res: ');
   return new Promise((resolve, reject) => {
     if (res.ok) {
+      console.log('res ok');
       return res.status === 204 ? resolve() : resolve(res.json());
     }
+      console.log('res not ok');
     return res.json()
       .then(json => createErrorPayload(res.status, defined(json.message, res.statusText), json))
       .catch(reject);

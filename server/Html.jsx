@@ -42,6 +42,7 @@ const Html = (props) => {
   const content = component ? renderToString(component) : '';
   const head = Helmet.rewind();
 
+  console.log('html.jsx props', props);
   return (
     <html lang={lang} className={className}>
       <head>
