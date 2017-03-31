@@ -22,19 +22,20 @@ export const getToken = () => {
   const authHead = `Basic ${b64EncodeUnicode(`${process.env.NDLA_LISTING_CLIENT_ID}:${process.env.NDLA_LISTING_CLIENT_SECRET}`)}`;
   console.log('authHead: ', authHead);
   return fetch(url, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-    Authorization: authHead,
-  },
-  body: 'grant_type=client_credentials',
-}).then(res => {
-  const json = res.json();
-  console.log('res.json', json);
-  const result = res;
-    let wat =  resolveJsonOrRejectWithError(result);
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+      Authorization: authHead,
+    },
+    body: 'grant_type=client_credentials',
+  }).then((res) => {
+    const json = res.json();
+    console.log('res.json', json);
+    const result = res;
+    const wat = resolveJsonOrRejectWithError(result);
     console.log('wat resolveJsonOrRejectWithError', wat);
-  console.log('get token res', result);
-  console.log('##### get token res.json', result.json());
-  return json;
-  }); };
+    console.log('get token res', result);
+    console.log('##### get token res.json', result.json());
+    return json;
+  });
+};

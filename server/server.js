@@ -50,9 +50,9 @@ app.get('/get_token', (req, res) => {
   console.log('app.get get_token ');
   getToken().then((token) => {
     res.send(token);
-  }).catch(err => {
+  }).catch((err) => {
     console.log('app.get get_token error', err);
-    res.status(500).send(err.message)
+    res.status(500).send(err.message);
   });
 });
 
@@ -73,10 +73,10 @@ function handleResponse(req, res, token) {
 
 
   if (global.__DISABLE_SSR__) { // eslint-disable-line no-underscore-dangle
-    console.log('before renderHtmlString token.access_token ... ',  token.access_token );
-    const bsToken= () => {if(token.access_token == null){ return 'thisisbullshittoken'} else token.access_token}
+    console.log('before renderHtmlString token.access_token ... ', token.access_token);
+    const bsToken = () => { if (token.access_token == null) { return 'thisisbullshittoken'; } token.access_token; };
     console.log('bsToken', bsToken());
-    const htmlString = renderHtmlString(locale, userAgentString, { accessToken: token.access_token});
+    const htmlString = renderHtmlString(locale, userAgentString, { accessToken: token.access_token });
     console.log('renderHtmlString.htmlString=', htmlString);
     res.send(`<!doctype html>\n${htmlString}`);
 
@@ -123,7 +123,7 @@ function handleResponse(req, res, token) {
       renderToString(component);
 
       // Dispatch a close event so sagas stop listening after they have resolved
-  console.log('handleResponse stopp before store.close ...');
+      console.log('handleResponse stopp before store.close ...');
       store.close();
     } else {
       console.log('else give 500');
