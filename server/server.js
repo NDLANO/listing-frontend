@@ -37,47 +37,28 @@ app.use(express.static('htdocs', {
   maxAge: 1000 * 60 * 60 * 24 * 365, // One year
 }));
 
-const renderHtmlString = (locale, userAgentString, state = {}, component = undefined) => {
-  console.log('renderHtmlString  renderHtmlString', userAgentString);
-  return renderToString(<Html lang={locale} state={state} component={component} className={getConditionalClassnames(userAgentString)} />);
-};
+const renderHtmlString = (locale, userAgentString, state = {}, component = undefined) =>
+  renderToString(<Html lang={locale} state={state} component={component} className={getConditionalClassnames(userAgentString)} />);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 200, text: 'Health check ok' });
 });
 
 app.get('/get_token', (req, res) => {
-  console.log('app.get get_token ');
   getToken().then((token) => {
     res.send(token);
   }).catch((err) => {
-    console.log('app.get get_token error', err);
     res.status(500).send(err.message);
   });
 });
 
 function handleResponse(req, res, token) {
-  console.log('handleResponse token', token);
-  // console.log('handleResponse  req', req.url);
-  // console.log('handleResponse  res', res.url);
-  // console.log('handleResponse  token', token);
-  // console.log('handleResponse  ...');
   const paths = req.url.split('/');
-  console.log('paths  ...', paths);
   const { abbreviation: locale, messages } = getLocaleObject(paths[1]);
-  console.log('abbreviation messages ...', messages);
   const userAgentString = req.headers['user-agent'];
-  console.log('userAgentString ...', userAgentString);
-
-  console.log('global.__DISABLE_SSR__', global.__DISABLE_SSR__);
-
 
   if (global.__DISABLE_SSR__) { // eslint-disable-line no-underscore-dangle
-    console.log('before renderHtmlString token.access_token ... ', token.access_token);
-    const bsToken = () => { if (token.access_token == null) { return 'thisisbullshittoken'; } token.access_token; };
-    console.log('bsToken', bsToken());
     const htmlString = renderHtmlString(locale, userAgentString, { accessToken: token.access_token });
-    console.log('renderHtmlString.htmlString=', htmlString);
     res.send(`<!doctype html>\n${htmlString}`);
 
     return;
@@ -123,10 +104,8 @@ function handleResponse(req, res, token) {
       renderToString(component);
 
       // Dispatch a close event so sagas stop listening after they have resolved
-      console.log('handleResponse stopp before store.close ...');
       store.close();
     } else {
-      console.log('else give 500');
       res.sendStatus(500);
     }
   });
@@ -134,14 +113,8 @@ function handleResponse(req, res, token) {
 
 
 app.get('*', (req, res) => {
-  console.log('app get * req:');
-
-  // handleResponse(req, res, 'sfhaslkjdfhaslkdfjhalsdfjhlasdhf').catch(err => res.status(500).send(err.message));
-
   getToken().then((token) => {
-    console.log('app.get * getToken().then', token);
-    return handleResponse(req, res, token);
-    // console.log('done handleResponse');
+    handleResponse(req, res, token);
   }).catch(err => res.status(500).send(err.message));
 });
 

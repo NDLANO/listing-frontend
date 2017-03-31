@@ -17,7 +17,6 @@ const environment = {
 
 const ndlaEnvironment = process.env.NDLA_ENVIRONMENT || 'test';
 const apiDomain = () => {
-  console.log('apiDomain process.env.NDLA_ENVIRONMENT:', process.env.NDLA_ENVIRONMENT);
   switch (process.env.NDLA_ENVIRONMENT) {
     case 'local':
       return 'http://proxy.ndla-local';
@@ -29,7 +28,6 @@ const apiDomain = () => {
 };
 
 const ndlaFrontendDomain = () => {
-  console.log('ndlaFrontendDomain process.env.NDLA_ENVIRONMENT:', process.env.NDLA_ENVIRONMENT);
   switch (process.env.NDLA_ENVIRONMENT) {
     case 'local':
       return 'http://localhost:30017';
