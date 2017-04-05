@@ -9,7 +9,7 @@
 import React, { PropTypes } from 'react';
 import Icon from '../../../icons/Icon';
 
-const ViewBar = ({curentSubject}) =>
+const ViewBar = ({ curentSubject }) =>
 
     // Det er egne issues på funksjonalitet til nedtrekkslistene som er fjernet sammenliknet med eksempelspekken.
     // De er fjernet foreløpig, vi venter på avklaringer.
