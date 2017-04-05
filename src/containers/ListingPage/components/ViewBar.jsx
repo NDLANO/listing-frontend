@@ -9,10 +9,10 @@
 import React, { PropTypes } from 'react';
 import Icon from '../../../icons/Icon';
 
-const ViewBar = ({ curentSubject }) =>
+const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
 
-    // Det er egne issues på funksjonalitet til nedtrekkslistene som er fjernet sammenliknet med eksempelspekken.
-    // De er fjernet foreløpig, vi venter på avklaringer.
+    // Jmf. https://github.com/NDLANO/Issues/issues/256 det er bare specket opp to views i praksis i eksempel-spekken,
+  //  kommenterer ut den som ikke er spesifisert.
      (
        <div className="visnings-container">
          <div className="velgfag-div">
@@ -24,9 +24,9 @@ const ViewBar = ({ curentSubject }) =>
          </div>
          <div className="visningsvalg-div">
            <div className="filter-tittler">Visnings valg:</div>
-           <a className="visnings-btn w-inline-block" href="/listing/visSomListe"><Icon.VisningListe className="visning-icon" /></a>
-           <a className="visnings-btn w-inline-block" href="/listing/visFullInfo"><Icon.VisningFull className="visning-icon" /></a>
-           <a className="visnings-btn w-inline-block" href="/listing/visKompakt"><Icon.VisningKompakt className="visning-icon" /></a>
+           <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningListe className="visning-icon" /></button>
+           <button className="visnings-btn w-inline-block" onClick={onViewChangeToGrid}><Icon.VisningFull className="visning-icon" /></button>
+           {/* <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningKompakt className="visning-icon" /></button>*/}
          </div>
          <div className="standard-filter-div">
            <div className="filter-tittler">-</div>
@@ -39,6 +39,8 @@ const ViewBar = ({ curentSubject }) =>
 
 ViewBar.propTypes = {
   curentSubject: PropTypes.string.isRequired,
+  onViewChangeToList: PropTypes.func.isRequired,
+  onViewChangeToGrid: PropTypes.func.isRequired,
 };
 
 export default ViewBar;

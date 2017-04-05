@@ -24,6 +24,7 @@ class Listing extends Component {
     this.onChoiceChange = this.onChoiceChange.bind(this);
   }
 
+
   onChoiceChange(event, choice) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;

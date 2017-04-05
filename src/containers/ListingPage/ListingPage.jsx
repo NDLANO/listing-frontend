@@ -18,9 +18,28 @@ import ViewBar from './components/ViewBar';
 
 class ListingPage extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      viewType: 'grid',
+    };
+    this.onViewChangeToList = this.onViewChangeToList.bind(this);
+    this.onViewChangeToGrid = this.onViewChangeToGrid.bind(this);
+  }
+
   componentWillMount() {
     const { fetchListingByFilter, params: { listingId } } = this.props;
     fetchListingByFilter(listingId);
+  }
+
+  onViewChangeToList(event) {
+    console.log('you clicked madam?', event);
+    this.setState({ viewType: 'list' });
+  }
+
+  onViewChangeToGrid(event) {
+    console.log('you clicked madam?', event);
+    this.setState({ viewType: 'grid' });
   }
 
   render() {
@@ -32,7 +51,11 @@ class ListingPage extends Component {
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'} />
-        <ViewBar curentSubject={listingId} />
+        <ViewBar
+          curentSubject={listingId}
+          onViewChangeToList={this.onViewChangeToList}
+          onViewChangeToGrid={this.onViewChangeToGrid}
+        />
         <Listing listings={listings} />
       </OneColumn>
     );
