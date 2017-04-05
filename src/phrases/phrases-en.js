@@ -19,6 +19,9 @@ const phrases = {
     bricklayingSubject: 'Bricklaying',
     carpentingSubject: 'Carpenter',
   },
+  listingPage: {
+    noFilters: 'Have nothing to filter',
+  },
   logo: {
     altText: 'The Norwegian Digital Learning Arena',
   },

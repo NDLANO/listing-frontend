@@ -19,6 +19,9 @@ const phrases = {
     bricklayingSubject: 'Murerfaget',
     carpentingSubject: 'Tømrerfaget',
   },
+  listingPage: {
+    noFilters: 'Er ingenting å filtere',
+  },
   logo: {
     altText: 'Nasjonal digital læringsarena',
   },
