@@ -6,17 +6,17 @@
  *
  */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Icon from '../../../icons/Icon';
 
-const ViewBar = () =>
+const ViewBar = ({curentSubject}) =>
 
     // Det er egne issues på funksjonalitet til nedtrekkslistene som er fjernet sammenliknet med eksempelspekken.
     // De er fjernet foreløpig, vi venter på avklaringer.
      (
        <div className="visnings-container">
          <div className="velgfag-div">
-           <div className="filter-tittler">-</div>
+           <div className="filter-tittler">{curentSubject}</div>
 
            <div className="dropdown-outer w-dropdown">
              -
@@ -36,5 +36,9 @@ const ViewBar = () =>
          </div>
        </div>
     );
+
+ViewBar.propTypes = {
+  curentSubject: PropTypes.string.isRequired,
+};
 
 export default ViewBar;

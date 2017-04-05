@@ -23,9 +23,19 @@ class FilterChoices extends Component {
   render() {
     const { filters, onChoiceChange, selectedFilters } = this.props;
 
+    console.log('FilterChoices filters', filters);
+
+    function haveCovers() {
+      if (filters === undefined || filters.length === 0) {
+        return (<div className="filter-tittler">Er ingenting å filtere.</div>);
+      }
+      return null;
+    }
+
     return (
       <div>
         <div className="filter-tittler">Filter:</div>
+        {haveCovers()}
         <div className="w-checkbox">{filters.map(filter =>
           <ChoiceGroup
             filter={filter}

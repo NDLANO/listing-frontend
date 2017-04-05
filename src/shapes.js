@@ -24,10 +24,12 @@ export const LabelShape = PropTypes.shape({
 });
 
 export const CoverShape = PropTypes.shape({
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
-  coverPhotoUrl: PropTypes.string.isRequired,
   articleApiId: PropTypes.number.isRequired,
-  labels: PropTypes.arrayOf(LabelShape),
+  coverPhotoUrl: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   filterChoices: PropTypes.arrayOfStrings,
+  id: PropTypes.number.isRequired,
+  labels: PropTypes.arrayOf(LabelShape),
+  supportedLanguages: PropTypes.arrayOfStrings,
+  title: PropTypes.string.isRequired,
 });
