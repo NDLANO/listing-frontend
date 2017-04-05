@@ -13,6 +13,7 @@ import { mapLabels } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
 import ToggleFilterChoices from './ToggleFilterChoices';
 import CoverList from './CoverList';
+import CoverGrid from './CoverGrid';
 
 class Listing extends Component {
 
@@ -40,7 +41,10 @@ class Listing extends Component {
   }
 
   render() {
-    const { listings } = this.props;
+    const { listings, viewType } = this.props;
+
+    console.log('Listing viewType', viewType());
+    console.log('Listing viewType', viewType);
 
     function isSelected(selectedFilters, choices) {
       if (choices === undefined) {
@@ -56,6 +60,27 @@ class Listing extends Component {
       return listings;
     };
 
+    const renderGivenViewType = () => {
+      console.log('renderGivenViewType', viewType());
+
+      if (viewType() === 'grid') {
+        console.log('lag for grid');
+        return (
+          <div className="main-content">
+            <CoverGrid listings={theWantedListings()} />
+          </div>);
+      } else if (viewType() === 'list') {
+        console.log('lag for list');
+        return (
+          <div className="main-content">
+            <CoverList listings={theWantedListings()} />
+          </div>
+        );
+      }
+      console.log('hvordan havna du her a?');
+      return (<div>Nooooo</div>);
+    };
+
     return (
       <div>
         <ToggleFilterChoices
@@ -63,9 +88,7 @@ class Listing extends Component {
           onChoiceChange={this.onChoiceChange}
           selectedFilters={this.state.selectedFilters}
         />
-        <div className="main-content">
-          <CoverList listings={theWantedListings()} />
-        </div>
+        {renderGivenViewType()}
       </div>
     );
   }
@@ -74,6 +97,7 @@ class Listing extends Component {
 
 Listing.propTypes = {
   listings: PropTypes.arrayOf(CoverShape).isRequired,
+  viewType: PropTypes.func.isRequired,
   locale: PropTypes.string,
 };
 

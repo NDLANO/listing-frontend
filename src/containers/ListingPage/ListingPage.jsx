@@ -25,6 +25,7 @@ class ListingPage extends Component {
     };
     this.onViewChangeToList = this.onViewChangeToList.bind(this);
     this.onViewChangeToGrid = this.onViewChangeToGrid.bind(this);
+    this.viewType = this.viewType.bind(this);
   }
 
   componentWillMount() {
@@ -32,14 +33,17 @@ class ListingPage extends Component {
     fetchListingByFilter(listingId);
   }
 
-  onViewChangeToList(event) {
-    console.log('you clicked madam?', event);
+  onViewChangeToList() {
     this.setState({ viewType: 'list' });
   }
 
-  onViewChangeToGrid(event) {
-    console.log('you clicked madam?', event);
+  onViewChangeToGrid() {
     this.setState({ viewType: 'grid' });
+  }
+
+  viewType() {
+    console.log('viewType', this.state.viewType);
+    return this.state.viewType;
   }
 
   render() {
@@ -56,7 +60,7 @@ class ListingPage extends Component {
           onViewChangeToList={this.onViewChangeToList}
           onViewChangeToGrid={this.onViewChangeToGrid}
         />
-        <Listing listings={listings} />
+        <Listing listings={listings} viewType={this.viewType} />
       </OneColumn>
     );
   }
