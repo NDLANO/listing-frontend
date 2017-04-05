@@ -28,14 +28,19 @@ const apiBaseUrl = (() => {
   if (process.env.NODE_ENV === 'unittest') {
     return 'http://ndla-api';
   }
-
   return NDLA_API_URL;
 })();
 
 
 export { apiBaseUrl };
 
-export function apiResourceUrl(path) { return apiBaseUrl + path; }
+export function headerWithAccessToken(token) {
+  return { Authorization: `Bearer ${token}` };
+}
+
+export function apiResourceUrl(path) {
+  return apiBaseUrl + path;
+}
 
 export function createErrorPayload(status, message, json) {
   return Object.assign(new Error(message), { status, json });

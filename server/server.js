@@ -23,6 +23,8 @@ import configureStore from '../src/configureStore';
 import rootSaga from '../src/sagas';
 import { getLocaleObject, isValidLocale } from '../src/i18n';
 import Html from './Html';
+import { getToken } from './auth';
+
 
 const app = express();
 
@@ -42,15 +44,23 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 200, text: 'Health check ok' });
 });
 
-app.get('*', (req, res) => {
+app.get('/get_token', (req, res) => {
+  getToken().then((token) => {
+    res.send(token);
+  }).catch((err) => {
+    res.status(500).send(err.message);
+  });
+});
+
+function handleResponse(req, res, token) {
   const paths = req.url.split('/');
   const { abbreviation: locale, messages } = getLocaleObject(paths[1]);
   const userAgentString = req.headers['user-agent'];
 
-
   if (global.__DISABLE_SSR__) { // eslint-disable-line no-underscore-dangle
-    const htmlString = renderHtmlString(locale, userAgentString);
+    const htmlString = renderHtmlString(locale, userAgentString, { accessToken: token.access_token });
     res.send(`<!doctype html>\n${htmlString}`);
+
     return;
   }
 
@@ -58,7 +68,7 @@ app.get('*', (req, res) => {
   const location = !options.basename ? req.url : req.url.replace(`${locale}/`, '');
   const memoryHistory = createMemoryHistory(req.url, options);
 
-  const store = configureStore({ locale }, memoryHistory);
+  const store = configureStore({ locale, accessToken: token.access_token }, memoryHistory);
 
   const history = syncHistoryWithStore(memoryHistory, store);
 
@@ -81,7 +91,7 @@ app.get('*', (req, res) => {
       store.runSaga(rootSaga).done
         .then(() => {
           const state = store.getState();
-          const htmlString = renderHtmlString(locale, userAgentString, state, component);
+          const htmlString = renderHtmlString(locale, userAgentString, state, component, { accessToken: token.access_token });
           const status = props.routes.find(r => r.status === 404) !== undefined ? 404 : 200;
           res.status(status).send(`<!doctype html>\n${htmlString}`);
         })
@@ -99,6 +109,14 @@ app.get('*', (req, res) => {
       res.sendStatus(500);
     }
   });
+}
+
+
+app.get('*', (req, res) => {
+  getToken().then((token) => {
+    handleResponse(req, res, token);
+  }).catch(err => res.status(500).send(err.message));
 });
+
 
 module.exports = app;
