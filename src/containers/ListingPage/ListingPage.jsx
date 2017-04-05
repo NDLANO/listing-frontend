@@ -42,7 +42,6 @@ class ListingPage extends Component {
   }
 
   viewType() {
-    console.log('viewType', this.state.viewType);
     return this.state.viewType;
   }
 

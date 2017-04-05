@@ -24,8 +24,6 @@ class FilterChoices extends Component {
   render() {
     const { filters, onChoiceChange, selectedFilters, t } = this.props;
 
-    console.log('FilterChoices filters', filters);
-
     function haveCovers() {
       if (filters === undefined || filters.length === 0) {
         return (<div className="filter-tittler">{t('listingPage.noFilters')}</div>);

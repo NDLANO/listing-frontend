@@ -43,9 +43,6 @@ class Listing extends Component {
   render() {
     const { listings, viewType } = this.props;
 
-    console.log('Listing viewType', viewType());
-    console.log('Listing viewType', viewType);
-
     function isSelected(selectedFilters, choices) {
       if (choices === undefined) {
         return false;
@@ -61,24 +58,18 @@ class Listing extends Component {
     };
 
     const renderGivenViewType = () => {
-      console.log('renderGivenViewType', viewType());
-
-      if (viewType() === 'grid') {
-        console.log('lag for grid');
-        return (
-          <div className="main-content">
-            <CoverGrid listings={theWantedListings()} />
-          </div>);
-      } else if (viewType() === 'list') {
-        console.log('lag for list');
+      if (viewType() === 'list') {
         return (
           <div className="main-content">
             <CoverList listings={theWantedListings()} />
           </div>
         );
       }
-      console.log('hvordan havna du her a?');
-      return (<div>Nooooo</div>);
+
+      return (
+        <div className="main-content">
+          <CoverGrid listings={theWantedListings()} />
+        </div>);
     };
 
     return (
