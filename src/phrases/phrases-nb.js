@@ -20,7 +20,7 @@ const phrases = {
     carpentingSubject: 'Tømrerfaget',
   },
   listingPage: {
-    noFilters: 'Er ingenting å filtere',
+    noFilters: 'Har ingenting å filtrere',
   },
   logo: {
     altText: 'Nasjonal digital læringsarena',
