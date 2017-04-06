@@ -12,7 +12,7 @@ import Icon from '../../../icons/Icon';
 const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
 
     // Jmf. https://github.com/NDLANO/Issues/issues/256 det er bare specket opp to views i praksis i eksempel-spekken,
-  //  kommenterer ut den som ikke er spesifisert.
+    // kommenterer ut den som ikke er spesifisert.
      (
        <div className="visnings-container">
          <div className="velgfag-div">
@@ -26,7 +26,7 @@ const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
            <div className="filter-tittler">Visnings valg:</div>
            <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningListe className="visning-icon" /></button>
            <button className="visnings-btn w-inline-block" onClick={onViewChangeToGrid}><Icon.VisningFull className="visning-icon" /></button>
-           {/* <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningKompakt className="visning-icon" /></button>*/}
+           {/* <button className="visnings-btn w-inline-block" onClick={onViewChangeToCompact}><Icon.VisningKompakt className="visning-icon" /></button>*/}
          </div>
          <div className="standard-filter-div">
            <div className="filter-tittler">-</div>
