@@ -270,6 +270,7 @@ label {
 .visningsvalg-div {
     width: 33%;
     text-align: center;
+    position: relative;
 }
 
 .vis-ressurs-btn {
@@ -304,12 +305,14 @@ label {
 
 
 .w-inline-block {
-    max-width: 100%;
+    max-width: 98%;
     display: inline-block;
+    cursor: pointer;
 }
 
 .visning-icon {
     fill:#9c9b9b;
+    position: relative;
 }
 
 .visfilter-btn {

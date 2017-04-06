@@ -24,9 +24,9 @@ const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
          </div>
          <div className="visningsvalg-div">
            <div className="filter-tittler">Visnings valg:</div>
-           <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningListe className="visning-icon" /></button>
            <button className="visnings-btn w-inline-block" onClick={onViewChangeToGrid}><Icon.VisningFull className="visning-icon" /></button>
-           {/* <button className="visnings-btn w-inline-block" onClick={onViewChangeToCompact}><Icon.VisningKompakt className="visning-icon" /></button>*/}
+           <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningListe className="visning-icon" /></button>
+           <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningKompakt className="visning-icon" /></button>
          </div>
          <div className="standard-filter-div">
            <div className="filter-tittler">-</div>
