@@ -61,7 +61,7 @@ class Listing extends Component {
     };
 
     const renderGivenViewType = () => {
-      if (viewType() === 'list') {
+      if (viewType === 'list') {
         return (
           <div className="main-content">
             <CoverList listings={theWantedListings()} />
@@ -91,7 +91,7 @@ class Listing extends Component {
 
 Listing.propTypes = {
   listings: PropTypes.arrayOf(CoverShape).isRequired,
-  viewType: PropTypes.func.isRequired,
+  viewType: PropTypes.string.isRequired,
   sortType: PropTypes.func.isRequired,
   locale: PropTypes.string,
 };
