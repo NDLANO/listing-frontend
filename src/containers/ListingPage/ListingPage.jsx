@@ -42,10 +42,6 @@ class ListingPage extends Component {
   }
 
 
-  sortType() {
-    return this.state.sortType;
-  }
-
   render() {
     const { listings, params: { listingId } } = this.props;
     if (!listings) {
@@ -62,7 +58,7 @@ class ListingPage extends Component {
         <Listing
           listings={listings}
           viewType={this.state.viewType}
-          sortType={this.sortType}
+          sortType={this.state.sortType}
         />
       </OneColumn>
     );

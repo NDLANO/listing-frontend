@@ -52,7 +52,7 @@ class Listing extends Component {
     }
 
     const theWantedListings = () => {
-      sortListing(sortType(), listings);
+      sortListing(sortType, listings);
 
       if (this.state.selectedFilters.length > 0) {
         return listings.filter(cover => isSelected(this.state.selectedFilters, cover.filterChoices));
@@ -92,7 +92,7 @@ class Listing extends Component {
 Listing.propTypes = {
   listings: PropTypes.arrayOf(CoverShape).isRequired,
   viewType: PropTypes.string.isRequired,
-  sortType: PropTypes.func.isRequired,
+  sortType: PropTypes.string.isRequired,
   locale: PropTypes.string,
 };
 
