@@ -27,7 +27,7 @@ class FilterChoices extends Component {
     console.log('FilterChoices filters', filters);
 
     function haveCovers() {
-      if ( !filters || filters.length === 0) {
+      if (!filters || filters.length === 0) {
         return (<div className="filter-tittler">{t('listingPage.noFilters')}</div>);
       }
       return null;
