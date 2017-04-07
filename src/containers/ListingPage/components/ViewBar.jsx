@@ -9,7 +9,7 @@
 import React, { PropTypes } from 'react';
 import Icon from '../../../icons/Icon';
 
-const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
+const ViewBar = ({ curentSubject, onViewTypeChange }) =>
 
     // Jmf. https://github.com/NDLANO/Issues/issues/256 det er bare specket opp to views i praksis i eksempel-spekken,
     // kommenterer ut den som ikke er spesifisert.
@@ -24,9 +24,9 @@ const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
          </div>
          <div className="visningsvalg-div">
            <div className="filter-tittler">Visnings valg:</div>
-           <button className="visnings-btn w-inline-block" onClick={onViewChangeToGrid}><Icon.VisningFull className="visning-icon" /></button>
-           <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningListe className="visning-icon" /></button>
-           <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningKompakt className="visning-icon" /></button>
+           <button className="visnings-btn w-inline-block" onClick={() => onViewTypeChange('grid')}><Icon.VisningFull className="visning-icon" /></button>
+           <button className="visnings-btn w-inline-block" onClick={() => onViewTypeChange('list')}><Icon.VisningListe className="visning-icon" /></button>
+           <button className="visnings-btn w-inline-block" onClick={() => onViewTypeChange('list')}><Icon.VisningKompakt className="visning-icon" /></button>
          </div>
          <div className="standard-filter-div">
            <div className="filter-tittler">-</div>
@@ -39,8 +39,7 @@ const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
 
 ViewBar.propTypes = {
   curentSubject: PropTypes.string.isRequired,
-  onViewChangeToList: PropTypes.func.isRequired,
-  onViewChangeToGrid: PropTypes.func.isRequired,
+  onViewTypeChange: PropTypes.func.isRequired,
 };
 
 export default ViewBar;

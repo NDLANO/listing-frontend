@@ -23,9 +23,7 @@ class ListingPage extends Component {
     this.state = {
       viewType: 'grid',
     };
-    this.onViewChangeToList = this.onViewChangeToList.bind(this);
-    this.onViewChangeToGrid = this.onViewChangeToGrid.bind(this);
-    this.viewType = this.viewType.bind(this);
+    this.onViewTypeChange = this.onViewTypeChange.bind(this);
   }
 
   componentWillMount() {
@@ -33,16 +31,8 @@ class ListingPage extends Component {
     fetchListingByFilter(listingId);
   }
 
-  onViewChangeToList() {
-    this.setState({ viewType: 'list' });
-  }
-
-  onViewChangeToGrid() {
-    this.setState({ viewType: 'grid' });
-  }
-
-  viewType() {
-    return this.state.viewType;
+  onViewTypeChange(type) {
+    this.setState({ viewType: type });
   }
 
   render() {
@@ -50,18 +40,17 @@ class ListingPage extends Component {
     if (!listings) {
       return null;
     }
-
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'} />
         <ViewBar
           curentSubject={listingId}
-          onViewChangeToList={this.onViewChangeToList}
-          onViewChangeToGrid={this.onViewChangeToGrid}
+          onViewTypeChange={this.onViewTypeChange}
         />
-        <Listing listings={listings} viewType={this.viewType} />
+        <Listing listings={listings} viewType={this.state.viewType} />
       </OneColumn>
     );
+
   }
 }
 
