@@ -31,7 +31,7 @@ const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid, onSort
          <div className="standard-filter-div">
            <div className="filter-tittler">Sorter etter:</div>
            <div className="dropdown-outer w-dropdown">
-             <select onChange={onSortChange}>
+             <select className="styled-select slate" onChange={onSortChange}>
                <option value="title_asc">Alfabetisk a-å</option>
                <option value="title_desc">Alfabetisk å–a</option>
              </select>
