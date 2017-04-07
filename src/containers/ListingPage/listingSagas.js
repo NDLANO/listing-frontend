@@ -18,7 +18,7 @@ export function* fetchListingByFilter(id) {
   const token = yield select(getAccessToken);
   const listings = yield call(api.fetchListingByFilter, id, locale, token);
 
-  if (listings.results === undefined || listings.results.length === 0) {
+  if (!listings.results) {
     yield put(actions.setListing([]));
   } else {
     const arrayWithfilterChoices = listings.results.map((listing) => {
