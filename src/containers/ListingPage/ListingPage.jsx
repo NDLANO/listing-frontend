@@ -62,7 +62,6 @@ class ListingPage extends Component {
         />
       </OneColumn>
     );
-
   }
 }
 
