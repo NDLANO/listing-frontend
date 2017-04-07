@@ -18,7 +18,7 @@ import { injectT } from '../../i18n';
  * Formålet med denne siden er kun for ha ett sted med "stave"-kontroll på hva som blir sendt som filter-parameter til apiet intill videre.
  * For enklere å støtte ruta som er "root" på listing tilfelle noen går dit manuelt i adressefeltet.
  */
-export const SubjectPage = ({ t }) =>
+const SubjectPage = ({ t }) =>
   <OneColumn >
     <h1>{t('subjectPage.chooseSubject')}</h1>
     <ul>
