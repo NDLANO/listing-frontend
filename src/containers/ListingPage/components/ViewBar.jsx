@@ -9,7 +9,7 @@
 import React, { PropTypes } from 'react';
 import Icon from '../../../icons/Icon';
 
-const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
+const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid, onSortChange }) =>
 
     // Jmf. https://github.com/NDLANO/Issues/issues/256 det er bare specket opp to views i praksis i eksempel-spekken,
     // kommenterer ut den som ikke er spesifisert.
@@ -29,9 +29,12 @@ const ViewBar = ({ curentSubject, onViewChangeToList, onViewChangeToGrid }) =>
            <button className="visnings-btn w-inline-block" onClick={onViewChangeToList}><Icon.VisningKompakt className="visning-icon" /></button>
          </div>
          <div className="standard-filter-div">
-           <div className="filter-tittler">-</div>
+           <div className="filter-tittler">Sorter etter:</div>
            <div className="dropdown-outer w-dropdown">
-            -
+             <select onChange={onSortChange}>
+               <option value="title_asc">Alfabetisk a-å</option>
+               <option value="title_desc">Alfabetisk å–a</option>
+             </select>
            </div>
          </div>
        </div>
@@ -41,6 +44,7 @@ ViewBar.propTypes = {
   curentSubject: PropTypes.string.isRequired,
   onViewChangeToList: PropTypes.func.isRequired,
   onViewChangeToGrid: PropTypes.func.isRequired,
+  onSortChange: PropTypes.func.isRequired,
 };
 
 export default ViewBar;

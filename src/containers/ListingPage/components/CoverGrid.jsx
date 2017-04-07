@@ -18,7 +18,7 @@ const CoverGrid = ({ listings }) => (
 );
 
 const CoverItem = ({ listing }) => (
-  <div className="produkt-container">
+  <div className="produkt-container" key={listing.id}>
     <div className="verktoy-bilde-div">
       <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
