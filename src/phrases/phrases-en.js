@@ -13,11 +13,19 @@ const phrases = {
   welcomePage: {
     hello: 'Hello world!',
   },
+  subjectPage: {
+    chooseSubject: 'Choose subject',
+    concreteSubject: 'Concrete',
+    bricklayingSubject: 'Bricklaying',
+    carpentingSubject: 'Carpenter',
+  },
+  listingPage: {
+    noFilters: 'Have nothing to filter',
+  },
   logo: {
     altText: 'The Norwegian Digital Learning Arena',
   },
   siteNav: {
-    chooseSubject: 'Choose Subject',
     search: 'Search',
     contact: 'Contact',
     help: 'Help',

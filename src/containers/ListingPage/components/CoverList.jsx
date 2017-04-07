@@ -13,7 +13,7 @@ import { CoverShape } from '../../../shapes';
 
 const CoverList = ({ listings }) => (
   <div className="main-content">
-    <div className="emneomrade-row">{listings.map(item => <CoverItem listing={item} />)}</div>
+    <div className="emneomrade-row">{listings.map(item => <CoverItem key={item.id} listing={item} />)}</div>
   </div>
 );
 
@@ -42,7 +42,7 @@ CoverItem.propTypes = {
 };
 
 CoverList.propTypes = {
-  listings: PropTypes.arrayOf(CoverShape).isRequired,
+  listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string,
 };
 

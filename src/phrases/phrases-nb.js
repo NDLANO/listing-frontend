@@ -13,11 +13,19 @@ const phrases = {
   welcomePage: {
     hello: 'Hallo verden!',
   },
+  subjectPage: {
+    chooseSubject: 'Velg fag',
+    concreteSubject: 'Betongfaget',
+    bricklayingSubject: 'Murerfaget',
+    carpentingSubject: 'Tømrerfaget',
+  },
+  listingPage: {
+    noFilters: 'Har ingenting å filtrere',
+  },
   logo: {
     altText: 'Nasjonal digital læringsarena',
   },
   siteNav: {
-    chooseSubject: 'Velg fag',
     search: 'Søk',
     contact: 'Kontakt',
     help: 'Hjelp',

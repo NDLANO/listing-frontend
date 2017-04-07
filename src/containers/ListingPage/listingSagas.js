@@ -13,42 +13,32 @@ import { listingsFlattLabels } from './../../util/listingHelpers';
 import { getAccessToken } from '../App/sessionSelectors';
 
 /* eslint-disable no-param-reassign*/
-export function* fetchListing() {
-  // This is to be done better in issue #256, its's like this for the demo.
+export function* fetchListingByFilter(id) {
   const locale = yield select(getLocale);
   const token = yield select(getAccessToken);
-  const listing1 = yield call(api.fetchListing, 1, locale, token);
-  const listing2 = yield call(api.fetchListing, 2, locale, token);
-  const listing3 = yield call(api.fetchListing, 3, locale, token);
-  const listing4 = yield call(api.fetchListing, 4, locale, token);
-  const listing5 = yield call(api.fetchListing, 5, locale, token);
-  const listing6 = yield call(api.fetchListing, 6, locale, token);
-  const listing7 = yield call(api.fetchListing, 7, locale, token);
+  const listings = yield call(api.fetchListingByFilter, id, locale, token);
 
+  if (!listings.results) {
+    yield put(actions.setListing([]));
+  } else {
+    const arrayWithfilterChoices = listings.results.map((listing) => {
+      const listingFilterChoices = listingsFlattLabels(listing.labels);
+      listing.filterChoices = listingFilterChoices.reduce((a, b) => a.concat(b), []);
+      return listing;
+    }).sort((a, b) => a.title.localeCompare(b.title));
 
-  const listingArray = [listing1].concat(listing2, listing3, listing4, listing5, listing6, listing7);
-
-  const arrayWithfilterChoices = listingArray.map((listing) => {
-    const listingsFlattLabels2 = listingsFlattLabels(listing.labels);
-    listing.filterChoices = listingsFlattLabels2.reduce((a, b) => a.concat(b), []);
-    return listing;
-  });
-
-  yield put(actions.setListing(arrayWithfilterChoices));
+    yield put(actions.setListing(arrayWithfilterChoices));
+  }
 }
 /* eslint-disable no-param-reassign*/
 
-export function* watchFetchListing() {
+export function* watchFetchListingByFilter() {
   while (true) {
     const { payload: id } = yield take(actions.fetchListing);
-    // const id = yield take(constants.FETCH_LISTING);
-    // const current = yield select(getListing(id));
-    // console.log("current: ", current);
-
-    yield call(fetchListing, id);
+    yield call(fetchListingByFilter, id);
   }
 }
 
 export default [
-  watchFetchListing,
+  watchFetchListingByFilter,
 ];

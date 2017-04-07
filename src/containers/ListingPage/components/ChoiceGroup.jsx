@@ -19,7 +19,14 @@ const ChoiceGroup = ({ filter, handleChoiceChange, selectedFilters }) => (
       return (
         <div className="w-checkbox">
           <label className="w-form-label" htmlFor={ident}>
-            <input className="w-checkbox-input" checked={isCheckedBefore} type="checkbox" id={ident} onChange={event => handleChoiceChange(event, ident)} />
+            <input
+              className="w-checkbox-input"
+              checked={isCheckedBefore}
+              type="checkbox"
+              id={ident}
+              onChange={event => handleChoiceChange(event, ident)}
+              key={ident}
+            />
             {choice}</label>
         </div>
       );

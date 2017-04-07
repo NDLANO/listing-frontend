@@ -6,6 +6,7 @@
  *
  */
 import React, { PropTypes, Component } from 'react';
+import { compose } from 'redux';
 import { injectT } from '../../../i18n';
 import ChoiceGroup from './ChoiceGroup';
 import { LabelShape } from './../../../shapes';
@@ -21,11 +22,21 @@ class FilterChoices extends Component {
   }
 
   render() {
-    const { filters, onChoiceChange, selectedFilters } = this.props;
+    const { filters, onChoiceChange, selectedFilters, t } = this.props;
+
+    console.log('FilterChoices filters', filters);
+
+    function haveCovers() {
+      if (!filters || filters.length === 0) {
+        return (<div className="filter-tittler">{t('listingPage.noFilters')}</div>);
+      }
+      return null;
+    }
 
     return (
       <div>
         <div className="filter-tittler">Filter:</div>
+        {haveCovers()}
         <div className="w-checkbox">{filters.map(filter =>
           <ChoiceGroup
             filter={filter}
@@ -44,5 +55,6 @@ FilterChoices.propTypes = {
   filters: PropTypes.arrayOf(LabelShape),
 };
 
-export default injectT(FilterChoices);
-
+export default compose(
+  injectT,
+)(FilterChoices);

@@ -19,12 +19,12 @@ import ViewBar from './components/ViewBar';
 class ListingPage extends Component {
 
   componentWillMount() {
-    const { fetchListing, params: { listingId } } = this.props;
-    fetchListing(listingId);
+    const { fetchListingByFilter, params: { listingId } } = this.props;
+    fetchListingByFilter(listingId);
   }
 
   render() {
-    const { listings } = this.props;
+    const { listings, params: { listingId } } = this.props;
     if (!listings) {
       return null;
     }
@@ -32,8 +32,7 @@ class ListingPage extends Component {
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'} />
-        <h2>NB! WORK IN PROGRESS - ONLY MOCK DATA</h2>
-        <ViewBar />
+        <ViewBar curentSubject={listingId} />
         <Listing listings={listings} />
       </OneColumn>
     );
@@ -47,11 +46,11 @@ ListingPage.propTypes = {
   }).isRequired,
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string.isRequired,
-  fetchListing: PropTypes.func.isRequired,
+  fetchListingByFilter: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  fetchListing: actions.fetchListing,
+  fetchListingByFilter: actions.fetchListing,
 };
 
 const mapStateToProps = state => ({
