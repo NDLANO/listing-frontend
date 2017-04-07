@@ -50,7 +50,6 @@ class ListingPage extends Component {
         <Listing listings={listings} viewType={this.state.viewType} />
       </OneColumn>
     );
-
   }
 }
 
