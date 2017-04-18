@@ -14,6 +14,7 @@ import { CoverShape } from '../../../shapes';
 import ToggleFilterChoices from './ToggleFilterChoices';
 import CoverList from './CoverList';
 import CoverGrid from './CoverGrid';
+import CoverCompact from './CoverCompact';
 
 class Listing extends Component {
 
@@ -58,6 +59,13 @@ class Listing extends Component {
     };
 
     const renderGivenViewType = () => {
+      if (viewType === 'grid') {
+        return (
+          <div className="main-content">
+            <CoverGrid listings={theWantedListings()} />
+          </div>
+        );
+      }
       if (viewType === 'list') {
         return (
           <div className="main-content">
@@ -65,7 +73,15 @@ class Listing extends Component {
           </div>
         );
       }
+      if (viewType === 'compact') {
+        return (
+          <div className="main-content">
+            <CoverCompact listings={theWantedListings()} />
+          </div>
+        );
+      }
 
+      // Use the grid view as a default fallthrough in case viewType is not set.
       return (
         <div className="main-content">
           <CoverGrid listings={theWantedListings()} />

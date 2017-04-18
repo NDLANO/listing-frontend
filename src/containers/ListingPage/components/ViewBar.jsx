@@ -26,7 +26,7 @@ const ViewBar = ({ curentSubject, onViewTypeChange }) =>
            <div className="filter-tittler">Visnings valg:</div>
            <button className="visnings-btn w-inline-block" onClick={() => onViewTypeChange('grid')}><Icon.VisningFull className="visning-icon" /></button>
            <button className="visnings-btn w-inline-block" onClick={() => onViewTypeChange('list')}><Icon.VisningListe className="visning-icon" /></button>
-           <button className="visnings-btn w-inline-block" onClick={() => onViewTypeChange('list')}><Icon.VisningKompakt className="visning-icon" /></button>
+           <button className="visnings-btn w-inline-block" onClick={() => onViewTypeChange('compact')}><Icon.VisningKompakt className="visning-icon" /></button>
          </div>
          <div className="standard-filter-div">
            <div className="filter-tittler">-</div>
