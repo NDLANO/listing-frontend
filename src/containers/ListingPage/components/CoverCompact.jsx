@@ -11,7 +11,7 @@ import { injectT } from '../../../i18n';
 import { findCategoryLabel } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
 
-const CoverList = ({ listings }) => (
+const CoverCompact = ({ listings }) => (
   <div className="main-content">
     <div className="emneomrade-row">{listings.map(item => <CoverItem key={item.id} listing={item} />)}</div>
   </div>
@@ -20,11 +20,18 @@ const CoverList = ({ listings }) => (
 
 const CoverItem = ({ listing }) => (
   <div className="produkt-container listView">
-    <div className="innerList">
-      <a className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
-        {listing.title}
-      </a>
-      <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
+    <div className="innerList compactView">
+      <div className="compactView1">
+        <a className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
+          {listing.title}
+        </a>
+        <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
+      </div>
+      <div className="compactView2">
+        <p>{listing.description}
+          <br />
+          <a href={`/article/${listing.articleApiId}`}>Les mer...</a></p>
+      </div>
     </div>
   </div>
 );
@@ -33,9 +40,9 @@ CoverItem.propTypes = {
   listing: PropTypes.shape(CoverShape),
 };
 
-CoverList.propTypes = {
+CoverCompact.propTypes = {
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string,
 };
 
-export default injectT(CoverList);
+export default injectT(CoverCompact);

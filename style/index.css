@@ -50,10 +50,31 @@
     background-color: #fff;
     box-shadow: 0 0 6px 1px rgba(51, 51, 51, .21);
 }
+
+.listView {
+    width: 100%;
+}
+
+.compactView1 {
+    display:inline-block;
+    width: 35%;
+}
+
+.compactView2 {
+    display:inline-block;
+    width: 65%;
+}
+
 .inner {
     overflow: hidden;
     height: auto;
     padding: 20px;
+}
+
+.innerList {
+    overflow: hidden;
+    height: auto;
+    padding: 5px 5px 5px 20px;
 }
 
 .h2-tittel-lenke {
@@ -81,6 +102,15 @@
     display: block;
     min-height: 100%;
     min-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+.verktoy-img-compact {
+    width: 95%;
+    display: block;
+    min-height: 10%;
+    min-width: 10%;
     margin-right: auto;
     margin-left: auto;
     text-align: center;
@@ -259,6 +289,7 @@ label {
 .visningsvalg-div {
     width: 33%;
     text-align: center;
+    position: relative;
 }
 
 .vis-ressurs-btn {
@@ -293,12 +324,14 @@ label {
 
 
 .w-inline-block {
-    max-width: 100%;
+    max-width: 98%;
     display: inline-block;
+    cursor: pointer;
 }
 
 .visning-icon {
     fill:#9c9b9b;
+    position: relative;
 }
 
 .visfilter-btn {

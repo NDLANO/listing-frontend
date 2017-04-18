@@ -13,6 +13,8 @@ import { mapLabels } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
 import ToggleFilterChoices from './ToggleFilterChoices';
 import CoverList from './CoverList';
+import CoverGrid from './CoverGrid';
+import CoverCompact from './CoverCompact';
 
 class Listing extends Component {
 
@@ -23,6 +25,7 @@ class Listing extends Component {
     };
     this.onChoiceChange = this.onChoiceChange.bind(this);
   }
+
 
   onChoiceChange(event, choice) {
     const target = event.target;
@@ -39,7 +42,7 @@ class Listing extends Component {
   }
 
   render() {
-    const { listings } = this.props;
+    const { listings, viewType } = this.props;
 
     function isSelected(selectedFilters, choices) {
       if (choices === undefined) {
@@ -55,6 +58,36 @@ class Listing extends Component {
       return listings;
     };
 
+    const renderGivenViewType = () => {
+      if (viewType === 'grid') {
+        return (
+          <div className="main-content">
+            <CoverGrid listings={theWantedListings()} />
+          </div>
+        );
+      }
+      if (viewType === 'list') {
+        return (
+          <div className="main-content">
+            <CoverList listings={theWantedListings()} />
+          </div>
+        );
+      }
+      if (viewType === 'compact') {
+        return (
+          <div className="main-content">
+            <CoverCompact listings={theWantedListings()} />
+          </div>
+        );
+      }
+
+      // Use the grid view as a default fallthrough in case viewType is not set.
+      return (
+        <div className="main-content">
+          <CoverGrid listings={theWantedListings()} />
+        </div>);
+    };
+
     return (
       <div>
         <ToggleFilterChoices
@@ -62,9 +95,7 @@ class Listing extends Component {
           onChoiceChange={this.onChoiceChange}
           selectedFilters={this.state.selectedFilters}
         />
-        <div className="main-content">
-          <CoverList listings={theWantedListings()} />
-        </div>
+        {renderGivenViewType()}
       </div>
     );
   }
@@ -73,6 +104,7 @@ class Listing extends Component {
 
 Listing.propTypes = {
   listings: PropTypes.arrayOf(CoverShape).isRequired,
+  viewType: PropTypes.string.isRequired,
   locale: PropTypes.string,
 };
 
