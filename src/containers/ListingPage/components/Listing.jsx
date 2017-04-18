@@ -10,6 +10,7 @@ import React, { PropTypes, Component } from 'react';
 
 import { injectT } from '../../../i18n';
 import { mapLabels } from '../../../util/listingHelpers';
+import { sortListing } from '../../../util/listingSorter';
 import { CoverShape } from '../../../shapes';
 import ToggleFilterChoices from './ToggleFilterChoices';
 import CoverList from './CoverList';
@@ -42,7 +43,7 @@ class Listing extends Component {
   }
 
   render() {
-    const { listings, viewType } = this.props;
+    const { listings, viewType, sortType } = this.props;
 
     function isSelected(selectedFilters, choices) {
       if (choices === undefined) {
@@ -52,6 +53,8 @@ class Listing extends Component {
     }
 
     const theWantedListings = () => {
+      sortListing(sortType, listings);
+
       if (this.state.selectedFilters.length > 0) {
         return listings.filter(cover => isSelected(this.state.selectedFilters, cover.filterChoices));
       }
@@ -105,6 +108,7 @@ class Listing extends Component {
 Listing.propTypes = {
   listings: PropTypes.arrayOf(CoverShape).isRequired,
   viewType: PropTypes.string.isRequired,
+  sortType: PropTypes.string.isRequired,
   locale: PropTypes.string,
 };
 

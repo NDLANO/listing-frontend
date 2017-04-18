@@ -21,9 +21,11 @@ class ListingPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      sortType: 'title_asc',
       viewType: 'grid',
     };
     this.onViewTypeChange = this.onViewTypeChange.bind(this);
+    this.onSortChange = this.onSortChange.bind(this);
   }
 
   componentWillMount() {
@@ -34,6 +36,11 @@ class ListingPage extends Component {
   onViewTypeChange(type) {
     this.setState({ viewType: type });
   }
+
+  onSortChange(event) {
+    this.setState({ sortType: event.target.value });
+  }
+
 
   render() {
     const { listings, params: { listingId } } = this.props;
@@ -46,8 +53,13 @@ class ListingPage extends Component {
         <ViewBar
           curentSubject={listingId}
           onViewTypeChange={this.onViewTypeChange}
+          onSortChange={this.onSortChange}
         />
-        <Listing listings={listings} viewType={this.state.viewType} />
+        <Listing
+          listings={listings}
+          viewType={this.state.viewType}
+          sortType={this.state.sortType}
+        />
       </OneColumn>
     );
   }

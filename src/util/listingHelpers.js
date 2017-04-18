@@ -44,9 +44,13 @@ export function mapLabels(coverList) {
     });
   });
 
-    // Flatten the map to an array for listing in the view component
+  // Flatten the map to an array for listing in the view component
   myMap.forEach((value, key) => {
     allLabels = allLabels.concat([{ type: key, labels: value }]);
+  });
+  // Make sure the the labels under each label type are sortert alfabeticaly inside the map
+  allLabels.forEach((theType) => {
+    theType.labels.sort((a, b) => a.localeCompare(b));
   });
 
   return allLabels;
