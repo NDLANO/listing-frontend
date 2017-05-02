@@ -9,7 +9,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import WelcomePage from './containers/WelcomePage/WelcomePage';
 import App from './containers/App/App';
 import ArticlePage from './containers/ArticlePage/ArticlePage';
 import NotFoundPage from './containers/NotFoundPage/NotFoundPage';
@@ -27,7 +26,7 @@ export function toListing(listingId) {
 export default function () {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={WelcomePage} />
+      <IndexRoute component={SubjectPage} />
       <Route path="listing(/)" component={SubjectPage} />
       <Route path="listing/:listingId(/)" component={ListingPage} />
       <Route path="article/:articleId(/)" component={ArticlePage} />
