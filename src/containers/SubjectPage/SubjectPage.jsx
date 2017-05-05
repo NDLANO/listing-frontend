@@ -20,7 +20,9 @@ import { injectT } from '../../i18n';
  */
 const SubjectPage = ({ t }) =>
   <OneColumn >
-    <h1>{t('subjectPage.chooseSubject')}</h1>
+    <h1>{t('subjectPage.heading')}</h1>
+    <p>{t('subjectPage.intro')}</p>
+    <h2>{t('subjectPage.chooseSubject')}</h2>
     <ul>
       <li><a href="/listing/betongfaget">{t('subjectPage.concreteSubject')}</a></li>
       <li><a href="/listing/murerfaget">{t('subjectPage.bricklayingSubject')}</a></li>

@@ -10,10 +10,9 @@ const phrases = {
   meta: {
     description: 'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
   },
-  welcomePage: {
-    hello: 'Hallo verden!',
-  },
   subjectPage: {
+    heading: 'Utisting',
+    intro: 'Dette er utlistingstjenesten til NDLA. Velg et fag for å komme i gang.',
     chooseSubject: 'Velg fag',
     concreteSubject: 'Betongfaget',
     bricklayingSubject: 'Murerfaget',
