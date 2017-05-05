@@ -10,10 +10,9 @@ const phrases = {
   meta: {
     description: 'Norwegian Digital Learning Arena, Open Educational Resources',
   },
-  welcomePage: {
-    hello: 'Hello world!',
-  },
   subjectPage: {
+    heading: 'Listing',
+    intro: 'This is NDLAs listing service. Choose a subject to start.',
     chooseSubject: 'Choose subject',
     concreteSubject: 'Concrete',
     bricklayingSubject: 'Bricklaying',
