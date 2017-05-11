@@ -11,7 +11,7 @@ const phrases = {
     description: 'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
   },
   subjectPage: {
-    heading: 'Utisting',
+    heading: 'Utlisting',
     intro: 'Dette er utlistingstjenesten til NDLA. Velg et fag for å komme i gang.',
     chooseSubject: 'Velg fag',
     concreteSubject: 'Betongfaget',
