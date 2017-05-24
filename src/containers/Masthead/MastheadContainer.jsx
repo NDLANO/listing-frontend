@@ -7,10 +7,10 @@
  */
 
 import React, { PropTypes } from 'react';
-import { Masthead, MastheadItem, SiteNav, SiteNavItem, Logo } from 'ndla-ui';
+import { Masthead, MastheadItem, Logo } from 'ndla-ui';
 
 
-const MastheadContainer = ({ t }) => (
+const MastheadContainer = () => (
   <Masthead>
     <MastheadItem left>
       <Logo altText="Nasjonal digital læringsarena" />
