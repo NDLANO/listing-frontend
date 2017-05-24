@@ -31,7 +31,7 @@ const phrases = {
   },
   footer: {
     aboutNDLA: 'Om NDLA',
-    selectLanguage: 'Velg språk (language): ',
+    selectLanguage: 'Språk (language): Bokmål',
     footerInfo: 'Nettstedet er utarbeidet av NDLA som åpen kildekode.',
     footerEditiorInChief: 'Ansvarlig redaktør: ',
     footerManagingEditor: 'Utgaveansvarlig: ',
