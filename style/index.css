@@ -16,6 +16,7 @@
     width: auto;
     max-width: 620px;
     min-width: 500px;
+    padding-top: 27px;
 }
 
 .emneomrade-row {
@@ -79,8 +80,8 @@
 
 .h2-tittel-lenke {
     color: #303030;
-    font-size: 2em;
-    line-height: 1.5em;
+    font-size: 1.3em;
+    line-height: 2em;
     text-decoration: none;
 }
 
