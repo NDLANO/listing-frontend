@@ -24,6 +24,7 @@ export function printSubjects(elem) {
 }
 
 export function mapLabels(coverList) {
+// TODO also set to changed/discontinued when the labels api endpoint is ready.
   const myMap = new Map();
   let allLabels = [];
 
@@ -36,6 +37,10 @@ export function mapLabels(coverList) {
             return 'Annet';
           case null:
             return 'Annet';
+          case 'subject': // todo -> this is a HACK - pre propper language support solution for fastiness.
+            return 'Fag';
+          case 'category': // todo -> this is HACK - pre propper language support solution for fastiness.
+            return 'Kategori';
           default:
             return l.type;
         }
