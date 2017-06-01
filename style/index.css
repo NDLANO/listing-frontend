@@ -80,7 +80,7 @@
 
 .h2-tittel-lenke {
     color: #303030;
-    font-size: 1.3em;
+    font-size: 1.4em;
     line-height: 2em;
     text-decoration: none;
 }
@@ -288,8 +288,8 @@ label {
     text-transform: uppercase;
 }
 .visningsvalg-div {
-    width: 33%;
-    text-align: center;
+    /*width: 33%;*/
+    text-align: left;
     position: relative;
 }
 
@@ -362,7 +362,7 @@ label {
 .styled-select.slate {
     background: no-repeat right center;
     height: 34px;
-    width: 240px;
+    width: 200px;
 }
 
 .styled-select.slate select {
@@ -370,4 +370,24 @@ label {
     font-size: 16px;
     height: 34px;
     width: 268px;
+}
+
+/* After first meeting filters are to the left, the following is trying ot make a box layout from
+https://www.w3schools.com/css/tryit.asp?filename=tryresponsive_styles
+*/
+.flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+.flex-container > * {
+    padding: 10px;
+    flex: 1 100%;
+}
+
+@media all and (min-width: 600px) {
+    .aside {
+        flex: 1 auto;
+        padding: 5px;
+    }
 }

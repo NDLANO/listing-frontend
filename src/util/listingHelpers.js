@@ -24,6 +24,7 @@ export function printSubjects(elem) {
 }
 
 export function mapLabels(coverList) {
+  console.log('mapLabels coverList:', coverList);
   const myMap = new Map();
   let allLabels = [];
 

@@ -32,16 +32,18 @@ class FilterChoices extends Component {
     }
 
     return (
-      <div>
-        <div className="filter-tittler">Filter:</div>
-        {haveCovers()}
-        <div className="w-checkbox">{filters.map(filter =>
-          <ChoiceGroup
-            filter={filter}
-            handleChoiceChange={onChoiceChange}
-            selectedFilters={selectedFilters}
-          />)}</div>
-      </div>
+      <aside className="aside">
+        <div>
+          <div className="filter-tittler">Filter:</div>
+          {haveCovers()}
+          <div className="w-checkbox">{filters.map(filter =>
+            <ChoiceGroup
+              filter={filter}
+              handleChoiceChange={onChoiceChange}
+              selectedFilters={selectedFilters}
+            />)}</div>
+        </div>
+      </aside>
     );
   }
 }

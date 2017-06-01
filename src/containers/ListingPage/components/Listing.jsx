@@ -11,11 +11,11 @@ import React, { PropTypes, Component } from 'react';
 import { injectT } from '../../../i18n';
 import { mapLabels } from '../../../util/listingHelpers';
 import { sortListing } from '../../../util/listingSorter';
-import { CoverShape } from '../../../shapes';
-import ToggleFilterChoices from './ToggleFilterChoices';
+import { CoverShape, LabelShape } from '../../../shapes';
 import CoverList from './CoverList';
 import CoverGrid from './CoverGrid';
 import CoverCompact from './CoverCompact';
+import SideBar from './SideBar';
 
 class Listing extends Component {
 
@@ -43,7 +43,7 @@ class Listing extends Component {
   }
 
   render() {
-    const { listings, viewType, sortType } = this.props;
+    const { listings, viewType, sortType, curentSubject, onViewTypeChange, onSortChange } = this.props;
 
     function isSelected(selectedFilters, choices) {
       if (choices === undefined) {
@@ -92,11 +92,14 @@ class Listing extends Component {
     };
 
     return (
-      <div>
-        <ToggleFilterChoices
+      <div className="flex-container">
+        <SideBar
+          curentSubject={curentSubject}
+          onViewTypeChange={onViewTypeChange}
+          onSortChange={onSortChange}
           filters={mapLabels(listings)}
-          onChoiceChange={this.onChoiceChange}
           selectedFilters={this.state.selectedFilters}
+          onChoiceChange={this.onChoiceChange}
         />
         {renderGivenViewType()}
       </div>
@@ -110,6 +113,12 @@ Listing.propTypes = {
   viewType: PropTypes.string.isRequired,
   sortType: PropTypes.string.isRequired,
   locale: PropTypes.string,
+  curentSubject: PropTypes.string,
+  onViewTypeChange: PropTypes.func,
+  onSortChange: PropTypes.func,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChoiceChange: PropTypes.func,
+  filters: PropTypes.arrayOf(LabelShape),
 };
 
 export default injectT(Listing);

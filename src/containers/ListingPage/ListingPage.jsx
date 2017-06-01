@@ -13,8 +13,6 @@ import * as actions from './listingActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 import Listing from './components/Listing';
-import ViewBar from './components/ViewBar';
-
 
 class ListingPage extends Component {
 
@@ -50,16 +48,16 @@ class ListingPage extends Component {
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'} />
-        <ViewBar
-          curentSubject={listingId}
-          onViewTypeChange={this.onViewTypeChange}
-          onSortChange={this.onSortChange}
-        />
-        <Listing
-          listings={listings}
-          viewType={this.state.viewType}
-          sortType={this.state.sortType}
-        />
+        <div className="flex-container">
+          <Listing
+            listings={listings}
+            viewType={this.state.viewType}
+            sortType={this.state.sortType}
+            curentSubject={listingId}
+            onViewTypeChange={this.onViewTypeChange}
+            onSortChange={this.onSortChange}
+          />
+        </div>
       </OneColumn>
     );
   }
