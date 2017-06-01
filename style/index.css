@@ -372,9 +372,7 @@ label {
     width: 268px;
 }
 
-/* After first meeting filters are to the left, the following is trying ot make a box layout from
-https://www.w3schools.com/css/tryit.asp?filename=tryresponsive_styles
-*/
+
 .flex-container {
     display: flex;
     flex-flow: row wrap;

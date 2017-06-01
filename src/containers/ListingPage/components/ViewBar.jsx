@@ -10,8 +10,6 @@ import React, { PropTypes } from 'react';
 import Icon from '../../../icons/Icon';
 
 const ViewBar = ({ onViewTypeChange, onSortChange }) => {
-  console.log('ViewBar...onViewTypeChange', onViewTypeChange);
-  console.log('ViewBar...onSortChange', onSortChange);
   return (
     <div>
       <div className="">
