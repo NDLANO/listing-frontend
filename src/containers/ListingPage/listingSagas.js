@@ -13,6 +13,7 @@ import { listingsFlattLabels } from './../../util/listingHelpers';
 import { getAccessToken } from '../App/sessionSelectors';
 
 /* eslint-disable no-param-reassign*/
+/* Rename functions AFTER THEY ARE WORING OK AGAIN ... */
 export function* fetchListingByFilter(id) {
   const locale = yield select(getLocale);
   const token = yield select(getAccessToken);

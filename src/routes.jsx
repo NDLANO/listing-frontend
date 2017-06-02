@@ -26,7 +26,6 @@ export default function () {
   return (
     <Route path="/" component={App}>
       <Route path="listing(/)" component={ListingPage} />
-      <Route path="listing/:listingId(/)" component={ListingPage} />
       <Route path="article/:articleId(/)" component={ArticlePage} />
       <Route path="*" status={404} component={NotFoundPage} />
     </Route>

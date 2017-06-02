@@ -42,6 +42,7 @@ class ListingPage extends Component {
 
   render() {
     const { listings, params: { listingId } } = this.props;
+
     if (!listings) {
       return null;
     }

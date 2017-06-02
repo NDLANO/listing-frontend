@@ -14,7 +14,6 @@ import { sortListing } from '../../../util/listingSorter';
 import { CoverShape, LabelShape } from '../../../shapes';
 import CoverList from './CoverList';
 import CoverGrid from './CoverGrid';
-import CoverCompact from './CoverCompact';
 import SideBar from './SideBar';
 
 class Listing extends Component {
@@ -25,6 +24,7 @@ class Listing extends Component {
       selectedFilters: [],
     };
     this.onChoiceChange = this.onChoiceChange.bind(this);
+    this.onSubjectButtonClick = this.onSubjectButtonClick.bind(this);
   }
 
 
@@ -32,12 +32,20 @@ class Listing extends Component {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
-    const choicesMade = this.state.selectedFilters;
+    this.updateSelectedFiltersState(value, choice);
+  }
 
-    if (value) {
+  onSubjectButtonClick(event) {
+    const choice = event.target.id;
+    const isSelected = (this.state.selectedFilters.indexOf(choice) === -1);
+    this.updateSelectedFiltersState(isSelected, choice);
+  }
+
+  updateSelectedFiltersState(isSelected, choice) {
+    if (isSelected) {
       this.setState({ selectedFilters: this.state.selectedFilters.concat(choice) });
     } else {
-      const reduced = choicesMade.filter(c => c !== choice);
+      const reduced = this.state.selectedFilters.filter(c => c !== choice);
       this.setState({ selectedFilters: reduced });
     }
   }
@@ -65,21 +73,20 @@ class Listing extends Component {
       if (viewType === 'grid') {
         return (
           <div className="main-content">
-            <CoverGrid listings={theWantedListings()} />
+            <CoverGrid
+              listings={theWantedListings()}
+              onSubjectButtonClick={this.onSubjectButtonClick}
+            />
           </div>
         );
       }
       if (viewType === 'list') {
         return (
           <div className="main-content">
-            <CoverList listings={theWantedListings()} />
-          </div>
-        );
-      }
-      if (viewType === 'compact') {
-        return (
-          <div className="main-content">
-            <CoverCompact listings={theWantedListings()} />
+            <CoverList
+              listings={theWantedListings()}
+              onSubjectButtonClick={this.onSubjectButtonClick}
+            />
           </div>
         );
       }
@@ -87,7 +94,10 @@ class Listing extends Component {
       // Use the grid view as a default fallthrough in case viewType is not set.
       return (
         <div className="main-content">
-          <CoverGrid listings={theWantedListings()} />
+          <CoverGrid
+            listings={theWantedListings()}
+            onSubjectButtonClick={this.onSubjectButtonClick}
+          />
         </div>);
     };
 
@@ -102,6 +112,7 @@ class Listing extends Component {
           onChoiceChange={this.onChoiceChange}
         />
         {renderGivenViewType()}
+
       </div>
     );
   }
@@ -118,6 +129,7 @@ Listing.propTypes = {
   onSortChange: PropTypes.func,
   selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChoiceChange: PropTypes.func,
+  onSubjectButtonClick: PropTypes.func,
   filters: PropTypes.arrayOf(LabelShape),
 };
 

@@ -120,11 +120,11 @@
 .tag-btn {
     margin-right: 5px;
     margin-bottom: 5px;
-    padding: 1px 4px;
-    background-color: #dfecfa;
+    padding: 1px 8px;
+    background-color: #20588f;
     font-family: 'Open Sans', sans-serif;
-    color: #4d4d4d;
-    font-size: 0.9em;
+    color: #fff;
+    font-size: 0.8em;
     font-weight: 400;
 }
 
