@@ -13,11 +13,10 @@ import { listingsFlattLabels } from './../../util/listingHelpers';
 import { getAccessToken } from '../App/sessionSelectors';
 
 /* eslint-disable no-param-reassign*/
-/* Rename functions AFTER THEY ARE WORING OK AGAIN ... */
-export function* fetchListingByFilter(id) {
+export function* fetchListing() {
   const locale = yield select(getLocale);
   const token = yield select(getAccessToken);
-  const listings = yield call(api.fetchListingByFilter, id, locale, token);
+  const listings = yield call(api.fetchListing, locale, token);
 
   if (!listings.results) {
     yield put(actions.setListing([]));
@@ -33,13 +32,13 @@ export function* fetchListingByFilter(id) {
 }
 /* eslint-disable no-param-reassign*/
 
-export function* watchFetchListingByFilter() {
+export function* watchFetchListing() {
   while (true) {
-    const { payload: id } = yield take(actions.fetchListing);
-    yield call(fetchListingByFilter, id);
+    yield take(actions.fetchListing);
+    yield call(fetchListing);
   }
 }
 
 export default [
-  watchFetchListingByFilter,
+  watchFetchListing,
 ];
