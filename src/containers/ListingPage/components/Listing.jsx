@@ -120,14 +120,14 @@ class Listing extends Component {
 }
 
 Listing.propTypes = {
-  listings: PropTypes.arrayOf(CoverShape).isRequired,
+  listings: PropTypes.arrayOf(CoverShape),
   viewType: PropTypes.string.isRequired,
   sortType: PropTypes.string.isRequired,
   locale: PropTypes.string,
   curentSubject: PropTypes.string,
   onViewTypeChange: PropTypes.func,
   onSortChange: PropTypes.func,
-  selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
   onChoiceChange: PropTypes.func,
   onSubjectButtonClick: PropTypes.func,
   filters: PropTypes.arrayOf(LabelShape),

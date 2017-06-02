@@ -27,8 +27,8 @@ class ListingPage extends Component {
   }
 
   componentWillMount() {
-    const { fetchListingByFilter, params: { listingId } } = this.props;
-    fetchListingByFilter(listingId);
+    const { fetchListing } = this.props;
+    fetchListing();
   }
 
   onViewTypeChange(type) {
@@ -41,7 +41,7 @@ class ListingPage extends Component {
 
 
   render() {
-    const { listings, params: { listingId } } = this.props;
+    const { listings } = this.props;
 
     if (!listings) {
       return null;
@@ -54,7 +54,6 @@ class ListingPage extends Component {
             listings={listings}
             viewType={this.state.viewType}
             sortType={this.state.sortType}
-            curentSubject={listingId}
             onViewTypeChange={this.onViewTypeChange}
             onSortChange={this.onSortChange}
           />
@@ -66,16 +65,13 @@ class ListingPage extends Component {
 
 
 ListingPage.propTypes = {
-  params: PropTypes.shape({
-    listingId: PropTypes.string.isRequired,
-  }).isRequired,
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string.isRequired,
-  fetchListingByFilter: PropTypes.func.isRequired,
+  fetchListing: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  fetchListingByFilter: actions.fetchListing,
+  fetchListing: actions.fetchListing,
 };
 
 const mapStateToProps = state => ({

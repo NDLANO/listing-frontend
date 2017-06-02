@@ -35,7 +35,6 @@ const ViewBar = ({ onViewTypeChange, onSortChange }) => (
   );
 
 ViewBar.propTypes = {
-  curentSubject: PropTypes.string,
   onViewTypeChange: PropTypes.func,
   onSortChange: PropTypes.func,
 };

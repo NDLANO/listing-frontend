@@ -5,7 +5,8 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const VisningKompakt = ({ className }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" style={className}>

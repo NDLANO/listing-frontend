@@ -5,8 +5,9 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import { uuid } from 'ndla-util';
 import { injectT } from '../../../i18n';
 import { findCategoryLabel, printSubjects } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
@@ -22,9 +23,15 @@ const CoverGrid = ({ listings, onSubjectButtonClick }) => (
   </div>
   );
 
+CoverGrid.propTypes = {
+  listings: PropTypes.arrayOf(CoverShape),
+  locale: PropTypes.string,
+  onSubjectButtonClick: PropTypes.func,
+};
+
 
 const CoverItem = ({ listing, onSubjectButtonClick }) => (
-  <div className="produkt-container" key={listing.id}>
+  <div className="produkt-container">
     <div className="verktoy-bilde-div">
       <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
@@ -37,7 +44,7 @@ const CoverItem = ({ listing, onSubjectButtonClick }) => (
       <a href={`/article/${listing.articleApiId}`}>
         Les mer...</a>
       <div>
-        {printSubjects(listing.labels).map(subject => <div>
+        {printSubjects(listing.labels).map(subject => <div key={uuid()}>
           <button className="tag-btn w-button" id={`subject+${subject}`} onClick={event => onSubjectButtonClick(event)}>{subject}</button>
         </div>)}
       </div>
@@ -46,13 +53,7 @@ const CoverItem = ({ listing, onSubjectButtonClick }) => (
   );
 
 CoverItem.propTypes = {
-  listing: PropTypes.shape(CoverShape),
-  onSubjectButtonClick: PropTypes.func,
-};
-
-CoverGrid.propTypes = {
-  listings: PropTypes.arrayOf(CoverShape),
-  locale: PropTypes.string,
+  listing: CoverShape,
   onSubjectButtonClick: PropTypes.func,
 };
 

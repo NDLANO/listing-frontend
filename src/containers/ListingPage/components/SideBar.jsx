@@ -12,16 +12,15 @@ import ViewBar from './ViewBar';
 import FilterChoices from './FilterChoices';
 import { LabelShape } from './../../../shapes';
 
-const SideBar = ({ curentSubject, onViewTypeChange, onSortChange, filters, selectedFilters, onChoiceChange }) => (
+const SideBar = ({ onViewTypeChange, onSortChange, filters, selectedFilters, onChoiceChange }) => (
   <aside className="aside">
-    <ViewBar curentSubject={curentSubject} onViewTypeChange={onViewTypeChange} onSortChange={onSortChange} />
+    <ViewBar onViewTypeChange={onViewTypeChange} onSortChange={onSortChange} />
     <FilterChoices selectedFilters={selectedFilters} filters={filters} onChoiceChange={onChoiceChange} />
   </aside>
 );
 
 
 SideBar.propTypes = {
-  curentSubject: PropTypes.string,
   onViewTypeChange: PropTypes.func.isRequired,
   onSortChange: PropTypes.func.isRequired,
   filters: PropTypes.arrayOf(LabelShape),
