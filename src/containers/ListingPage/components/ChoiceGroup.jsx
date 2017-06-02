@@ -41,7 +41,7 @@ ChoiceGroup.propTypes = {
     type: PropTypes.string,
     labels: PropTypes.arrayOfStrings,
   }),
-  selectedFilters:  PropTypes.arrayOf(PropTypes.string),
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default injectT(ChoiceGroup);
