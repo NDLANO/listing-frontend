@@ -70,7 +70,5 @@ export function buttonSubjectChoiceIdent(subject) {
 }
 
 export function listingsFlattLabels(labels) {
-  return labels.map(label => label.labels.map((l) => {
-    return `labels.${choiceIdent(label.type, l)}`;
-  }));
+  return labels.map(label => label.labels.map(l => `labels.${choiceIdent(label.type, l)}`));
 }
