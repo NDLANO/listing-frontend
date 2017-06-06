@@ -34,13 +34,13 @@ export function mapLabels(coverList) {
       function theType() {
         switch (l.type) {
           case undefined:
-            return 'Annet';
+            return 'listingPage.other';
           case null:
-            return 'Annet';
-          case 'subject': // todo -> this is a HACK - pre propper language support solution for fastiness.
-            return 'Fag';
-          case 'category': // todo -> this is HACK - pre propper language support solution for fastiness.
-            return 'Kategori';
+            return 'listingPage.other';
+          case 'subject':
+            return 'listingPage.subject';
+          case 'category':
+            return 'listingPage.category';
           default:
             return l.type;
         }

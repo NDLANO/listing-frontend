@@ -20,6 +20,9 @@ const phrases = {
   },
   listingPage: {
     noFilters: 'Have nothing to filter',
+    category: 'Category',
+    subject: 'Subject',
+    other: 'Other',
   },
   logo: {
     altText: 'The Norwegian Digital Learning Arena',
