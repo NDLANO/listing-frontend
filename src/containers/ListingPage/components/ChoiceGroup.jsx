@@ -12,9 +12,9 @@ import { uuid } from 'ndla-util';
 import { injectT } from '../../../i18n';
 import { choiceIdent } from '../../../util/listingHelpers';
 
-const ChoiceGroup = ({ filter, handleChoiceChange, selectedFilters }) => (
+const ChoiceGroup = ({ filter, handleChoiceChange, selectedFilters, t }) => (
   <div>
-    <label htmlFor={filter.type}>{filter.type}:</label>
+    <label htmlFor={filter.type}>{t(`${filter.type}`)}</label>
     {filter.labels.map((choice) => {
       const ident = choiceIdent(filter.type, choice);
       const isCheckedBefore = selectedFilters.find(f => f.toString() === ident.toString());

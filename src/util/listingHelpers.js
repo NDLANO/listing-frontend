@@ -24,6 +24,7 @@ export function printSubjects(elem) {
 }
 
 export function mapLabels(coverList) {
+// TODO also set to changed/discontinued when the labels api endpoint is ready.
   const myMap = new Map();
   let allLabels = [];
 
@@ -33,9 +34,13 @@ export function mapLabels(coverList) {
       function theType() {
         switch (l.type) {
           case undefined:
-            return 'Annet';
+            return 'listingPage.other';
           case null:
-            return 'Annet';
+            return 'listingPage.other';
+          case 'subject':
+            return 'listingPage.subject';
+          case 'category':
+            return 'listingPage.category';
           default:
             return l.type;
         }
