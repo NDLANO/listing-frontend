@@ -20,6 +20,9 @@ const phrases = {
   },
   listingPage: {
     noFilters: 'Har ingenting å filtrere',
+    category: 'Kategori',
+    subject: 'Fag',
+    other: 'Annet',
   },
   logo: {
     altText: 'Nasjonal digital læringsarena',
