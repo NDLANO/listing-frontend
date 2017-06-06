@@ -389,3 +389,9 @@ label {
         padding: 5px;
     }
 }
+
+.h2-txt-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

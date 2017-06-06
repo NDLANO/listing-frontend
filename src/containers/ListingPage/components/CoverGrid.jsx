@@ -37,7 +37,7 @@ const CoverItem = ({ listing, onSubjectButtonClick }) => (
     </div>
     <div className="inner">
       <a className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
-        {listing.title}
+        <div className="h2-txt-overflow">{listing.title}</div>
       </a>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>
