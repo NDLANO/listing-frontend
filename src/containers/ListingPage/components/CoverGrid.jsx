@@ -9,7 +9,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { uuid } from 'ndla-util';
 import { injectT } from '../../../i18n';
-import { findCategoryLabel, printSubjects } from '../../../util/listingHelpers';
+import { findCategoryLabel, printSubjects, buttonSubjectChoiceIdent } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
 
 const CoverGrid = ({ listings, onSubjectButtonClick }) => (
@@ -45,8 +45,9 @@ const CoverItem = ({ listing, onSubjectButtonClick }) => (
         Les mer...</a>
       <div>
         {printSubjects(listing.labels).map(subject => <div key={uuid()}>
-          <button className="tag-btn w-button" id={`subject+${subject}`} onClick={event => onSubjectButtonClick(event)}>{subject}</button>
-        </div>)}
+          <button className="tag-btn w-button" id={buttonSubjectChoiceIdent(subject)} onClick={event => onSubjectButtonClick(event)}>{subject}</button>
+        </div>)
+        }
       </div>
     </div>
   </div>
