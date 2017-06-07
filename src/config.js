@@ -27,10 +27,10 @@ const apiDomain = () => {
   }
 };
 
-const ndlaFrontendDomain = () => {
+const ndlaListingFrontendDomain = () => {
   switch (process.env.NDLA_ENVIRONMENT) {
     case 'local':
-      return 'http://localhost:30017';
+      return 'http://localhost:30020';
     case 'prod':
       return 'https://listing-frontend.api.ndla.no';
     default:
@@ -39,6 +39,17 @@ const ndlaFrontendDomain = () => {
 };
 
 
+const ndlaFrontendDomain = () => {
+  switch (process.env.NDLA_ENVIRONMENT) {
+    case 'local':
+      return 'http://localhost:30017';
+    case 'prod':
+      return 'https://ndla-frontend.api.ndla.no';
+    default:
+      return `https://ndla-frontend.${process.env.NDLA_ENVIRONMENT}.api.ndla.no`;
+  }
+};
+
 module.exports = Object.assign({
   host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
   port: process.env.NDLA_FRONTENTD_PORT || '3000',
@@ -46,5 +57,6 @@ module.exports = Object.assign({
   googleTagMangerId: process.env.GOOGLE_TAG_MANGER_ID || undefined,
   disableSSR: process.env.DISABLE_SSR || false,
   ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
+  ndlaListingFrontendDomain: ndlaListingFrontendDomain(),
   ndlaFrontendDomain: ndlaFrontendDomain(),
 }, environment);
