@@ -24,24 +24,10 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
     flex-direction: row;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
     justify-content: space-between;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    -webkit-box-align: stretch;
-    -webkit-align-items: stretch;
-    -ms-flex-align: stretch;
     align-items: stretch;
-    -webkit-align-content: flex-start;
-    -ms-flex-line-pack: start;
     align-content: flex-start;
 }
 
@@ -121,11 +107,12 @@
     margin-right: 5px;
     margin-bottom: 5px;
     padding: 1px 8px;
-    background-color: #20588f;
+    background-color: #dfecfa;
     font-family: 'Open Sans', sans-serif;
-    color: #fff;
+    color: #4d4d4d;
     font-size: 0.8em;
     font-weight: 400;
+    text-transform: capitalize;
 }
 
 .w-button {
@@ -219,6 +206,7 @@
     display: block;
     margin-bottom: 5px;
     padding-left: 20px;
+    text-transform: capitalize;
 }
 
 .w-checkbox-input,
@@ -383,10 +371,47 @@ label {
     flex: 1 100%;
 }
 
-@media all and (min-width: 600px) {
+@media all and (min-width: 400px) {
     .aside {
         flex: 1 auto;
         padding: 5px;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .produkt-container {
+        width: 50%;
+        flex: 1 auto;
+        padding: 5px;
+        max-width: 192px;
+        min-width: 192px;
+    }
+}
+
+
+@media all and (max-width: 665px) {
+    .produkt-container {
+        padding: 5px;
+        max-width: 192px;
+        min-width: 192px;
+        padding: 5px;
+        margin: 5px;
+    }
+    .emneomrade-row {
+        justify-content: flex-start;
+    }
+}
+
+@media all and (max-width: 435px) {
+    .produkt-container {
+        width: 150%;
+        max-width: 192px;
+        min-width: 192px;
+        flex: 1 auto;
+        padding: 5px;
+    }
+    .emneomrade-row {
+        flex-direction: column;
     }
 }
 
