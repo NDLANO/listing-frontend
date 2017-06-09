@@ -1,7 +1,7 @@
 FROM node:6.10.0-alpine
 
 ENV HOME=/home/app
-ENV APP_PATH=$HOME/ndla-frontend
+ENV APP_PATH=$HOME/listing-frontend
 
 #Install yarn
 ENV YARN_VERSION 0.24.6
