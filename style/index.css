@@ -363,6 +363,9 @@ label {
 
 .flex-container {
     display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     flex-flow: row wrap;
     justify-content: space-around;
 }
@@ -419,4 +422,8 @@ label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.safari .flex-container {
+    display: block; /* Unsure if this is a good enough, but a solution for now. see: https://github.com/NDLANO/Issues/issues/418 */
 }
