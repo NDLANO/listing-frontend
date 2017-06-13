@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRedirect } from 'react-router';
 
 import App from './containers/App/App';
 import ArticlePage from './containers/ArticlePage/ArticlePage';
@@ -25,6 +25,7 @@ export function toListing(listingId) {
 export default function () {
   return (
     <Route path="/" component={App}>
+      <IndexRedirect to="listing" />
       <Route path="listing(/)" component={ListingPage} />
       <Route path="article/:articleId(/)" component={ArticlePage} />
       <Route path="*" status={404} component={NotFoundPage} />
