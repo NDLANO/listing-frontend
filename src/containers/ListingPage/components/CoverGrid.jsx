@@ -10,6 +10,7 @@ import React, { PropTypes } from 'react';
 import { injectT } from '../../../i18n';
 import { findCategoryLabel, printSubjects } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
+import { ndlaFrontendUrl } from '../../../util/apiHelpers';
 
 const CoverGrid = ({ listings }) => (
   <div className="main-content">
@@ -23,7 +24,7 @@ const CoverItem = ({ listing }) => (
       <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
     <div className="inner">
-      <a className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
+      <a className="h2-tittel-lenke" href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
         {listing.title}
       </a>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
