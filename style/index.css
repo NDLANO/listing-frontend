@@ -87,7 +87,6 @@
 
 .verktoy-img {
     display: block;
-    min-height: 100%;
     min-width: 100%;
     margin-right: auto;
     margin-left: auto;
@@ -426,4 +425,11 @@ label {
 
 .safari .flex-container {
     display: block; /* Unsure if this is a good enough, but a solution for now. see: https://github.com/NDLANO/Issues/issues/418 */
+}
+
+img {
+    display: block !important;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
 }
