@@ -16,6 +16,7 @@
     width: auto;
     max-width: 620px;
     min-width: 500px;
+    padding-top: 27px;
 }
 
 .emneomrade-row {
@@ -23,24 +24,10 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
     flex-direction: row;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
     justify-content: space-between;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    -webkit-box-align: stretch;
-    -webkit-align-items: stretch;
-    -ms-flex-align: stretch;
     align-items: stretch;
-    -webkit-align-content: flex-start;
-    -ms-flex-line-pack: start;
     align-content: flex-start;
 }
 
@@ -79,8 +66,8 @@
 
 .h2-tittel-lenke {
     color: #303030;
-    font-size: 2em;
-    line-height: 1.5em;
+    font-size: 1.4em;
+    line-height: 2em;
     text-decoration: none;
 }
 
@@ -119,12 +106,13 @@
 .tag-btn {
     margin-right: 5px;
     margin-bottom: 5px;
-    padding: 1px 4px;
+    padding: 1px 8px;
     background-color: #dfecfa;
     font-family: 'Open Sans', sans-serif;
     color: #4d4d4d;
-    font-size: 0.9em;
+    font-size: 0.8em;
     font-weight: 400;
+    text-transform: capitalize;
 }
 
 .w-button {
@@ -218,6 +206,7 @@
     display: block;
     margin-bottom: 5px;
     padding-left: 20px;
+    text-transform: capitalize;
 }
 
 .w-checkbox-input,
@@ -287,8 +276,8 @@ label {
     text-transform: uppercase;
 }
 .visningsvalg-div {
-    width: 33%;
-    text-align: center;
+    /*width: 33%;*/
+    text-align: left;
     position: relative;
 }
 
@@ -361,7 +350,7 @@ label {
 .styled-select.slate {
     background: no-repeat right center;
     height: 34px;
-    width: 240px;
+    width: 200px;
 }
 
 .styled-select.slate select {
@@ -369,4 +358,72 @@ label {
     font-size: 16px;
     height: 34px;
     width: 268px;
+}
+
+
+.flex-container {
+    display: flex;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+.flex-container > * {
+    padding: 10px;
+    flex: 1 100%;
+}
+
+@media all and (min-width: 400px) {
+    .aside {
+        flex: 1 auto;
+        padding: 5px;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .produkt-container {
+        width: 50%;
+        flex: 1 auto;
+        padding: 5px;
+        max-width: 192px;
+        min-width: 192px;
+    }
+}
+
+
+@media all and (max-width: 665px) {
+    .produkt-container {
+        padding: 5px;
+        max-width: 192px;
+        min-width: 192px;
+        padding: 5px;
+        margin: 5px;
+    }
+    .emneomrade-row {
+        justify-content: flex-start;
+    }
+}
+
+@media all and (max-width: 435px) {
+    .produkt-container {
+        width: 150%;
+        max-width: 192px;
+        min-width: 192px;
+        flex: 1 auto;
+        padding: 5px;
+    }
+    .emneomrade-row {
+        flex-direction: column;
+    }
+}
+
+.h2-txt-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.safari .flex-container {
+    display: block; /* Unsure if this is a good enough, but a solution for now. see: https://github.com/NDLANO/Issues/issues/418 */
 }

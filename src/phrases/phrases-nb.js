@@ -10,19 +10,13 @@ const phrases = {
   meta: {
     description: 'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
   },
-  subjectPage: {
-    heading: 'Utlisting',
-    intro: 'Dette er utlistingstjenesten til NDLA. Velg et fag for å komme i gang.',
-    chooseSubject: 'Velg fag',
-    concreteSubject: 'Betongfaget',
-    bricklayingSubject: 'Murerfaget',
-    carpentingSubject: 'Tømrerfaget',
-  },
-  listingPage: {
-    noFilters: 'Har ingenting å filtrere',
+  labels: {
     category: 'Kategori',
     subject: 'Fag',
     other: 'Annet',
+  },
+  listingPage: {
+    noFilters: 'Har ingenting å filtrere',
   },
   logo: {
     altText: 'Nasjonal digital læringsarena',

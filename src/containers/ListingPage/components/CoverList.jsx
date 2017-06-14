@@ -17,6 +17,11 @@ const CoverList = ({ listings }) => (
   </div>
 );
 
+CoverList.propTypes = {
+  listings: PropTypes.arrayOf(CoverShape),
+  locale: PropTypes.string,
+};
+
 
 const CoverItem = ({ listing }) => (
   <div className="produkt-container listView">
@@ -30,12 +35,8 @@ const CoverItem = ({ listing }) => (
 );
 
 CoverItem.propTypes = {
-  listing: PropTypes.shape(CoverShape),
+  listing: CoverShape,
 };
 
-CoverList.propTypes = {
-  listings: PropTypes.arrayOf(CoverShape),
-  locale: PropTypes.string,
-};
 
 export default injectT(CoverList);

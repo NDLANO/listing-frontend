@@ -5,46 +5,58 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import React, { PropTypes } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import { uuid } from 'ndla-util';
 import { injectT } from '../../../i18n';
-import { findCategoryLabel, printSubjects } from '../../../util/listingHelpers';
+import { findCategoryLabel, printSubjects, buttonSubjectChoiceIdent } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
 import { ndlaFrontendUrl } from '../../../util/apiHelpers';
 
-const CoverGrid = ({ listings }) => (
+const CoverGrid = ({ listings, onSubjectButtonClick }) => (
   <div className="main-content">
-    <div className="emneomrade-row">{listings.map(item => <CoverItem key={item.id} listing={item} />)}</div>
+    <div className="emneomrade-row">{listings.map(item =>
+      <CoverItem
+        key={item.id}
+        listing={item}
+        onSubjectButtonClick={onSubjectButtonClick}
+      />)}</div>
   </div>
-);
+  );
 
-const CoverItem = ({ listing }) => (
-  <div className="produkt-container" key={listing.id}>
+CoverGrid.propTypes = {
+  listings: PropTypes.arrayOf(CoverShape),
+  locale: PropTypes.string,
+  onSubjectButtonClick: PropTypes.func,
+};
+
+
+const CoverItem = ({ listing, onSubjectButtonClick }) => (
+  <div className="produkt-container">
     <div className="verktoy-bilde-div">
       <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
     <div className="inner">
       <a className="h2-tittel-lenke" href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
-        {listing.title}
+        <div className="h2-txt-overflow">{listing.title}</div>
       </a>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>
       <a href={`/article/${listing.articleApiId}`}>
         Les mer...</a>
       <div>
-        {printSubjects(listing.labels).map(subject => <div><a className="tag-btn w-button" key={subject} href={`/listing/${subject}`}>{subject}</a></div>)}
+        {printSubjects(listing.labels).map(subject => <div key={uuid()}>
+          <button className="tag-btn w-button" id={buttonSubjectChoiceIdent(subject)} onClick={event => onSubjectButtonClick(event)}>{subject}</button>
+        </div>)
+        }
       </div>
     </div>
   </div>
-);
+  );
 
 CoverItem.propTypes = {
-  listing: PropTypes.shape(CoverShape),
-};
-
-CoverGrid.propTypes = {
-  listings: PropTypes.arrayOf(CoverShape),
-  locale: PropTypes.string,
+  listing: CoverShape,
+  onSubjectButtonClick: PropTypes.func,
 };
 
 export default injectT(CoverGrid);

@@ -13,8 +13,6 @@ import * as actions from './listingActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 import Listing from './components/Listing';
-import ViewBar from './components/ViewBar';
-
 
 class ListingPage extends Component {
 
@@ -29,8 +27,8 @@ class ListingPage extends Component {
   }
 
   componentWillMount() {
-    const { fetchListingByFilter, params: { listingId } } = this.props;
-    fetchListingByFilter(listingId);
+    const { fetchListing } = this.props;
+    fetchListing();
   }
 
   onViewTypeChange(type) {
@@ -43,23 +41,23 @@ class ListingPage extends Component {
 
 
   render() {
-    const { listings, params: { listingId } } = this.props;
+    const { listings } = this.props;
+
     if (!listings) {
       return null;
     }
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'} />
-        <ViewBar
-          curentSubject={listingId}
-          onViewTypeChange={this.onViewTypeChange}
-          onSortChange={this.onSortChange}
-        />
-        <Listing
-          listings={listings}
-          viewType={this.state.viewType}
-          sortType={this.state.sortType}
-        />
+        <div className="flex-container">
+          <Listing
+            listings={listings}
+            viewType={this.state.viewType}
+            sortType={this.state.sortType}
+            onViewTypeChange={this.onViewTypeChange}
+            onSortChange={this.onSortChange}
+          />
+        </div>
       </OneColumn>
     );
   }
@@ -67,16 +65,13 @@ class ListingPage extends Component {
 
 
 ListingPage.propTypes = {
-  params: PropTypes.shape({
-    listingId: PropTypes.string.isRequired,
-  }).isRequired,
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string.isRequired,
-  fetchListingByFilter: PropTypes.func.isRequired,
+  fetchListing: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  fetchListingByFilter: actions.fetchListing,
+  fetchListing: actions.fetchListing,
 };
 
 const mapStateToProps = state => ({

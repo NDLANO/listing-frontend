@@ -10,19 +10,13 @@ const phrases = {
   meta: {
     description: 'Norwegian Digital Learning Arena, Open Educational Resources',
   },
-  subjectPage: {
-    heading: 'Listing',
-    intro: 'This is NDLAs listing service. Choose a subject to start.',
-    chooseSubject: 'Choose subject',
-    concreteSubject: 'Concrete',
-    bricklayingSubject: 'Bricklaying',
-    carpentingSubject: 'Carpenter',
-  },
-  listingPage: {
-    noFilters: 'Have nothing to filter',
+  labels: {
     category: 'Category',
     subject: 'Subject',
     other: 'Other',
+  },
+  listingPage: {
+    noFilters: 'Have nothing to filter',
   },
   logo: {
     altText: 'The Norwegian Digital Learning Arena',

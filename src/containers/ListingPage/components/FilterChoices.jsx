@@ -5,7 +5,9 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { uuid } from 'ndla-util';
 import { compose } from 'redux';
 import { injectT } from '../../../i18n';
 import ChoiceGroup from './ChoiceGroup';
@@ -32,23 +34,26 @@ class FilterChoices extends Component {
     }
 
     return (
-      <div>
-        <div className="filter-tittler">Filter:</div>
-        {haveCovers()}
-        <div className="w-checkbox">{filters.map(filter =>
-          <ChoiceGroup
-            filter={filter}
-            handleChoiceChange={onChoiceChange}
-            selectedFilters={selectedFilters}
-          />)}</div>
-      </div>
+      <aside className="aside">
+        <div>
+          <div className="filter-tittler">Filter:</div>
+          {haveCovers()}
+          <div className="w-checkbox">{filters.map(filter =>
+            <ChoiceGroup
+              filter={filter}
+              handleChoiceChange={onChoiceChange}
+              selectedFilters={selectedFilters}
+              key={uuid()}
+            />)}</div>
+        </div>
+      </aside>
     );
   }
 }
 
 
 FilterChoices.propTypes = {
-  selectedFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
   onChoiceChange: PropTypes.func,
   filters: PropTypes.arrayOf(LabelShape),
 };

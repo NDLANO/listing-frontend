@@ -14,8 +14,7 @@ export function findCategoryLabel(labels) {
 }
 
 export function isSubject(labelTuppel) {
-  // Dette er foreløpig for v1 til vi får avklaringer i #252 #253
-  return labelTuppel.type === 'subject' || labelTuppel.type === 'Fag';
+  return labelTuppel.type === 'subject';
 }
 
 export function printSubjects(elem) {
@@ -34,15 +33,11 @@ export function mapLabels(coverList) {
       function theType() {
         switch (l.type) {
           case undefined:
-            return 'listingPage.other';
+            return 'labels.other';
           case null:
-            return 'listingPage.other';
-          case 'subject':
-            return 'listingPage.subject';
-          case 'category':
-            return 'listingPage.category';
+            return 'labels.other';
           default:
-            return l.type;
+            return `labels.${l.type}`;
         }
       }
       myMap.set(theType(), [...new Set(myMap.has(theType()) ? myMap.get(theType()).concat(l.labels) : l.labels)]);
@@ -63,13 +58,17 @@ export function mapLabels(coverList) {
 
 export function choiceIdent(typeName, choiceName) {
   const name = () => {
-    if (typeName === undefined || typeName === null) return 'Annet';
+    if (typeName === undefined || typeName === null) return 'other';
     return typeName;
   };
 
   return name().concat('+').concat(choiceName).replace(/\s/g, '_');
 }
 
+export function buttonSubjectChoiceIdent(subject) {
+  return `labels.subject+${subject}`;
+}
+
 export function listingsFlattLabels(labels) {
-  return labels.map(label => label.labels.map(l => choiceIdent(label.type, l)));
+  return labels.map(label => label.labels.map(l => `labels.${choiceIdent(label.type, l)}`));
 }

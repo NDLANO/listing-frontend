@@ -6,7 +6,9 @@
  *
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { uuid } from 'ndla-util';
 import { injectT } from '../../../i18n';
 import { choiceIdent } from '../../../util/listingHelpers';
 
@@ -17,7 +19,7 @@ const ChoiceGroup = ({ filter, handleChoiceChange, selectedFilters, t }) => (
       const ident = choiceIdent(filter.type, choice);
       const isCheckedBefore = selectedFilters.find(f => f.toString() === ident.toString());
       return (
-        <div className="w-checkbox">
+        <div className="w-checkbox" key={uuid()} >
           <label className="w-form-label" htmlFor={ident}>
             <input
               className="w-checkbox-input"
@@ -25,7 +27,6 @@ const ChoiceGroup = ({ filter, handleChoiceChange, selectedFilters, t }) => (
               type="checkbox"
               id={ident}
               onChange={event => handleChoiceChange(event, ident)}
-              key={ident}
             />
             {choice}</label>
         </div>
@@ -35,12 +36,12 @@ const ChoiceGroup = ({ filter, handleChoiceChange, selectedFilters, t }) => (
 
 
 ChoiceGroup.propTypes = {
-  selectedFilters: PropTypes.arrayOfStrings,
   handleChoiceChange: PropTypes.func.isRequired,
   filter: PropTypes.shape({
     type: PropTypes.string,
     labels: PropTypes.arrayOfStrings,
   }),
+  selectedFilters: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default injectT(ChoiceGroup);

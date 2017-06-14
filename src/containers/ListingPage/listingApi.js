@@ -11,4 +11,4 @@ import { resolveJsonOrRejectWithError, apiResourceUrl, headerWithAccessToken } f
 
 const baseUrl = apiResourceUrl('/listing-api/v1/listing');
 
-export const fetchListingByFilter = (filter, locale, token) => fetch(`${baseUrl}?filter=${filter}`, { headers: headerWithAccessToken(token) }).then(resolveJsonOrRejectWithError);
+export const fetchListing = (locale, token) => fetch(`${baseUrl}`, { headers: headerWithAccessToken(token) }).then(resolveJsonOrRejectWithError);
