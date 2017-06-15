@@ -21,6 +21,11 @@ export function* fetchListing() {
   if (!listings.results) {
     yield put(actions.setListing([]));
   } else {
+    const numberOfPages = Math.ceil(listings.totalCount / listings.pageSize);
+    for (let i = 2; i <= numberOfPages; i += 1) {
+      const tempListings = yield call(api.fetchListing, locale, token, i);
+      listings.results.push(...tempListings.results);
+    }
     const arrayWithfilterChoices = listings.results.map((listing) => {
       const listingFilterChoices = listingsFlattLabels(listing.labels);
       listing.filterChoices = listingFilterChoices.reduce((a, b) => a.concat(b), []);
