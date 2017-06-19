@@ -42,7 +42,7 @@ const CoverItem = ({ listing, onSubjectButtonClick }) => (
       </a>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>
-      <a href={`/article/${listing.articleApiId}`}>
+      <a href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
         Les mer...</a>
       <div>
         {printSubjects(listing.labels).map(subject => <div key={uuid()}>
