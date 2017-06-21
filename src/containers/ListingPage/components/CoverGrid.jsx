@@ -32,7 +32,7 @@ CoverGrid.propTypes = {
 
 
 const CoverItem = ({ listing, onSubjectButtonClick }) => (
-  <div className="produkt-container">
+  <div className="produkt-container grid-view">
     <div className="verktoy-bilde-div">
       <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
