@@ -388,7 +388,7 @@ label {
 }
 
 @media all and (max-width: 768px) {
-    .produkt-container .grid-view {
+    .produkt-container {
         width: 50%;
         flex: 1 auto;
         padding: 5px;
@@ -398,7 +398,7 @@ label {
 }
 
 @media all and (max-width: 665px) {
-    .produkt-container .grid-view {
+    .produkt-container {
         padding: 5px;
         max-width: 192px;
         min-width: 192px;
@@ -412,7 +412,7 @@ label {
 }
 
 @media all and (max-width: 435px) {
-    .produkt-container .grid-view {
+    .produkt-container {
         width: 150%;
         max-width: 192px;
         min-width: 192px;
