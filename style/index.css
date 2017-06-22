@@ -5,11 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
 @import '../node_modules/ndla-ui/lib/style.css';
 
 :root {
-  --font-size--medium: 18px;
+    --font-size--medium: 18px;
 }
 
 .main-content {
@@ -43,12 +42,12 @@
 }
 
 .compactView1 {
-    display:inline-block;
+    display: inline-block;
     width: 35%;
 }
 
 .compactView2 {
-    display:inline-block;
+    display: inline-block;
     width: 65%;
 }
 
@@ -92,6 +91,7 @@
     margin-left: auto;
     text-align: center;
 }
+
 .verktoy-img-compact {
     width: 95%;
     display: block;
@@ -142,12 +142,15 @@
 .w-icon-slider-right:before {
     content: "\e600";
 }
+
 .w-icon-slider-left:before {
     content: "\e601";
 }
+
 .w-icon-nav-menu:before {
     content: "\e602";
 }
+
 .w-icon-arrow-down:before,
 .w-icon-dropdown-toggle:before {
     content: "\e603";
@@ -175,6 +178,7 @@
     margin-right: auto;
     white-space: nowrap;
 }
+
 .w-dropdown-toggle {
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -249,14 +253,17 @@ label {
 .dropdown-list.w--open {
     background-color: #fff;
 }
+
 .w-dropdown-list.w--open {
     display: block;
 }
+
 .w-dropdown-link {
     padding: 10px 20px;
     display: block;
     color: #222222;
 }
+
 .dropdown-outer {
     display: block;
     margin-bottom: 32px;
@@ -274,6 +281,7 @@ label {
     font-weight: 300;
     text-transform: uppercase;
 }
+
 .visningsvalg-div {
     /*width: 33%;*/
     text-align: left;
@@ -310,7 +318,6 @@ label {
     border-left: 0px solid rgba(77, 77, 77, .5);
 }
 
-
 .w-inline-block {
     max-width: 98%;
     display: inline-block;
@@ -318,7 +325,7 @@ label {
 }
 
 .visning-icon {
-    fill:#9c9b9b;
+    fill: #9c9b9b;
     position: relative;
 }
 
@@ -359,7 +366,6 @@ label {
     width: 268px;
 }
 
-
 .flex-container {
     display: flex;
     display: -webkit-box;
@@ -368,6 +374,7 @@ label {
     flex-flow: row wrap;
     justify-content: space-around;
 }
+
 .flex-container > * {
     padding: 10px;
     flex: 1 100%;
@@ -390,7 +397,6 @@ label {
     }
 }
 
-
 @media all and (max-width: 665px) {
     .produkt-container {
         padding: 5px;
@@ -399,6 +405,7 @@ label {
         padding: 5px;
         margin: 5px;
     }
+
     .emneomrade-row {
         justify-content: flex-start;
     }
@@ -412,6 +419,7 @@ label {
         flex: 1 auto;
         padding: 5px;
     }
+
     .emneomrade-row {
         flex-direction: column;
     }
