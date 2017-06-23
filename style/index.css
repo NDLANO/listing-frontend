@@ -387,6 +387,7 @@ label {
     .aside {
         flex: 1 auto;
         padding: 5px;
+        margin: 0px;
     }
 }
 
