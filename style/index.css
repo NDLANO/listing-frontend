@@ -121,6 +121,9 @@
     text-decoration: none;
     cursor: pointer;
     border-radius: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 5px;
 }
 
 .visnings-container {
