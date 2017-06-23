@@ -3841,11 +3841,14 @@ ndla-licenses@^0.0.6:
   dependencies:
     defined "1.0.0"
 
-ndla-ui@^0.2.9:
-  version "0.2.17"
-  resolved "https://registry.yarnpkg.com/ndla-ui/-/ndla-ui-0.2.17.tgz#3e3bf42c3b53163ca836e9ab2f74c0650a254221"
+ndla-ui@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/ndla-ui/-/ndla-ui-0.6.0.tgz#7c188738c70244cb5a6dd1ada14b0f8e79e3ffdc"
   dependencies:
-    react-prop-types "^0.4.0"
+    classnames "2.2.5"
+    react-bem-helper "1.4.1"
+    react-prop-types "0.4.0"
+    react-sticky-header "^0.1.6"
 
 ndla-util@^0.1.0:
   version "0.1.0"
@@ -4977,7 +4980,7 @@ react-addons-test-utils@^15.4.2:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-bem-helper@^1.3.1:
+react-bem-helper@1.4.1, react-bem-helper@^1.3.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/react-bem-helper/-/react-bem-helper-1.4.1.tgz#cb27aeadda020e9fe9d169bfaae1095c559f4cf5"
   dependencies:
@@ -5031,7 +5034,7 @@ react-motion@^0.4.7:
     prop-types "^15.5.8"
     raf "^3.1.0"
 
-react-prop-types@^0.4.0:
+react-prop-types@0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/react-prop-types/-/react-prop-types-0.4.0.tgz#f99b0bfb4006929c9af2051e7c1414a5c75b93d0"
   dependencies:
@@ -5072,6 +5075,12 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
 
+react-sticky-header@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/react-sticky-header/-/react-sticky-header-0.1.6.tgz#a0f0fe88b05be366ace1704e1648380af5764bca"
+  dependencies:
+    react "^15.5.4"
+
 react-tabs@^0.8.0:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-0.8.3.tgz#40bdc14c725c4dbf4befdfddf1153a93af92a894"
@@ -5081,7 +5090,7 @@ react-tabs@^0.8.0:
     js-stylesheet "^0.0.1"
     prop-types "^15.5.8"
 
-react@^15.4.2:
+react@^15.4.2, react@^15.5.4:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/react/-/react-15.5.4.tgz#fa83eb01506ab237cdc1c8c3b1cea8de012bf047"
   dependencies:

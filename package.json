@@ -76,7 +76,7 @@
     "lodash": "^4.17.2",
     "ndla-article-scripts": "^0.0.3",
     "ndla-licenses": "^0.0.6",
-    "ndla-ui": "^0.2.9",
+    "ndla-ui": "^0.6.0",
     "ndla-util": "^0.1.0",
     "prop-types": "^15.5.10",
     "react": "^15.4.2",
