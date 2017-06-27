@@ -11,13 +11,13 @@ import { renderToString } from 'react-dom/server';
 import express from 'express';
 import compression from 'compression';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
-import { match, RouterContext } from 'react-router';
+import { match, RouterContext } from 'react-router-dom';
 
 import enableDevMiddleWare from './enableDevMiddleware';
 import getConditionalClassnames from './getConditionalClassnames';
-import createMemoryHistory from './createMemoryHistory';
 import configureRoutes from '../src/routes';
 import configureStore from '../src/configureStore';
 import rootSaga from '../src/sagas';
@@ -37,8 +37,9 @@ app.use(express.static('htdocs', {
   maxAge: 1000 * 60 * 60 * 24 * 365, // One year
 }));
 app.use((req, res, next) => {
-  res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  res.setHeader('Content-Security-Policy', 'default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://*.ndla.no https://players.brightcove.net https://www.nrk.no https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://s.ytimg.com https://cdn.auth0.com; style-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://fonts.googleapis.com https://fonts.gstatic.com; font-src \'self\' https://fonts.googleapis.com https://fonts.gstatic.com; connect-src \'self\' https://*.ndla.no https://logs-01.loggly.com; img-src https://*.ndla.no https://www.google-analytics.com https://stats.g.doubleclick.net data: ;');
+  // TODO use helmet for security headers in stead
+  // res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  // res.setHeader('Content-Security-Policy', 'default-src \'self\'; script-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://*.ndla.no https://players.brightcove.net https://www.nrk.no https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://s.ytimg.com https://cdn.auth0.com; style-src \'self\' \'unsafe-inline\' \'unsafe-eval\' https://fonts.googleapis.com https://fonts.gstatic.com; font-src \'self\' https://fonts.googleapis.com https://fonts.gstatic.com; connect-src \'self\' https://*.ndla.no https://logs-01.loggly.com; img-src https://*.ndla.no https://www.google-analytics.com https://stats.g.doubleclick.net data: ;');
   next();
 });
 
@@ -59,7 +60,8 @@ app.get('/get_token', (req, res) => {
 
 function handleResponse(req, res, token) {
   const paths = req.url.split('/');
-  const { abbreviation: locale, messages } = getLocaleObject(paths[1]);
+  console.log('paths', paths);
+  const { abbreviation: locale } = getLocaleObject(paths[1]);
   const userAgentString = req.headers['user-agent'];
 
   if (global.__DISABLE_SSR__) { // eslint-disable-line no-underscore-dangle
@@ -70,10 +72,15 @@ function handleResponse(req, res, token) {
   }
 
   const options = isValidLocale(paths[1]) ? { basename: `/${locale}/` } : {};
+  console.log('options', options);
   const location = !options.basename ? req.url : req.url.replace(`${locale}/`, '');
+  console.log('location', location);
   const memoryHistory = createMemoryHistory(req.url, options);
+  console.log('memoryHisotry', memoryHistory);
 
   const store = configureStore({ locale, accessToken: token.access_token }, memoryHistory);
+
+  console.log('store', store);
 
   const history = syncHistoryWithStore(memoryHistory, store);
 
@@ -119,9 +126,9 @@ function handleResponse(req, res, token) {
 
 app.get('*', (req, res) => {
   getToken().then((token) => {
+    console.log("app.get", token);
     handleResponse(req, res, token);
   }).catch(err => res.status(500).send(err.message));
 });
-
 
 module.exports = app;

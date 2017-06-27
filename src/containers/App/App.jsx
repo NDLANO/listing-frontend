@@ -7,6 +7,8 @@
  */
 
 import React, { PropTypes } from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { PageContainer } from 'ndla-ui';
@@ -15,6 +17,7 @@ import Masthead from '../Masthead';
 import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
 import { injectT } from '../../i18n';
+import ListingPage from '../ListingPage/ListingPage';
 
 export class App extends React.Component {
   getChildContext() {
@@ -24,7 +27,7 @@ export class App extends React.Component {
   }
 
   render() {
-    const { children, t } = this.props;
+    const { t } = this.props;
     return (
       <PageContainer>
         <Helmet
@@ -35,7 +38,10 @@ export class App extends React.Component {
         />
 
         <Masthead t={t} />
-        {children}
+
+        <Switch>
+          <Route path="/listing" component={ListingPage} />
+        </Switch>
         <Footer t={t} />
       </PageContainer>
     );
