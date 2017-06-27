@@ -22,10 +22,10 @@ export function* fetchListing() {
     yield put(actions.setListing([]));
   } else {
     const numberOfPages = Math.ceil(listings.totalCount / listings.pageSize);
-    for (let i = 2; i <= numberOfPages; i += 1) {
+    Array.from(new Array(numberOfPages - 1), (value, index) => index + 2).forEach(function* pageNumbers(i) {
       const tempListings = yield call(api.fetchListing, locale, token, i);
       listings.results.push(...tempListings.results);
-    }
+    });
     const arrayWithfilterChoices = listings.results.map((listing) => {
       const listingFilterChoices = listingsFlattLabels(listing.labels);
       listing.filterChoices = listingFilterChoices.reduce((a, b) => a.concat(b), []);
