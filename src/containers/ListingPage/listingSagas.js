@@ -6,6 +6,7 @@
  *
  */
 import { call, select, put, take } from 'redux-saga-effects';
+import { range } from 'lodash';
 import { getLocale } from '../Locale/localeSelectors';
 import * as actions from './listingActions';
 import * as api from './listingApi';
@@ -22,7 +23,7 @@ export function* fetchListing() {
     yield put(actions.setListing([]));
   } else {
     const numberOfPages = Math.ceil(listings.totalCount / listings.pageSize);
-    Array.from(new Array(numberOfPages - 1), (value, index) => index + 2).forEach(function* pageNumbers(i) {
+    range(2, numberOfPages - 1).forEach(function* pageNumbers(i) {
       const tempListings = yield call(api.fetchListing, locale, token, i);
       listings.results.push(...tempListings.results);
     });
