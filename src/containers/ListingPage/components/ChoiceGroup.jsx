@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { uuid } from 'ndla-util';
-import { injectT } from '../../../i18n';
+import { injectT } from 'ndla-i18n';
 import { choiceIdent } from '../../../util/listingHelpers';
 
 const ChoiceGroup = ({ filter, handleChoiceChange, selectedFilters, t }) => (

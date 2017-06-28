@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { uuid } from 'ndla-util';
 import { compose } from 'redux';
-import { injectT } from '../../../i18n';
+import { injectT } from 'ndla-i18n';
 import ChoiceGroup from './ChoiceGroup';
 import { LabelShape } from './../../../shapes';
 

@@ -6,8 +6,8 @@
  *
  */
 import React, { PropTypes } from 'react';
+import { injectT } from 'ndla-i18n';
 
-import { injectT } from '../../../i18n';
 import { findCategoryLabel } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
 

@@ -7,8 +7,8 @@
  */
 
 import React, { PropTypes, Component } from 'react';
+import { injectT } from 'ndla-i18n';
 
-import { injectT } from '../../../i18n';
 import { mapLabels } from '../../../util/listingHelpers';
 import { sortListing } from '../../../util/listingSorter';
 import { CoverShape, LabelShape } from '../../../shapes';
