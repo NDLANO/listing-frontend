@@ -8,15 +8,14 @@
 
 import React, { PropTypes } from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { PageContainer } from 'ndla-ui';
+import { injectT } from 'ndla-i18n';
 
 import Masthead from '../Masthead';
 import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
-import { injectT } from '../../i18n';
 import ListingPage from '../ListingPage/ListingPage';
 
 export class App extends React.Component {

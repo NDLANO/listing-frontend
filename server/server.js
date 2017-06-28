@@ -13,7 +13,7 @@ import compression from 'compression';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from 'ndla-i18n';
 import { match, RouterContext } from 'react-router-dom';
 
 import enableDevMiddleWare from './enableDevMiddleware';
@@ -60,11 +60,11 @@ app.get('/get_token', (req, res) => {
 
 function handleResponse(req, res, token) {
   const paths = req.url.split('/');
-  const { abbreviation: locale } = getLocaleObject(paths[1]);
+  const { abbreviation: locale, messages } = getLocaleObject(paths[1]);
   const userAgentString = req.headers['user-agent'];
 
   if (global.__DISABLE_SSR__) { // eslint-disable-line no-underscore-dangle
-    const htmlString = renderHtmlString(locale, userAgentString, { accessToken: token.access_token });
+    const htmlString = renderHtmlString(locale, userAgentString, { accessToken: token.access_token, locale });
     res.send(`<!doctype html>\n${htmlString}`);
 
     return;

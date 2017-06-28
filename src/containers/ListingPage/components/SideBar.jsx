@@ -7,7 +7,7 @@
  */
 import React, { PropTypes } from 'react';
 import { compose } from 'redux';
-import { injectT } from '../../../i18n';
+import { injectT } from 'ndla-i18n';
 import ViewBar from './ViewBar';
 import FilterChoices from './FilterChoices';
 import { LabelShape } from './../../../shapes';
