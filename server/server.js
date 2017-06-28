@@ -60,7 +60,6 @@ app.get('/get_token', (req, res) => {
 
 function handleResponse(req, res, token) {
   const paths = req.url.split('/');
-  console.log('paths', paths);
   const { abbreviation: locale } = getLocaleObject(paths[1]);
   const userAgentString = req.headers['user-agent'];
 
@@ -72,15 +71,10 @@ function handleResponse(req, res, token) {
   }
 
   const options = isValidLocale(paths[1]) ? { basename: `/${locale}/` } : {};
-  console.log('options', options);
   const location = !options.basename ? req.url : req.url.replace(`${locale}/`, '');
-  console.log('location', location);
   const memoryHistory = createMemoryHistory(req.url, options);
-  console.log('memoryHisotry', memoryHistory);
 
   const store = configureStore({ locale, accessToken: token.access_token }, memoryHistory);
-
-  console.log('store', store);
 
   const history = syncHistoryWithStore(memoryHistory, store);
 
@@ -126,7 +120,6 @@ function handleResponse(req, res, token) {
 
 app.get('*', (req, res) => {
   getToken().then((token) => {
-    console.log("app.get", token);
     handleResponse(req, res, token);
   }).catch(err => res.status(500).send(err.message));
 });
