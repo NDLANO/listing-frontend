@@ -447,7 +447,7 @@ img {
     vertical-align: middle;
 }
 
-label:first-letter, button:first-letter {
+.w-form-label:first-letter, .tag-btn:first-letter {
     text-transform:capitalize;
 }
 
