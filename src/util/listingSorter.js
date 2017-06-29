@@ -9,12 +9,12 @@
 export function sortListing(sortType, listings) {
   switch (sortType) {
     case 'title_asc':
-      listings.sort((a, b) => a.title.localeCompare(b.title));
+      listings.sort((a, b) => a.title.localeCompare(b.title, 'nb'));
       break;
     case 'title_desc':
-      listings.sort((b, a) => a.title.localeCompare(b.title));
+      listings.sort((b, a) => a.title.localeCompare(b.title, 'nb'));
       break;
     default:
-      listings.sort((a, b) => a.title.localeCompare(b.title));
+      listings.sort((a, b) => a.title.localeCompare(b.title, 'nb'));
   }
 }

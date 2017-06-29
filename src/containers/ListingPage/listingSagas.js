@@ -31,7 +31,7 @@ export function* fetchListing() {
       const listingFilterChoices = listingsFlattLabels(listing.labels);
       listing.filterChoices = listingFilterChoices.reduce((a, b) => a.concat(b), []);
       return listing;
-    }).sort((a, b) => a.title.localeCompare(b.title));
+    });
 
     yield put(actions.setListing(arrayWithfilterChoices));
   }
