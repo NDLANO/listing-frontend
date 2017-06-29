@@ -16,6 +16,7 @@ import { injectT } from 'ndla-i18n';
 import Masthead from '../Masthead';
 import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
+import ListingPage from '../ListingPage/ListingPage';
 
 export class App extends React.Component {
   getChildContext() {

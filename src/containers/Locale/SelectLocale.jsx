@@ -9,13 +9,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createHistory } from 'history';
+import { withRouter } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 
 import { appLocales } from '../../i18n';
 import { getLocale } from './localeSelectors';
-import { getPathnameBeforeTransitions, getSearchBeforeTransitions } from '../App/routingSelectors';
 
-const SelectLocale = ({ locale, pathname, search }) => {
+const SelectLocale = ({ locale, location: { pathname, search } }) => {
   const handleChange = (newLocale) => {
     const path = pathname.startsWith('/') ? pathname.substring(1) : pathname;
     createHistory().push(`/${newLocale}/${path}${search}`); // Need create new history or else basename is included
@@ -23,8 +23,16 @@ const SelectLocale = ({ locale, pathname, search }) => {
   };
 
   return (
-    <select onChange={(evt) => { handleChange(evt.target.value); }} value={locale}>
-      {appLocales.map(l => <option key={l.abbreviation} value={l.abbreviation}>{l.name}</option>)}
+    <select
+      onChange={evt => {
+        handleChange(evt.target.value);
+      }}
+      value={locale}>
+      {appLocales.map(l =>
+        <option key={l.abbreviation} value={l.abbreviation}>
+          {l.name}
+        </option>,
+      )}
     </select>
   );
 }
@@ -32,14 +40,14 @@ const SelectLocale = ({ locale, pathname, search }) => {
 
 SelectLocale.propTypes = {
   locale: PropTypes.string.isRequired,
-  pathname: PropTypes.string.isRequired,
-  search: PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    search: PropTypes.string.isRequired,
+  }),
 };
 
 const mapStateToProps = state => ({
   locale: getLocale(state),
-  pathname: getPathnameBeforeTransitions(state),
-  search: getSearchBeforeTransitions(state),
 });
 
-export default connect(mapStateToProps)(SelectLocale);
+export default withRouter(connect(mapStateToProps)(SelectLocale));

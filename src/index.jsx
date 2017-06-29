@@ -11,7 +11,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { IntlProvider } from 'ndla-i18n';
-import isEmpty from 'lodash/isEmpty';
 
 import { getLocaleObject, isValidLocale } from './i18n';
 import configureStore from './configureStore';
@@ -22,8 +21,10 @@ const initialState = window.initialState;
 const localeString = initialState.locale;
 const locale = getLocaleObject(localeString);
 
-const initialState = !isEmpty(window.initialState) ? window.initialState : { locale: locale.abbreviation };
-const store = configureStore(initialState);
+const paths = window.location.pathname.split('/');
+const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
+
+const store = configureStore({...initialState});
 
 store.runSaga(rootSaga);
 
