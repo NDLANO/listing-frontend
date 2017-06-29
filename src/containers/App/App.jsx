@@ -39,6 +39,7 @@ export class App extends React.Component {
         <Masthead t={t} />
 
         <Switch>
+          <Route path="/" component={ListingPage} />
           <Route path="/listing" component={ListingPage} />
         </Switch>
         <Footer t={t} />
