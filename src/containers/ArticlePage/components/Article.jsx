@@ -15,7 +15,7 @@ import {
   addAsideClickListener,
   removeEventListenerForResize,
   removeAsideClickListener } from 'ndla-article-scripts';
-import { injectT } from '../../../i18n';
+import { injectT } from 'ndla-i18n';
 
 
 class Article extends Component {

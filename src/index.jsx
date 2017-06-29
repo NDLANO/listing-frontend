@@ -10,7 +10,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { IntlProvider } from 'react-intl';
+import { IntlProvider } from 'ndla-i18n';
 import isEmpty from 'lodash/isEmpty';
 
 import { getLocaleObject, isValidLocale } from './i18n';
@@ -18,11 +18,8 @@ import configureStore from './configureStore';
 import rootSaga from './sagas';
 import App from '../src/containers/App/App';
 
-
-const paths = window.location.pathname.split('/');
-const localeString = paths.length > 2 && isValidLocale(paths[1]) ? paths[1] : 'nb';
-const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
-
+const initialState = window.initialState;
+const localeString = initialState.locale;
 const locale = getLocaleObject(localeString);
 
 const initialState = !isEmpty(window.initialState) ? window.initialState : { locale: locale.abbreviation };
