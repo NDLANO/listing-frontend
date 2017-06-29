@@ -12,7 +12,7 @@ import { Masthead, MastheadItem, Logo } from 'ndla-ui';
 
 const MastheadContainer = () => (
   <Masthead>
-    <MastheadItem left>
+    <MastheadItem right>
       <Logo altText="Nasjonal digital læringsarena" />
     </MastheadItem>
   </Masthead>
