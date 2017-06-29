@@ -14,9 +14,9 @@
 
 .main-content {
     width: auto;
-    max-width: 620px;
+    max-width: 740px;
     min-width: 500px;
-    padding-top: 27px;
+    padding-top: 87px;
 }
 
 .emneomrade-row {
@@ -376,7 +376,7 @@ label {
     display: -webkit-flex;
     display: -ms-flexbox;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
 
 .flex-container > * {
@@ -384,7 +384,7 @@ label {
     flex: 1 100%;
 }
 
-@media all and (min-width: 400px) {
+@media all and (min-width: 250px) {
     .aside {
         flex: 1 auto;
         padding: 5px;
@@ -449,4 +449,9 @@ img {
 
 label:first-letter, button:first-letter {
     text-transform:capitalize;
+}
+
+.aside {
+    padding-top: 87px;
+    width: 200px;
 }

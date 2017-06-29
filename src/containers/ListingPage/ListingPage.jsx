@@ -43,8 +43,6 @@ class ListingPage extends Component {
   render() {
     const { listings } = this.props;
 
-    console.log('ListingPage listings:', listings);
-
     if (!listings) {
       return null;
     }
