@@ -112,7 +112,7 @@
     color: #4d4d4d;
     font-size: 0.8em;
     font-weight: 400;
-    text-transform: capitalize;
+    /*text-transform: capitalize;*/
 }
 
 .w-button {
@@ -213,7 +213,7 @@
     display: block;
     margin-bottom: 5px;
     padding-left: 20px;
-    text-transform: capitalize;
+    /*text-transform: capitalize;*/
 }
 
 .w-checkbox-input,
@@ -445,4 +445,8 @@ img {
     margin-left: auto;
     margin-right: auto;
     vertical-align: middle;
+}
+
+label:first-letter, button:first-letter {
+    text-transform:capitalize;
 }
