@@ -7,8 +7,7 @@
  */
 
 /* eslint-disable */
-
-global.__CLIENT__ = false;
-global.__SERVER__ = true;
-
+window.config = {
+  ndlaApiUrl: 'http://ndla-api'
+}
 /* eslint-enable */

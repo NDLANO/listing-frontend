@@ -9,29 +9,8 @@
 import defined from 'defined';
 import config from '../config';
 
-const NDLA_API_URL = __SERVER__ ? config.ndlaApiUrl : window.config.ndlaApiUrl;
-const NDLA_API_KEY = __SERVER__ ? config.ndlaApiKey : window.config.ndlaApiKey;
-const NDLA_FRONTEND_BASE_URL = __SERVER__ ? config.ndlaFrontendDomain : window.config.ndlaFrontendDomain;
 
-if (process.env.NODE_ENV === 'unittest') {
-  global.__SERVER__ = false; //eslint-disable-line
-}
-
-export const defaultApiKey = (() => {
-  if (process.env.NODE_ENV === 'unittest') {
-    return 'ndlatestapikey';
-  }
-
-  return NDLA_API_KEY;
-})();
-
-const apiBaseUrl = (() => {
-  if (process.env.NODE_ENV === 'unittest') {
-    return 'http://ndla-api';
-  }
-  return NDLA_API_URL;
-})();
-
+const apiBaseUrl = window.config.ndlaApiUrl;
 
 export { apiBaseUrl };
 
@@ -44,7 +23,7 @@ export function apiResourceUrl(path) {
 }
 
 export function ndlaFrontendUrl(path) {
-  return NDLA_FRONTEND_BASE_URL + path;
+  return config.ndlaFrontendDomain + path;
 }
 
 export function createErrorPayload(status, message, json) {
