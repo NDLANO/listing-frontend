@@ -398,6 +398,10 @@ label {
         max-width: 192px;
         min-width: 192px;
     }
+
+    .emneomrade-row {
+        justify-content: flex-start;
+    }
 }
 
 @media all and (max-width: 665px) {
@@ -425,6 +429,7 @@ label {
 
     .emneomrade-row {
         flex-direction: column;
+        justify-content: flex-start;
     }
 }
 
@@ -454,7 +459,7 @@ img {
 }
 
 .w-form-label:first-letter, .tag-btn:first-letter {
-    text-transform:capitalize;
+    text-transform: capitalize;
 }
 
 .aside {
