@@ -37,7 +37,6 @@ const apiBaseUrl = (() => {
 export { apiBaseUrl };
 
 export function headerWithAccessToken(token) {
-  console.log('token', token);
   return { Authorization: `Bearer ${token}` };
 }
 
