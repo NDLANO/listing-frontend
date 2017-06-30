@@ -40,9 +40,10 @@ const CoverItem = ({ listing, onSubjectButtonClick }) => (
       </a>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>
-      <a href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
+      <p><a href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
         Les mer...</a>
-      <div>
+      </p>
+    <div>
         {printSubjects(listing.labels).map(subject => <div key={uuid()}>
           <button className="tag-btn w-button" id={buttonSubjectChoiceIdent(subject)} onClick={event => onSubjectButtonClick(event)}>{subject}</button>
         </div>)
