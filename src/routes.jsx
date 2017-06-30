@@ -6,11 +6,6 @@
  *
  */
 
-
-export function toArticle(articleId) {
-  return `/article/${articleId}`;
-}
-
 export function toListing(listingId) {
   return `/listing/${listingId}`;
 }
