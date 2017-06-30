@@ -15,11 +15,11 @@ import defined from 'defined';
 import { IntlProvider } from 'ndla-i18n';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
-import routes from '../../src/routes';
 import configureStore from '../../src/configureStore';
 import rootSaga from '../../src/sagas';
 import { getLocaleObject, isValidLocale } from '../../src/i18n';
 import { storeAccessToken } from '../../src/util/apiHelpers';
+import App from '../../src/containers/App/App';
 
 const renderHtmlString = (
   locale,
@@ -60,7 +60,7 @@ export function defaultRoute(req, res, token) {
     <Provider store={store}>
       <IntlProvider locale={locale} messages={messages}>
         <StaticRouter basename={basename} location={req.url} context={context}>
-          {routes}
+        <App/>
         </StaticRouter>
       </IntlProvider>
     </Provider>

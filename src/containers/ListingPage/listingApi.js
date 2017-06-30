@@ -6,9 +6,8 @@
  *
  */
 
-import fetch from 'isomorphic-fetch';
-import { resolveJsonOrRejectWithError, apiResourceUrl, headerWithAccessToken } from '../../util/apiHelpers';
+import { resolveJsonOrRejectWithError, apiResourceUrl, fetchWithAccessToken } from '../../util/apiHelpers';
 
 const baseUrl = apiResourceUrl('/listing-api/v1/listing');
 
-export const fetchListing = (locale, token, page = 1) => fetch(`${baseUrl}?page=${page}`, { headers: headerWithAccessToken(token) }).then(resolveJsonOrRejectWithError);
+export const fetchListing = (locale, page = 1) => fetchWithAccessToken(`${baseUrl}?page=${page}`).then(resolveJsonOrRejectWithError);
