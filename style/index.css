@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-@import '../node_modules/ndla-ui/lib/style.css';
+@import '../node_modules/ndla-ui/lib/main.css';
+@import '../node_modules/ndla-ui/lib/editor.css';
 
 :root {
     --font-size--medium: 18px;
@@ -13,9 +14,9 @@
 
 .main-content {
     width: auto;
-    max-width: 620px;
+    max-width: 740px;
     min-width: 500px;
-    padding-top: 27px;
+    padding-top: 87px;
 }
 
 .emneomrade-row {
@@ -375,7 +376,7 @@ label {
     display: -webkit-flex;
     display: -ms-flexbox;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
 }
 
 .flex-container > * {
@@ -383,11 +384,9 @@ label {
     flex: 1 100%;
 }
 
-@media all and (min-width: 400px) {
-    .aside {
-        flex: 1 auto;
-        padding: 5px;
-        margin: 0px;
+@media all and (min-width: 1020px) {
+    .main-content {
+        padding-top: 87px;
     }
 }
 
@@ -398,6 +397,10 @@ label {
         padding: 5px;
         max-width: 192px;
         min-width: 192px;
+    }
+
+    .emneomrade-row {
+        justify-content: flex-start;
     }
 }
 
@@ -426,6 +429,15 @@ label {
 
     .emneomrade-row {
         flex-direction: column;
+        justify-content: flex-start;
+    }
+}
+
+@media all and (min-width: 250px) {
+    .aside {
+        flex: 1 auto;
+        padding: 5px;
+        margin: 0px;
     }
 }
 
@@ -446,6 +458,11 @@ img {
     vertical-align: middle;
 }
 
-label:first-letter, button:first-letter {
-    text-transform:capitalize;
+.w-form-label:first-letter, .tag-btn:first-letter {
+    text-transform: capitalize;
+}
+
+.aside {
+    padding-top: 87px;
+    width: 205px;
 }

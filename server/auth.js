@@ -10,17 +10,32 @@ import 'isomorphic-fetch';
 import btoa from 'btoa';
 import config from '../src/config';
 
+const fetch = require('node-fetch');
+
 const NDLA_API_URL = config.ndlaApiUrl;
 
 const url = `${NDLA_API_URL}/auth/tokens`;
 
-const b64EncodeUnicode = str => btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(`0x${p1}`)));
+const ndlaFrontendClientId =
+  process.env.NDLA_LISTING_CLIENT_ID || 'swagger-client';
+const ndlaFrontendClientSecret =
+  process.env.NDLA_LISTING_CLIENT_SECRET || 'swagger-public-client-secret';
 
-export const getToken = () => fetch(url, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-    Authorization: `Basic ${b64EncodeUnicode(`${process.env.NDLA_LISTING_CLIENT_ID}:${process.env.NDLA_LISTING_CLIENT_SECRET}`)}`,
-  },
-  body: 'grant_type=client_credentials',
-}).then(res => res.json());
+const b64EncodeUnicode = str =>
+  btoa(
+    encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) =>
+      String.fromCharCode(`0x${p1}`),
+    ),
+  );
+
+export const getToken = () =>
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+      Authorization: `Basic ${b64EncodeUnicode(
+        `${ndlaFrontendClientId}:${ndlaFrontendClientSecret}`,
+      )}`,
+    },
+    body: 'grant_type=client_credentials',
+  }).then(res => res.json());

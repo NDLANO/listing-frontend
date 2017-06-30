@@ -34,7 +34,6 @@ class FilterChoices extends Component {
     }
 
     return (
-      <aside className="aside">
         <div>
           <div className="filter-tittler">Filter:</div>
           {haveCovers()}
@@ -46,7 +45,6 @@ class FilterChoices extends Component {
               key={uuid()}
             />)}</div>
         </div>
-      </aside>
     );
   }
 }

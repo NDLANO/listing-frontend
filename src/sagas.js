@@ -5,15 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { fork } from 'redux-saga-effects';
-import articleSagas from './containers/ArticlePage/articleSagas';
+import { all, fork } from 'redux-saga/effects';
 import listingSagas from './containers/ListingPage/listingSagas';
-import sessionSagas from './containers/App/sessionSagas';
 
 export default function* root() {
-  yield [
-    ...articleSagas.map(s => fork(s)),
+  yield all([
     ...listingSagas.map(s => fork(s)),
-    ...sessionSagas.map(s => fork(s)),
-  ];
+  ]);
 }

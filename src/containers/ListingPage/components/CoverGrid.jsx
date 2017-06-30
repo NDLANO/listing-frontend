@@ -14,14 +14,12 @@ import { CoverShape } from '../../../shapes';
 import { ndlaFrontendUrl } from '../../../util/apiHelpers';
 
 const CoverGrid = ({ listings, onSubjectButtonClick }) => (
-  <div className="main-content">
     <div className="emneomrade-row">{listings.map(item =>
       <CoverItem
         key={item.id}
         listing={item}
         onSubjectButtonClick={onSubjectButtonClick}
       />)}</div>
-  </div>
   );
 
 CoverGrid.propTypes = {
