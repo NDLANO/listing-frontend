@@ -12,9 +12,7 @@ import { findCategoryLabel } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
 
 const CoverList = ({ listings }) => (
-  <div className="main-content">
     <div className="emneomrade-row">{listings.map(item => <CoverItem key={item.id} listing={item} />)}</div>
-  </div>
 );
 
 CoverList.propTypes = {

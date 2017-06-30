@@ -384,11 +384,9 @@ label {
     flex: 1 100%;
 }
 
-@media all and (min-width: 250px) {
-    .aside {
-        flex: 1 auto;
-        padding: 5px;
-        margin: 0px;
+@media all and (min-width: 1020px) {
+    .main-content {
+        padding-top: 87px;
     }
 }
 
@@ -430,6 +428,14 @@ label {
     }
 }
 
+@media all and (min-width: 250px) {
+    .aside {
+        flex: 1 auto;
+        padding: 5px;
+        margin: 0px;
+    }
+}
+
 .h2-txt-overflow {
     white-space: nowrap;
     overflow: hidden;
@@ -453,5 +459,5 @@ img {
 
 .aside {
     padding-top: 87px;
-    width: 200px;
+    width: 205px;
 }
