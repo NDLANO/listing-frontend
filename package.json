@@ -93,6 +93,7 @@
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-router-prop-types": "^0.0.1",
     "react-router-redux": "^4.0.8",
     "react-tabs": "^1.1.0",
     "redux": "^3.7.0",

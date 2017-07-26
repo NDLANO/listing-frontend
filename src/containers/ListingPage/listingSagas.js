@@ -6,13 +6,12 @@
  *
  */
 import { call, select, put, take } from 'redux-saga-effects';
-import { range } from 'lodash';
 import { getLocale } from '../Locale/localeSelectors';
 import * as actions from './listingActions';
 import * as api from './listingApi';
 import { listingsFlattLabels } from './../../util/listingHelpers';
 
-/* eslint-disable no-param-reassign*/
+/* eslint-disable no-param-reassign */
 export function* fetchListingByTheme(id) {
   const locale = yield select(getLocale);
   const listings = yield call(api.fetchListingByTheme, locale, id);
@@ -29,7 +28,7 @@ export function* fetchListingByTheme(id) {
     yield put(actions.setListing(arrayWithfilterChoices));
   }
 }
-/* eslint-disable no-param-reassign*/
+/* eslint-disable no-param-reassign */
 
 export function* watchFetchListingByTheme() {
   while (true) {

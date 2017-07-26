@@ -6,6 +6,7 @@
  *
  */
 import React, { PropTypes, Component } from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { OneColumn } from 'ndla-ui';
@@ -64,7 +65,7 @@ class ListingPage extends Component {
 
 
 ListingPage.propTypes = {
-  match: PropTypes.object,
+  match: ReactRouterPropTypes.match.isRequired,
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string.isRequired,
   fetchListingByTheme: PropTypes.func.isRequired,
