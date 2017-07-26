@@ -32,4 +32,5 @@ export const CoverShape = PropTypes.shape({
   labels: PropTypes.arrayOf(LabelShape),
   supportedLanguages: PropTypes.arrayOfStrings,
   title: PropTypes.string.isRequired,
+  theme: PropTypes.string.isRequired,
 });

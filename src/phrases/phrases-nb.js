@@ -10,6 +10,13 @@ const phrases = {
   meta: {
     description: 'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
   },
+  themePage: {
+    heading: 'Utlisting',
+    intro: 'Dette er utlistingstjenesten til NDLA. Velg et område for å komme i gang.',
+    chooseTheme: 'Velg område',
+    toolTheme: 'Verktøy',
+    natureTheme: 'Naturbruk',
+  },
   labels: {
     category: 'Kategori',
     subject: 'Fag',

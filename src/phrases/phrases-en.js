@@ -10,6 +10,13 @@ const phrases = {
   meta: {
     description: 'Norwegian Digital Learning Arena, Open Educational Resources',
   },
+  themePage: {
+    heading: 'Listing',
+    intro: 'This is NDLAs listing service. Choose a subject to start.',
+    chooseTheme: 'Choose theme',
+    toolTheme: 'Tools',
+    natureTheme: 'Nature',
+  },
   labels: {
     category: 'Category',
     subject: 'Subject',

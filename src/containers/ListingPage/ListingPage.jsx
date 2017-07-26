@@ -27,8 +27,8 @@ class ListingPage extends Component {
   }
 
   componentWillMount() {
-    const { fetchListing } = this.props;
-    fetchListing();
+    const { fetchListingByTheme, match: { params } } = this.props;
+    fetchListingByTheme(params.listingId);
   }
 
   onViewTypeChange(type) {
@@ -42,7 +42,6 @@ class ListingPage extends Component {
 
   render() {
     const { listings } = this.props;
-
     if (!listings) {
       return null;
     }
@@ -65,13 +64,14 @@ class ListingPage extends Component {
 
 
 ListingPage.propTypes = {
+  match: PropTypes.object,
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string.isRequired,
-  fetchListing: PropTypes.func.isRequired,
+  fetchListingByTheme: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  fetchListing: actions.fetchListing,
+  fetchListingByTheme: actions.fetchListing,
 };
 
 const mapStateToProps = state => ({
