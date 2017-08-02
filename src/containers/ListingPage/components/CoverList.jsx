@@ -5,14 +5,17 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import React, { PropTypes } from 'react';
-import { injectT } from 'ndla-i18n';
+import React, {PropTypes} from 'react';
+import {injectT} from 'ndla-i18n';
 
-import { findCategoryLabel } from '../../../util/listingHelpers';
-import { CoverShape } from '../../../shapes';
+import {findCategoryLabel} from '../../../util/listingHelpers';
+import {CoverShape} from '../../../shapes';
+import ToggleOembed from "./ToggleOembed";
 
-const CoverList = ({ listings }) => (
-    <div className="emneomrade-row">{listings.map(item => <CoverItem key={item.id} listing={item} />)}</div>
+const CoverList = ({listings}) => (
+  <div className="emneomrade-row">
+    {listings.map(item => <CoverItem key={item.id} listing={item}/>)}
+  </div>
 );
 
 CoverList.propTypes = {
@@ -21,12 +24,12 @@ CoverList.propTypes = {
 };
 
 
-const CoverItem = ({ listing }) => (
+const CoverItem = ({listing}) => (
   <div className="produkt-container listView">
     <div className="innerList">
-      <a className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
-        <div className="h2-txt-overflow">{listing.title}</div>
-      </a>
+      <div className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
+        <div className="h2-txt-overflow">{listing.title} Klikk for oembed:<ToggleOembed url={listing.oembedUrl}/></div>
+      </div>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
     </div>
   </div>

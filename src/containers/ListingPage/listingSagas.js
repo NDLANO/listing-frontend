@@ -37,6 +37,26 @@ export function* watchFetchListingByTheme() {
   }
 }
 
+/* eslint-disable no-param-reassign */
+// export function* fetchOembed(url) {
+//   console.log('export function* fetch oembed', url);
+//   const oembed = yield call(api.fetchOembed, url);
+//   console.log('res oembed yield', oembed);
+//   console.log('html:',oembed.html);
+//   yield put(actions.setOembed(oembed.html));
+// }
+// /* eslint-disable no-param-reassign */
+//
+// export function* watchFetchOembed() {
+//   console.log('* watchFetchOembed');
+//   while (true) {
+//     yield take(actions.fetchOembed);
+//     yield call(fetchOembed, 'test');
+//   }
+//
+// }
+
 export default [
   watchFetchListingByTheme,
+  // watchFetchOembed,
 ];

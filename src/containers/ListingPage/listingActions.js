@@ -10,3 +10,5 @@ import { createAction } from 'redux-actions';
 
 export const fetchListing = createAction('FETCH_LISTING');
 export const setListing = createAction('SET_LISTING');
+export const fetchOembed = createAction('FETCH_OEMBED');
+export const setOembed = createAction('SET_OEMBED');

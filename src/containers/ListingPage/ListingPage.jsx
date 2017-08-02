@@ -21,15 +21,16 @@ class ListingPage extends Component {
     super(props);
     this.state = {
       sortType: 'title_asc',
-      viewType: 'grid',
+      viewType: 'list',
     };
     this.onViewTypeChange = this.onViewTypeChange.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
   }
 
   componentWillMount() {
-    const { fetchListingByTheme, match: { params } } = this.props;
+    const { fetchOembed, fetchListingByTheme, match: { params } } = this.props;
     fetchListingByTheme(params.listingId);
+    // fetchOembed('stuff');
   }
 
   onViewTypeChange(type) {
@@ -67,16 +68,20 @@ class ListingPage extends Component {
 ListingPage.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   listings: PropTypes.arrayOf(CoverShape),
+  // oembed: PropTypes.string,
   locale: PropTypes.string.isRequired,
   fetchListingByTheme: PropTypes.func.isRequired,
+  // fetchOembed: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
   fetchListingByTheme: actions.fetchListing,
+  // fetchOembed: actions.fetchOembed,
 };
 
 const mapStateToProps = state => ({
   listings: state.listings,
+  // oembed: state.oembed,
   locale: getLocale(state),
 });
 

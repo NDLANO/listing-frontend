@@ -12,6 +12,8 @@ import { injectT } from 'ndla-i18n';
 import { findCategoryLabel, printSubjects, buttonSubjectChoiceIdent } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
 import { ndlaFrontendUrl } from '../../../util/apiHelpers';
+import ToggleOembed from "./ToggleOembed";
+
 
 const CoverGrid = ({ listings, onSubjectButtonClick }) => (
     <div className="emneomrade-row">{listings.map(item =>
@@ -35,9 +37,10 @@ const CoverItem = ({ listing, onSubjectButtonClick }) => (
       <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
     <div className="inner">
-      <a className="h2-tittel-lenke" href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
-        <div className="h2-txt-overflow">{listing.title}</div>
-      </a>
+      {/*<div className="h2-tittel-lenke" href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">*/}
+      <div className="h2-tittel-lenke">
+        <div className="h2-txt-overflow">{listing.title}<ToggleOembed url={listing.oembedUrl} /></div>
+      </div>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>
       <p><a href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
