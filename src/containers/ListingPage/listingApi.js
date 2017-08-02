@@ -10,4 +10,5 @@ import { resolveJsonOrRejectWithError, apiResourceUrl, fetchWithAccessToken } fr
 
 const baseUrl = apiResourceUrl('/listing-api/v1/listing');
 
-export const fetchListing = (locale, page = 1) => fetchWithAccessToken(`${baseUrl}?page=${page}`).then(resolveJsonOrRejectWithError);
+export const fetchListingByTheme = (locale, theme) => fetchWithAccessToken(`${baseUrl}/theme/${theme}`).then(resolveJsonOrRejectWithError);
+

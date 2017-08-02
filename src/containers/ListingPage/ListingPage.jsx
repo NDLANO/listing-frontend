@@ -6,6 +6,7 @@
  *
  */
 import React, { PropTypes, Component } from 'react';
+import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { OneColumn } from 'ndla-ui';
@@ -27,8 +28,8 @@ class ListingPage extends Component {
   }
 
   componentWillMount() {
-    const { fetchListing } = this.props;
-    fetchListing();
+    const { fetchListingByTheme, match: { params } } = this.props;
+    fetchListingByTheme(params.listingId);
   }
 
   onViewTypeChange(type) {
@@ -42,7 +43,6 @@ class ListingPage extends Component {
 
   render() {
     const { listings } = this.props;
-
     if (!listings) {
       return null;
     }
@@ -65,13 +65,14 @@ class ListingPage extends Component {
 
 
 ListingPage.propTypes = {
+  match: ReactRouterPropTypes.match.isRequired,
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string.isRequired,
-  fetchListing: PropTypes.func.isRequired,
+  fetchListingByTheme: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  fetchListing: actions.fetchListing,
+  fetchListingByTheme: actions.fetchListing,
 };
 
 const mapStateToProps = state => ({

@@ -17,6 +17,7 @@ import Masthead from '../Masthead';
 import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
+import ThemePage from "../ThemePage/ThemePage";
 
 export class App extends React.Component {
   getChildContext() {
@@ -39,8 +40,8 @@ export class App extends React.Component {
         <Masthead t={t} />
 
         <Switch>
-          <Route path="/" component={ListingPage} />
-          <Route path="/listing" component={ListingPage} />
+          <Route path="/listing/:listingId" component={ListingPage}/>
+          <Route path="/listing" component={ThemePage}/>
         </Switch>
         <Footer t={t} />
       </PageContainer>

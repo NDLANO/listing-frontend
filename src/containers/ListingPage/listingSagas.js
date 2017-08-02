@@ -6,43 +6,37 @@
  *
  */
 import { call, select, put, take } from 'redux-saga-effects';
-import { range } from 'lodash';
 import { getLocale } from '../Locale/localeSelectors';
 import * as actions from './listingActions';
 import * as api from './listingApi';
 import { listingsFlattLabels } from './../../util/listingHelpers';
 
-/* eslint-disable no-param-reassign*/
-export function* fetchListing() {
+/* eslint-disable no-param-reassign */
+export function* fetchListingByTheme(id) {
   const locale = yield select(getLocale);
-  const listings = yield call(api.fetchListing, locale);
+  const listings = yield call(api.fetchListingByTheme, locale, id);
 
   if (!listings.results) {
     yield put(actions.setListing([]));
   } else {
-    const numberOfPages = Math.ceil(listings.totalCount / listings.pageSize);
-    range(2, numberOfPages - 1).forEach(function* pageNumbers(i) {
-      const tempListings = yield call(api.fetchListing, locale, i);
-      listings.results.push(...tempListings.results);
-    });
     const arrayWithfilterChoices = listings.results.map((listing) => {
       const listingFilterChoices = listingsFlattLabels(listing.labels);
       listing.filterChoices = listingFilterChoices.reduce((a, b) => a.concat(b), []);
       return listing;
-    });
+    }).sort((a, b) => a.title.localeCompare(b.title));
 
     yield put(actions.setListing(arrayWithfilterChoices));
   }
 }
-/* eslint-disable no-param-reassign*/
+/* eslint-disable no-param-reassign */
 
-export function* watchFetchListing() {
+export function* watchFetchListingByTheme() {
   while (true) {
-    yield take(actions.fetchListing);
-    yield call(fetchListing);
+    const { payload: listingId } = yield take(actions.fetchListing);
+    yield call(fetchListingByTheme, listingId);
   }
 }
 
 export default [
-  watchFetchListing,
+  watchFetchListingByTheme,
 ];
