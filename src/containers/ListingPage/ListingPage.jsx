@@ -21,7 +21,7 @@ class ListingPage extends Component {
     super(props);
     this.state = {
       sortType: 'title_asc',
-      viewType: 'list',
+      viewType: 'grid',
     };
     this.onViewTypeChange = this.onViewTypeChange.bind(this);
     this.onSortChange = this.onSortChange.bind(this);

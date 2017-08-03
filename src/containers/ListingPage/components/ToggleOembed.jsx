@@ -8,11 +8,7 @@
 import { connect } from 'react-redux';
 import React, { PropTypes, Component } from 'react';
 import * as actions from './../listingActions';
-import { LabelShape } from '../../../shapes';
 import * as api from './../listingApi';
-
-// import FilterChoices from './FilterChoices';
-
 
 class ToggleOembed extends Component {
 
@@ -20,31 +16,24 @@ class ToggleOembed extends Component {
     super(props);
     this.state = {
       isVisOembed: false,
-      content: "Fetching content",
+      content: "",
     };
 
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
+    const { onOembedButtonClick } = this.props;
     this.setState(prevState => ({ isVisOembed: !prevState.isVisOembed }));
-    console.log('Oembed cliked... go fetch it...', this.props.url);
+    onOembedButtonClick(!this.state.isVisOembed);
     api.fetchOembed(this.props.url).then((v) => {
-    // api.fetchOembed('https://ndla.no/node/81538').then((v) => {
-      console.log('v', v);
       this.setState({ content: v.html });
     }, (e) => {
-      console.log('e', e);
-
+      console.error('e', e);
     });
-
-    // const { fetchOembed } this.props;
-    // const oembed = yield call(api.fetchOembed, url);
-
   }
 
   render() {
-    // const { filters, onChoiceChange, selectedFilters } = this.props;
     const { isVisOembed } = this.state;
 
     const child = (
@@ -70,6 +59,7 @@ ToggleOembed.propTypes = {
   oembed: PropTypes.string,
   url: PropTypes.string.isRequired,
   cssClass: PropTypes.string,
+  onOembedButtonClick: PropTypes.func,
 };
 
 
