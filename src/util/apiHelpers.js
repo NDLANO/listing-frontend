@@ -53,7 +53,6 @@ export function createErrorPayload(status, message, json) {
 }
 
 export function resolveJsonOrRejectWithError(res) {
-  console.log('resolveJsonOrRejectWithError(res)',res)
   return new Promise((resolve, reject) => {
     if (res.ok) {
       return res.status === 204 ? resolve() : resolve(res.json());
@@ -103,7 +102,6 @@ export const fetchAccessToken = () =>
   fetch('/get_token').then(resolveJsonOrRejectWithError);
 
 export const fetchWithAccessToken = (url, options = {}) => {
-  console.log('fetchWithAccessToken . . .');
   const accessToken = getAccessToken();
   const expiresAt = accessToken ? getAccessTokenExpiresAt() : 0;
 

@@ -28,8 +28,8 @@ class ToggleOembed extends Component {
     onOembedButtonClick(!this.state.isVisOembed);
     api.fetchOembed(this.props.url).then((v) => {
       this.setState({ content: v.html });
-    }, (e) => {
-      console.error('e', e);
+    }, () => {
+      this.setState({ content: "Error fetching content." });
     });
   }
 

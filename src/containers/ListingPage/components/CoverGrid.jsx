@@ -41,7 +41,6 @@ class CoverItem extends Component {
   }
 
   onOembedButtonClick(isVisOembed) {
-    console.log('FUCK YEA onOembedButtonClick', isVisOembed);
     if (isVisOembed) {
       this.setState({oembedCss: "bigger-grid"})
     } else {
