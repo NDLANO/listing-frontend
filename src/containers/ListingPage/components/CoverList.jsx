@@ -28,9 +28,14 @@ const CoverItem = ({listing}) => (
   <div className="produkt-container listView">
     <div className="innerList">
       <div className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
-        <div className="h2-txt-overflow">{listing.title} Klikk for oembed:<ToggleOembed url={listing.oembedUrl}/></div>
+        <div className="h2-txt-overflow">
+          {listing.title}
+        </div>
       </div>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
+      <ToggleOembed
+        cssClass="visfilter-btn-list"
+        url={listing.oembedUrl}/>
     </div>
   </div>
 );

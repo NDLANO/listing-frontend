@@ -47,15 +47,14 @@ class ToggleOembed extends Component {
     // const { filters, onChoiceChange, selectedFilters } = this.props;
     const { isVisOembed } = this.state;
 
-    const child = (<div>
-        <p>Hello this is a oembed article. </p>
-
+    const child = (
+      <div>
         <div className="bigger" dangerouslySetInnerHTML={{ __html: this.state.content }} />
       </div>);
 
     return (
       <div className="w-form">
-        <button className="visfilter-btn w-button visfilter c-button" onClick={this.handleClick}>Vis oembed article</button>
+        <button className={`${this.props.cssClass} w-button c-button c-button--outline`} onClick={this.handleClick}>Les mer ... </button>
         { isVisOembed ? child : null }
       </div>
     );
@@ -70,6 +69,7 @@ const mapDispatchToProps = {
 ToggleOembed.propTypes = {
   oembed: PropTypes.string,
   url: PropTypes.string.isRequired,
+  cssClass: PropTypes.string,
 };
 
 

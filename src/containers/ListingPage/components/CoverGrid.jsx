@@ -37,14 +37,13 @@ const CoverItem = ({ listing, onSubjectButtonClick }) => (
       <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
     </div>
     <div className="inner">
-      {/*<div className="h2-tittel-lenke" href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">*/}
       <div className="h2-tittel-lenke">
-        <div className="h2-txt-overflow">{listing.title}<ToggleOembed url={listing.oembedUrl} /></div>
+        <div className="h2-txt-overflow">{listing.title}</div>
       </div>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>
-      <p><a href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
-        Les mer...</a>
+      <p>
+        <ToggleOembed cssClass="visfilter-btn-grid" url={listing.oembedUrl} />
       </p>
     <div>
         {printSubjects(listing.labels).map(subject => <div key={uuid()}>
