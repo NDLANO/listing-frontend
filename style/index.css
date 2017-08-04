@@ -402,6 +402,20 @@ label {
         min-width: 192px;
     }
 
+    .oembed-grid {
+        max-width: 665px;
+        width: 655px !important;
+    }
+
+    .listView {
+        max-width: 665px;
+        width: 500px !important;
+    }
+
+    .listView .visfilter-btn-list {
+        width: 50%;
+    }
+
     .emneomrade-row {
         justify-content: flex-start;
     }
@@ -414,6 +428,20 @@ label {
         min-width: 192px;
         padding: 5px;
         margin: 5px;
+    }
+
+    .oembed-grid {
+        max-width: 435px;
+        width: 435px !important;
+    }
+
+    .listView {
+        max-width: 380px;
+        width: 380px !important;
+    }
+
+    .listView .visfilter-btn-list {
+        width: 50%;
     }
 
     .emneomrade-row {
@@ -474,7 +502,7 @@ img {
     height: 800px;
 }
 
-.bigger-grid {
+.oembed-grid {
     width: 800px !important;
 }
 
