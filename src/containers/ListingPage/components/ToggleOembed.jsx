@@ -7,8 +7,8 @@
  */
 import { connect } from 'react-redux';
 import React, { PropTypes, Component } from 'react';
-import * as actions from './../listingActions';
-import * as api from './../listingApi';
+import Oembed from "./Oembed";
+
 
 class ToggleOembed extends Component {
 
@@ -22,24 +22,19 @@ class ToggleOembed extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
+
   handleClick() {
     const { onOembedButtonClick } = this.props;
     this.setState(prevState => ({ isVisOembed: !prevState.isVisOembed }));
     onOembedButtonClick(!this.state.isVisOembed);
-    api.fetchOembed(this.props.url).then((v) => {
-      this.setState({ content: v.html });
-    }, () => {
-      this.setState({ content: "Error fetching content." });
-    });
   }
 
   render() {
     const { isVisOembed } = this.state;
 
     const child = (
-      <div>
-        <div className="bigger" dangerouslySetInnerHTML={{ __html: this.state.content }} />
-      </div>);
+      <Oembed url={this.props.url}/>
+      );
 
     return (
       <div className="w-form">
@@ -51,7 +46,6 @@ class ToggleOembed extends Component {
 }
 
 const mapDispatchToProps = {
-  fetchOembed: actions.fetchOembed,
 };
 
 

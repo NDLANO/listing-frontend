@@ -55,27 +55,29 @@ class CoverItem extends Component {
 
     return(
       <div className={`produkt-container ${this.state.oembedCss}`}>
-      <div className="verktoy-bilde-div">
-        <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
-      </div>
-      <div className="inner">
-        <div className="h2-tittel-lenke">
-          <div className="h2-txt-overflow">{listing.title}</div>
+        <div className="verktoy-bilde-div">
+          <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl}/>
         </div>
-        <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
-        <p>{listing.description}</p>
-          <div><ToggleOembed
-            onOembedButtonClick={this.onOembedButtonClick}
-            cssClass="visfilter-btn-grid" url={listing.oembedUrl} />
+        <div className="inner">
+          <div className="h2-tittel-lenke">
+            <div className="h2-txt-overflow">{listing.title}</div>
           </div>
-        <div>
-          {printSubjects(listing.labels).map(subject => <div key={uuid()}>
-            <button className="tag-btn w-button" id={buttonSubjectChoiceIdent(subject)} onClick={event => onSubjectButtonClick(event)}>{subject}</button>
-          </div>)
-          }
+          <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
+          <p>{listing.description}</p>
+          <div>
+            <ToggleOembed
+              onOembedButtonClick={this.onOembedButtonClick}
+              cssClass="visfilter-btn-grid" url={listing.oembedUrl}/>
+          </div>
+          <div>
+            {printSubjects(listing.labels).map(subject => <div key={uuid()}>
+              <button className="tag-btn w-button" id={buttonSubjectChoiceIdent(subject)}
+                      onClick={event => onSubjectButtonClick(event)}>{subject}</button>
+            </div>)
+            }
+          </div>
         </div>
-      </div>
-    </div>);
+      </div>);
   }
 }
 

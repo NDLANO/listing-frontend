@@ -15,8 +15,4 @@ export default handleActions({
     next: (state, action) => action.payload,
     throw: state => state,
   },
-  // [actions.setOembed]: {
-  //   next: (state, action) => action.payload,
-  //   throw: state => state,
-  // },
 }, initalState);
