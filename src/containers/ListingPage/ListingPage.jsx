@@ -30,7 +30,6 @@ class ListingPage extends Component {
   componentWillMount() {
     const { fetchListingByTheme, match: { params } } = this.props;
     fetchListingByTheme(params.listingId);
-    // fetchOembed('stuff');
   }
 
   onViewTypeChange(type) {

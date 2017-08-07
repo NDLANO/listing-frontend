@@ -91,9 +91,6 @@ class Oembed extends Component {
       return;
     }
 
-    /* Needed to enforce content to stay within iframe on Safari iOS */
-    iframe.setAttribute('scrolling', 'no');
-
     this.setState({isLoadingResource: false});
   }
 

@@ -508,7 +508,13 @@ img {
 
 iframe {
     height: 800px;
+    /*border-top: 1em;*/
     border: none;
+    border-left: solid 0.5px;
+    border-bottom: solid 0.5px;
+    border-right: solid 0.5px;
+    border-color: #20588f;
+    padding: 20px 5px 20px 5px;
 }
 
 .spinner {
@@ -516,8 +522,8 @@ iframe {
     border-bottom-color: #20588f;
     border-radius: 50%;
     margin: 0 auto;
-    width: 10em;
-    height: 10em;
+    width: 7em;
+    height: 7em;
     -webkit-animation: spinner-spin .7s linear infinite;
     animation: spinner-spin .7s linear infinite;
     left: 330px;
