@@ -23,4 +23,5 @@ export const CoverShape = PropTypes.shape({
   supportedLanguages: PropTypes.arrayOfStrings,
   title: PropTypes.string.isRequired,
   theme: PropTypes.string.isRequired,
+  oembedUrl: PropTypes.string,
 });
