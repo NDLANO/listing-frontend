@@ -5,9 +5,9 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import {compose} from 'redux';
-import {injectT} from 'ndla-i18n';
-import React, {Component, PropTypes} from 'react';
+import { compose } from 'redux';
+import { injectT } from 'ndla-i18n';
+import React, { Component, PropTypes } from 'react';
 import get from 'lodash/get';
 import * as api from './../listingApi';
 import Spinner from "./Spinner";
@@ -21,7 +21,7 @@ class Oembed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      html: "",
+      html: '',
       isNDLAResource: false,
       listeningToResize: false,
       isLoadingResource: true,
@@ -37,9 +37,9 @@ class Oembed extends Component {
 
 
   componentDidMount() {
-    const {url} = this.props;
+    const { url } = this.props;
     api.fetchOembed(url).then((res) => {
-      this.setState({html: res.html})
+      this.setState({ html: res.html })
     });
   }
 
@@ -51,33 +51,33 @@ class Oembed extends Component {
 
   componentWillUnmount() {
     this.disableIframeResizing();
-    this.setState({isLoadingResource: false});
+    this.setState({ isLoadingResource: false });
   }
 
   getIframeDOM() {
-    return this.iframeDiv.children[0];
+    return this.iframeDiv.children[ 0 ];
   }
 
 
-  handleIframeResizing({url}) {
+  handleIframeResizing({ url }) {
     if (urlIsNDLA(url) || urlIsApiNDLA(url) || urlIsLocalNdla(url)) {
-      this.setState({isNDLAResource: true}, this.enableIframeResizing);
+      this.setState({ isNDLAResource: true }, this.enableIframeResizing);
     } else {
-      this.setState({isNDLAResource: false}, this.disableIframeResizing);
+      this.setState({ isNDLAResource: false }, this.disableIframeResizing);
     }
   }
 
   enableIframeResizing() {
     if (!this.state.listeningToResize) {
       window.addEventListener('message', this.handleResizeMessage);
-      this.setState({listeningToResize: true});
+      this.setState({ listeningToResize: true });
     }
   }
 
   disableIframeResizing() {
     window.removeEventListener('message', this.handleResizeMessage);
-    this.setState({listeningToResize: false});
-    this.setState({isLoadingResource: false});
+    this.setState({ listeningToResize: false });
+    this.setState({ isLoadingResource: false });
   }
 
   handleResizeMessage(evt) {
@@ -91,20 +91,31 @@ class Oembed extends Component {
       return;
     }
 
-    this.setState({isLoadingResource: false});
+    /* Needed to enforce content to stay within iframe on Safari iOS */
+    iframe.setAttribute('scrolling', 'no');
+
+    const newHeight = parseInt(get(evt, 'data.height', 0), 10) + 87;
+
+    iframe.style.height = `${newHeight}px`;
+
+    this.setState({ isLoadingResource: false });
   }
 
 
   render() {
 
+    const { onBackToListing } = this.props;
+
     return (
       <div>
+        <button className="w-button c-button c-button--outline" onClick={onBackToListing}>Tilbake</button>
         {this.state.isLoadingResource && <Spinner hasMargins/>}
-        <div className="bigger" dangerouslySetInnerHTML={{__html: this.state.html}}
+        <div dangerouslySetInnerHTML={{ __html: this.state.html }}
              ref={(iframeDiv) => {
                this.iframeDiv = iframeDiv;
              }}
         />
+        <button className="w-button c-button c-button--outline" onClick={onBackToListing}>Tilbake</button>
       </div>
     )
   }
@@ -114,6 +125,7 @@ class Oembed extends Component {
 
 Oembed.propTypes = {
   url: PropTypes.string.isRequired,
+  onBackToListing: PropTypes.func,
 };
 
 

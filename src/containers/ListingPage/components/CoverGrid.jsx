@@ -14,12 +14,13 @@ import {CoverShape} from '../../../shapes';
 import ToggleOembed from "./ToggleOembed";
 
 
-const CoverGrid = ({ listings, onSubjectButtonClick }) => (
+const CoverGrid = ({ listings, onSubjectButtonClick, onViewOembed }) => (
     <div className="emneomrade-row">{listings.map(item =>
       <CoverItem
         key={item.id}
         listing={item}
         onSubjectButtonClick={onSubjectButtonClick}
+        onViewOembed={onViewOembed}
       />)}</div>
   );
 
@@ -27,6 +28,7 @@ CoverGrid.propTypes = {
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string,
   onSubjectButtonClick: PropTypes.func,
+  onViewOembed: PropTypes.func,
 };
 
 
@@ -51,7 +53,7 @@ class CoverItem extends Component {
 
   render(){
 
-    const  { listing, onSubjectButtonClick } = this.props;
+    const  { listing, onSubjectButtonClick, onViewOembed } = this.props;
 
     return(
       <div className={`produkt-container ${this.state.oembedCss}`}>
@@ -67,6 +69,7 @@ class CoverItem extends Component {
           <div>
             <ToggleOembed
               onOembedButtonClick={this.onOembedButtonClick}
+              onViewOembed={onViewOembed}
               cssClass="visfilter-btn-grid" url={listing.oembedUrl}/>
           </div>
           <div>
@@ -85,6 +88,7 @@ CoverItem.propTypes = {
   listing: CoverShape,
   onSubjectButtonClick: PropTypes.func,
   onOembedButtonClick: PropTypes.func,
+  onViewOembed: PropTypes.func,
 };
 
 export default injectT(CoverGrid);

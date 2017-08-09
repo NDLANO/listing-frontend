@@ -388,7 +388,7 @@ label {
 }
 
 @media all and (min-width: 1020px) {
-    .main-content {
+    .main-content, .oembed-content {
         padding-top: 87px;
     }
 }
@@ -507,23 +507,18 @@ img {
 }
 
 iframe {
-    height: 800px;
-    /*border-top: 1em;*/
+    height: 2000px;
     border: none;
-    border-left: solid 0.5px;
-    border-bottom: solid 0.5px;
-    border-right: solid 0.5px;
-    border-color: #20588f;
     padding: 20px 5px 20px 5px;
 }
 
 .spinner {
-    border: 1em solid #eaeaea;
+    border: 0.4em solid #eaeaea;
     border-bottom-color: #20588f;
     border-radius: 50%;
     margin: 0 auto;
-    width: 7em;
-    height: 7em;
+    width: 3em;
+    height: 3em;
     -webkit-animation: spinner-spin .7s linear infinite;
     animation: spinner-spin .7s linear infinite;
     left: 330px;

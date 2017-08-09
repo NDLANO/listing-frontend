@@ -12,15 +12,20 @@ import {findCategoryLabel} from '../../../util/listingHelpers';
 import {CoverShape} from '../../../shapes';
 import ToggleOembed from "./ToggleOembed";
 
-const CoverList = ({listings}) => (
+const CoverList = ({listings, onViewOembed}) => (
   <div className="emneomrade-row">
-    {listings.map(item => <CoverItem key={item.id} listing={item}/>)}
+    {listings.map(item => <CoverItem
+        key={item.id}
+        listing={item}
+        onViewOembed={onViewOembed}
+    />)}
   </div>
 );
 
 CoverList.propTypes = {
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string,
+  onViewOembed: PropTypes.func,
 };
 
 class CoverItem extends Component {
@@ -42,7 +47,7 @@ class CoverItem extends Component {
   }
 
   render(){
-    const  { listing } = this.props;
+    const  { listing, onViewOembed } = this.props;
 
     return(
       <div className="produkt-container listView">
@@ -55,6 +60,7 @@ class CoverItem extends Component {
           <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
           <ToggleOembed
             onOembedButtonClick={this.onOembedButtonClick}
+            onViewOembed={onViewOembed}
             cssClass="visfilter-btn-list"
             url={listing.oembedUrl}/>
         </div>
@@ -68,6 +74,7 @@ class CoverItem extends Component {
 CoverItem.propTypes = {
   listing: CoverShape,
   onOembedButtonClick: PropTypes.func,
+  onViewOembed: PropTypes.func,
 };
 
 
