@@ -5,7 +5,7 @@
  *  LICENSE file in the root directory of this source tree.
  *
  */
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import { injectT } from 'ndla-i18n';
 
 import { findCategoryLabel } from '../../../util/listingHelpers';
