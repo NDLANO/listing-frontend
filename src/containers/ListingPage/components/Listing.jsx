@@ -51,7 +51,8 @@ class Listing extends Component {
   }
 
   render() {
-    const { listings, viewType, sortType, curentSubject, onViewTypeChange, onSortChange } = this.props;
+    const { listings, viewType, sortType, curentSubject, onViewTypeChange, onSortChange, onViewOembed } = this.props;
+
 
     function isSelected(selectedFilters, choices) {
       if (choices === undefined) {
@@ -76,6 +77,7 @@ class Listing extends Component {
             <CoverGrid
               listings={theWantedListings()}
               onSubjectButtonClick={this.onSubjectButtonClick}
+              onViewOembed={onViewOembed}
             />
           </div>
         );
@@ -86,6 +88,7 @@ class Listing extends Component {
             <CoverList
               listings={theWantedListings()}
               onSubjectButtonClick={this.onSubjectButtonClick}
+              onViewOembed={onViewOembed}
             />
           </div>
         );
@@ -97,6 +100,7 @@ class Listing extends Component {
           <CoverGrid
             listings={theWantedListings()}
             onSubjectButtonClick={this.onSubjectButtonClick}
+            onViewOembed={onViewOembed}
           />
         </div>);
     };
@@ -127,6 +131,7 @@ Listing.propTypes = {
   curentSubject: PropTypes.string,
   onViewTypeChange: PropTypes.func,
   onSortChange: PropTypes.func,
+  onViewOembed: PropTypes.func,
   selectedFilters: PropTypes.arrayOf(PropTypes.string),
   onChoiceChange: PropTypes.func,
   onSubjectButtonClick: PropTypes.func,

@@ -7,18 +7,20 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { uuid } from 'ndla-util';
-import { injectT } from 'ndla-i18n';
-import { findCategoryLabel, printSubjects, buttonSubjectChoiceIdent } from '../../../util/listingHelpers';
-import { CoverShape } from '../../../shapes';
-import { ndlaFrontendUrl } from '../../../util/apiHelpers';
+import {uuid} from 'ndla-util';
+import {injectT} from 'ndla-i18n';
+import {buttonSubjectChoiceIdent, findCategoryLabel, printSubjects} from '../../../util/listingHelpers';
+import {CoverShape} from '../../../shapes';
+import ToggleOembed from "./ToggleOembed";
 
-const CoverGrid = ({ listings, onSubjectButtonClick }) => (
+
+const CoverGrid = ({ listings, onSubjectButtonClick, onViewOembed }) => (
     <div className="emneomrade-row">{listings.map(item =>
       <CoverItem
         key={item.id}
         listing={item}
         onSubjectButtonClick={onSubjectButtonClick}
+        onViewOembed={onViewOembed}
       />)}</div>
   );
 
@@ -26,36 +28,40 @@ CoverGrid.propTypes = {
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string,
   onSubjectButtonClick: PropTypes.func,
+  onViewOembed: PropTypes.func,
 };
 
-
-const CoverItem = ({ listing, onSubjectButtonClick }) => (
+const CoverItem = ({ listing, onSubjectButtonClick, onViewOembed }) => (
   <div className="produkt-container">
     <div className="verktoy-bilde-div">
-      <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl} />
+      <img className="verktoy-img" alt={listing.coverPhotoUrl} src={listing.coverPhotoUrl}/>
     </div>
     <div className="inner">
-      <a className="h2-tittel-lenke" href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
+      <div className="h2-tittel-lenke">
         <div className="h2-txt-overflow">{listing.title}</div>
-      </a>
+      </div>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
       <p>{listing.description}</p>
-      <p><a href={ndlaFrontendUrl(`/article/${listing.articleApiId}`)} target="_blank" rel="noopener noreferrer">
-        Les mer...</a>
-      </p>
-    <div>
+      <div>
+        <ToggleOembed
+          onViewOembed={onViewOembed}
+          cssClass="visfilter-btn-grid" url={listing.oembedUrl}/>
+      </div>
+      <div>
         {printSubjects(listing.labels).map(subject => <div key={uuid()}>
-          <button className="tag-btn w-button" id={buttonSubjectChoiceIdent(subject)} onClick={event => onSubjectButtonClick(event)}>{subject}</button>
+          <button className="tag-btn w-button" id={buttonSubjectChoiceIdent(subject)}
+                  onClick={event => onSubjectButtonClick(event)}>{subject}</button>
         </div>)
         }
       </div>
     </div>
   </div>
-  );
+);
 
 CoverItem.propTypes = {
   listing: CoverShape,
   onSubjectButtonClick: PropTypes.func,
+  onViewOembed: PropTypes.func,
 };
 
 export default injectT(CoverGrid);
