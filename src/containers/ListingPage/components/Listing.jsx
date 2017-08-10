@@ -156,7 +156,6 @@ Listing.propTypes = {
   viewType: PropTypes.string.isRequired,
   sortType: PropTypes.string.isRequired,
   locale: PropTypes.string,
-  url: PropTypes.string,
   curentSubject: PropTypes.string,
   onViewTypeChange: PropTypes.func,
   onSortChange: PropTypes.func,

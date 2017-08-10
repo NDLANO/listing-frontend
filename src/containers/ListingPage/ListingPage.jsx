@@ -14,7 +14,6 @@ import * as actions from './listingActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 import Listing from './components/Listing';
-import Oembed from "./components/Oembed";
 
 class ListingPage extends Component {
 
@@ -61,7 +60,6 @@ class ListingPage extends Component {
             onViewTypeChange={this.onViewTypeChange}
             onSortChange={this.onSortChange}
             onViewOembed={this.onViewOembed}
-            url={this.state.oembedHtml}
             onBackToListing={this.onBackToListing}
           />
         </div>
