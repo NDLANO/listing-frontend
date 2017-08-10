@@ -23,13 +23,11 @@ class ListingPage extends Component {
     this.state = {
       sortType: 'title_asc',
       viewType: 'grid',
-      oembedHtml: '',
-      showOembedArticle: false,
+
     };
     this.onViewTypeChange = this.onViewTypeChange.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
-    this.onViewOembed = this.onViewOembed.bind(this);
-    this.onBackToListing = this.onBackToListing.bind(this);
+
   }
 
   componentWillMount() {
@@ -45,45 +43,27 @@ class ListingPage extends Component {
     this.setState({ sortType: event.target.value });
   }
 
-  onViewOembed(html) {
-    this.setState({ oembedHtml: html });
-    this.setState(prevState => ({ showOembedArticle: !prevState.showOembedArticle }));
-  }
-
-  onBackToListing() {
-    this.setState({ showOembedArticle: false });
-  }
-
   render() {
     const { listings } = this.props;
-    const { showOembedArticle } = this.state;
     if (!listings) {
       return null;
     }
 
-    const article = (
-      <div className="oembed-content">
-        <Oembed
-          url={this.state.oembedHtml}
-          onBackToListing={this.onBackToListing}
-        />
-      </div>
-    );
-
-    const listing = ( <Listing
-      listings={listings}
-      viewType={this.state.viewType}
-      sortType={this.state.sortType}
-      onViewTypeChange={this.onViewTypeChange}
-      onSortChange={this.onSortChange}
-      onViewOembed={this.onViewOembed}
-    />);
 
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'}/>
         <div className="flex-container">
-          {showOembedArticle ? article : listing}
+          <Listing
+            listings={listings}
+            viewType={this.state.viewType}
+            sortType={this.state.sortType}
+            onViewTypeChange={this.onViewTypeChange}
+            onSortChange={this.onSortChange}
+            onViewOembed={this.onViewOembed}
+            url={this.state.oembedHtml}
+            onBackToListing={this.onBackToListing}
+          />
         </div>
       </OneColumn>
     );
