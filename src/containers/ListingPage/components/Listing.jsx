@@ -15,6 +15,7 @@ import { CoverShape, LabelShape } from '../../../shapes';
 import CoverList from './CoverList';
 import CoverGrid from './CoverGrid';
 import SideBar from './SideBar';
+import Oembed from "./Oembed";
 
 class Listing extends Component {
 
@@ -22,9 +23,13 @@ class Listing extends Component {
     super(props);
     this.state = {
       selectedFilters: [],
+      oembedHtml: '',
+      showOembedArticle: false,
     };
     this.onChoiceChange = this.onChoiceChange.bind(this);
     this.onSubjectButtonClick = this.onSubjectButtonClick.bind(this);
+    this.onViewOembed = this.onViewOembed.bind(this);
+    this.onBackToListing = this.onBackToListing.bind(this);
   }
 
 
@@ -41,6 +46,15 @@ class Listing extends Component {
     this.updateSelectedFiltersState(isSelected, choice);
   }
 
+  onViewOembed(html) {
+    this.setState({ oembedHtml: html });
+    this.setState(prevState => ({ showOembedArticle: !prevState.showOembedArticle }));
+  }
+
+  onBackToListing() {
+    this.setState({ showOembedArticle: false });
+  }
+
   updateSelectedFiltersState(isSelected, choice) {
     if (isSelected) {
       this.setState({ selectedFilters: this.state.selectedFilters.concat(choice) });
@@ -52,6 +66,7 @@ class Listing extends Component {
 
   render() {
     const { listings, viewType, sortType, curentSubject, onViewTypeChange, onSortChange } = this.props;
+    const { showOembedArticle } = this.state;
 
     function isSelected(selectedFilters, choices) {
       if (choices === undefined) {
@@ -76,6 +91,7 @@ class Listing extends Component {
             <CoverGrid
               listings={theWantedListings()}
               onSubjectButtonClick={this.onSubjectButtonClick}
+              onViewOembed={this.onViewOembed}
             />
           </div>
         );
@@ -86,6 +102,7 @@ class Listing extends Component {
             <CoverList
               listings={theWantedListings()}
               onSubjectButtonClick={this.onSubjectButtonClick}
+              onViewOembed={this.onViewOembed}
             />
           </div>
         );
@@ -97,11 +114,22 @@ class Listing extends Component {
           <CoverGrid
             listings={theWantedListings()}
             onSubjectButtonClick={this.onSubjectButtonClick}
+            onViewOembed={this.onViewOembed}
           />
         </div>);
     };
 
-    return (
+
+    const article = (
+      <div className="oembed-content">
+        <Oembed
+          url={this.state.oembedHtml}
+          onBackToListing={this.onBackToListing}
+        />
+      </div>
+    );
+
+    const listing = (
       <div className="flex-container">
         <SideBar
           curentSubject={curentSubject}
@@ -112,7 +140,11 @@ class Listing extends Component {
           onChoiceChange={this.onChoiceChange}
         />
         {renderGivenViewType()}
+      </div>
+    );
 
+    return (<div>
+        {showOembedArticle ? article : listing}
       </div>
     );
   }
@@ -127,6 +159,8 @@ Listing.propTypes = {
   curentSubject: PropTypes.string,
   onViewTypeChange: PropTypes.func,
   onSortChange: PropTypes.func,
+  onViewOembed: PropTypes.func,
+  onBackToListing: PropTypes.func,
   selectedFilters: PropTypes.arrayOf(PropTypes.string),
   onChoiceChange: PropTypes.func,
   onSubjectButtonClick: PropTypes.func,

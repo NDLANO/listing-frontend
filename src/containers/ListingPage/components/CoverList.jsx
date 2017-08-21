@@ -10,30 +10,44 @@ import { injectT } from 'ndla-i18n';
 
 import { findCategoryLabel } from '../../../util/listingHelpers';
 import { CoverShape } from '../../../shapes';
+import ToggleOembed from "./ToggleOembed";
 
-const CoverList = ({ listings }) => (
-    <div className="emneomrade-row">{listings.map(item => <CoverItem key={item.id} listing={item} />)}</div>
+const CoverList = ({ listings, onViewOembed }) => (
+  <div className="emneomrade-row">
+    {listings.map(item => <CoverItem
+      key={item.id}
+      listing={item}
+      onViewOembed={onViewOembed}
+    />)}
+  </div>
 );
 
 CoverList.propTypes = {
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string,
+  onViewOembed: PropTypes.func,
 };
 
-
-const CoverItem = ({ listing }) => (
+const CoverItem = ({ listing, onViewOembed }) => (
   <div className="produkt-container listView">
     <div className="innerList">
-      <a className="h2-tittel-lenke" href={`/article/${listing.articleApiId}`}>
-        <div className="h2-txt-overflow">{listing.title}</div>
-      </a>
+      <div className="h2-tittel-lenke">
+        <div className="h2-txt-overflow">
+          {listing.title}
+        </div>
+      </div>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
+      <ToggleOembed
+        onViewOembed={onViewOembed}
+        cssClass="visfilter-btn-list"
+        url={listing.oembedUrl}/>
     </div>
   </div>
 );
 
 CoverItem.propTypes = {
   listing: CoverShape,
+  onViewOembed: PropTypes.func,
 };
 
 

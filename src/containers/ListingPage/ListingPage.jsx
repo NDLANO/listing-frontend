@@ -22,9 +22,11 @@ class ListingPage extends Component {
     this.state = {
       sortType: 'title_asc',
       viewType: 'grid',
+
     };
     this.onViewTypeChange = this.onViewTypeChange.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
+
   }
 
   componentWillMount() {
@@ -40,15 +42,16 @@ class ListingPage extends Component {
     this.setState({ sortType: event.target.value });
   }
 
-
   render() {
     const { listings } = this.props;
     if (!listings) {
       return null;
     }
+
+
     return (
       <OneColumn>
-        <Helmet title={'NDLA Utlisting'} />
+        <Helmet title={'NDLA Utlisting'}/>
         <div className="flex-container">
           <Listing
             listings={listings}
@@ -56,6 +59,8 @@ class ListingPage extends Component {
             sortType={this.state.sortType}
             onViewTypeChange={this.onViewTypeChange}
             onSortChange={this.onSortChange}
+            onViewOembed={this.onViewOembed}
+            onBackToListing={this.onBackToListing}
           />
         </div>
       </OneColumn>
