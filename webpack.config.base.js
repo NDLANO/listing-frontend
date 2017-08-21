@@ -35,11 +35,26 @@ module.exports = options => ({
             babelrc: false,
             presets: [
               'react', ['env', {
-                targets: {
-                  browsers: ['last 2 versions', 'IE >= 11'],
-                },
+                targets: options.babelPresetTargets,
                 useBuiltIns: true,
                 modules: false,
+                exclude: [
+                  'es6.symbol',
+                  'es6.map',
+                  'es6.set',
+                  'es6.weak-map',
+                  'es6.weak-set',
+                  'es6.typed.array-buffer',
+                  'es6.typed.int8-array',
+                  'es6.typed.uint8-array',
+                  'es6.typed.uint8-clamped-array',
+                  'es6.typed.int16-array',
+                  'es6.typed.uint16-array',
+                  'es6.typed.int32-array',
+                  'es6.typed.uint32-array',
+                  'es6.typed.float32-array',
+                  'es6.typed.float64-array',
+                ],
               }],
             ],
             plugins: ['transform-object-rest-spread'],
@@ -68,21 +83,24 @@ module.exports = options => ({
       __CLIENT__: true,
       __SERVER__: false,
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      chunks: ['main'],
+      filename: options.vendorFilename,
+      minChunks(module) {
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      },
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity,
+    }),
   ]),
 
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
-    extensions: [
-      '.js',
-      '.json',
-      '.jsx',
-      '.css',
-    ],
-    mainFields: [
-      'jsnext:main',
-      'browser',
-      'main',
-    ],
+    extensions: ['.js', '.json', '.jsx', '.css'],
+    mainFields: ['jsnext:main', 'module', 'browser', 'main'],
   },
 
   devtool: options.devtool,
