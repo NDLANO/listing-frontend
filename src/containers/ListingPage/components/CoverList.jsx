@@ -33,7 +33,7 @@ const CoverItem = ({ listing, onViewOembed }) => (
     <div className="innerList">
       <div className="h2-tittel-lenke">
         <div className="h2-txt-overflow">
-          {listing.title}
+          {listing.title.title}
         </div>
       </div>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>

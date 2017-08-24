@@ -7,7 +7,7 @@
  */
 
 export function findCategoryLabel(labels) {
-  return labels
+  return labels.labels
         .filter(_ => _.type === 'category')
         .map(_ => _.labels)
         .map(cleanLabel => cleanLabel.join(', '));
@@ -29,7 +29,7 @@ export function mapLabels(coverList) {
 
     // Make a map witch has flattend all the labels arrays of all the covers
   coverList.forEach((cover) => {
-    cover.labels.forEach((l) => {
+    cover.labels.labels.forEach((l) => {
       function theType() {
         switch (l.type) {
           case undefined:

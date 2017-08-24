@@ -38,17 +38,17 @@ const CoverItem = ({ listing, onSubjectButtonClick, onViewOembed }) => (
     </div>
     <div className="inner">
       <div className="h2-tittel-lenke">
-        <div className="h2-txt-overflow">{listing.title}</div>
+        <div className="h2-txt-overflow">{listing.title.title}</div>
       </div>
       <div className="type-txt">{findCategoryLabel(listing.labels)}</div>
-      <p>{listing.description}</p>
+      <p>{listing.description.description}</p>
       <div>
         <ToggleOembed
           onViewOembed={onViewOembed}
           cssClass="visfilter-btn-grid" url={listing.oembedUrl}/>
       </div>
       <div>
-        {printSubjects(listing.labels).map(subject => <div key={uuid()}>
+        {printSubjects(listing.labels.labels).map(subject => <div key={uuid()}>
           <button className="tag-btn w-button" id={buttonSubjectChoiceIdent(subject)}
                   onClick={event => onSubjectButtonClick(event)}>{subject}</button>
         </div>)
