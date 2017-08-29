@@ -72,7 +72,7 @@ class Listing extends Component {
       if (choices === undefined) {
         return false;
       }
-      return selectedFilters.find(wanted => choices.includes(wanted));
+      return selectedFilters.reduce((result, selectedFilter) => result && choices.includes(selectedFilter), true);
     }
 
     const theWantedListings = () => {
