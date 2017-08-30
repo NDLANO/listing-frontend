@@ -20,10 +20,10 @@ export function* fetchListingByTheme(id) {
     yield put(actions.setListing([]));
   } else {
     const arrayWithfilterChoices = listings.results.map((listing) => {
-      const listingFilterChoices = listingsFlattLabels(listing.labels);
+      const listingFilterChoices = listingsFlattLabels(listing.labels.labels);
       listing.filterChoices = listingFilterChoices.reduce((a, b) => a.concat(b), []);
       return listing;
-    }).sort((a, b) => a.title.localeCompare(b.title));
+    }).sort((a, b) => a.title.title.localeCompare(b.title.title));
 
     yield put(actions.setListing(arrayWithfilterChoices));
   }

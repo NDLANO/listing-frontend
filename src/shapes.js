@@ -16,12 +16,21 @@ export const LabelShape = PropTypes.shape({
 export const CoverShape = PropTypes.shape({
   articleApiId: PropTypes.number.isRequired,
   coverPhotoUrl: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.shape({
+    description: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired
+  }),
   filterChoices: PropTypes.arrayOfStrings,
   id: PropTypes.number.isRequired,
-  labels: PropTypes.arrayOf(LabelShape),
+  labels: PropTypes.shape({
+    labels: PropTypes.arrayOf(LabelShape).isRequired,
+    language: PropTypes.string.isRequired
+  }),
   supportedLanguages: PropTypes.arrayOfStrings,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired
+  }),
   theme: PropTypes.string.isRequired,
   oembedUrl: PropTypes.string,
 });
