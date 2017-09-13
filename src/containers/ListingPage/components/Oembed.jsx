@@ -7,7 +7,8 @@
  */
 import { compose } from 'redux';
 import { injectT } from 'ndla-i18n';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import * as api from './../listingApi';
 import Spinner from "./Spinner";
