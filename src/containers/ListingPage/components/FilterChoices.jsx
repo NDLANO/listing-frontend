@@ -37,7 +37,7 @@ class FilterChoices extends Component {
         <div>
           <div className="filter-tittler">Filter:</div>
           {haveCovers()}
-          <div className="w-checkbox">{filters.map(filter =>
+          <div className="w-checkbox">{filters.filter(filter => filter.labels.length > 1).map(filter =>
             <ChoiceGroup
               filter={filter}
               handleChoiceChange={onChoiceChange}
