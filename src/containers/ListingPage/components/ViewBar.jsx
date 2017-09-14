@@ -6,7 +6,8 @@
  *
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Icon from '../../../icons/Icon';
 
 const ViewBar = ({ onViewTypeChange, onSortChange }) => (

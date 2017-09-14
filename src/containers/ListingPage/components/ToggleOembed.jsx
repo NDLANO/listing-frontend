@@ -6,7 +6,8 @@
  *
  */
 import { connect } from 'react-redux';
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Oembed from "./Oembed";
 
 
