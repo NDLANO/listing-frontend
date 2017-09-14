@@ -6,7 +6,6 @@
  *
  */
 import React from 'react';
-import {compose} from 'redux';
 import {OneColumn} from 'ndla-ui';
 import { injectT } from 'ndla-i18n';
 
@@ -22,5 +21,4 @@ const ThemePage = ({t}) =>
   </OneColumn>
 ;
 
-export default compose(injectT,
-)(ThemePage);
+export default injectT(ThemePage);

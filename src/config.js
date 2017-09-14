@@ -38,18 +38,6 @@ const ndlaListingFrontendDomain = () => {
   }
 };
 
-
-const ndlaFrontendDomain = () => {
-  switch (process.env.NDLA_ENVIRONMENT) {
-    case 'local':
-      return 'http://localhost:30017';
-    case 'prod':
-      return 'https://ndla-frontend.api.ndla.no';
-    default:
-      return `https://ndla-frontend.${process.env.NDLA_ENVIRONMENT}.api.ndla.no`;
-  }
-};
-
 module.exports = Object.assign({
   host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
   port: process.env.NDLA_FRONTENTD_PORT || '3000',
@@ -58,5 +46,4 @@ module.exports = Object.assign({
   disableSSR: process.env.DISABLE_SSR || false,
   ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
   ndlaListingFrontendDomain: ndlaListingFrontendDomain(),
-  ndlaFrontendDomain: ndlaFrontendDomain(),
 }, environment);

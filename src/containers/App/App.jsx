@@ -7,7 +7,7 @@
  */
 
 import React, { PropTypes } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { PageContainer } from 'ndla-ui';
@@ -40,6 +40,7 @@ export class App extends React.Component {
         <Masthead t={t} />
 
         <Switch>
+          <Redirect from="/" exact to="/listing"/>
           <Route path="/listing/:listingId" component={ListingPage}/>
           <Route path="/listing" component={ThemePage}/>
         </Switch>
@@ -61,4 +62,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default connect(mapStateToProps)(injectT(App));
+export default withRouter(connect(mapStateToProps)(injectT(App)));
