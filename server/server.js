@@ -8,6 +8,7 @@
 
 import helmet from 'helmet';
 import express from 'express';
+import robots from 'express-robots';
 import compression from 'compression';
 
 import enableDevMiddleWare from './enableDevMiddleware';
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV === 'development') {
   enableDevMiddleWare(app);
 }
 
+app.use(robots({ UserAgent: '*', Disallow: '/' }));
 app.use(compression());
 app.use(express.static('htdocs', {
   maxAge: 1000 * 60 * 60 * 24 * 365, // One year
