@@ -8,7 +8,6 @@
 
 import helmet from 'helmet';
 import express from 'express';
-import robots from 'express-robots';
 import compression from 'compression';
 
 import enableDevMiddleWare from './enableDevMiddleware';
@@ -22,7 +21,6 @@ if (process.env.NODE_ENV === 'development') {
   enableDevMiddleWare(app);
 }
 
-app.use(robots({ UserAgent: '*', Disallow: '/' }));
 app.use(compression());
 app.use(express.static('htdocs', {
   maxAge: 1000 * 60 * 60 * 24 * 365, // One year
@@ -131,6 +129,11 @@ app.use(
 
 // const renderHtmlString = (locale, userAgentString, state = {}, component = undefined) =>
 //   renderToString(<Html lang={locale} state={state} component={component} className={getConditionalClassnames(userAgentString)} />);
+
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nDisallow: /');
+});
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 200, text: 'Health check ok' });
