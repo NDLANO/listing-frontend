@@ -10,7 +10,7 @@ import 'isomorphic-fetch';
 
 const fetch = require('node-fetch');
 
-const url = `https://ndla.eu.auth0.com/oauth/token`;
+const url = 'https://ndla.eu.auth0.com/oauth/token';
 
 const listingFrontendClientId = process.env.NDLA_LISTING_CLIENT_ID;
 const listingFrontendClientSecret = process.env.NDLA_LISTING_CLIENT_SECRET;
