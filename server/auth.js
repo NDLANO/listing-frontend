@@ -23,8 +23,8 @@ export const getToken = () =>
     },
     body: JSON.stringify({
       grant_type: 'client_credentials',
-      client_id: `${listingFrontendClientId}`,
-      client_secret: `${listingFrontendClientSecret}`,
+      client_id: listingFrontendClientId,
+      client_secret: listingFrontendClientSecret,
       audience: 'ndla_system'
     }),
     json: true
