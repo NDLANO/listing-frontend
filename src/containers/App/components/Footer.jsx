@@ -14,7 +14,7 @@ const FooterWrapper = ({ t }) => (
   <Footer>
     <Footer.Ruler />
     <Footer.Text>
-      <Footer.Editor title={t('footer.footerEditiorInChief')} name="Christer Gundersen" />
+      <Footer.Editor title={t('footer.footerEditiorInChief')} name="Sigurd Trageton" />
       <Footer.Editor title={t('footer.footerManagingEditor')} name="Pål Frønsdal" />
     </Footer.Text>
     <Footer.Text>{t('footer.footerInfo')}</Footer.Text>
