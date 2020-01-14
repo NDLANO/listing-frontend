@@ -18,7 +18,6 @@ import Html from '../helpers/Html';
 import configureStore from '../../src/configureStore';
 import rootSaga from '../../src/sagas';
 import { getLocaleObject, isValidLocale } from '../../src/i18n';
-import { storeAccessToken } from '../../src/util/apiHelpers';
 import App from '../../src/containers/App/App';
 
 const renderHtmlString = (
@@ -36,8 +35,7 @@ const renderHtmlString = (
     />,
   );
 
-export function defaultRoute(req, res, token) {
-  storeAccessToken(token.access_token);
+export function defaultRoute(req, res) {
   const paths = req.url.split('/');
   const { abbreviation: locale, messages } = getLocaleObject(paths[1]);
   const userAgentString = req.headers['user-agent'];

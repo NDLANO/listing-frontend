@@ -23,7 +23,7 @@ const apiDomain = () => {
     case 'prod':
       return 'https://api.ndla.no';
     default:
-      return `https://${ndlaEnvironment}.api.ndla.no`;
+      return `https://api.${ndlaEnvironment}.ndla.no`;
   }
 };
 
@@ -34,7 +34,7 @@ const ndlaListingFrontendDomain = () => {
     case 'prod':
       return 'https://listing-frontend.api.ndla.no';
     default:
-      return `https://listing-frontend.${ndlaEnvironment}.api.ndla.no`;
+      return `https://listing-frontend.api.${ndlaEnvironment}.ndla.no`;
   }
 };
 
