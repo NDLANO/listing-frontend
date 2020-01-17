@@ -31,8 +31,8 @@ class ListingPage extends Component {
   }
 
   componentWillMount() {
-    const { fetchListingByTheme, match: { params } } = this.props;
-    fetchListingByTheme(params.listingId);
+    const { fetchListing, match: { params } } = this.props;
+    fetchListing(params.listingId);
   }
 
   onViewTypeChange(type) {
@@ -48,7 +48,6 @@ class ListingPage extends Component {
     if (!listings) {
       return null;
     }
-
 
     return (
       <OneColumn>
@@ -74,11 +73,11 @@ ListingPage.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   listings: PropTypes.arrayOf(CoverShape),
   locale: PropTypes.string.isRequired,
-  fetchListingByTheme: PropTypes.func.isRequired,
+  fetchListing: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-  fetchListingByTheme: actions.fetchListing,
+  fetchListing: actions.fetchListing,
 };
 
 const mapStateToProps = state => ({

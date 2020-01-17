@@ -5,38 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { call, select, put, take } from 'redux-saga-effects';
-import { getLocale } from '../Locale/localeSelectors';
+import { call, put} from 'redux-saga-effects';
 import * as actions from './listingActions';
 import * as api from './listingApi';
-import { listingsFlattLabels } from './../../util/listingHelpers';
 
 /* eslint-disable no-param-reassign */
-export function* fetchListingByTheme(id) {
-  const locale = yield select(getLocale);
-  const listings = yield call(api.fetchListingByTheme, locale, id);
+export function* fetchListing() {
+  const listings = yield call(api.fetchListing);
+
+  console.log(listings)
 
   if (!listings.results) {
     yield put(actions.setListing([]));
   } else {
-    const arrayWithfilterChoices = listings.results.map((listing) => {
-      const listingFilterChoices = listingsFlattLabels(listing.labels.labels);
-      listing.filterChoices = listingFilterChoices.reduce((a, b) => a.concat(b), []);
-      return listing;
-    }).sort((a, b) => a.title.title.localeCompare(b.title.title));
-
-    yield put(actions.setListing(arrayWithfilterChoices));
+    yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title))));
   }
 }
 /* eslint-disable no-param-reassign */
 
-export function* watchFetchListingByTheme() {
-  while (true) {
-    const { payload: listingId } = yield take(actions.fetchListing);
-    yield call(fetchListingByTheme, listingId);
-  }
+export function* watchFetchListing() {
+  yield call(fetchListing);
 }
 
 export default [
-  watchFetchListingByTheme,
+  watchFetchListing,
 ];
