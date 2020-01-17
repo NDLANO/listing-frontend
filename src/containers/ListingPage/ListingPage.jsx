@@ -10,11 +10,13 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+
+import { mapConceptToListItem } from '../../util/listingHelpers';
+import ListView from '@ndla/listview';
 import { OneColumn } from 'ndla-ui';
 import * as actions from './listingActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
-import Listing from './components/Listing';
 
 class ListingPage extends Component {
 
@@ -53,14 +55,11 @@ class ListingPage extends Component {
       <OneColumn>
         <Helmet title={'NDLA Utlisting'}/>
         <div className="flex-container">
-          <Listing
-            listings={listings}
-            viewType={this.state.viewType}
-            sortType={this.state.sortType}
-            onViewTypeChange={this.onViewTypeChange}
-            onSortChange={this.onSortChange}
-            onViewOembed={this.onViewOembed}
-            onBackToListing={this.onBackToListing}
+          <ListView
+            items={listings.map(concept => mapConceptToListItem(concept))}
+            viewStyle={this.state.viewType}
+            onSelectItem={() => {}}
+            disableViewOption
           />
         </div>
       </OneColumn>

@@ -72,3 +72,20 @@ export function buttonSubjectChoiceIdent(subject) {
 export function listingsFlattLabels(labels) {
   return labels.map(label => label.labels.map(l => `labels.${choiceIdent(label.type, l)}`));
 }
+
+export function mapConceptToListItem(concept) {
+  return {
+    id: concept.id.toString(),
+    name: concept.title.title,
+    description: concept.content.content,
+    image: concept.metaImage.url,
+    subject: [{
+      title: "Subject title",
+      value: "Subject value"
+    }],
+    category: {
+      title: "Category title",
+      value: "Category value"
+    },
+  }
+}
