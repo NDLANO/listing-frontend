@@ -10,10 +10,10 @@ import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import ListView, { activeAlphabet } from '@ndla/listview';
+import { OneColumn } from 'ndla-ui';
 
 import { mapConceptToListItem } from '../../util/listingHelpers';
-import ListView from '@ndla/listview';
-import { OneColumn } from 'ndla-ui';
 import * as actions from './listingActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
@@ -29,10 +29,10 @@ class ListingPage extends Component {
     };
     this.onViewTypeChange = this.onViewTypeChange.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
-
+    this.handleChangedViewStyle = this.handleChangedViewStyle.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { fetchListing, match: { params } } = this.props;
     fetchListing(params.listingId);
   }
@@ -45,21 +45,30 @@ class ListingPage extends Component {
     this.setState({ sortType: event.target.value });
   }
 
+  handleChangedViewStyle({ viewType }) {
+    this.setState(
+      viewType
+    )
+  }
+
   render() {
     const { listings } = this.props;
     if (!listings) {
       return null;
     }
 
+    const listItems = listings.map(concept => mapConceptToListItem(concept));
+
     return (
       <OneColumn>
         <Helmet title={'NDLA Utlisting'}/>
         <div className="flex-container">
           <ListView
-            items={listings.map(concept => mapConceptToListItem(concept))}
+            items={listItems}
+            alphabet={activeAlphabet(listItems)}
             viewStyle={this.state.viewType}
             onSelectItem={() => {}}
-            disableViewOption
+            onChangedViewStyle={this.handleChangedViewStyle}
           />
         </div>
       </OneColumn>
