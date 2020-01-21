@@ -8,6 +8,6 @@
 
 import { resolveJsonOrRejectWithError, apiResourceUrl } from '../../util/apiHelpers';
 
-const baseSubjectUrl = apiResourceUrl('/concept-api/v1/concepts/subjects');
+const baseSubjectUrl = apiResourceUrl('/concept-api/v1/concepts/subjects/');
 
 export const fetchSubjects = () => fetch(baseSubjectUrl).then(resolveJsonOrRejectWithError);

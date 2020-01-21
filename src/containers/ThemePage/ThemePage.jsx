@@ -6,6 +6,7 @@
  *
  */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {OneColumn} from 'ndla-ui';
 import { injectT } from 'ndla-i18n';
 
@@ -14,10 +15,9 @@ const ThemePage = ({t}) =>
     <h1>{t('themePage.heading')}</h1>
     <p>{t('themePage.intro')}</p>
     <h2>{t('themePage.chooseTheme')}</h2>
-    <ul>
-      <li><a href="/listing/verktoy">{t('themePage.toolTheme')}</a></li>
-      <li><a href="/listing/naturbruk">{t('themePage.natureTheme')}</a></li>
-    </ul>
+    <Link to='/listing/verktoy'>{t('themePage.toolTheme')}</Link>
+    <br/>
+    <Link to='/listing/naturbruk'>{t('themePage.natureTheme')}</Link>
   </OneColumn>
 ;
 
