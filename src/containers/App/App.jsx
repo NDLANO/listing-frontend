@@ -19,12 +19,17 @@ import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
 import ThemePage from "../ThemePage/ThemePage";
+import * as actions from '../Subject/subjectActions';
 
 export class App extends React.Component {
   getChildContext() {
     return {
       locale: this.props.locale,
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchSubjects();  
   }
 
   render() {
@@ -53,6 +58,7 @@ export class App extends React.Component {
 
 App.propTypes = {
   locale: PropTypes.string.isRequired,
+  fetchSubjects: PropTypes.func.isRequired
 };
 
 App.childContextTypes = {
@@ -63,4 +69,8 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default withRouter(connect(mapStateToProps)(injectT(App)));
+const mapDispatchToProps = {
+  fetchSubjects: actions.fetchSubjects,
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(injectT(App)));

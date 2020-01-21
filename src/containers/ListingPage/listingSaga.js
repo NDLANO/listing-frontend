@@ -5,11 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { call, put} from 'redux-saga-effects';
+import { call, put, takeEvery } from 'redux-saga-effects';
 import * as actions from './listingActions';
 import * as api from './listingApi';
 
-/* eslint-disable no-param-reassign */
 export function* fetchListing() {
   const listings = yield call(api.fetchListing);
 
@@ -21,12 +20,9 @@ export function* fetchListing() {
     yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title))));
   }
 }
-/* eslint-disable no-param-reassign */
 
 export function* watchFetchListing() {
-  yield call(fetchListing);
+  yield takeEvery(actions.fetchListing, fetchListing);
 }
 
-export default [
-  watchFetchListing,
-];
+export default watchFetchListing;
