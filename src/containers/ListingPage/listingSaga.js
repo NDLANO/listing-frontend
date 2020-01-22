@@ -19,7 +19,8 @@ export function* fetchListing() {
   if (!listings.results) {
     yield put(actions.setListing([]));
   } else {
-    yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title))));
+    const locale = yield select(state => state.locale);
+    yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))));
   }
 }
 
