@@ -10,9 +10,12 @@ import * as actions from './listingActions';
 import * as api from './listingApi';
 
 export function* fetchListing() {
-  const subjects = yield select(state => state.subjects);
-  const listings = yield call(() => api.fetchListing(subjects, 10));
+  let subjects = yield select(state => state.subjects);
+  if (!subjects) {
+    subjects = yield call(api.fetchSubjects);
+  }
 
+  const listings = yield call(() => api.fetchListing(subjects, 12));
   if (!listings.results) {
     yield put(actions.setListing([]));
   } else {

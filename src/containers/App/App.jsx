@@ -28,10 +28,6 @@ export class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchSubjects();  
-  }
-
   render() {
     const { t } = this.props;
     return (
@@ -57,8 +53,7 @@ export class App extends React.Component {
 }
 
 App.propTypes = {
-  locale: PropTypes.string.isRequired,
-  fetchSubjects: PropTypes.func.isRequired
+  locale: PropTypes.string.isRequired
 };
 
 App.childContextTypes = {
@@ -69,8 +64,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-const mapDispatchToProps = {
-  fetchSubjects: actions.fetchSubjects,
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(injectT(App)));
+export default withRouter(connect(mapStateToProps)(injectT(App)));

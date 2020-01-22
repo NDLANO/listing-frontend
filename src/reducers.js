@@ -10,13 +10,10 @@ import { combineReducers } from 'redux';
 
 import locale from './containers/Locale/localeReducer';
 import listings from './containers/ListingPage/listingReducer';
-import subjects from './containers/Subject/subjectReducer';
-
 
 const rootReducers = combineReducers({
   listings,
-  locale,
-  subjects
+  locale
 });
 
 export default rootReducers;
