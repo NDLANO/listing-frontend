@@ -5,17 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { call, put, takeEvery } from 'redux-saga-effects';
+import { call, all, put, takeEvery } from 'redux-saga/effects';
 import * as actions from './subjectActions';
 import * as api from './subjectApi';
 
 export function* fetchSubjects() {
-  const subjects = yield call(api.fetchSubjects);
+  const subjectIds = yield call(api.fetchSubjects);
   
-  if (!subjects) {
+  if (!subjectIds) {
     yield put(actions.setSubjects([]));
   } else {
+    const subjects = [];
+    yield all(subjectIds.map(id => call(() => 
+      api.fetchSubjectNames(id)
+      .then(response => response.json())
+      .then(subject => {
+        if (subject.name) {
+          subjects.push({
+            id,
+            name: subject.name
+          })
+        }
+      })
+    )))
     yield put(actions.setSubjects(subjects))
+    
   }
 }
 

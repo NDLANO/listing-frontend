@@ -8,7 +8,7 @@
 import { handleActions } from 'redux-actions';
 import * as actions from './subjectActions';
 
-const initalState = [];
+const initalState = null;
 
 export default handleActions({
   [actions.setSubjects]: {
