@@ -11,6 +11,5 @@ import { resolveJsonOrRejectWithError, apiResourceUrl } from '../../util/apiHelp
 const baseListingUrl = apiResourceUrl('/concept-api/v1/concepts');
 const baseOembedUrl = apiResourceUrl('/oembed-proxy/v1/oembed');
 
-export const fetchSubjects = () => fetch(`${baseListingUrl}/subjects/`).then(resolveJsonOrRejectWithError);
 export const fetchListing = (subjectIds, pageSize) => fetch(`${baseListingUrl}?subjectIds=${subjectIds.toString()}&page-size=${pageSize}`).then(resolveJsonOrRejectWithError);
 export const fetchOembed = (url) => fetch(`${baseOembedUrl}/?url=${encodeURI(url)}`).then(resolveJsonOrRejectWithError);

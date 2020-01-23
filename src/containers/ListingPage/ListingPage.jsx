@@ -33,7 +33,8 @@ class ListingPage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchListing();
+    const { fetchListing, match: { params } } = this.props;
+    fetchListing(params.listingId);
   }
 
   onViewTypeChange(type) {
