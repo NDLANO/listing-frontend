@@ -6,19 +6,42 @@
  *
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {OneColumn} from 'ndla-ui';
+import { connect } from 'react-redux';
+import { OneColumn } from 'ndla-ui';
 import { injectT } from 'ndla-i18n';
 
-const ThemePage = ({t}) =>
-  <OneColumn>
-    <h1>{t('themePage.heading')}</h1>
-    <p>{t('themePage.intro')}</p>
-    <h2>{t('themePage.chooseTheme')}</h2>
-    <Link to='/listing/verktoy'>{t('themePage.toolTheme')}</Link>
-    <br/>
-    <Link to='/listing/naturbruk'>{t('themePage.natureTheme')}</Link>
-  </OneColumn>
-;
+const ThemePage = ({ t, subjects }) => {
+  if (!subjects) {
+    return null;
+  }
 
-export default injectT(ThemePage);
+  return (
+    <OneColumn>
+      <h1>{t('themePage.heading')}</h1>
+      <p>{t('themePage.intro')}</p>
+      <h2>{t('themePage.chooseTheme')}</h2>
+      {subjects.map(subject =>
+        <div key={subject.id}>
+          <Link to={`/${subject.id}`}>{subject.name}</Link>
+          <br/>
+        </div>
+      )}
+    </OneColumn>
+  );
+}
+
+ThemePage.propTypes = {
+  subjects: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string
+    })
+  )
+}
+const mapStateToProps = state => ({
+  subjects: state.subjects
+});
+
+export default connect(mapStateToProps)(injectT(ThemePage));

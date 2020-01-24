@@ -8,7 +8,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { PageContainer } from 'ndla-ui';
@@ -46,9 +46,8 @@ export class App extends React.Component {
         <Masthead t={t} />
 
         <Switch>
-          <Redirect from="/" exact to="/listing"/>
-          <Route path="/listing/:listingId" component={ListingPage}/>
-          <Route path="/listing" component={ThemePage}/>
+          <Route path="/:listingId" component={ListingPage}/>
+          <Route path="/" component={ThemePage}/>
         </Switch>
         <Footer t={t} />
       </PageContainer>
