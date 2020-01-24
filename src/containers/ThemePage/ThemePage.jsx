@@ -5,14 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { OneColumn } from 'ndla-ui';
 import { injectT } from 'ndla-i18n';
+import * as actions from '../Subject/subjectActions';
 
-const ThemePage = ({ t, subjects }) => {
+const ThemePage = ({ t, subjects, fetchSubjects }) => {
+  useEffect(() => {
+    fetchSubjects();
+  }, []);
+  
   if (!subjects) {
     return null;
   }
@@ -38,10 +43,16 @@ ThemePage.propTypes = {
       id: PropTypes.string,
       name: PropTypes.string
     })
-  )
+  ),
+  fetchSubjects: PropTypes.func
 }
+
 const mapStateToProps = state => ({
   subjects: state.subjects
 });
 
-export default connect(mapStateToProps)(injectT(ThemePage));
+const mapDispatchToProps = {
+  fetchSubjects: actions.fetchSubjects,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectT(ThemePage));

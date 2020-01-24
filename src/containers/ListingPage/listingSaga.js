@@ -5,18 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { take, select, call, put, takeEvery } from 'redux-saga/effects';
+import { select, call, put, takeEvery } from 'redux-saga/effects';
 import * as actions from './listingActions';
 import * as api from './listingApi';
-import { setSubjects } from '../Subject/subjectActions';
 
-export function* fetchListing() {
-  let subjects = yield select(state => state.subjects);
-  if (!subjects) {
-    yield take(setSubjects);
-    subjects = yield select(state => state.subjects);
-  }
-  const listings = yield call(() => api.fetchListing(subjects.map(subject => subject.id), 12));
+export function* fetchListing(action) {
+  const { payload: subjectId } = action;
+  const listings = yield call(() => api.fetchListing(subjectId, 12));
 
   if (!listings.results) {
     yield put(actions.setListing([]));

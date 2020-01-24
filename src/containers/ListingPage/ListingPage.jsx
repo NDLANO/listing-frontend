@@ -25,7 +25,6 @@ class ListingPage extends Component {
     this.state = {
       sortType: 'title_asc',
       viewType: 'grid',
-
     };
     this.onViewTypeChange = this.onViewTypeChange.bind(this);
     this.onSortChange = this.onSortChange.bind(this);
@@ -33,7 +32,8 @@ class ListingPage extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchListing();
+    const { fetchListing, match: { params } } = this.props;
+    fetchListing(params.subjectId);
   }
 
   onViewTypeChange(type) {
