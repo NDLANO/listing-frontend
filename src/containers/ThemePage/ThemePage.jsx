@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -14,11 +14,8 @@ import { injectT } from 'ndla-i18n';
 import * as actions from '../Subject/subjectActions';
 
 const ThemePage = ({ t, subjects, fetchSubjects }) => {
-  useEffect(() => {
-    fetchSubjects();
-  }, []);
-  
   if (!subjects) {
+    fetchSubjects();
     return null;
   }
 
