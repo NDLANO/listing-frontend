@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
@@ -18,63 +18,32 @@ import * as actions from './listingActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 
-class ListingPage extends Component {
+const ListingPage = (props) => {
+  const [viewType, setViewType] = useState('grid');
+  const [sortBy, setSortBy] = useState('category');
+  const [filters, setFilters] = useState([]);
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      sortType: 'title_asc',
-      viewType: 'grid',
-    };
-    this.onViewTypeChange = this.onViewTypeChange.bind(this);
-    this.onSortChange = this.onSortChange.bind(this);
-    this.handleChangedViewStyle = this.handleChangedViewStyle.bind(this);
-  }
-
-  componentDidMount() {
-    const { fetchListing, match: { params } } = this.props;
+  useEffect(() => {
+    const { fetchListing, match: { params } } = props;
     fetchListing(params.subjectId);
-  }
+  }, []);
 
-  onViewTypeChange(type) {
-    this.setState({ viewType: type });
-  }
+  const listItems = props.listings.map(concept => mapConceptToListItem(concept));
 
-  onSortChange(event) {
-    this.setState({ sortType: event.target.value });
-  }
-
-  handleChangedViewStyle({ viewType }) {
-    this.setState(
-      viewType
-    )
-  }
-
-  render() {
-    const { listings } = this.props;
-    if (!listings) {
-      return null;
-    }
-
-    const listItems = listings.map(concept => mapConceptToListItem(concept));
-
-    return (
-      <OneColumn>
-        <Helmet title={'NDLA Utlisting'}/>
-        <div className="flex-container">
-          <ListView
-            items={listItems}
-            alphabet={activeAlphabet(listItems)}
-            viewStyle={this.state.viewType}
-            onSelectItem={() => {}}
-            onChangedViewStyle={this.handleChangedViewStyle}
-          />
-        </div>
-      </OneColumn>
-    );
-  }
+  return (
+    <OneColumn>
+      <Helmet title={'NDLA Utlisting'} />
+        <ListView
+          items={listItems}
+          alphabet={activeAlphabet(listItems)}
+          viewStyle={viewType}
+          onSelectItem={() => { }}
+          onChangedViewStyle={({ v }) => setViewType(v)}
+          filters={filters}
+        />
+    </OneColumn>
+  );
 }
-
 
 ListingPage.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
