@@ -11,25 +11,24 @@ import * as api from './subjectApi';
 
 export function* fetchSubjects() {
   const subjectIds = yield call(api.fetchSubjects);
-  
+
   if (!subjectIds) {
     yield put(actions.setSubjects([]));
   } else {
     const subjects = [];
-    yield all(subjectIds.map(id => call(() => 
+    yield all(subjectIds.map(id => call(() =>
       api.fetchSubjectNames(id)
-      .then(response => response.json())
-      .then(subject => {
-        if (subject.name) {
+        .then(response => response.json())
+        .then(subject => {
           subjects.push({
             id,
-            name: subject.name
+            name: subject.name ? subject.name : id
           })
-        }
-      })
+        })
+        .catch(() => { })
     )))
     yield put(actions.setSubjects(subjects))
-    
+
   }
 }
 
