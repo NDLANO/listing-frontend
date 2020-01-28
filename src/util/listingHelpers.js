@@ -89,3 +89,18 @@ export function mapConceptToListItem(concept) {
     },
   }
 }
+
+export function mapTagsToCategories(tags) {
+  const categories = {
+    main: [],
+    sub: []
+  }
+  tags.forEach(tag => {
+    const splitTag = tag.split(':');
+    if (splitTag) {
+      categories.main = splitTag[0];
+      categories.sub = splitTag[1];
+    }
+  })
+  return categories;
+}

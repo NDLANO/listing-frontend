@@ -8,7 +8,14 @@
 import { handleActions } from 'redux-actions';
 import * as actions from './listingActions';
 
-const initalState = [];
+const initalState = {
+  subjectName: '',
+  categories: {
+    main: '',
+    sub: ''
+  },
+  listings: []
+};
 
 export default handleActions({
   [actions.setListing]: {

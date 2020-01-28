@@ -9,7 +9,9 @@
 import { resolveJsonOrRejectWithError, apiResourceUrl } from '../../util/apiHelpers';
 
 const baseListingUrl = apiResourceUrl('/concept-api/v1/concepts');
-const baseOembedUrl = apiResourceUrl('/oembed-proxy/v1/oembed');
+const baseTaxonomyUrl = apiResourceUrl('/taxonomy/v1/subjects/')
 
 export const fetchListing = (subjectId, pageSize) => fetch(`${baseListingUrl}?subjectIds=${subjectId}&page-size=${pageSize}`).then(resolveJsonOrRejectWithError);
-export const fetchOembed = (url) => fetch(`${baseOembedUrl}/?url=${encodeURI(url)}`).then(resolveJsonOrRejectWithError);
+export const fetchTags = (subjectId) => fetch(`${baseListingUrl}/tags/?subjectIds=${subjectId}`).then(resolveJsonOrRejectWithError);
+export const fetchSubjectName = (subjectId) => fetch(baseTaxonomyUrl + subjectId)
+    .then(res => res.ok ? res.json().name : subjectId)

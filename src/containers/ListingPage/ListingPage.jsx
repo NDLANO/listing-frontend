@@ -28,7 +28,7 @@ const ListingPage = (props) => {
     fetchListing(params.subjectId);
   }, []);
 
-  const listItems = props.listings.map(concept => mapConceptToListItem(concept));
+  const listItems = props.listings.listings.map(concept => mapConceptToListItem(concept));
 
   return (
     <OneColumn>
@@ -47,7 +47,14 @@ const ListingPage = (props) => {
 
 ListingPage.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
-  listings: PropTypes.arrayOf(CoverShape),
+  listings: PropTypes.exact({
+    subjectName: PropTypes.string,
+    categories: PropTypes.exact({
+      main: PropTypes.string.isRequired,
+      sub: PropTypes.string.isRequired
+    }),
+    listings: PropTypes.arrayOf(CoverShape)
+  }),
   locale: PropTypes.string.isRequired,
   fetchListing: PropTypes.func.isRequired,
 };

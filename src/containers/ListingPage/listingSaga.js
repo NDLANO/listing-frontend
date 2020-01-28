@@ -8,16 +8,24 @@
 import { select, call, put, takeEvery } from 'redux-saga/effects';
 import * as actions from './listingActions';
 import * as api from './listingApi';
+import { mapTagsToCategories } from '../../util/listingHelpers'
 
 export function* fetchListing(action) {
   const { payload: subjectId } = action;
+
+  const subjectName = yield call(() => api.fetchSubjectName(subjectId).then(res => res || subjectId));
+  const tags = yield call(() => api.fetchTags(subjectId));
   const listings = yield call(() => api.fetchListing(subjectId, 12));
 
   if (!listings.results) {
-    yield put(actions.setListing([]));
+    yield put(actions.setListing({}));
   } else {
     const locale = yield select(state => state.locale);
-    yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))));
+    yield put(actions.setListing({
+      subjectName,
+      categories: tags.tags ? mapTagsToCategories(tags.tags) : undefined,
+      listings: listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))
+    }))
   }
 }
 
