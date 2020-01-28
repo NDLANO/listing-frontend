@@ -13,5 +13,5 @@ const baseTaxonomyUrl = apiResourceUrl('/taxonomy/v1/subjects/')
 
 export const fetchListing = (subjectId, pageSize) => fetch(`${baseListingUrl}?subjectIds=${subjectId}&page-size=${pageSize}`).then(resolveJsonOrRejectWithError);
 export const fetchTags = (subjectId) => fetch(`${baseListingUrl}/tags/?subjectIds=${subjectId}`).then(resolveJsonOrRejectWithError);
-export const fetchSubjectName = (subjectId) => fetch(baseTaxonomyUrl + subjectId)
-    .then(res => res.ok ? res.json().name : subjectId)
+export const fetchSubject = (subjectId) => fetch(baseTaxonomyUrl + subjectId)
+    .then(res => res.ok ? res.json() : subjectId);

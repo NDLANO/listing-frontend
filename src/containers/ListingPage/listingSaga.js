@@ -13,7 +13,7 @@ import { mapTagsToCategories } from '../../util/listingHelpers'
 export function* fetchListing(action) {
   const { payload: subjectId } = action;
 
-  const subjectName = yield call(() => api.fetchSubjectName(subjectId).then(res => res || subjectId));
+  const subject = yield call(() => api.fetchSubject(subjectId));
   const tags = yield call(() => api.fetchTags(subjectId));
   const listings = yield call(() => api.fetchListing(subjectId, 12));
 
@@ -22,7 +22,7 @@ export function* fetchListing(action) {
   } else {
     const locale = yield select(state => state.locale);
     yield put(actions.setListing({
-      subjectName,
+      subjectName: subject.name || subjectId,
       categories: tags.tags ? mapTagsToCategories(tags.tags) : undefined,
       listings: listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))
     }))

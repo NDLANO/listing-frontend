@@ -28,7 +28,7 @@ const ListingPage = (props) => {
     fetchListing(params.subjectId);
   }, []);
 
-  const listItems = props.listings.listings.map(concept => mapConceptToListItem(concept));
+  const listItems = props.listings.listings.map(concept => mapConceptToListItem(concept, props.listings.subjectName));
 
   return (
     <OneColumn>
