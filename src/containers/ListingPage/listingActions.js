@@ -10,3 +10,4 @@ import { createAction } from 'redux-actions';
 
 export const fetchListing = createAction('FETCH_LISTING');
 export const setListing = createAction('SET_LISTING');
+export const resetListing = createAction('RESET_LISTING');

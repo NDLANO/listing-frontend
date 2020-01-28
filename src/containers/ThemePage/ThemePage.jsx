@@ -12,12 +12,15 @@ import { connect } from 'react-redux';
 import { OneColumn } from 'ndla-ui';
 import { injectT } from 'ndla-i18n';
 import * as actions from '../Subject/subjectActions';
+import * as subjectActions from '../ListingPage/listingActions';
 
-const ThemePage = ({ t, subjects, fetchSubjects }) => {
+const ThemePage = ({ t, subjects, fetchSubjects, resetListing }) => {
   if (!subjects) {
     fetchSubjects();
     return null;
   }
+  
+  resetListing();
 
   return (
     <OneColumn>
@@ -41,7 +44,8 @@ ThemePage.propTypes = {
       name: PropTypes.string
     })
   ),
-  fetchSubjects: PropTypes.func
+  fetchSubjects: PropTypes.func,
+  resetListing: PropTypes.func
 }
 
 const mapStateToProps = state => ({
@@ -50,6 +54,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchSubjects: actions.fetchSubjects,
+  resetListing: subjectActions.resetListing
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectT(ThemePage));

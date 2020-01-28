@@ -22,4 +22,8 @@ export default handleActions({
     next: (state, action) => action.payload,
     throw: state => state,
   },
+  [actions.resetListing]: {
+    next: () => initalState,
+    throw: state => state
+  }
 }, initalState);
