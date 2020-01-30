@@ -14,15 +14,17 @@ const FooterWrapper = ({ t }) => (
   <Footer>
     <Footer.Ruler />
     <Footer.Text>
-      <Footer.Editor title={t('footer.footerEditiorInChief')} name="Sigurd Trageton" />
-      <Footer.Editor title={t('footer.footerManagingEditor')} name="Pål Frønsdal" />
+      <Footer.Editor
+        title={t('footer.footerEditiorInChief')}
+        name='Sigurd Trageton'
+      />
     </Footer.Text>
     <Footer.Text>{t('footer.footerInfo')}</Footer.Text>
   </Footer>
 );
 
 FooterWrapper.propTypes = {
-  t: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 export default FooterWrapper;
