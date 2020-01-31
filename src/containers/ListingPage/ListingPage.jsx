@@ -20,9 +20,10 @@ import { CoverShape } from '../../shapes';
 
 const ListingPage = (props) => {
   const [viewType, setViewType] = useState('grid');
-  const [sortBy, setSortBy] = useState('category');
+  const [sortByValue, setSortByValue] = useState('category');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
   const [filters, setFilters] = useState({ subject: [], category: [] });
 
   useEffect(() => {
@@ -40,12 +41,26 @@ const ListingPage = (props) => {
   const filterItems = (listItems) => {
     let filteredItems = listItems;
 
+    // Checkboxes
     if (filters.subject.length) {
       filteredItems = filteredItems.filter(item => item.filters.main.some(subject => filters.subject.includes(subject)));
     }
     if (filters.category.length) {
       filteredItems = filteredItems.filter(item => item.filters.sub.some(category => filters.category.includes(category)));
     }
+
+    // Search
+    if (searchValue.length > 0) {
+      const searchValueLowercase = searchValue.toLowerCase();
+      filteredItems = filteredItems.filter(
+        item =>
+          (item.description &&
+            item.description.toLowerCase().indexOf(searchValueLowercase) !== -1) ||
+          item.name.toLowerCase().indexOf(searchValueLowercase) !== -1,
+      );
+    }
+
+
     return filteredItems;
   }
 
@@ -62,6 +77,8 @@ const ListingPage = (props) => {
         detailedItem={detailedItem}
         selectCallback={setDetailedItem}
         onSelectItem={setSelectItem}
+        searchValue={searchValue}
+        onChangedSearchValue={(e) => setSearchValue(e.target.value)}
         filters={[
           {
             options: props.listings.filters.main.map(item => ({ title: item, value: item })),
