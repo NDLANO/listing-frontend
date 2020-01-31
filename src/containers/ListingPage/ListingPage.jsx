@@ -19,7 +19,7 @@ import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 
 const ListingPage = (props) => {
-  const [viewType, setViewType] = useState('grid');
+  const [viewStyle, setViewStyle] = useState('grid');
   const [sortByValue, setSortByValue] = useState('category');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
@@ -60,7 +60,6 @@ const ListingPage = (props) => {
       );
     }
 
-
     return filteredItems;
   }
 
@@ -72,13 +71,13 @@ const ListingPage = (props) => {
       <ListView
         items={listItems}
         alphabet={activeAlphabet(listItems)}
-        viewStyle={viewType}
-        onChangedViewStyle={({ v }) => setViewType(v)}
         detailedItem={detailedItem}
         selectCallback={setDetailedItem}
         onSelectItem={setSelectItem}
+        viewStyle={viewStyle}
+        onChangedViewStyle={e => setViewStyle(e.viewStyle)}
         searchValue={searchValue}
-        onChangedSearchValue={(e) => setSearchValue(e.target.value)}
+        onChangedSearchValue={e => setSearchValue(e.target.value)}
         filters={[
           {
             options: props.listings.filters.main.map(item => ({ title: item, value: item })),
