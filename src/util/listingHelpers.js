@@ -90,17 +90,17 @@ export function mapConceptToListItem(concept, subjectName) {
   }
 }
 
-export function mapTagsToCategories(tags) {
-  const categories = {
+export function mapTagsToFilters(tags) {
+  const filters = {
     main: [],
     sub: []
   }
   tags.forEach(tag => {
     const splitTag = tag.split(':');
-    if (splitTag) {
-      categories.main = splitTag[0];
-      categories.sub = splitTag[1];
+    if (splitTag.length > 1) {
+      filters.main.push(splitTag[0]);
+      filters.sub.push(splitTag[1]);
     }
   })
-  return categories;
+  return filters;
 }

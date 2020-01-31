@@ -21,26 +21,52 @@ import { CoverShape } from '../../shapes';
 const ListingPage = (props) => {
   const [viewType, setViewType] = useState('grid');
   const [sortBy, setSortBy] = useState('category');
-  const [filters, setFilters] = useState([]);
+  const [detailedItem, setDetailedItem] = useState(null);
+  const [selectItem, setSelectItem] = useState(null);
+  const [filters, setFilters] = useState({ subject: [], category: [] });
 
   useEffect(() => {
     const { fetchListing, match: { params } } = props;
     fetchListing(params.subjectId);
   }, []);
 
+  const handleChangeFilters = (key, values) => {
+    setFilters({
+      ...filters,
+      [key]: values
+    });
+  }
+
   const listItems = props.listings.listings.map(concept => mapConceptToListItem(concept, props.listings.subjectName));
 
   return (
     <OneColumn>
       <Helmet title={'NDLA Utlisting'} />
-        <ListView
-          items={listItems}
-          alphabet={activeAlphabet(listItems)}
-          viewStyle={viewType}
-          onSelectItem={() => { }}
-          onChangedViewStyle={({ v }) => setViewType(v)}
-          filters={filters}
-        />
+      <ListView
+        items={listItems}
+        alphabet={activeAlphabet(listItems)}
+        viewStyle={viewType}
+        onChangedViewStyle={({ v }) => setViewType(v)}
+        detailedItem={detailedItem}
+        selectCallback={setDetailedItem}
+        onSelectItem={setSelectItem}
+        filters={[
+          {
+            options: props.listings.filters.main.map(item => ({ title: item, value: item })),
+            filterValues: filters.subject,
+            onChange: handleChangeFilters,
+            key: 'subject',
+            label: '',
+          },
+          {
+            options: props.listings.filters.sub.map(item => ({ title: item, value: item })),
+            filterValues: filters.category,
+            onChange: handleChangeFilters,
+            key: 'category',
+            label: '',
+          },
+        ]}
+      />
     </OneColumn>
   );
 }
@@ -49,9 +75,9 @@ ListingPage.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   listings: PropTypes.exact({
     subjectName: PropTypes.string,
-    categories: PropTypes.exact({
-      main: PropTypes.string.isRequired,
-      sub: PropTypes.string.isRequired
+    filters: PropTypes.exact({
+      main: PropTypes.arrayOf(PropTypes.string).isRequired,
+      sub: PropTypes.arrayOf(PropTypes.string).isRequired
     }),
     listings: PropTypes.arrayOf(CoverShape)
   }),

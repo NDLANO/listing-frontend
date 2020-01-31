@@ -10,9 +10,9 @@ import * as actions from './listingActions';
 
 const initalState = {
   subjectName: '',
-  categories: {
-    main: '',
-    sub: ''
+  filters: {
+    main: [],
+    sub: []
   },
   listings: []
 };

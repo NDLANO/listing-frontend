@@ -38,7 +38,7 @@ export class App extends React.Component {
           ]}
         />
 
-        <Masthead t={t} />
+        { /* <Masthead t={t} /> */ }
 
         <Switch>
           <Route path="/:subjectId" component={ListingPage}/>

@@ -8,7 +8,7 @@
 import { select, call, put, takeEvery } from 'redux-saga/effects';
 import * as actions from './listingActions';
 import * as api from './listingApi';
-import { mapTagsToCategories } from '../../util/listingHelpers'
+import { mapTagsToFilters } from '../../util/listingHelpers'
 
 export function* fetchListing(action) {
   const { payload: subjectId } = action;
@@ -23,7 +23,7 @@ export function* fetchListing(action) {
     const locale = yield select(state => state.locale);
     yield put(actions.setListing({
       subjectName: subject.name || subjectId,
-      categories: tags.tags ? mapTagsToCategories(tags.tags) : undefined,
+      filters: tags[0].tags ? mapTagsToFilters(tags[0].tags) : undefined,
       listings: listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))
     }))
   }
