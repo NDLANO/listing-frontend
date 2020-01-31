@@ -15,7 +15,7 @@ export function* fetchListing(action) {
 
   const subject = yield call(() => api.fetchSubject(subjectId));
   const tags = yield call(() => api.fetchTags(subjectId));
-  const listings = yield call(() => api.fetchListing(subjectId, 12));
+  const listings = yield call(() => api.fetchListing(subjectId, 1000));
 
   if (!listings.results) {
     yield put(actions.setListing({}));

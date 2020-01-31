@@ -73,6 +73,21 @@ export function listingsFlattLabels(labels) {
   return labels.map(label => label.labels.map(l => `labels.${choiceIdent(label.type, l)}`));
 }
 
+export function mapTagsToFilters(tags) {
+  const filters = {
+    main: [],
+    sub: []
+  }
+  tags.forEach(tag => {
+    const splitTag = tag.split(':');
+    if (splitTag.length > 1) {
+      if (!filters.main.includes(splitTag[0])) filters.main.push(splitTag[0]);
+      if (!filters.sub.includes(splitTag[1])) filters.sub.push(splitTag[1]);
+    }
+  })
+  return filters;
+}
+
 export function mapConceptToListItem(concept, subjectName) {
   return {
     id: concept.id.toString(),
@@ -87,20 +102,6 @@ export function mapConceptToListItem(concept, subjectName) {
       title: '',
       value: ''
     },
+    filters: mapTagsToFilters(concept.tags.tags)
   }
-}
-
-export function mapTagsToFilters(tags) {
-  const filters = {
-    main: [],
-    sub: []
-  }
-  tags.forEach(tag => {
-    const splitTag = tag.split(':');
-    if (splitTag.length > 1) {
-      filters.main.push(splitTag[0]);
-      filters.sub.push(splitTag[1]);
-    }
-  })
-  return filters;
 }

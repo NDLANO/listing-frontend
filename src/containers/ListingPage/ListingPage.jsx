@@ -37,7 +37,19 @@ const ListingPage = (props) => {
     });
   }
 
-  const listItems = props.listings.listings.map(concept => mapConceptToListItem(concept, props.listings.subjectName));
+  const filterItems = (listItems) => {
+    let filteredItems = listItems;
+
+    if (filters.subject.length) {
+      filteredItems = filteredItems.filter(item => item.filters.main.some(subject => filters.subject.includes(subject)));
+    }
+    if (filters.category.length) {
+      filteredItems = filteredItems.filter(item => item.filters.sub.some(category => filters.category.includes(category)));
+    }
+    return filteredItems;
+  }
+
+  const listItems = filterItems(props.listings.listings.map(concept => mapConceptToListItem(concept, props.listings.subjectName)));
 
   return (
     <OneColumn>
