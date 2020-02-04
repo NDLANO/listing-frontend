@@ -16,6 +16,7 @@ import { OneColumn } from 'ndla-ui';
 import { mapConceptToListItem } from '../../util/listingHelpers';
 import useQueryString from '../../util/useQueryString';
 import * as actions from './listingActions';
+import { fetchSubjects } from '../Subject/subjectActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 
@@ -26,6 +27,10 @@ const ListingPage = (props) => {
   const [selectItem, setSelectItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [filters, setFilters] = useQueryString({ subject: [], category: [] });
+
+  useEffect(() => {
+    props.fetchSubjects();
+  }, []);
 
   useEffect(() => {
     const { fetchListing, match: { params } } = props;
@@ -112,13 +117,21 @@ ListingPage.propTypes = {
   }),
   locale: PropTypes.string.isRequired,
   fetchListing: PropTypes.func.isRequired,
+  subjects: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string,
+      name: PropTypes.string
+    })
+  ),
 };
 
 const mapDispatchToProps = {
+  fetchSubjects,
   fetchListing: actions.fetchListing,
 };
 
 const mapStateToProps = state => ({
+  subjects: state.subjects,
   listings: state.listings,
   locale: getLocale(state),
 });
