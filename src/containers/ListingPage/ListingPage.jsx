@@ -14,6 +14,7 @@ import ListView, { activeAlphabet } from '@ndla/listview';
 import { OneColumn } from 'ndla-ui';
 
 import { mapConceptToListItem } from '../../util/listingHelpers';
+import useQueryString from '../../util/useQueryString';
 import * as actions from './listingActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
@@ -24,7 +25,7 @@ const ListingPage = (props) => {
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [filters, setFilters] = useState({ subject: [], category: [] });
+  const [filters, setFilters] = useQueryString({ subject: [], category: [] });
 
   useEffect(() => {
     const { fetchListing, match: { params } } = props;

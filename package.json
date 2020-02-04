@@ -87,6 +87,7 @@
     "node-fetch": "^1.7.3",
     "prettier": "^1.7.4",
     "prop-types": "^15.6.0",
+    "query-string": "^6.10.1",
     "react": "^16.12.0",
     "react-bem-helper": "^1.4.1",
     "react-collapse": "^4.0.3",
