@@ -64,6 +64,8 @@
     "@emotion/core": "^10.0.27",
     "@emotion/styled-base": "^10.0.27",
     "@ndla/article-scripts": "^0.5.11",
+    "@ndla/editor": "^0.7.6",
+    "@ndla/forms": "^0.3.64",
     "@ndla/listview": "^0.2.68",
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",

@@ -11,6 +11,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import ListView, { activeAlphabet } from '@ndla/listview';
+import { Select } from '@ndla/forms';
 import { OneColumn } from 'ndla-ui';
 
 import { mapConceptToListItem } from '../../util/listingHelpers';
@@ -26,6 +27,7 @@ const ListingPage = (props) => {
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
+  const [subject, setSubject] = useQueryString('');
   const [filters, setFilters] = useQueryString({ subject: [], category: [] });
 
   useEffect(() => {
@@ -69,11 +71,24 @@ const ListingPage = (props) => {
     return filteredItems;
   }
 
+  if(!props.listings.listings || !props.subjects) {
+    return null;
+  }
+
   const listItems = filterItems(props.listings.listings.map(concept => mapConceptToListItem(concept, props.listings.subjectName)));
 
   return (
     <OneColumn>
       <Helmet title={'NDLA Utlisting'} />
+      <Select
+        value={subject}
+        onChange={e => setSubject(e.target.value)}>
+          {props.subjects.map(item => (
+            <option value={item.name} key={item.name}>
+              {item.name}
+            </option>
+          ))}
+      </Select>
       <ListView
         items={listItems}
         alphabet={activeAlphabet(listItems)}
