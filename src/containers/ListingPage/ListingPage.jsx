@@ -36,11 +36,15 @@ const ListingPage = (props) => {
   }, []);
 
   useEffect(() => {
-    setFilters({ subject: [], category: [] });
     if (currentSubject.length > 0) {
       props.fetchListing(currentSubject);
     }
   }, [currentSubject]);
+
+  const handleChangeSubject = (e) => {
+    setCurrentSubject(e.target.value);
+    setFilters({ subject: [], category: [] });
+  }
 
   const handleChangeFilters = (key, values) => {
     setFilters({
@@ -85,7 +89,7 @@ const ListingPage = (props) => {
       <Helmet title={'NDLA Utlisting'} />
       <Select
         value={currentSubject}
-        onChange={e => setCurrentSubject(e.target.value)}>
+        onChange={handleChangeSubject}>
           {props.subjects.map(item => (
             <option value={item.id} key={item.id}>
               {item.name}
