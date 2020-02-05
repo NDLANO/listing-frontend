@@ -27,7 +27,7 @@ const ListingPage = (props) => {
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [subject, setSubject] = useQueryString('');
+  const [currentSubject, setCurrentSubject] = useQueryString('');
   const [filters, setFilters] = useQueryString({ subject: [], category: [] });
 
   useEffect(() => {
@@ -35,9 +35,10 @@ const ListingPage = (props) => {
   }, []);
 
   useEffect(() => {
-    const { fetchListing, match: { params } } = props;
-    fetchListing(params.subjectId);
-  }, []);
+    if (currentSubject.length > 0) {
+      props.fetchListing(currentSubject);
+    }
+  }, [currentSubject]);
 
   const handleChangeFilters = (key, values) => {
     setFilters({
@@ -81,10 +82,10 @@ const ListingPage = (props) => {
     <OneColumn>
       <Helmet title={'NDLA Utlisting'} />
       <Select
-        value={subject}
-        onChange={e => setSubject(e.target.value)}>
+        value={currentSubject}
+        onChange={e => setCurrentSubject(e.target.value)}>
           {props.subjects.map(item => (
-            <option value={item.name} key={item.name}>
+            <option value={item.id} key={item.id}>
               {item.name}
             </option>
           ))}
