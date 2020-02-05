@@ -8,7 +8,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { PageContainer } from 'ndla-ui';
@@ -18,7 +17,6 @@ import Masthead from '../Masthead';
 import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
-import ThemePage from "../ThemePage/ThemePage";
 
 export class App extends React.Component {
   getChildContext() {
@@ -37,13 +35,8 @@ export class App extends React.Component {
             { name: 'description', content: t('meta.description') },
           ]}
         />
-
         { /* <Masthead t={t} /> */ }
-
-        <Switch>
-          <Route path="/:subjectId" component={ListingPage}/>
-          <Route path="/" component={ThemePage}/>
-        </Switch>
+        <ListingPage/>
         <Footer t={t} />
       </PageContainer>
     );
@@ -62,4 +55,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default withRouter(connect(mapStateToProps)(injectT(App)));
+export default connect(mapStateToProps)(injectT(App));

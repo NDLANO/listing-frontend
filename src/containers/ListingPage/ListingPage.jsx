@@ -15,7 +15,8 @@ import { Select } from '@ndla/forms';
 import { OneColumn } from 'ndla-ui';
 
 import { mapConceptToListItem } from '../../util/listingHelpers';
-import useQueryString from '../../util/useQueryString';
+import useURIParameter from '../../util/useURIParameter';
+import useQueryParameter from '../../util/useQueryParameter';
 import * as actions from './listingActions';
 import { fetchSubjects } from '../Subject/subjectActions';
 import { getLocale } from '../Locale/localeSelectors';
@@ -27,14 +28,15 @@ const ListingPage = (props) => {
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectItem, setSelectItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [currentSubject, setCurrentSubject] = useQueryString('');
-  const [filters, setFilters] = useQueryString({ subject: [], category: [] });
+  const [currentSubject, setCurrentSubject] = useURIParameter('');
+  const [filters, setFilters] = useQueryParameter({ subject: [], category: [] });
 
   useEffect(() => {
     props.fetchSubjects();
   }, []);
 
   useEffect(() => {
+    setFilters({ subject: [], category: [] });
     if (currentSubject.length > 0) {
       props.fetchListing(currentSubject);
     }
