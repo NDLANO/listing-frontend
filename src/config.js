@@ -8,11 +8,11 @@
 
 const environment = {
   development: {
-    isProduction: false,
+    isProduction: false
   },
   production: {
-    isProduction: true,
-  },
+    isProduction: true
+  }
 }[process.env.NODE_ENV || 'development'];
 
 const ndlaEnvironment = process.env.NDLA_ENVIRONMENT || 'test';
@@ -32,18 +32,21 @@ const ndlaListingFrontendDomain = () => {
     case 'local':
       return 'http://localhost:30020';
     case 'prod':
-      return 'https://listing-frontend.api.ndla.no';
+      return 'https://liste.ndla.no';
     default:
-      return `https://listing-frontend.api.${ndlaEnvironment}.ndla.no`;
+      return `https://liste.${ndlaEnvironment}.ndla.no`;
   }
 };
 
-module.exports = Object.assign({
-  host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
-  port: process.env.NDLA_FRONTENTD_PORT || '3000',
-  redirectPort: process.env.NDLA_REDIRECT_PORT || '3001',
-  googleTagMangerId: process.env.GOOGLE_TAG_MANGER_ID || undefined,
-  disableSSR: process.env.DISABLE_SSR || false,
-  ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
-  ndlaListingFrontendDomain: ndlaListingFrontendDomain(),
-}, environment);
+module.exports = Object.assign(
+  {
+    host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
+    port: process.env.NDLA_FRONTENTD_PORT || '3000',
+    redirectPort: process.env.NDLA_REDIRECT_PORT || '3001',
+    googleTagMangerId: process.env.GOOGLE_TAG_MANGER_ID || undefined,
+    disableSSR: process.env.DISABLE_SSR || false,
+    ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
+    ndlaListingFrontendDomain: ndlaListingFrontendDomain()
+  },
+  environment
+);
