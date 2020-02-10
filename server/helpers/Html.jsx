@@ -78,8 +78,8 @@ const Html = props => {
         />
         <link
           rel='icon'
-          href={`/assets/${assets['ndla-favicon.png']}`}
-          type='image/png'
+          href={`/assets/${assets['favicon.ico']}`}
+          type='image/ico'
         />
       </head>
       <body>
