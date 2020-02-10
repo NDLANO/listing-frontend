@@ -102,6 +102,6 @@ export function mapConceptToListItem(concept, subjectName) {
       title: '',
       value: ''
     },
-    filters: concept.tags ? mapTagsToFilters(concept.tags.tags) : {}
+    filters: concept.tags ? mapTagsToFilters(concept.tags.tags) : {main: [], sub: []}
   }
 }
