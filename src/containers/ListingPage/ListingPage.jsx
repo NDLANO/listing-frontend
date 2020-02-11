@@ -35,7 +35,6 @@ import { CoverShape } from '../../shapes';
 
 const ListingPage = (props) => {
   const [viewStyle, setViewStyle] = useState('grid');
-  const [sortByValue, setSortByValue] = useState('category');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
@@ -44,17 +43,18 @@ const ListingPage = (props) => {
 
   useEffect(() => {
     props.fetchSubjects();
-    props.fetchListing();
   }, []);
 
-  const handleChangeSubject = (e) => {
-    if (e.target.value.length > 0) {
-      props.fetchListingBySubject(e.target.value);
+  useEffect(() => {
+    if (currentSubject.length > 0) {
+      props.fetchListingBySubject(currentSubject);
     }
     else {
       props.fetchListing();
     }
+  }, [currentSubject]);
 
+  const handleChangeSubject = (e) => {
     setCurrentSubject(e.target.value);
     setFilters({ subject: [], category: [] });
   }
