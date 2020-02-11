@@ -280,6 +280,15 @@
     "@ndla/util" "^0.3.6"
     "@reach/dialog" "^0.2.9"
 
+"@ndla/notion@^0.2.27":
+  version "0.2.27"
+  resolved "https://registry.yarnpkg.com/@ndla/notion/-/notion-0.2.27.tgz#707821ad83e89eb5f43c8b18cfca66e956036e5c"
+  integrity sha512-x3Ozu5JoRkCwv4kJRlMom0GM4fkzcmlAgisxj2B16RKMUb5hsQLKwuiI+cvSDUZFxgnueT3Mp2s/4L/2zibZig==
+  dependencies:
+    "@ndla/core" "^0.6.21"
+    "@ndla/licenses" "^0.6.22"
+    "@ndla/modal" "^0.4.6"
+
 "@ndla/safelink@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@ndla/safelink/-/safelink-0.0.3.tgz#e3d11c53e1d6e39379a214bb5bd910db58b9a9c3"
