@@ -2,8 +2,11 @@ import { useState, useCallback } from 'react';
 import qs from 'query-string';
 
 const setQueryParameter = (state) => {
-  const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${qs.stringify(state, {arrayFormat: 'bracket'})}`;
-  window.history.pushState({ path: url }, '', url);
+  const params = qs.stringify(state, { arrayFormat: 'bracket' });
+  if (params.length > 0) {
+    const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${params}`;
+    window.history.pushState({ path: url }, '', url);
+  }
 }
 
 const getQueryParameter = (initialValue) =>
