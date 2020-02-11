@@ -33,15 +33,17 @@ const ListingPage = (props) => {
 
   useEffect(() => {
     props.fetchSubjects();
+    props.fetchListing();
   }, []);
 
-  useEffect(() => {
-    if (currentSubject.length > 0) {
-      props.fetchListing(currentSubject);
-    }
-  }, [currentSubject]);
-
   const handleChangeSubject = (e) => {
+    if (e.target.value.length > 0) {
+      props.fetchListingBySubject(e.target.value);
+    }
+    else {
+      props.fetchListing();
+    }
+
     setCurrentSubject(e.target.value);
     setFilters({ subject: [], category: [] });
   }
@@ -78,11 +80,13 @@ const ListingPage = (props) => {
     return filteredItems;
   }
 
-  if(!props.listings.listings || !props.subjects) {
+  if (!props.listings.listings || !props.subjects) {
     return null;
   }
 
-  const listItems = filterItems(props.listings.listings.map(concept => mapConceptToListItem(concept, props.listings.subjectName)));
+  // Filtered list items, concepts without subjects are excluded
+  const listItems = filterItems(props.listings.listings.filter(concept => concept.subjectIds).map(concept =>
+    mapConceptToListItem(concept, props.subjects.find(subject => concept.subjectIds.includes(subject.id)))));
 
   return (
     <OneColumn>
@@ -90,11 +94,14 @@ const ListingPage = (props) => {
       <Select
         value={currentSubject}
         onChange={handleChangeSubject}>
-          {props.subjects.map(item => (
-            <option value={item.id} key={item.id}>
-              {item.name}
-            </option>
-          ))}
+        <option value={''}>
+          Alle fag
+        </option>
+        {props.subjects.map(item => (
+          <option value={item.id} key={item.id}>
+            {item.name}
+          </option>
+        ))}
       </Select>
       <ListView
         items={listItems}
@@ -139,6 +146,7 @@ ListingPage.propTypes = {
   }),
   locale: PropTypes.string.isRequired,
   fetchListing: PropTypes.func.isRequired,
+  fetchListingBySubject: PropTypes.func.isRequired,
   subjects: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.string,
@@ -150,6 +158,7 @@ ListingPage.propTypes = {
 const mapDispatchToProps = {
   fetchSubjects,
   fetchListing: actions.fetchListing,
+  fetchListingBySubject: actions.fetchListingBySubject
 };
 
 const mapStateToProps = state => ({

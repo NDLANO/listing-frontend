@@ -10,20 +10,32 @@ import * as actions from './listingActions';
 import * as api from './listingApi';
 import { mapTagsToFilters } from '../../util/listingHelpers'
 
-export function* fetchListing(action) {
-  const { payload: subjectId } = action;
-
-  const subject = yield call(() => api.fetchSubject(subjectId));
-  const tags = yield call(() => api.fetchTags(subjectId));
-  const listings = yield call(() => api.fetchListing(subjectId, 1000));
+export function* fetchListing() {
+  const listings = yield call(() => api.fetchListing(1000));
 
   if (!listings.results) {
     yield put(actions.setListing({}));
   } else {
     const locale = yield select(state => state.locale);
     yield put(actions.setListing({
-      subjectName: subject.name || subjectId,
-      filters: tags[0].tags ? mapTagsToFilters(tags[0].tags) : undefined,
+      filters: { main: [], sub: [] },
+      listings: listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))
+    }))
+  }
+}
+
+export function* fetchListingBySubject(action) {
+  const { payload: subjectId } = action;
+
+  const tags = yield call(() => api.fetchTags(subjectId));
+  const listings = yield call(() => api.fetchListingBySubject(subjectId, 1000));
+
+  if (!listings.results) {
+    yield put(actions.setListing({}));
+  } else {
+    const locale = yield select(state => state.locale);
+    yield put(actions.setListing({
+      filters: tags[0].tags ? mapTagsToFilters(tags[0].tags) : { main: [], sub: [] },
       listings: listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))
     }))
   }
@@ -31,6 +43,7 @@ export function* fetchListing(action) {
 
 export function* watchFetchListing() {
   yield takeEvery(actions.fetchListing, fetchListing);
+  yield takeEvery(actions.fetchListingBySubject, fetchListingBySubject);
 }
 
 export default watchFetchListing;
