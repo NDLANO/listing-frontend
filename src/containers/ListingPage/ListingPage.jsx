@@ -7,7 +7,6 @@
  */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { injectT } from 'ndla-i18n';
@@ -193,7 +192,6 @@ const ListingPage = (props) => {
 }
 
 ListingPage.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
   listings: PropTypes.exact({
     subjectName: PropTypes.string,
     filters: PropTypes.exact({
