@@ -40,6 +40,29 @@ const phrases = {
     footerEditiorInChief: 'Editor in chief: ',
     footerManagingEditor: 'Managing editor: ',
   },
+  notions: {
+    closeNotion: 'Close'
+  },
+  article: {
+    useContent: 'Use content'
+  },
+  license: {
+    heading: 'How to reuse content'
+  },
+  listview: {
+    filters: {
+      subject: {
+        useFilter: 'Use filter',
+        openFilter: 'Filter subject',
+        closeFilter: 'Close filter',
+      },
+      category: {
+        useFilter: 'Use filter',
+        openFilter: 'Filtrer category',
+        closeFilter: 'Close filter',
+      },
+    },
+  },
 };
 
 export default phrases;

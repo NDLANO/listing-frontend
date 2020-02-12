@@ -40,6 +40,29 @@ const phrases = {
     footerEditiorInChief: 'Ansvarlig redaktør: ',
     footerManagingEditor: 'Utgaveansvarlig: ',
   },
+  notions: {
+    closeNotion: 'Lukk'
+  },
+  article: {
+    useContent: 'Bruk innhold'
+  },
+  license: {
+    heading: 'Slik gjenbruker du innhold'
+  },
+  listview: {
+    filters: {
+      subject: {
+        useFilter: 'Bruk filter',
+        openFilter: 'Filtrer på fag',
+        closeFilter: 'Lukk filter',
+      },
+      category: {
+        useFilter: 'Bruk filter',
+        openFilter: 'Filtrer på kategori',
+        closeFilter: 'Lukk filter',
+      },
+    },
+  },
 };
 
 export default phrases;
