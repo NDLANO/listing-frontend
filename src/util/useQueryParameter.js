@@ -3,10 +3,8 @@ import qs from 'query-string';
 
 const setQueryParameter = (state) => {
   const params = qs.stringify(state, { arrayFormat: 'bracket' });
-  if (params.length > 0) {
-    const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${params}`;
-    window.history.pushState({ path: url }, '', url);
-  }
+  const url = `${window.location.protocol}//${window.location.host}${window.location.pathname}${(params.length > 0) ? `?${params}` : ''}`
+  window.history.pushState({ path: url }, '', url);
 }
 
 const getQueryParameter = (initialValue) =>
