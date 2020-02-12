@@ -9,7 +9,6 @@ import { handleActions } from 'redux-actions';
 import * as actions from './listingActions';
 
 const initalState = {
-  subjectName: '',
   filters: {
     main: [],
     sub: []

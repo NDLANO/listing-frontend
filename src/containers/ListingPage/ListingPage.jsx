@@ -193,7 +193,6 @@ const ListingPage = (props) => {
 
 ListingPage.propTypes = {
   listings: PropTypes.exact({
-    subjectName: PropTypes.string,
     filters: PropTypes.exact({
       main: PropTypes.arrayOf(PropTypes.string).isRequired,
       sub: PropTypes.arrayOf(PropTypes.string).isRequired
