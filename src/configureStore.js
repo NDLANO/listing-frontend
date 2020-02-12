@@ -25,7 +25,8 @@ export default function configureStore(initialState, history) {
       errorReporter,
       middleware,
     ),
-    __CLIENT__ && window && window.devToolsExtension ? window.devToolsExtension() : f => f,
+    // eslint-disable-next-line no-underscore-dangle
+    __CLIENT__ && window && window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f,
   )(createStore);
 
   const store = createFinalStore(rootReducer, initialState);
