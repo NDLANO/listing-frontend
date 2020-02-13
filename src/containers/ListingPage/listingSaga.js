@@ -35,7 +35,7 @@ export function* fetchListingBySubject(action) {
   } else {
     const locale = yield select(state => state.locale);
     yield put(actions.setListing({
-      filters: tags[0].tags ? mapTagsToFilters(tags[0].tags) : { main: [], sub: [] },
+      filters: tags[0] ? mapTagsToFilters(tags[0].tags) : { main: [], sub: [] },
       listings: listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))
     }))
   }
