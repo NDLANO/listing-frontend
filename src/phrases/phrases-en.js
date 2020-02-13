@@ -47,7 +47,11 @@ const phrases = {
     useContent: 'Use content'
   },
   license: {
-    heading: 'How to reuse content'
+    heading: 'How to reuse content',
+    tabs: {
+      text: 'Text',
+      images: 'Images'
+    },
   },
   listview: {
     filters: {

@@ -23,6 +23,7 @@ import {
 } from '@ndla/notion';
 import Modal, { ModalHeader, ModalBody, ModalCloseButton } from '@ndla/modal';
 import Button from '@ndla/button';
+import Tabs from '@ndla/tabs';
 
 import { mapConceptToListItem } from '../../util/listingHelpers';
 import useURIParameter from '../../util/useURIParameter';
@@ -132,6 +133,17 @@ const ListingPage = (props) => {
                   <ModalBody>
                     <div>
                       <h1>{t('license.heading')}</h1>
+                      <Tabs
+                        singleLine
+                        tabs={[
+                          {
+                            title: t('license.tabs.text'),
+                          },
+                          {
+                            title: t('license.tabs.images'),
+                          },
+                        ]}
+                      />
                     </div>
                   </ModalBody>
                 </div>

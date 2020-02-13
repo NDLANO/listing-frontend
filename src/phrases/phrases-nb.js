@@ -47,7 +47,11 @@ const phrases = {
     useContent: 'Bruk innhold'
   },
   license: {
-    heading: 'Slik gjenbruker du innhold'
+    heading: 'Slik gjenbruker du innhold',
+    tabs: {
+      text: 'Tekst',
+      images: 'Bilder'
+    },
   },
   listview: {
     filters: {

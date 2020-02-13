@@ -71,6 +71,7 @@
     "@ndla/listview": "^0.2.68",
     "@ndla/modal": "^0.4.6",
     "@ndla/notion": "^0.2.27",
+    "@ndla/tabs": "^0.11.23",
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
     "btoa": "^1.1.2",
