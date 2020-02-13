@@ -63,6 +63,7 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
     "@emotion/styled-base": "^10.0.27",
     "@ndla/article-scripts": "^0.5.11",
     "@ndla/button": "^0.3.22",
@@ -72,6 +73,7 @@
     "@ndla/modal": "^0.4.6",
     "@ndla/notion": "^0.2.27",
     "@ndla/tabs": "^0.11.23",
+    "@ndla/ui": "^0.27.10",
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",
     "btoa": "^1.1.2",

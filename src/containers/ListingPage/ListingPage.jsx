@@ -9,10 +9,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import styled from '@emotion/styled';
 import { injectT } from 'ndla-i18n';
 import ListView, { activeAlphabet } from '@ndla/listview';
-import { Select } from '@ndla/forms';
-import { OneColumn } from 'ndla-ui';
+import { OneColumn, FilterListPhone } from '@ndla/ui';
 import {
   NotionDialogContent,
   NotionDialogImage,
@@ -26,37 +26,38 @@ import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
 
 import { mapConceptToListItem } from '../../util/listingHelpers';
-import useURIParameter from '../../util/useURIParameter';
 import useQueryParameter from '../../util/useQueryParameter';
 import * as actions from './listingActions';
 import { fetchSubjects } from '../Subject/subjectActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 
+const SubjectFilterWrapper = styled.div`
+  margin-bottom: 13px;
+`;
+
 const ListingPage = (props) => {
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [currentSubject, setCurrentSubject] = useURIParameter('');
-  const [filters, setFilters] = useQueryParameter({ subject: [], category: [] });
+  const [filters, setFilters] = useQueryParameter({ subjects: [], subject: [], category: [] });
 
   useEffect(() => {
     props.fetchSubjects();
   }, []);
 
   useEffect(() => {
-    if (currentSubject.length > 0) {
-      props.fetchListingBySubject(currentSubject);
+    if (filters.subjects.length > 0) {
+      props.fetchListingBySubject(filters.subjects);
     }
     else {
       props.fetchListing();
     }
-  }, [currentSubject]);
+  }, [filters.subjects]);
 
-  const handleChangeSubject = (e) => {
-    setCurrentSubject(e.target.value);
-    setFilters({ subject: [], category: [] });
+  const handleChangeSubject = (values) => {
+    setFilters({ subjects: values, subject: [], category: [] });
   }
 
   const handleChangeFilters = (key, values) => {
@@ -102,22 +103,22 @@ const ListingPage = (props) => {
   const { t } = props;
 
   const renderSelectedItem = () => (
-    selectedItem ? 
-    <NotionDialogWrapper
-      title={selectedItem.name}
-      subTitle={selectedItem.category.title}
-      closeCallback={setSelectedItem}>
-      <NotionDialogContent>
-        {selectedItem.image ? (
-          <NotionDialogImage
-            src={selectedItem.image}
-            alt={selectedItem.description}
-          />
-        ) : null}
-        <NotionDialogText>{selectedItem.description}</NotionDialogText>
-      </NotionDialogContent>
-      <NotionDialogTags tags={selectedItem.subject.map(subject => subject.title)}/>
-      <NotionDialogLicenses
+    selectedItem ?
+      <NotionDialogWrapper
+        title={selectedItem.name}
+        subTitle={selectedItem.category.title}
+        closeCallback={setSelectedItem}>
+        <NotionDialogContent>
+          {selectedItem.image ? (
+            <NotionDialogImage
+              src={selectedItem.image}
+              alt={selectedItem.description}
+            />
+          ) : null}
+          <NotionDialogText>{selectedItem.description}</NotionDialogText>
+        </NotionDialogContent>
+        <NotionDialogTags tags={selectedItem.subject.map(subject => subject.title)} />
+        <NotionDialogLicenses
           license={selectedItem.license}
           source={selectedItem.source}
           authors={selectedItem.authors}
@@ -151,26 +152,30 @@ const ListingPage = (props) => {
             </Modal>
           }
         />
-    </NotionDialogWrapper>
-    :
-    null
+      </NotionDialogWrapper>
+      :
+      null
   )
 
   return (
     <OneColumn>
       <Helmet title={'NDLA Utlisting'} />
-      <Select
-        value={currentSubject}
-        onChange={handleChangeSubject}>
-        <option value={''}>
-          Alle fag
-        </option>
-        {props.subjects.map(item => (
-          <option value={item.id} key={item.id}>
-            {item.name}
-          </option>
-        ))}
-      </Select>
+      <SubjectFilterWrapper>
+        <FilterListPhone
+          preid="subject-list"
+          label="Filtrer på fag"
+          options={props.subjects.map(item => ({ title: item.name, value: item.id, filterName: 'filter_subjects'}))}
+          alignedGroup
+          values={filters.subjects}
+          messages={{
+            useFilter: t(`listview.filters.subject.useFilter`),
+            openFilter: t(`listview.filters.subject.openFilter`),
+            closeFilter: t(`listview.filters.subject.closeFilter`),
+          }}
+          onChange={handleChangeSubject}
+          viewMode='allModal'
+        />
+      </SubjectFilterWrapper>
       <ListView
         items={listItems}
         alphabet={activeAlphabet(listItems)}

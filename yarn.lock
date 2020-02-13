@@ -123,6 +123,14 @@
     "@emotion/serialize" "^0.11.15"
     "@emotion/utils" "0.11.3"
 
+"@emotion/styled@^10.0.27":
+  version "10.0.27"
+  resolved "https://registry.yarnpkg.com/@emotion/styled/-/styled-10.0.27.tgz#12cb67e91f7ad7431e1875b1d83a94b814133eaf"
+  integrity sha512-iK/8Sh7+NLJzyp9a5+vIQIXTYxfT4yB/OJbjzQanB2RZpvmzBQOHZWhpAMZWYEKRNNbsD6WfBw5sVWkb6WzS/Q==
+  dependencies:
+    "@emotion/styled-base" "^10.0.27"
+    babel-plugin-emotion "^10.0.27"
+
 "@emotion/stylis@0.8.5":
   version "0.8.5"
   resolved "https://registry.yarnpkg.com/@emotion/stylis/-/stylis-0.8.5.tgz#deacb389bd6ee77d1e7fcaccce9e16c5c7e78e04"
@@ -337,6 +345,37 @@
   integrity sha512-rH9RD9zNKs/wQfCRaIjx7EH08fQ0Q1eTuI5BuZh4MUKY42zn48cckttZnwRnl0/Sj6VT17EsbptRQX1srlyBTg==
   dependencies:
     "@ndla/core" "^0.6.21"
+
+"@ndla/ui@^0.27.10":
+  version "0.27.10"
+  resolved "https://registry.yarnpkg.com/@ndla/ui/-/ui-0.27.10.tgz#8b9a648696e08ee3572a161f40c5d5f7988c06a0"
+  integrity sha512-esDb1wuWY7Lr4F7JmwxaExE+N2ffrGPLk7MlemaoUdxReWFgrbD01XpFMbIxDzi5Jw+yz4gAZtfF6zxH5EIytQ==
+  dependencies:
+    "@ndla/button" "^0.3.22"
+    "@ndla/carousel" "^0.3.20"
+    "@ndla/core" "^0.6.21"
+    "@ndla/hooks" "^0.1.7"
+    "@ndla/i18n" "^0.4.2"
+    "@ndla/icons" "^0.6.20"
+    "@ndla/licenses" "^0.6.22"
+    "@ndla/modal" "^0.4.6"
+    "@ndla/safelink" "^0.0.4"
+    "@ndla/switch" "^0.0.10"
+    "@ndla/tabs" "^0.11.23"
+    "@ndla/tooltip" "^0.2.21"
+    "@ndla/util" "^0.3.6"
+    "@reach/dialog" "^0.2.9"
+    classnames "2.2.6"
+    focus-trap "^4.0.2"
+    focus-trap-react "^6.0.0"
+    jump.js "^1.0.2"
+    lodash "^4.17.14"
+    react-bem-helper "1.4.1"
+    react-device-detect "^1.6.2"
+    react-facebook "^6.0.15"
+    react-prop-types "0.4.0"
+    react-swipeable "^5.0.1"
+    react-transition-group "^2.5.3"
 
 "@ndla/ui@^0.27.3":
   version "0.27.3"
