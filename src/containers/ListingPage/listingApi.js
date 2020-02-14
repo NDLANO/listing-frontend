@@ -13,7 +13,6 @@ const baseTaxonomyUrl = apiResourceUrl('/taxonomy/v1/subjects/')
 
 export const fetchListing = (pageSize) => fetch(`${baseListingUrl}?page-size=${pageSize}`).then(resolveJsonOrRejectWithError);
 export const fetchListingBySubject = (subjectId, pageSize) => fetch(`${baseListingUrl}?subjects=${subjectId}&page-size=${pageSize}`).then(resolveJsonOrRejectWithError);
-export const fetchTags = (subjectId) => fetch(`${baseListingUrl}/tags/?subjects=${subjectId}`)
-    .then(res => res.ok ? res.json() : {});
-export const fetchSubject = (subjectId) => fetch(baseTaxonomyUrl + subjectId)
-    .then(res => res.ok ? res.json() : subjectId);
+export const fetchTags = (subjectId) => fetch(`${baseListingUrl}/tags/?subjects=${subjectId}`).then(res => res.ok ? res.json() : {});
+export const fetchSubject = (subjectId) => fetch(baseTaxonomyUrl + subjectId).then(res => res.ok ? res.json() : subjectId);
+export const fetchConcept = (conceptId) => fetch(`${baseListingUrl}/${conceptId}`).then(resolveJsonOrRejectWithError);

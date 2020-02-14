@@ -13,17 +13,7 @@ import styled from '@emotion/styled';
 import { injectT } from 'ndla-i18n';
 import ListView, { activeAlphabet } from '@ndla/listview';
 import { OneColumn, FilterListPhone } from '@ndla/ui';
-import {
-  NotionDialogContent,
-  NotionDialogImage,
-  NotionDialogText,
-  NotionDialogTags,
-  NotionDialogLicenses,
-  NotionDialogWrapper,
-} from '@ndla/notion';
-import Modal, { ModalHeader, ModalBody, ModalCloseButton } from '@ndla/modal';
-import Button from '@ndla/button';
-import Tabs from '@ndla/tabs';
+import NotionDialog from './NotionDialog';
 
 import { mapConceptToListItem } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
@@ -102,61 +92,6 @@ const ListingPage = (props) => {
 
   const { t } = props;
 
-  const renderSelectedItem = () => (
-    selectedItem ?
-      <NotionDialogWrapper
-        title={selectedItem.name}
-        subTitle={selectedItem.category.title}
-        closeCallback={setSelectedItem}>
-        <NotionDialogContent>
-          {selectedItem.image ? (
-            <NotionDialogImage
-              src={selectedItem.image}
-              alt={selectedItem.description}
-            />
-          ) : null}
-          <NotionDialogText>{selectedItem.description}</NotionDialogText>
-        </NotionDialogContent>
-        <NotionDialogTags tags={selectedItem.subject.map(subject => subject.title)} />
-        <NotionDialogLicenses
-          license={selectedItem.license}
-          source={selectedItem.source}
-          authors={selectedItem.authors}
-          licenseBox={
-            <Modal
-              activateButton={<Button link>{t('article.useContent')}</Button>}
-              size="medium">
-              {onClose => (
-                <div>
-                  <ModalHeader modifier="no-bottom-padding">
-                    <ModalCloseButton onClick={onClose} title="lukk" />
-                  </ModalHeader>
-                  <ModalBody>
-                    <div>
-                      <h1>{t('license.heading')}</h1>
-                      <Tabs
-                        singleLine
-                        tabs={[
-                          {
-                            title: t('license.tabs.text'),
-                          },
-                          {
-                            title: t('license.tabs.images'),
-                          },
-                        ]}
-                      />
-                    </div>
-                  </ModalBody>
-                </div>
-              )}
-            </Modal>
-          }
-        />
-      </NotionDialogWrapper>
-      :
-      null
-  )
-
   return (
     <OneColumn>
       <Helmet title={'NDLA Utlisting'} />
@@ -185,7 +120,7 @@ const ListingPage = (props) => {
         onChangedViewStyle={e => setViewStyle(e.viewStyle)}
         searchValue={searchValue}
         onChangedSearchValue={e => setSearchValue(e.target.value)}
-        selectedItem={renderSelectedItem()}
+        selectedItem={selectedItem ? <NotionDialog item={selectedItem} handleClose={setSelectedItem}/> : null}
         onSelectItem={setSelectedItem}
         filters={[
           {
