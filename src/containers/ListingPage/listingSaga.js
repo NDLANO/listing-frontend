@@ -17,33 +17,38 @@ export function* fetchListing() {
     yield put(actions.setListing({}));
   } else {
     const locale = yield select(state => state.locale);
-    yield put(actions.setListing({
-      filters: { main: [], sub: [] },
-      listings: listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))
-    }))
+    yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))));
   }
 }
 
 export function* fetchListingBySubject(action) {
   const { payload: subjectId } = action;
-
-  const tags = yield call(() => api.fetchTags(subjectId));
   const listings = yield call(() => api.fetchListingBySubject(subjectId, 1000));
 
   if (!listings.results) {
     yield put(actions.setListing({}));
   } else {
     const locale = yield select(state => state.locale);
-    yield put(actions.setListing({
-      filters: tags[0] ? mapTagsToFilters(tags[0].tags) : { main: [], sub: [] },
-      listings: listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))
-    }))
+    yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))));
+  }
+}
+
+export function* fetchFilters(action) {
+  const { payload: subjectId } = action;
+  const tags = yield call(() => api.fetchTags(subjectId));
+
+  if (!tags[0]) {
+    yield put(actions.setFilters({ main: [], sub: [] }));
+  }
+  else {
+    yield put(actions.setFilters(mapTagsToFilters(tags[0].tags)));
   }
 }
 
 export function* watchFetchListing() {
   yield takeEvery(actions.fetchListing, fetchListing);
   yield takeEvery(actions.fetchListingBySubject, fetchListingBySubject);
+  yield takeEvery(actions.fetchFilters, fetchFilters);
 }
 
 export default watchFetchListing;

@@ -40,6 +40,7 @@ const ListingPage = (props) => {
   useEffect(() => {
     if (filters.subjects.length > 0) {
       props.fetchListingBySubject(filters.subjects);
+      props.fetchFilters(filters.subjects);
     }
     else {
       props.fetchListing();
@@ -165,7 +166,8 @@ ListingPage.propTypes = {
 const mapDispatchToProps = {
   fetchSubjects,
   fetchListing: actions.fetchListing,
-  fetchListingBySubject: actions.fetchListingBySubject
+  fetchListingBySubject: actions.fetchListingBySubject,
+  fetchFilters: actions.fetchFilters
 };
 
 const mapStateToProps = state => ({

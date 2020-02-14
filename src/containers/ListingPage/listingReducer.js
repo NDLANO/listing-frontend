@@ -18,11 +18,11 @@ const initalState = {
 
 export default handleActions({
   [actions.setListing]: {
-    next: (state, action) => action.payload,
-    throw: state => state,
+    next: (state, action) => ({...state, listings: action.payload }),
+    throw: state => state
   },
-  [actions.resetListing]: {
-    next: () => initalState,
+  [actions.setFilters]: {
+    next: (state, action) => ({...state, filters: action.payload }),
     throw: state => state
   }
 }, initalState);
