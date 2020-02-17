@@ -44,6 +44,7 @@ const ListingPage = (props) => {
     }
     else {
       props.fetchListing();
+      props.resetFilters();
     }
   }, [filters.subjects]);
 
@@ -167,7 +168,8 @@ const mapDispatchToProps = {
   fetchSubjects,
   fetchListing: actions.fetchListing,
   fetchListingBySubject: actions.fetchListingBySubject,
-  fetchFilters: actions.fetchFilters
+  fetchFilters: actions.fetchFilters,
+  resetFilters: actions.resetFilters
 };
 
 const mapStateToProps = state => ({

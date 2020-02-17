@@ -13,3 +13,4 @@ export const fetchListingBySubject = createAction('FETCH_LISTING_BY_SUBJECT');
 export const setListing = createAction('SET_LISTING');
 export const fetchFilters = createAction('FETCH_FILTERS');
 export const setFilters = createAction('SET_FILTERS');
+export const resetFilters = createAction('RESET_FILTERS');

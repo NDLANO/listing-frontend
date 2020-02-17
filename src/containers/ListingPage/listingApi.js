@@ -12,5 +12,5 @@ const baseListingUrl = apiResourceUrl('/concept-api/v1/concepts');
 
 export const fetchListing = (pageSize) => fetch(`${baseListingUrl}?page-size=${pageSize}`).then(resolveJsonOrRejectWithError);
 export const fetchListingBySubject = (subjectId, pageSize) => fetch(`${baseListingUrl}?subjects=${subjectId}&page-size=${pageSize}`).then(resolveJsonOrRejectWithError);
-export const fetchTags = (subjectId) => fetch(`${baseListingUrl}/tags/?subjects=${subjectId}`).then(resolveJsonOrRejectWithError);
+export const fetchTags = (subjectIds) => fetch(`${baseListingUrl}/tags/?subjects=${subjectIds}`).then(resolveJsonOrRejectWithError);
 export const fetchConcept = (conceptId) => fetch(`${baseListingUrl}/${conceptId}`).then(resolveJsonOrRejectWithError);

@@ -24,5 +24,9 @@ export default handleActions({
   [actions.setFilters]: {
     next: (state, action) => ({...state, filters: action.payload }),
     throw: state => state
+  },
+  [actions.resetFilters]: {
+    next: (state) => ({...state, filters: initalState.filters }),
+    throw: state => state
   }
 }, initalState);

@@ -34,14 +34,15 @@ export function* fetchListingBySubject(action) {
 }
 
 export function* fetchFilters(action) {
-  const { payload: subjectId } = action;
-  const tags = yield call(() => api.fetchTags(subjectId));
+  const { payload: subjectIds } = action;
+  const tags = yield call(() => api.fetchTags(subjectIds));
 
-  if (!tags[0]) {
+  if (tags.length === 0) {
     yield put(actions.setFilters({ main: [], sub: [] }));
   }
   else {
-    yield put(actions.setFilters(mapTagsToFilters(tags[0].tags)));
+    const tagsArray = [].concat(...tags.map(tag => [...tag.tags]));
+    yield put(actions.setFilters(mapTagsToFilters(tagsArray)));
   }
 }
 
