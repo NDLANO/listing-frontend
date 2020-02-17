@@ -64,10 +64,10 @@ const ListingPage = (props) => {
 
     // Checkboxes
     if (filters.subject.length) {
-      filteredItems = filteredItems.filter(item => item.filters.main.some(subject => filters.subject.includes(subject)));
+      filteredItems = filteredItems.filter(item => filters.subject.every(subject => item.filters.main.includes(subject)));
     }
     if (filters.category.length) {
-      filteredItems = filteredItems.filter(item => item.filters.sub.some(category => filters.category.includes(category)));
+      filteredItems = filteredItems.filter(item => filters.category.every(category => item.filters.sub.includes(category)));
     }
 
     // Search
