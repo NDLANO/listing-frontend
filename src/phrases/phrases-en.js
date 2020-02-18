@@ -68,6 +68,11 @@ const phrases = {
       rules: 'Rules for use of text:',
       published: 'Published',
     },
+    images: {
+      heading: 'How to use images from the article',
+      description: 'Remember to copy the text to be attached to the image where you use it.',
+      rules: 'Rules for use of image:',
+    },
     tabs: {
       text: 'Text',
       images: 'Images'

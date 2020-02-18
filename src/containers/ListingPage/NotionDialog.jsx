@@ -13,10 +13,10 @@ import Modal, { ModalHeader, ModalBody, ModalCloseButton } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
 
-import { fetchConcept } from './listingApi';
-import { TextContent } from './LicenseBox';
+import { fetchConcept, fetchImage } from './listingApi';
+import { TextContent, ImageContent } from './LicenseBox';
 
-const initialState = {
+const initialConcept = {
   title: '',
   source: '',
   created: '',
@@ -25,21 +25,53 @@ const initialState = {
   rightsholders: []
 }
 
+const initialImage = {
+  title: '',
+  image: {
+    url: '',
+    alt: ''
+  },
+  license: '',
+  authors: [],
+  rightsholders: [],
+  origin: ''
+}
+
 const NotionDialog = (props) => {
-  const [concept, setConcept] = useState(initialState);
+  const [concept, setConcept] = useState(initialConcept);
+  const [image, setImage] = useState(initialImage);
 
   useEffect(() => {
+    // Concept
     fetchConcept(props.item.id)
       .then(response => {
         setConcept({
-          title: response.title.title,
+          title: response.title ? response.title.title : '',
           source: response.source,
           created: response.created,
           license: response.copyright ? response.copyright.license.license : '',
           authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : [],
-          rightsholders: []
+          rightsholders: response.copyright ? response.copyright.rightsholders.map(holder => holder.name) : []
         })
       });
+
+    // Image
+    const imageId = props.item.image.split('/').pop();
+    fetchImage(imageId)
+    .then(response => {
+      setImage({
+        title: response.title ? response.title.title : '',
+        image: {
+          url: response.imageUrl,
+          alt: response.alttext ? response.alttext.alttext : ''
+        },
+        license: response.copyright ? response.copyright.license.license : '',
+        authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : [],
+        rightsholders: response.copyright ? response.copyright.rightsholders.map(holder => holder.name) : [],
+        origin: response.copyright ? response.copyright.origin : ''
+      })
+    })
+    
   }, []);
 
   const { t } = props;
@@ -83,7 +115,7 @@ const NotionDialog = (props) => {
                         },
                         {
                           title: t('license.tabs.images'),
-                          // content: <ImageContent t={t} />,
+                          content: <ImageContent t={t} image={image} />,
                         },
                       ]}
                     />

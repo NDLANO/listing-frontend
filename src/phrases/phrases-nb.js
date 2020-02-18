@@ -68,6 +68,11 @@ const phrases = {
       rules: 'Regler for bruk av teksten:',
       published: 'Publiseringsdato',
     },
+    images: {
+      heading: 'Slik bruker du bilder fra artikkelen',
+      description: 'Husk å kopiere teksten som skal legges ved bildet der du bruker det.',
+      rules: 'Regler for bruk av bildet:',
+    },
     tabs: {
       text: 'Tekst',
       images: 'Bilder'
