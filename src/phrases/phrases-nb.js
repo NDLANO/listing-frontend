@@ -46,13 +46,6 @@ const phrases = {
   article: {
     useContent: 'Bruk innhold'
   },
-  license: {
-    heading: 'Slik gjenbruker du innhold',
-    tabs: {
-      text: 'Tekst',
-      images: 'Bilder'
-    },
-  },
   listview: {
     filters: {
       subject: {
@@ -67,6 +60,22 @@ const phrases = {
       },
     },
   },
+  license: {
+    heading: 'Slik gjenbruker du innhold',
+    text: {
+      heading: 'Slik bruker du tekst fra artikkelen',
+      description: 'Husk å henvise til kilden når du gjenbruker tekst.',
+      rules: 'Regler for bruk av teksten:',
+      published: 'Publiseringsdato',
+    },
+    tabs: {
+      text: 'Tekst',
+      images: 'Bilder'
+    },
+    copyTitle: 'Kopier referanse',
+    hasCopiedTitle: 'Kopiert!',
+    download: 'Last ned'
+  }
 };
 
 export default phrases;

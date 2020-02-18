@@ -46,13 +46,6 @@ const phrases = {
   article: {
     useContent: 'Use content'
   },
-  license: {
-    heading: 'How to reuse content',
-    tabs: {
-      text: 'Text',
-      images: 'Images'
-    },
-  },
   listview: {
     filters: {
       subject: {
@@ -67,6 +60,22 @@ const phrases = {
       },
     },
   },
+  license: {
+    heading: 'How to reuse content',
+    text: {
+      heading: 'How to use text from the article',
+      description: 'Remember to refer to the source when reusing text.',
+      rules: 'Rules for use of text:',
+      published: 'Published',
+    },
+    tabs: {
+      text: 'Text',
+      images: 'Images'
+    },
+    copyTitle: 'Copy reference',
+    hasCopiedTitle: 'Copied!',
+    download: 'Download'
+  }
 };
 
 export default phrases;
