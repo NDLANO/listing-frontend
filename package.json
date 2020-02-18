@@ -72,6 +72,8 @@
     "@ndla/button": "^0.3.22",
     "@ndla/editor": "^0.7.6",
     "@ndla/forms": "^0.3.64",
+    "@ndla/icons": "^0.6.20",
+    "@ndla/licenses": "^0.6.22",
     "@ndla/listview": "^0.2.68",
     "@ndla/modal": "^0.4.6",
     "@ndla/notion": "^0.2.27",

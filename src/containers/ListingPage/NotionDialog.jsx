@@ -14,22 +14,32 @@ import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
 
 import { fetchConcept } from './listingApi';
+import { TextContent } from './LicenseBox';
+
+const initialState = {
+  title: '',
+  source: '',
+  created: '',
+  license: '',
+  authors: [],
+  rightsholders: []
+}
 
 const NotionDialog = (props) => {
-  const [copyright, setCopyright] = useState({
-    license: '',
-    source: '',
-    authors: []
-  });
+  const [concept, setConcept] = useState(initialState);
 
   useEffect(() => {
     fetchConcept(props.item.id)
-    .then(response => {
-      setCopyright({
-      license: response.copyright ? response.copyright.license.license : '',
-      source: response.source,
-      authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : []
-    })})
+      .then(response => {
+        setConcept({
+          title: response.title.title,
+          source: response.source,
+          created: response.created,
+          license: response.copyright ? response.copyright.license.license : '',
+          authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : [],
+          rightsholders: []
+        })
+      });
   }, []);
 
   const { t } = props;
@@ -49,41 +59,41 @@ const NotionDialog = (props) => {
       </NotionDialogContent>
       <NotionDialogTags tags={props.item.subject.map(subject => subject.title)} />
       <NotionDialogLicenses
-          license={copyright.license}
-          source={copyright.source}
-          authors={copyright.authors}
-          licenseBox={
-            <Modal
-              activateButton={<Button link>{t('article.useContent')}</Button>}
-              size="medium">
-              {onClose => (
-                <div>
-                  <ModalHeader modifier="no-bottom-padding">
-                    <ModalCloseButton onClick={onClose} title="lukk" />
-                  </ModalHeader>
-                  <ModalBody>
-                    <div>
-                      <h1>{t('license.heading')}</h1>
-                      <Tabs
-                        singleLine
-                        tabs={[
-                          {
-                            title: t('license.tabs.text'),
-                            // content: <TextContent t={t} />,
-                          },
-                          {
-                            title: t('license.tabs.images'),
-                            // content: <ImageContent t={t} />,
-                          },
-                        ]}
-                      />
-                    </div>
-                  </ModalBody>
-                </div>
-              )}
-            </Modal>
-          }
-        />
+        license={concept.license}
+        source={concept.source}
+        authors={concept.authors}
+        licenseBox={
+          <Modal
+            activateButton={<Button link>{t('article.useContent')}</Button>}
+            size="medium">
+            {onClose => (
+              <div>
+                <ModalHeader modifier="no-bottom-padding">
+                  <ModalCloseButton onClick={onClose} title="lukk" />
+                </ModalHeader>
+                <ModalBody>
+                  <div>
+                    <h1>{t('license.heading')}</h1>
+                    <Tabs
+                      singleLine
+                      tabs={[
+                        {
+                          title: t('license.tabs.text'),
+                          content: <TextContent t={t} concept={concept} />,
+                        },
+                        {
+                          title: t('license.tabs.images'),
+                          // content: <ImageContent t={t} />,
+                        },
+                      ]}
+                    />
+                  </div>
+                </ModalBody>
+              </div>
+            )}
+          </Modal>
+        }
+      />
     </NotionDialogWrapper>
   )
 }
