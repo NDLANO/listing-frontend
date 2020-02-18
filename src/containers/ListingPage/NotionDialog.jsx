@@ -57,21 +57,22 @@ const NotionDialog = (props) => {
 
     // Image
     const imageId = props.item.image.split('/').pop();
-    fetchImage(imageId)
-    .then(response => {
-      setImage({
-        title: response.title ? response.title.title : '',
-        image: {
-          url: response.imageUrl,
-          alt: response.alttext ? response.alttext.alttext : ''
-        },
-        license: response.copyright ? response.copyright.license.license : '',
-        authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : [],
-        rightsholders: response.copyright ? response.copyright.rightsholders.map(holder => holder.name) : [],
-        origin: response.copyright ? response.copyright.origin : ''
-      })
-    })
-    
+    if (imageId.length) {
+      fetchImage(imageId)
+        .then(response => {
+          setImage({
+            title: response.title ? response.title.title : '',
+            image: {
+              url: response.imageUrl,
+              alt: response.alttext ? response.alttext.alttext : ''
+            },
+            license: response.copyright ? response.copyright.license.license : '',
+            authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : [],
+            rightsholders: response.copyright ? response.copyright.rightsholders.map(holder => holder.name) : [],
+            origin: response.copyright ? response.copyright.origin : ''
+          })
+        })
+    }
   }, []);
 
   const { t } = props;
@@ -113,10 +114,10 @@ const NotionDialog = (props) => {
                           title: t('license.tabs.text'),
                           content: <TextContent t={t} concept={concept} />,
                         },
-                        {
+                        ...image.image.url.length ? [{
                           title: t('license.tabs.images'),
                           content: <ImageContent t={t} image={image} />,
-                        },
+                        }] : []
                       ]}
                     />
                   </div>
