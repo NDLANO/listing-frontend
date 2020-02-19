@@ -59,6 +59,9 @@ const phrases = {
         closeFilter: 'Lukk filter',
       },
     },
+    relatedLinks: {
+      label: 'Tilknyttede artikler',
+    },
   },
   license: {
     heading: 'Slik gjenbruker du innhold',

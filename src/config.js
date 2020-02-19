@@ -38,6 +38,17 @@ const ndlaListingFrontendDomain = () => {
   }
 };
 
+const ndlaFrontendDomain = () => {
+  switch (process.env.NDLA_ENVIRONMENT) {
+    case 'local':
+      return 'http://localhost:30020';
+    case 'prod':
+      return 'https://ndla.no';
+    default:
+      return `https://${ndlaEnvironment}.ndla.no`;
+  }
+};
+
 module.exports = Object.assign(
   {
     host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
@@ -46,7 +57,8 @@ module.exports = Object.assign(
     googleTagMangerId: process.env.GOOGLE_TAG_MANGER_ID || undefined,
     disableSSR: process.env.DISABLE_SSR || false,
     ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
-    ndlaListingFrontendDomain: ndlaListingFrontendDomain()
+    ndlaListingFrontendDomain: ndlaListingFrontendDomain(),
+    ndlaFrontendDomain: ndlaFrontendDomain()
   },
   environment
 );

@@ -6,6 +6,7 @@ import {
   NotionDialogImage,
   NotionDialogText,
   NotionDialogTags,
+  NotionDialogRelatedLinks,
   NotionDialogLicenses,
   NotionDialogWrapper,
 } from '@ndla/notion';
@@ -13,6 +14,7 @@ import Modal, { ModalHeader, ModalBody, ModalCloseButton } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
 
+import config from '../../config';
 import { fetchConcept, fetchImage } from './listingApi';
 import { TextContent, ImageContent } from './LicenseBox';
 
@@ -38,6 +40,7 @@ const initialImage = {
 }
 
 const NotionDialog = (props) => {
+  const [articleId, setArticleId] = useState(undefined);
   const [concept, setConcept] = useState(initialConcept);
   const [image, setImage] = useState(initialImage);
 
@@ -45,6 +48,7 @@ const NotionDialog = (props) => {
     // Concept
     fetchConcept(props.item.id)
       .then(response => {
+        setArticleId(response.articleId);
         setConcept({
           title: response.title ? response.title.title : '',
           source: response.source,
@@ -52,7 +56,7 @@ const NotionDialog = (props) => {
           license: response.copyright ? response.copyright.license.license : '',
           authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : [],
           rightsholders: response.copyright ? response.copyright.rightsholders.map(holder => holder.name) : []
-        })
+        });
       });
 
     // Image
@@ -71,7 +75,7 @@ const NotionDialog = (props) => {
             rightsholders: response.copyright ? response.copyright.rightsholders.map(holder => holder.name) : [],
             origin: response.copyright ? response.copyright.origin : ''
           })
-        })
+        });
     }
   }, []);
 
@@ -91,6 +95,15 @@ const NotionDialog = (props) => {
         <NotionDialogText>{props.item.description}</NotionDialogText>
       </NotionDialogContent>
       <NotionDialogTags tags={props.item.subject.map(subject => subject.title)} />
+      {articleId &&
+        <NotionDialogRelatedLinks
+          label={t(`listview.relatedLinks.label`)}
+          links={[{
+            label: props.item.name,
+            href: `${config.ndlaFrontendDomain}/article/${articleId}`
+          }]}
+        />
+      }
       <NotionDialogLicenses
         license={concept.license}
         source={concept.source}

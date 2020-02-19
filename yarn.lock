@@ -33,10 +33,17 @@
     core-js "^2.6.5"
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.3.tgz#0811944f73a6c926bb2ad35e918dcc1bfab279f1"
   integrity sha512-fVHx1rzEmwB130VTkLnxR+HmxcTjGzH12LYQcFFoBwakMd3aOMD4OsRN7tGG/UOYE2ektgFrS8uACAoRk1CY0w==
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
+"@babel/runtime@^7.2.0":
+  version "7.8.4"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.4.tgz#d79f5a2040f7caa24d53e563aad49cbc05581308"
+  integrity sha512-neAp3zt80trRVBI1x0azq6c57aNBqYZH8KhMm3TaB7wEI5Q4A2SHfBHE8w9gOhI/lrqxtEbXZgQIrHP+wvSGwQ==
   dependencies:
     regenerator-runtime "^0.13.2"
 
@@ -304,9 +311,9 @@
     "@reach/dialog" "^0.2.9"
 
 "@ndla/notion@^0.2.27":
-  version "0.2.27"
-  resolved "https://registry.yarnpkg.com/@ndla/notion/-/notion-0.2.27.tgz#707821ad83e89eb5f43c8b18cfca66e956036e5c"
-  integrity sha512-x3Ozu5JoRkCwv4kJRlMom0GM4fkzcmlAgisxj2B16RKMUb5hsQLKwuiI+cvSDUZFxgnueT3Mp2s/4L/2zibZig==
+  version "0.2.28"
+  resolved "https://registry.yarnpkg.com/@ndla/notion/-/notion-0.2.28.tgz#4b95119833b3a5d03fec0ee04a288a65691c2b0d"
+  integrity sha512-FW74YJIr15+dx9fng4aszoAkxUHITYeu35udMt/KttOa/GZw2B+CRU+R/3tOaXHAH7y8cAFF7b8R1/ByUHqQvA==
   dependencies:
     "@ndla/core" "^0.6.21"
     "@ndla/licenses" "^0.6.22"

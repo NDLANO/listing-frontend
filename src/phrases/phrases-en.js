@@ -59,6 +59,9 @@ const phrases = {
         closeFilter: 'Close filter',
       },
     },
+    relatedLinks: {
+      label: 'Related articles',
+    },
   },
   license: {
     heading: 'How to reuse content',
