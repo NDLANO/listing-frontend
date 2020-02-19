@@ -47,6 +47,9 @@ const phrases = {
     useContent: 'Use content'
   },
   listview: {
+    search: {
+      placeholder: 'Search',
+    },
     filters: {
       subject: {
         useFilter: 'Use filter',

@@ -47,6 +47,9 @@ const phrases = {
     useContent: 'Bruk innhold'
   },
   listview: {
+    search: {
+      placeholder: 'Søk',
+    },
     filters: {
       subject: {
         useFilter: 'Bruk filter',
