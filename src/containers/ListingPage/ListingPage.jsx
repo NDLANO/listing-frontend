@@ -23,6 +23,7 @@ import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 
 const SubjectFilterWrapper = styled.div`
+  margin-top: 60px;
   margin-bottom: 13px;
 `;
 

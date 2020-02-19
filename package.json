@@ -78,7 +78,7 @@
     "@ndla/modal": "^0.4.6",
     "@ndla/notion": "^0.2.27",
     "@ndla/tabs": "^0.11.23",
-    "@ndla/ui": "^0.27.10",
+    "@ndla/ui": "^0.27.11",
     "@ndla/video-search": "^0.8.26",
     "babel-polyfill": "^6.26.0",
     "babel-register": "^6.26.0",

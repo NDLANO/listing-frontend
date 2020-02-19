@@ -80,6 +80,11 @@ const phrases = {
     copyTitle: 'Copy reference',
     hasCopiedTitle: 'Copied!',
     download: 'Download'
+  },
+  searchPage: {
+    searchFilterMessages: {
+      removeFilter: 'Remove filter {filterName}',
+    }
   }
 };
 
