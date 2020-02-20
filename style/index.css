@@ -6,10 +6,8 @@
  *
  */
 
-@import '../node_modules/ndla-ui/lib/main.css';
-@import '../node_modules/ndla-ui/lib/editor.css';
-@import '~@ndla/ui/src/all.scss';
-@import '~@ndla/ui/src/main.scss';
+ @import '~@ndla/ui/src/all.scss';
+ @import '~@ndla/ui/src/main.scss';
 
 :root {
     --font-size--medium: 18px;
