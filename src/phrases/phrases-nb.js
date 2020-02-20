@@ -33,13 +33,6 @@ const phrases = {
     contact: 'Kontakt',
     help: 'Hjelp',
   },
-  footer: {
-    aboutNDLA: 'Om NDLA',
-    selectLanguage: 'Språk (language): Bokmål',
-    footerInfo: 'Nettstedet er utarbeidet av NDLA som åpen kildekode.',
-    footerEditiorInChief: 'Ansvarlig redaktør: ',
-    footerManagingEditor: 'Utgaveansvarlig: ',
-  },
   notions: {
     closeNotion: 'Lukk'
   },
@@ -91,7 +84,31 @@ const phrases = {
     searchFilterMessages: {
       removeFilter: 'Fjern filter {filterName}',
     }
-  }
+  },
+  footer: {
+    aboutNDLA: 'Om NDLA',
+    selectLanguage: 'Velg språk (language): ',
+    vision:
+      'NDLA sin visjon er å lage gode, åpne digitale læremidler for alle fag i videregående opplæring og støtte opp om elever og lærere i aktivt og deltakende læringsarbeid.',
+    footerLinksHeader: 'Andre NDLA nettsteder',
+    footerInfo: 'Nettstedet er utarbeidet av NDLA med åpen kildekode.',
+    footerEditiorInChief: 'Ansvarlig redaktør: ',
+    footerManagingEditor: 'Utgaveansvarlig: ',
+    footerPrivacyLink: 'Personvernerklæring',
+    socialMediaLinks: {
+      facebook: 'NDLA på Facebook',
+      newsletter: 'Meld deg på vårt nyhetsbrev',
+      twitter: 'NDLA på Twitter',
+    },
+    ndlaLinks: {
+      omNdla: 'Om NDLA',
+      aboutNdla: 'About NDLA',
+      blog: 'Fagblogg',
+      tips: 'Tips til elever',
+      fyr: 'FYR-prosjektet',
+      sharing: 'Delingsarena',
+    },
+  },
 };
 
 export default phrases;

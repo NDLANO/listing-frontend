@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { injectT } from 'ndla-i18n/lib/injectT';
+import { injectT } from '@ndla/i18n';
 import {
   NotionDialogContent,
   NotionDialogImage,

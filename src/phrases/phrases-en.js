@@ -33,13 +33,6 @@ const phrases = {
     contact: 'Contact',
     help: 'Help',
   },
-  footer: {
-    aboutNDLA: 'About NDLA',
-    selectLanguage: 'Language (språk): Norwegian',
-    footerInfo: 'This webapplication is developed by NDLA as Open Source code.',
-    footerEditiorInChief: 'Editor in chief: ',
-    footerManagingEditor: 'Managing editor: ',
-  },
   notions: {
     closeNotion: 'Close'
   },
@@ -91,7 +84,31 @@ const phrases = {
     searchFilterMessages: {
       removeFilter: 'Remove filter {filterName}',
     }
-  }
+  },
+  footer: {
+    aboutNDLA: 'About NDLA',
+    selectLanguage: 'Choose language (språk): ',
+    footerInfo: 'This webapplication is developed by NDLA as Open Source code.',
+    footerEditiorInChief: 'Editor in chief: ',
+    footerManagingEditor: 'Managing editor: ',
+    footerPrivacyLink: 'Cookies Policy',
+    vision:
+      'NDLA’s vision is to offer high quality open educational learning resources in all subjects in upper secondary education in Norway and to support students and teachers in their active and collaborative learning.',
+    footerLinksHeader: 'Other NDLA sites',
+    socialMediaLinks: {
+      facebook: 'NDLA on Facebook',
+      newsletter: 'Sign up for our Newsletter',
+      twitter: 'NDLA on Twitter',
+    },
+    ndlaLinks: {
+      omNdla: 'Om NDLA',
+      aboutNdla: 'About NDLA',
+      blog: 'Blog',
+      tips: 'Tips to students',
+      fyr: 'FYR project',
+      sharing: 'Sharing arena',
+    },
+  },
 };
 
 export default phrases;

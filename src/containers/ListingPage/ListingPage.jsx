@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import styled from '@emotion/styled';
-import { injectT } from 'ndla-i18n';
+import { injectT } from '@ndla/i18n';
 import ListView, { activeAlphabet } from '@ndla/listview';
 import { OneColumn, FilterListPhone } from '@ndla/ui';
 import NotionDialog from './NotionDialog';

@@ -12,7 +12,7 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import defined from 'defined';
 
-import { IntlProvider } from 'ndla-i18n';
+import { IntlProvider } from '@ndla/i18n';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
 import configureStore from '../../src/configureStore';

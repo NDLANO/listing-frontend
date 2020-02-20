@@ -10,8 +10,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { PageContainer } from 'ndla-ui';
-import { injectT } from 'ndla-i18n';
+import { PageContainer } from '@ndla/ui';
+import { injectT } from '@ndla/i18n';
 
 import Masthead from '../Masthead';
 import Footer from './components/Footer';

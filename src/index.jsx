@@ -10,7 +10,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { IntlProvider } from 'ndla-i18n';
+import { IntlProvider } from '@ndla/i18n';
 
 import { getLocaleObject, isValidLocale } from './i18n';
 import configureStore from './configureStore';

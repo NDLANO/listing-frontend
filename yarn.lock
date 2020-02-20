@@ -2525,15 +2525,6 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-class@^15.6.0:
-  version "15.6.3"
-  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
-  integrity sha512-M+/3Q6E6DLO6Yx3OwrWjwHBnvfXXYA7W+dFjt/ZDBemHO1DDZhsalX/NUtnTYclN6GfnBDRh4qRHjcDHmlJBJg==
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
 cross-env@^5.1.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.2.1.tgz#b2c76c1ca7add66dc874d11798466094f551b34d"
@@ -4516,27 +4507,15 @@ interpret@^1.0.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
   integrity sha512-mT34yGKMNceBQUoVn7iCDKDntA7SC6gycMAWzGx1z/CMCTV7b2AAtXlo3nRyHZ1FelRkQbQjprHSYGwzLtkVbw==
 
-intl-format-cache@^2.0.5, intl-format-cache@^2.1.0:
+intl-format-cache@^2.1.0:
   version "2.2.9"
   resolved "https://registry.yarnpkg.com/intl-format-cache/-/intl-format-cache-2.2.9.tgz#fb560de20c549cda20b569cf1ffb6dc62b5b93b4"
   integrity sha512-Zv/u8wRpekckv0cLkwpVdABYST4hZNTDaX7reFetrYTJwxExR2VyTqQm+l0WmL0Qo8Mjb9Tf33qnfj0T7pjxdQ==
-
-intl-messageformat-parser@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.2.0.tgz#5906b7f953ab7470e0dc8549097b648b991892ff"
-  integrity sha1-WQa3+VOrdHDg3IVJCXtki5kYkv8=
 
 intl-messageformat-parser@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/intl-messageformat-parser/-/intl-messageformat-parser-1.4.0.tgz#b43d45a97468cadbe44331d74bb1e8dea44fc075"
   integrity sha1-tD1FqXRoytvkQzHXS7Ho3qRPwHU=
-
-intl-messageformat@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/intl-messageformat/-/intl-messageformat-1.3.0.tgz#f7d926aded7a3ab19b2dc601efd54e99a4bd4eae"
-  integrity sha1-99kmre16OrGbLcYB79VOmaS9Tq4=
-  dependencies:
-    intl-messageformat-parser "1.2.0"
 
 intl-messageformat@^2.2.0:
   version "2.2.0"
@@ -5992,31 +5971,12 @@ ndla-article-scripts@^0.0.5:
   resolved "https://registry.yarnpkg.com/ndla-article-scripts/-/ndla-article-scripts-0.0.5.tgz#09bdf5b561e7531e4dd626d105ba5a69300d4944"
   integrity sha1-Cb31tWHnUx5N1ibRBbpaaTANSUQ=
 
-ndla-i18n@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/ndla-i18n/-/ndla-i18n-0.0.1.tgz#36f0663cf8d72364397c20123664556c8464190d"
-  integrity sha512-G043mq1tz8aA8tltWos5W2ytnq9UtJ5/CWqW/H7PoCwqmtqTgWkyKLAHVfPSM+qE/E2/ZOzAkJqG2B59k+WyJQ==
-  dependencies:
-    intl-format-cache "^2.0.5"
-    intl-messageformat "^1.3.0"
-    invariant "^2.2.2"
-
 ndla-licenses@^0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/ndla-licenses/-/ndla-licenses-0.0.8.tgz#758fbe422c185ce8c41147f2a2a45576a90f77a6"
   integrity sha1-dY++QiwYXOjEEUfyoqRVdqkPd6Y=
   dependencies:
     defined "1.0.0"
-
-ndla-ui@^0.7.18:
-  version "0.7.18"
-  resolved "https://registry.yarnpkg.com/ndla-ui/-/ndla-ui-0.7.18.tgz#413a7597134b701ec51b208e126a7b28246ca495"
-  integrity sha512-A21iL6cKh2IKnhngjQV8QuUdiHgige89ZnQd1KsHwd0KIB9Rq+YWe7nLhV7tx+CfVeRb5rLcKPpr1nWNoOG3OA==
-  dependencies:
-    classnames "2.2.5"
-    react-bem-helper "1.4.1"
-    react-prop-types "0.4.0"
-    react-sticky-header "^0.1.6"
 
 ndla-util@^0.1.7:
   version "0.1.11"
@@ -7582,13 +7542,6 @@ react-spinner-children@^1.0.8:
     prop-types "^15.6.0"
     spin.js "^2.3.2"
 
-react-sticky-header@^0.1.6:
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/react-sticky-header/-/react-sticky-header-0.1.9.tgz#a03fe20bf4c91b88fc579d9052102586a77df505"
-  integrity sha1-oD/iC/TJG4j8V52QUhAlhqd99QU=
-  dependencies:
-    react "^15.5.4"
-
 react-style-singleton@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-1.1.1.tgz#b2b698765519da812b80f55ab3c5fc5d849a2e63"
@@ -7629,17 +7582,6 @@ react-transition-group@^2.5.3:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
-
-react@^15.5.4:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.6.2.tgz#dba0434ab439cfe82f108f0f511663908179aa72"
-  integrity sha1-26BDSrQ5z+gvEI8PURZjkIF5qnI=
-  dependencies:
-    create-react-class "^15.6.0"
-    fbjs "^0.8.9"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.0"
-    prop-types "^15.5.10"
 
 react@^16.12.0:
   version "16.12.0"
