@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import styled from '@emotion/styled';
 import { injectT } from '@ndla/i18n';
-import ListView, { activeAlphabet } from '@ndla/listview';
+import ListView from '@ndla/listview';
 import { OneColumn, FilterListPhone } from '@ndla/ui';
 import NotionDialog from './NotionDialog';
 
@@ -116,7 +116,6 @@ const ListingPage = (props) => {
       </SubjectFilterWrapper>
       <ListView
         items={listItems}
-        alphabet={activeAlphabet(listItems)}
         detailedItem={detailedItem}
         selectCallback={setDetailedItem}
         viewStyle={viewStyle}
