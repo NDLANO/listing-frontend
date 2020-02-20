@@ -100,7 +100,7 @@ const ListingPage = (props) => {
         <FilterListPhone
           preid="subject-list"
           label="Filtrer på fag"
-          options={props.subjects.map(item => ({ title: item.name, value: item.id, filterName: 'filter_subjects'}))}
+          options={props.subjects.map(item => ({ title: item.name, value: item.id }))}
           alignedGroup
           values={queryParams.subjects}
           messages={{
@@ -129,8 +129,10 @@ const ListingPage = (props) => {
           key: 'default',
           label: 'Filter',
           options: [
-            props.listings.filters.main.map(item => ({ title: item, value: item })),
-            props.listings.filters.sub.map(item => ({ title: item, value: item }))
+            props.listings.filters.main.map(filter =>
+              ({ title: filter, value: filter, disabled: !listItems.some(item => item.filters.main.includes(filter))})),
+            props.listings.filters.sub.map(filter =>
+              ({ title: filter, value: filter, disabled: !listItems.some(item => item.filters.sub.includes(filter))})),
           ]
         }]}
       />
