@@ -54,6 +54,12 @@ const phrases = {
         openFilter: 'Filtrer category',
         closeFilter: 'Close filter',
       },
+      default: {
+        useFilter: 'Use filter',
+        openFilter: 'Filter',
+        closeFilter: 'Close filter',
+        heading: 'Filter',
+      },
     },
     relatedLinks: {
       label: 'Related articles',

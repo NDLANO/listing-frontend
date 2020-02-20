@@ -32,31 +32,31 @@ const ListingPage = (props) => {
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [filters, setFilters] = useQueryParameter({ subjects: [], subject: [], category: [] });
+  const [queryParams, setQueryParams] = useQueryParameter({ subjects: [], filters: [] });
 
   useEffect(() => {
     props.fetchSubjects();
   }, []);
 
   useEffect(() => {
-    if (filters.subjects.length > 0) {
-      props.fetchListingBySubject(filters.subjects);
-      props.fetchFilters(filters.subjects);
+    if (queryParams.subjects.length > 0) {
+      props.fetchListingBySubject(queryParams.subjects);
+      props.fetchFilters(queryParams.subjects);
     }
     else {
       props.fetchListing();
       props.resetFilters();
     }
-  }, [filters.subjects]);
+  }, [queryParams.subjects]);
 
   const handleChangeSubject = (values) => {
-    setFilters({ subjects: values, subject: [], category: [] });
+    setQueryParams({ subjects: values, filters: [] });
   }
 
   const handleChangeFilters = (key, values) => {
-    setFilters({
-      ...filters,
-      [key]: values
+    setQueryParams({
+      ...queryParams,
+      filters: values
     });
   }
 
@@ -64,11 +64,9 @@ const ListingPage = (props) => {
     let filteredItems = listItems;
 
     // Checkboxes
-    if (filters.subject.length) {
-      filteredItems = filteredItems.filter(item => filters.subject.every(subject => item.filters.main.includes(subject)));
-    }
-    if (filters.category.length) {
-      filteredItems = filteredItems.filter(item => filters.category.every(category => item.filters.sub.includes(category)));
+    if (queryParams.filters.length) {
+      filteredItems = filteredItems.filter(item => queryParams.filters.every(filter => 
+        [...item.filters.main, ...item.filters.sub].includes(filter)));
     }
 
     // Search
@@ -104,7 +102,7 @@ const ListingPage = (props) => {
           label="Filtrer på fag"
           options={props.subjects.map(item => ({ title: item.name, value: item.id, filterName: 'filter_subjects'}))}
           alignedGroup
-          values={filters.subjects}
+          values={queryParams.subjects}
           messages={{
             useFilter: t(`listview.filters.subject.useFilter`),
             openFilter: t(`listview.filters.subject.openFilter`),
@@ -124,22 +122,17 @@ const ListingPage = (props) => {
         onChangedSearchValue={e => setSearchValue(e.target.value)}
         selectedItem={selectedItem ? <NotionDialog item={selectedItem} handleClose={setSelectedItem}/> : null}
         onSelectItem={setSelectedItem}
-        filters={[
-          {
-            options: props.listings.filters.main.map(item => ({ title: item, value: item })),
-            filterValues: filters.subject,
-            onChange: handleChangeFilters,
-            key: 'subject',
-            label: '',
-          },
-          {
-            options: props.listings.filters.sub.map(item => ({ title: item, value: item })),
-            filterValues: filters.category,
-            onChange: handleChangeFilters,
-            key: 'category',
-            label: '',
-          },
-        ]}
+        filters={[{
+          filterValues: queryParams.filters,
+          onChange: handleChangeFilters,
+          isGroupedOptions: true,
+          key: 'default',
+          label: 'Filter',
+          options: [
+            props.listings.filters.main.map(item => ({ title: item, value: item })),
+            props.listings.filters.sub.map(item => ({ title: item, value: item }))
+          ]
+        }]}
       />
     </OneColumn>
   );

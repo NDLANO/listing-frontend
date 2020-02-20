@@ -54,6 +54,12 @@ const phrases = {
         openFilter: 'Filtrer på kategori',
         closeFilter: 'Lukk filter',
       },
+      default: {
+        useFilter: 'Bruk filter',
+        openFilter: 'Filtrer',
+        closeFilter: 'Lukk filter',
+        heading: 'Filter',
+      },
     },
     relatedLinks: {
       label: 'Tilknyttede artikler',
