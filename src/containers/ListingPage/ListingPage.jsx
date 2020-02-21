@@ -142,7 +142,7 @@ const ListingPage = props => {
           ) : null
         }
         onSelectItem={setSelectedItem}
-        filters={[
+        filters={props.listings.filters.main.length ? [
           {
             filterValues: queryParams.filters,
             onChange: handleChangeFilters,
@@ -166,7 +166,10 @@ const ListingPage = props => {
               })),
             ],
           },
-        ]}
+        ]
+          :
+          null
+        }
       />
     </OneColumn>
   );
