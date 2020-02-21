@@ -24,58 +24,64 @@ const initialConcept = {
   created: '',
   license: '',
   authors: [],
-  rightsholders: []
-}
+  rightsholders: [],
+};
 
 const initialImage = {
   title: '',
   image: {
     url: '',
-    alt: ''
+    alt: '',
   },
   license: '',
   authors: [],
   rightsholders: [],
-  origin: ''
-}
+  origin: '',
+};
 
-const NotionDialog = (props) => {
+const NotionDialog = props => {
   const [articleId, setArticleId] = useState(undefined);
   const [concept, setConcept] = useState(initialConcept);
   const [image, setImage] = useState(initialImage);
 
   useEffect(() => {
     // Concept
-    fetchConcept(props.item.id)
-      .then(response => {
-        setArticleId(response.articleId);
-        setConcept({
-          title: response.title ? response.title.title : '',
-          source: response.source,
-          created: response.created,
-          license: response.copyright ? response.copyright.license.license : '',
-          authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : [],
-          rightsholders: response.copyright ? response.copyright.rightsholders.map(holder => holder.name) : []
-        });
+    fetchConcept(props.item.id).then(response => {
+      setArticleId(response.articleId);
+      setConcept({
+        title: response.title ? response.title.title : '',
+        source: response.source,
+        created: response.created,
+        license: response.copyright ? response.copyright.license.license : '',
+        authors: response.copyright
+          ? response.copyright.creators.map(creator => creator.name)
+          : [],
+        rightsholders: response.copyright
+          ? response.copyright.rightsholders.map(holder => holder.name)
+          : [],
       });
+    });
 
     // Image
     const imageId = props.item.image.split('/').pop();
     if (imageId.length) {
-      fetchImage(imageId)
-        .then(response => {
-          setImage({
-            title: response.title ? response.title.title : '',
-            image: {
-              url: response.imageUrl,
-              alt: response.alttext ? response.alttext.alttext : ''
-            },
-            license: response.copyright ? response.copyright.license.license : '',
-            authors: response.copyright ? response.copyright.creators.map(creator => creator.name) : [],
-            rightsholders: response.copyright ? response.copyright.rightsholders.map(holder => holder.name) : [],
-            origin: response.copyright ? response.copyright.origin : ''
-          })
+      fetchImage(imageId).then(response => {
+        setImage({
+          title: response.title ? response.title.title : '',
+          image: {
+            url: response.imageUrl,
+            alt: response.alttext ? response.alttext.alttext : '',
+          },
+          license: response.copyright ? response.copyright.license.license : '',
+          authors: response.copyright
+            ? response.copyright.creators.map(creator => creator.name)
+            : [],
+          rightsholders: response.copyright
+            ? response.copyright.rightsholders.map(holder => holder.name)
+            : [],
+          origin: response.copyright ? response.copyright.origin : '',
         });
+      });
     }
   }, []);
 
@@ -94,16 +100,20 @@ const NotionDialog = (props) => {
         ) : null}
         <NotionDialogText>{props.item.description}</NotionDialogText>
       </NotionDialogContent>
-      <NotionDialogTags tags={props.item.subject.map(subject => subject.title)} />
-      {articleId &&
+      <NotionDialogTags
+        tags={props.item.subject.map(subject => subject.title)}
+      />
+      {articleId && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}
-          links={[{
-            label: props.item.name,
-            href: `${config.ndlaFrontendDomain}/article/${articleId}`
-          }]}
+          links={[
+            {
+              label: props.item.name,
+              href: `${config.ndlaFrontendDomain}/article/${articleId}`,
+            },
+          ]}
         />
-      }
+      )}
       <NotionDialogLicenses
         license={concept.license}
         source={concept.source}
@@ -127,10 +137,14 @@ const NotionDialog = (props) => {
                           title: t('license.tabs.text'),
                           content: <TextContent t={t} concept={concept} />,
                         },
-                        ...image.image.url.length ? [{
-                          title: t('license.tabs.images'),
-                          content: <ImageContent t={t} image={image} />,
-                        }] : []
+                        ...(image.image.url.length
+                          ? [
+                              {
+                                title: t('license.tabs.images'),
+                                content: <ImageContent t={t} image={image} />,
+                              },
+                            ]
+                          : []),
                       ]}
                     />
                   </div>
@@ -141,8 +155,8 @@ const NotionDialog = (props) => {
         }
       />
     </NotionDialogWrapper>
-  )
-}
+  );
+};
 
 NotionDialog.propTypes = {
   item: PropTypes.shape({
@@ -150,12 +164,14 @@ NotionDialog.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     image: PropTypes.string,
-    subject: PropTypes.arrayOf(PropTypes.exact({
-      title: PropTypes.string.isRequired,
-      value: PropTypes.string
-    }))
+    subject: PropTypes.arrayOf(
+      PropTypes.exact({
+        title: PropTypes.string.isRequired,
+        value: PropTypes.string,
+      }),
+    ),
   }),
-  handleClose: PropTypes.func.isRequired
-}
+  handleClose: PropTypes.func.isRequired,
+};
 
 export default injectT(NotionDialog);

@@ -16,19 +16,23 @@ export function* fetchSubjects() {
     yield put(actions.setSubjects([]));
   } else {
     const subjects = [];
-    yield all(subjectIds.map(id => call(() =>
-      api.fetchSubjectNames(id)
-        .then(response => response.json())
-        .then(subject => {
-          subjects.push({
-            id,
-            name: subject.name ? subject.name : id
-          })
-        })
-        .catch(() => { })
-    )))
-    yield put(actions.setSubjects(subjects))
-
+    yield all(
+      subjectIds.map(id =>
+        call(() =>
+          api
+            .fetchSubjectNames(id)
+            .then(response => response.json())
+            .then(subject => {
+              subjects.push({
+                id,
+                name: subject.name ? subject.name : id,
+              });
+            })
+            .catch(() => {}),
+        ),
+      ),
+    );
+    yield put(actions.setSubjects(subjects));
   }
 }
 

@@ -16,22 +16,22 @@ export const LabelShape = PropTypes.shape({
 export const CoverShape = PropTypes.shape({
   tags: PropTypes.shape({
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-    language: PropTypes.string.isRequired
+    language: PropTypes.string.isRequired,
   }),
   metaImage: PropTypes.shape({
     url: PropTypes.string.isRequired,
     alt: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired
+    language: PropTypes.string.isRequired,
   }),
   id: PropTypes.number.isRequired,
   subjectIds: PropTypes.arrayOf(PropTypes.string),
   content: PropTypes.shape({
     content: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired
+    language: PropTypes.string.isRequired,
   }),
   supportedLanguages: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired
-  })
-})
+    language: PropTypes.string.isRequired,
+  }),
+});

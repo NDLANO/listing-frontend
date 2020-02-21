@@ -34,10 +34,10 @@ const phrases = {
     help: 'Help',
   },
   notions: {
-    closeNotion: 'Close'
+    closeNotion: 'Close',
   },
   article: {
-    useContent: 'Use content'
+    useContent: 'Use content',
   },
   listview: {
     search: {
@@ -75,21 +75,22 @@ const phrases = {
     },
     images: {
       heading: 'How to use images from the article',
-      description: 'Remember to copy the text to be attached to the image where you use it.',
+      description:
+        'Remember to copy the text to be attached to the image where you use it.',
       rules: 'Rules for use of image:',
     },
     tabs: {
       text: 'Text',
-      images: 'Images'
+      images: 'Images',
     },
     copyTitle: 'Copy reference',
     hasCopiedTitle: 'Copied!',
-    download: 'Download'
+    download: 'Download',
   },
   searchPage: {
     searchFilterMessages: {
       removeFilter: 'Remove filter {filterName}',
-    }
+    },
   },
   footer: {
     aboutNDLA: 'About NDLA',

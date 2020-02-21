@@ -8,7 +8,7 @@
 import { select, call, put, takeEvery } from 'redux-saga/effects';
 import * as actions from './listingActions';
 import * as api from './listingApi';
-import { mapTagsToFilters } from '../../util/listingHelpers'
+import { mapTagsToFilters } from '../../util/listingHelpers';
 
 export function* fetchListing() {
   const listings = yield call(() => api.fetchListing(1000));
@@ -17,7 +17,13 @@ export function* fetchListing() {
     yield put(actions.setListing({}));
   } else {
     const locale = yield select(state => state.locale);
-    yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))));
+    yield put(
+      actions.setListing(
+        listings.results.sort((a, b) =>
+          a.title.title.localeCompare(b.title.title, locale),
+        ),
+      ),
+    );
   }
 }
 
@@ -29,7 +35,13 @@ export function* fetchListingBySubject(action) {
     yield put(actions.setListing({}));
   } else {
     const locale = yield select(state => state.locale);
-    yield put(actions.setListing(listings.results.sort((a, b) => a.title.title.localeCompare(b.title.title, locale))));
+    yield put(
+      actions.setListing(
+        listings.results.sort((a, b) =>
+          a.title.title.localeCompare(b.title.title, locale),
+        ),
+      ),
+    );
   }
 }
 
@@ -39,8 +51,7 @@ export function* fetchFilters(action) {
 
   if (tags.length === 0) {
     yield put(actions.setFilters({ main: [], sub: [] }));
-  }
-  else {
+  } else {
     const tagsArray = [].concat(...tags.map(tag => [...tag.tags]));
     yield put(actions.setFilters(mapTagsToFilters(tagsArray)));
   }

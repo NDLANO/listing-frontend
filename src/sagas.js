@@ -10,8 +10,5 @@ import listingSaga from './containers/ListingPage/listingSaga';
 import subjectSaga from './containers/Subject/subjectSaga';
 
 export default function* root() {
-  yield all([
-    fork(listingSaga),
-    fork(subjectSaga)
-  ]);
+  yield all([fork(listingSaga), fork(subjectSaga)]);
 }

@@ -6,10 +6,14 @@
  *
  */
 
-import { resolveJsonOrRejectWithError, apiResourceUrl } from '../../util/apiHelpers';
+import {
+  resolveJsonOrRejectWithError,
+  apiResourceUrl,
+} from '../../util/apiHelpers';
 
 const baseSubjectUrl = apiResourceUrl('/concept-api/v1/concepts/subjects/');
-const baseTaxonomyUrl = apiResourceUrl('/taxonomy/v1/subjects/')
+const baseTaxonomyUrl = apiResourceUrl('/taxonomy/v1/subjects/');
 
-export const fetchSubjects = () => fetch(baseSubjectUrl).then(resolveJsonOrRejectWithError);
-export const fetchSubjectNames = (id) => fetch(baseTaxonomyUrl + id);
+export const fetchSubjects = () =>
+  fetch(baseSubjectUrl).then(resolveJsonOrRejectWithError);
+export const fetchSubjectNames = id => fetch(baseTaxonomyUrl + id);

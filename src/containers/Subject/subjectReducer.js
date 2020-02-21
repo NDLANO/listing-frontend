@@ -10,9 +10,12 @@ import * as actions from './subjectActions';
 
 const initalState = null;
 
-export default handleActions({
-  [actions.setSubjects]: {
-    next: (state, action) => action.payload,
-    throw: state => state,
+export default handleActions(
+  {
+    [actions.setSubjects]: {
+      next: (state, action) => action.payload,
+      throw: state => state,
+    },
   },
-}, initalState);
+  initalState,
+);

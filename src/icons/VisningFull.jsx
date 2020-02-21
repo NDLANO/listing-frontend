@@ -9,12 +9,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const VisningFull = ({ className }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" className={className}>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 50 50"
+    className={className}>
     <title>visning</title>
     <rect className="visning-icon" x="7" y="7" width="14.04" height="14.04" />
-    <rect className="visning-icon" x="28.95" y="7" width="14.04" height="14.04" />
-    <rect className="visning-icon" x="7" y="28.95" width="14.04" height="14.04" />
-    <rect className="visning-icon" x="28.95" y="28.95" width="14.04" height="14.04" />
+    <rect
+      className="visning-icon"
+      x="28.95"
+      y="7"
+      width="14.04"
+      height="14.04"
+    />
+    <rect
+      className="visning-icon"
+      x="7"
+      y="28.95"
+      width="14.04"
+      height="14.04"
+    />
+    <rect
+      className="visning-icon"
+      x="28.95"
+      y="28.95"
+      width="14.04"
+      height="14.04"
+    />
   </svg>
 );
 

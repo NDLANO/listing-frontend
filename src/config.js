@@ -8,11 +8,11 @@
 
 const environment = {
   development: {
-    isProduction: false
+    isProduction: false,
   },
   production: {
-    isProduction: true
-  }
+    isProduction: true,
+  },
 }[process.env.NODE_ENV || 'development'];
 
 const ndlaEnvironment = process.env.NDLA_ENVIRONMENT || 'test';
@@ -58,7 +58,7 @@ module.exports = Object.assign(
     disableSSR: process.env.DISABLE_SSR || false,
     ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
     ndlaListingFrontendDomain: ndlaListingFrontendDomain(),
-    ndlaFrontendDomain: ndlaFrontendDomain()
+    ndlaFrontendDomain: ndlaFrontendDomain(),
   },
-  environment
+  environment,
 );

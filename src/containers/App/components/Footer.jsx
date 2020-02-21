@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 import { injectT } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
 import { Facebook, Twitter, EmailOutline } from '@ndla/icons/common';
@@ -21,7 +21,6 @@ const StyledFooterWrapper = styled.div`
 `;
 
 const FooterWrapper = ({ t, locale }) => {
-
   const links = [
     {
       to: 'https://www.facebook.com/ndla.no',
@@ -46,13 +45,13 @@ const FooterWrapper = ({ t, locale }) => {
         <FooterText>
           <EditorName
             title={t('footer.footerEditiorInChief')}
-            name='Sigurd Trageton'
+            name="Sigurd Trageton"
           />
           {t('footer.footerInfo')}
         </FooterText>
       </Footer>
     </StyledFooterWrapper>
-  )
+  );
 };
 
 FooterWrapper.propTypes = {

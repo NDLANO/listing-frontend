@@ -8,11 +8,13 @@
 
 const phrases = {
   meta: {
-    description: 'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
+    description:
+      'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
   },
   themePage: {
     heading: 'Utlisting',
-    intro: 'Dette er utlistingstjenesten til NDLA. Velg et område for å komme i gang.',
+    intro:
+      'Dette er utlistingstjenesten til NDLA. Velg et område for å komme i gang.',
     chooseTheme: 'Velg område',
     toolTheme: 'Verktøy',
     natureTheme: 'Naturbruk',
@@ -34,10 +36,10 @@ const phrases = {
     help: 'Hjelp',
   },
   notions: {
-    closeNotion: 'Lukk'
+    closeNotion: 'Lukk',
   },
   article: {
-    useContent: 'Bruk innhold'
+    useContent: 'Bruk innhold',
   },
   listview: {
     search: {
@@ -75,21 +77,22 @@ const phrases = {
     },
     images: {
       heading: 'Slik bruker du bilder fra artikkelen',
-      description: 'Husk å kopiere teksten som skal legges ved bildet der du bruker det.',
+      description:
+        'Husk å kopiere teksten som skal legges ved bildet der du bruker det.',
       rules: 'Regler for bruk av bildet:',
     },
     tabs: {
       text: 'Tekst',
-      images: 'Bilder'
+      images: 'Bilder',
     },
     copyTitle: 'Kopier referanse',
     hasCopiedTitle: 'Kopiert!',
-    download: 'Last ned'
+    download: 'Last ned',
   },
   searchPage: {
     searchFilterMessages: {
       removeFilter: 'Fjern filter {filterName}',
-    }
+    },
   },
   footer: {
     aboutNDLA: 'Om NDLA',

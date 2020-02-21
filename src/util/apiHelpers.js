@@ -31,7 +31,6 @@ const apiBaseUrl = (() => {
   return NDLA_API_URL;
 })();
 
-
 export { apiBaseUrl };
 
 export function apiResourceUrl(path) {
@@ -47,8 +46,15 @@ export function resolveJsonOrRejectWithError(res) {
     if (res.ok) {
       return res.status === 204 ? resolve() : resolve(res.json());
     }
-    return res.json()
-      .then(json => createErrorPayload(res.status, defined(json.message, res.statusText), json))
+    return res
+      .json()
+      .then(json =>
+        createErrorPayload(
+          res.status,
+          defined(json.message, res.statusText),
+          json,
+        ),
+      )
       .catch(reject);
   });
 }

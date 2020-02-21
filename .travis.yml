@@ -1,9 +1,9 @@
 language: node_js
 node_js:
-- '8'
+  - '8'
 script:
-- yarn test
-- yarn build
+  - yarn check-all
+  - yarn build
 notifications:
   slack:
     on_success: change

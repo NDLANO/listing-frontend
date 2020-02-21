@@ -13,7 +13,6 @@ import Helmet from 'react-helmet';
 import { PageContainer } from '@ndla/ui';
 import { injectT } from '@ndla/i18n';
 
-import Masthead from '../Masthead';
 import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
@@ -31,12 +30,10 @@ export class App extends React.Component {
       <PageContainer>
         <Helmet
           title="NDLA"
-          meta={[
-            { name: 'description', content: t('meta.description') },
-          ]}
+          meta={[{ name: 'description', content: t('meta.description') }]}
         />
-        { /* <Masthead t={t} /> */ }
-        <ListingPage/>
+        {/* <Masthead t={t} /> */}
+        <ListingPage />
         <Footer t={t} />
       </PageContainer>
     );

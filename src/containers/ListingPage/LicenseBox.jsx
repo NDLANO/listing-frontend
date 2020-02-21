@@ -27,9 +27,9 @@ export const TextContent = ({ t, concept }) => (
         <MediaListItemBody
           license={concept.license}
           title={t('license.text.rules')}
-          resourceUrl=''
-          locale='nb'
-          resourceType='text'>
+          resourceUrl=""
+          locale="nb"
+          resourceType="text">
           <MediaListItemActions>
             <div className="c-medialist__ref">
               <MediaListItemMeta
@@ -59,9 +59,7 @@ export const TextContent = ({ t, concept }) => (
               <CopyButton outline copyNode={t('license.hasCopiedTitle')}>
                 {t('license.copyTitle')}
               </CopyButton>
-              <Button
-                outline
-                onClick={() => { }}>
+              <Button outline onClick={() => {}}>
                 {t('license.download')}
               </Button>
             </div>
@@ -70,7 +68,7 @@ export const TextContent = ({ t, concept }) => (
       </MediaListItem>
     </MediaList>
   </div>
-)
+);
 
 TextContent.propTypes = {
   t: PropTypes.func.isRequired,
@@ -80,9 +78,9 @@ TextContent.propTypes = {
     created: PropTypes.string,
     license: PropTypes.string,
     authors: PropTypes.arrayOf(PropTypes.string),
-    rightsholders: PropTypes.arrayOf(PropTypes.string)
-  })
-}
+    rightsholders: PropTypes.arrayOf(PropTypes.string),
+  }),
+};
 
 export const ImageContent = ({ t, image }) => (
   <div>
@@ -98,9 +96,9 @@ export const ImageContent = ({ t, image }) => (
         <MediaListItemBody
           license={image.license}
           title={t('license.images.rules')}
-          resourceUrl=''
-          locale='nb'
-          resourceType='image'>
+          resourceUrl=""
+          locale="nb"
+          resourceType="image">
           <MediaListItemActions>
             <div className="c-medialist__ref">
               <MediaListItemMeta
@@ -130,9 +128,7 @@ export const ImageContent = ({ t, image }) => (
               <CopyButton outline copyNode={t('license.hasCopiedTitle')}>
                 {t('license.copyTitle')}
               </CopyButton>
-              <Button
-                outline
-                onClick={() => { }}>
+              <Button outline onClick={() => {}}>
                 {t('license.download')}
               </Button>
             </div>
@@ -141,7 +137,7 @@ export const ImageContent = ({ t, image }) => (
       </MediaListItem>
     </MediaList>
   </div>
-)
+);
 
 ImageContent.propTypes = {
   t: PropTypes.func.isRequired,
@@ -149,11 +145,11 @@ ImageContent.propTypes = {
     title: PropTypes.string,
     image: PropTypes.exact({
       url: PropTypes.string,
-      alt: PropTypes.string
+      alt: PropTypes.string,
     }),
     license: PropTypes.string,
     authors: PropTypes.arrayOf(PropTypes.string),
     rightsholders: PropTypes.arrayOf(PropTypes.string),
-    origin: PropTypes.string
-  })
-}
+    origin: PropTypes.string,
+  }),
+};

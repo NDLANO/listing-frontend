@@ -27,12 +27,15 @@ const SubjectFilterWrapper = styled.div`
   margin-bottom: 13px;
 `;
 
-const ListingPage = (props) => {
+const ListingPage = props => {
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [queryParams, setQueryParams] = useQueryParameter({ subjects: [], filters: [] });
+  const [queryParams, setQueryParams] = useQueryParameter({
+    subjects: [],
+    filters: [],
+  });
 
   useEffect(() => {
     props.fetchSubjects();
@@ -42,54 +45,63 @@ const ListingPage = (props) => {
     if (queryParams.subjects.length > 0) {
       props.fetchListingBySubject(queryParams.subjects);
       props.fetchFilters(queryParams.subjects);
-    }
-    else {
+    } else {
       props.fetchListing();
       props.resetFilters();
     }
   }, [queryParams.subjects]);
 
-  const handleChangeSubject = (values) => {
+  const handleChangeSubject = values => {
     setQueryParams({ subjects: values, filters: [] });
-  }
+  };
 
   const handleChangeFilters = (key, values) => {
     setQueryParams({
       ...queryParams,
-      filters: values
+      filters: values,
     });
-  }
+  };
 
-  const filterItems = (listItems) => {
+  const filterItems = listItems => {
     let filteredItems = listItems;
 
     // Checkboxes
     if (queryParams.filters.length) {
-      filteredItems = filteredItems.filter(item => queryParams.filters.every(filter => 
-        [...item.filters.main, ...item.filters.sub].includes(filter)));
+      filteredItems = filteredItems.filter(item =>
+        queryParams.filters.every(filter =>
+          [...item.filters.main, ...item.filters.sub].includes(filter),
+        ),
+      );
     }
 
     // Search
     if (searchValue.length > 0) {
       const searchValueLowercase = searchValue.toLowerCase();
-      filteredItems = filteredItems.filter(
-        item =>
-          (item.description &&
-            item.description.toLowerCase().indexOf(searchValueLowercase) !== -1) ||
-          item.name.toLowerCase().indexOf(searchValueLowercase) !== -1,
+      filteredItems = filteredItems.filter(item =>
+        item.name.toLowerCase().startsWith(searchValueLowercase),
       );
     }
 
     return filteredItems;
-  }
+  };
 
   if (!props.listings.listings || !props.subjects) {
     return null;
   }
 
   // Filtered list items, concepts without subjects are excluded
-  const listItems = filterItems(props.listings.listings.filter(concept => concept.subjectIds).map(concept =>
-    mapConceptToListItem(concept, props.subjects.find(subject => concept.subjectIds.includes(subject.id)))));
+  const listItems = filterItems(
+    props.listings.listings
+      .filter(concept => concept.subjectIds)
+      .map(concept =>
+        mapConceptToListItem(
+          concept,
+          props.subjects.find(subject =>
+            concept.subjectIds.includes(subject.id),
+          ),
+        ),
+      ),
+  );
 
   const { t } = props;
 
@@ -100,7 +112,10 @@ const ListingPage = (props) => {
         <FilterListPhone
           preid="subject-list"
           label="Filtrer på fag"
-          options={props.subjects.map(item => ({ title: item.name, value: item.id }))}
+          options={props.subjects.map(item => ({
+            title: item.name,
+            value: item.id,
+          }))}
           alignedGroup
           values={queryParams.subjects}
           messages={{
@@ -109,7 +124,7 @@ const ListingPage = (props) => {
             closeFilter: t(`listview.filters.subject.closeFilter`),
           }}
           onChange={handleChangeSubject}
-          viewMode='allModal'
+          viewMode="allModal"
         />
       </SubjectFilterWrapper>
       <ListView
@@ -120,33 +135,49 @@ const ListingPage = (props) => {
         onChangedViewStyle={e => setViewStyle(e.viewStyle)}
         searchValue={searchValue}
         onChangedSearchValue={e => setSearchValue(e.target.value)}
-        selectedItem={selectedItem ? <NotionDialog item={selectedItem} handleClose={setSelectedItem}/> : null}
+        selectedItem={
+          selectedItem ? (
+            <NotionDialog item={selectedItem} handleClose={setSelectedItem} />
+          ) : null
+        }
         onSelectItem={setSelectedItem}
-        filters={[{
-          filterValues: queryParams.filters,
-          onChange: handleChangeFilters,
-          isGroupedOptions: true,
-          key: 'default',
-          label: 'Filter',
-          options: [
-            props.listings.filters.main.map(filter =>
-              ({ title: filter, value: filter, disabled: !listItems.some(item => item.filters.main.includes(filter))})),
-            props.listings.filters.sub.map(filter =>
-              ({ title: filter, value: filter, disabled: !listItems.some(item => item.filters.sub.includes(filter))})),
-          ]
-        }]}
+        filters={[
+          {
+            filterValues: queryParams.filters,
+            onChange: handleChangeFilters,
+            isGroupedOptions: true,
+            key: 'default',
+            label: 'Filter',
+            options: [
+              props.listings.filters.main.map(filter => ({
+                title: filter,
+                value: filter,
+                disabled: !listItems.some(item =>
+                  item.filters.main.includes(filter),
+                ),
+              })),
+              props.listings.filters.sub.map(filter => ({
+                title: filter,
+                value: filter,
+                disabled: !listItems.some(item =>
+                  item.filters.sub.includes(filter),
+                ),
+              })),
+            ],
+          },
+        ]}
       />
     </OneColumn>
   );
-}
+};
 
 ListingPage.propTypes = {
   listings: PropTypes.exact({
     filters: PropTypes.exact({
       main: PropTypes.arrayOf(PropTypes.string).isRequired,
-      sub: PropTypes.arrayOf(PropTypes.string).isRequired
+      sub: PropTypes.arrayOf(PropTypes.string).isRequired,
     }),
-    listings: PropTypes.arrayOf(CoverShape)
+    listings: PropTypes.arrayOf(CoverShape),
   }),
   locale: PropTypes.string.isRequired,
   fetchListing: PropTypes.func.isRequired,
@@ -154,8 +185,8 @@ ListingPage.propTypes = {
   subjects: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.string,
-      name: PropTypes.string
-    })
+      name: PropTypes.string,
+    }),
   ),
 };
 
@@ -164,7 +195,7 @@ const mapDispatchToProps = {
   fetchListing: actions.fetchListing,
   fetchListingBySubject: actions.fetchListingBySubject,
   fetchFilters: actions.fetchFilters,
-  resetFilters: actions.resetFilters
+  resetFilters: actions.resetFilters,
 };
 
 const mapStateToProps = state => ({
@@ -173,4 +204,7 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectT(ListingPage));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(injectT(ListingPage));

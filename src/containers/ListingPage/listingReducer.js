@@ -11,22 +11,25 @@ import * as actions from './listingActions';
 const initalState = {
   filters: {
     main: [],
-    sub: []
+    sub: [],
   },
-  listings: []
+  listings: [],
 };
 
-export default handleActions({
-  [actions.setListing]: {
-    next: (state, action) => ({...state, listings: action.payload }),
-    throw: state => state
+export default handleActions(
+  {
+    [actions.setListing]: {
+      next: (state, action) => ({ ...state, listings: action.payload }),
+      throw: state => state,
+    },
+    [actions.setFilters]: {
+      next: (state, action) => ({ ...state, filters: action.payload }),
+      throw: state => state,
+    },
+    [actions.resetFilters]: {
+      next: state => ({ ...state, filters: initalState.filters }),
+      throw: state => state,
+    },
   },
-  [actions.setFilters]: {
-    next: (state, action) => ({...state, filters: action.payload }),
-    throw: state => state
-  },
-  [actions.resetFilters]: {
-    next: (state) => ({...state, filters: initalState.filters }),
-    throw: state => state
-  }
-}, initalState);
+  initalState,
+);

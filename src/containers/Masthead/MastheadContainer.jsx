@@ -10,7 +10,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Masthead, MastheadItem, Logo } from '@ndla/ui';
 
-
 const MastheadContainer = () => (
   <Masthead>
     <MastheadItem right>
@@ -22,6 +21,5 @@ const MastheadContainer = () => (
 MastheadContainer.propTypes = {
   t: PropTypes.func.isRequired,
 };
-
 
 export default MastheadContainer;
