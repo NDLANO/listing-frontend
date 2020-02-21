@@ -8,11 +8,28 @@
 import { handleActions } from 'redux-actions';
 import * as actions from './listingActions';
 
-const initalState = [];
-
-export default handleActions({
-  [actions.setListing]: {
-    next: (state, action) => action.payload,
-    throw: state => state,
+const initalState = {
+  filters: {
+    main: [],
+    sub: [],
   },
-}, initalState);
+  listings: [],
+};
+
+export default handleActions(
+  {
+    [actions.setListing]: {
+      next: (state, action) => ({ ...state, listings: action.payload }),
+      throw: state => state,
+    },
+    [actions.setFilters]: {
+      next: (state, action) => ({ ...state, filters: action.payload }),
+      throw: state => state,
+    },
+    [actions.resetFilters]: {
+      next: state => ({ ...state, filters: initalState.filters }),
+      throw: state => state,
+    },
+  },
+  initalState,
+);

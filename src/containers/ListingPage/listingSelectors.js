@@ -12,17 +12,15 @@ import { titleI18N } from '../../util/i18nFieldFinder';
 
 const getListingFromState = state => state.listings;
 
-export const getListingById = listingId => createSelector(
-    [getListingFromState],
-    listings => listings[listingId],
-);
+export const getListingById = listingId =>
+  createSelector([getListingFromState], listings => listings[listingId]);
 
-export const getListing = listingId => createSelector(
-    [getListingById(listingId), getLocale],
-    (listing, locale) => (
-        listing ? {
+export const getListing = listingId =>
+  createSelector([getListingById(listingId), getLocale], (listing, locale) =>
+    listing
+      ? {
           ...listing,
           title: titleI18N(listing, locale, true),
-        } : undefined
-    ),
-);
+        }
+      : undefined,
+  );

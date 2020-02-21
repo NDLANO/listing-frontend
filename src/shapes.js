@@ -14,23 +14,24 @@ export const LabelShape = PropTypes.shape({
 });
 
 export const CoverShape = PropTypes.shape({
-  articleApiId: PropTypes.number.isRequired,
-  coverPhotoUrl: PropTypes.string.isRequired,
-  description: PropTypes.shape({
-    description: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired
+  tags: PropTypes.shape({
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    language: PropTypes.string.isRequired,
   }),
-  filterChoices: PropTypes.arrayOfStrings,
+  metaImage: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    alt: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
+  }),
   id: PropTypes.number.isRequired,
-  labels: PropTypes.shape({
-    labels: PropTypes.arrayOf(LabelShape).isRequired,
-    language: PropTypes.string.isRequired
+  subjectIds: PropTypes.arrayOf(PropTypes.string),
+  content: PropTypes.shape({
+    content: PropTypes.string.isRequired,
+    language: PropTypes.string.isRequired,
   }),
-  supportedLanguages: PropTypes.arrayOfStrings,
+  supportedLanguages: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    language: PropTypes.string.isRequired
+    language: PropTypes.string.isRequired,
   }),
-  theme: PropTypes.string.isRequired,
-  oembedUrl: PropTypes.string,
 });

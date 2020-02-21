@@ -9,7 +9,6 @@
 import nb from './phrases/phrases-nb';
 import en from './phrases/phrases-en';
 
-
 function* entries(obj) {
   // eslint-disable-next-line
   for (const key of Object.keys(obj)) {
@@ -17,7 +16,11 @@ function* entries(obj) {
   }
 }
 
-export const formatNestedMessages = (phrases, formattedMessages = {}, prefix = '') => {
+export const formatNestedMessages = (
+  phrases,
+  formattedMessages = {},
+  prefix = '',
+) => {
   const messages = formattedMessages;
 
   // eslint-disable-next-line
@@ -34,22 +37,35 @@ export const formatNestedMessages = (phrases, formattedMessages = {}, prefix = '
   return messages;
 };
 
-const NB = { name: 'Bokmål', abbreviation: 'nb', messages: formatNestedMessages(nb) };
-const NN = { name: 'Nynorsk', abbreviation: 'nn', messages: formatNestedMessages(nb) };
-const EN = { name: 'English', abbreviation: 'en', messages: formatNestedMessages(en) };
+const NB = {
+  name: 'Bokmål',
+  abbreviation: 'nb',
+  messages: formatNestedMessages(nb),
+};
+const NN = {
+  name: 'Nynorsk',
+  abbreviation: 'nn',
+  messages: formatNestedMessages(nb),
+};
+const EN = {
+  name: 'English',
+  abbreviation: 'en',
+  messages: formatNestedMessages(en),
+};
 
 export const appLocales = [NB, NN, EN];
 export const preferdLocales = [NB, NN, EN];
 
-export const getLocaleObject = (localeAbbreviation) => {
+export const getLocaleObject = localeAbbreviation => {
   const locale = appLocales.find(l => l.abbreviation === localeAbbreviation);
 
   return locale || NB; // defaults to NB
 };
 
-export const isValidLocale = localeAbbreviation => appLocales.find(l => l.abbreviation === localeAbbreviation) !== undefined;
+export const isValidLocale = localeAbbreviation =>
+  appLocales.find(l => l.abbreviation === localeAbbreviation) !== undefined;
 
-export const getHtmlLang = (localeAbbreviation) => {
+export const getHtmlLang = localeAbbreviation => {
   const locale = appLocales.find(l => l.abbreviation === localeAbbreviation);
   return locale ? locale.abbreviation : 'nb'; // Defaults to nb if not found
 };

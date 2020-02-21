@@ -11,7 +11,6 @@ import express from 'express';
 import compression from 'compression';
 
 import enableDevMiddleWare from './enableDevMiddleware';
-import { getToken } from './auth';
 import { defaultRoute } from './routes/defaultRoute';
 
 
@@ -139,20 +138,8 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 200, text: 'Health check ok' });
 });
 
-app.get('/get_token', (req, res) => {
-  getToken().then((token) => {
-    res.send(token);
-  }).catch((err) => {
-    res.status(500).send(err.message);
-  });
-});
-
-
 app.get('*', (req, res) => {
-  getToken().then((token) => {
-    // handleResponse(req, res, token);
-    defaultRoute(req, res, token);
-  }).catch(err => res.status(500).send(err.message));
+  defaultRoute(req, res);
 });
 
 module.exports = app;

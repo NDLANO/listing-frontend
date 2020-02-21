@@ -33,12 +33,93 @@ const phrases = {
     contact: 'Contact',
     help: 'Help',
   },
+  notions: {
+    closeNotion: 'Close',
+  },
+  article: {
+    useContent: 'Use content',
+  },
+  listview: {
+    search: {
+      placeholder: 'Search',
+    },
+    filters: {
+      subject: {
+        useFilter: 'Use filter',
+        openFilter: 'Filter subject',
+        closeFilter: 'Close filter',
+      },
+      category: {
+        useFilter: 'Use filter',
+        openFilter: 'Filtrer category',
+        closeFilter: 'Close filter',
+      },
+      default: {
+        useFilter: 'Use filter',
+        openFilter: 'Filter',
+        closeFilter: 'Close filter',
+        heading: 'Filter',
+      },
+    },
+    relatedLinks: {
+      label: 'Related articles',
+    },
+  },
+  license: {
+    heading: 'How to reuse content',
+    text: {
+      heading: 'How to use text from the article',
+      description: 'Remember to refer to the source when reusing text.',
+      rules: 'Rules for use of text:',
+      published: 'Published',
+    },
+    images: {
+      heading: 'How to use images from the article',
+      description:
+        'Remember to copy the text to be attached to the image where you use it.',
+      rules: 'Rules for use of image:',
+    },
+    tabs: {
+      text: 'Text',
+      images: 'Images',
+    },
+    copyTitle: 'Copy reference',
+    hasCopiedTitle: 'Copied!',
+    download: 'Download',
+    title: 'Title',
+    originator: 'Originator',
+    rightsholder: 'Rightsholder',
+    source: 'Source',
+    published: 'Publihed',
+  },
+  searchPage: {
+    searchFilterMessages: {
+      removeFilter: 'Remove filter {filterName}',
+    },
+  },
   footer: {
     aboutNDLA: 'About NDLA',
-    selectLanguage: 'Language (språk): Norwegian',
+    selectLanguage: 'Choose language (språk): ',
     footerInfo: 'This webapplication is developed by NDLA as Open Source code.',
     footerEditiorInChief: 'Editor in chief: ',
     footerManagingEditor: 'Managing editor: ',
+    footerPrivacyLink: 'Cookies Policy',
+    vision:
+      'NDLA’s vision is to offer high quality open educational learning resources in all subjects in upper secondary education in Norway and to support students and teachers in their active and collaborative learning.',
+    footerLinksHeader: 'Other NDLA sites',
+    socialMediaLinks: {
+      facebook: 'NDLA on Facebook',
+      newsletter: 'Sign up for our Newsletter',
+      twitter: 'NDLA on Twitter',
+    },
+    ndlaLinks: {
+      omNdla: 'Om NDLA',
+      aboutNdla: 'About NDLA',
+      blog: 'Blog',
+      tips: 'Tips to students',
+      fyr: 'FYR project',
+      sharing: 'Sharing arena',
+    },
   },
 };
 

@@ -6,11 +6,27 @@
  *
  */
 
-import { resolveJsonOrRejectWithError, apiResourceUrl, fetchWithAccessToken } from '../../util/apiHelpers';
+import {
+  resolveJsonOrRejectWithError,
+  apiResourceUrl,
+} from '../../util/apiHelpers';
 
-const baseListingUrl = apiResourceUrl('/listing-api/v1/listing');
-const baseOembedUrl = apiResourceUrl('/oembed-proxy/v1/oembed');
+const baseListingUrl = apiResourceUrl('/concept-api/v1/concepts');
+const baseImageUrl = apiResourceUrl('/image-api/v2/images');
 
-export const fetchListingByTheme = (locale, theme) => fetchWithAccessToken(`${baseListingUrl}/theme/${theme}`).then(resolveJsonOrRejectWithError);
-
-export const fetchOembed = (url) => fetchWithAccessToken(`${baseOembedUrl}/?url=${encodeURI(url)}`).then(resolveJsonOrRejectWithError);
+export const fetchListing = pageSize =>
+  fetch(`${baseListingUrl}?page-size=${pageSize}`).then(
+    resolveJsonOrRejectWithError,
+  );
+export const fetchListingBySubject = (subjectId, pageSize) =>
+  fetch(`${baseListingUrl}?subjects=${subjectId}&page-size=${pageSize}`).then(
+    resolveJsonOrRejectWithError,
+  );
+export const fetchTags = subjectIds =>
+  fetch(`${baseListingUrl}/tags/?subjects=${subjectIds}`).then(
+    resolveJsonOrRejectWithError,
+  );
+export const fetchConcept = conceptId =>
+  fetch(`${baseListingUrl}/${conceptId}`).then(resolveJsonOrRejectWithError);
+export const fetchImage = imageId =>
+  fetch(`${baseImageUrl}/${imageId}`).then(resolveJsonOrRejectWithError);

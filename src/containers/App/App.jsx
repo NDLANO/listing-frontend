@@ -8,17 +8,14 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { PageContainer } from 'ndla-ui';
-import { injectT } from 'ndla-i18n';
+import { PageContainer } from '@ndla/ui';
+import { injectT } from '@ndla/i18n';
 
-import Masthead from '../Masthead';
 import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
-import ThemePage from "../ThemePage/ThemePage";
 
 export class App extends React.Component {
   getChildContext() {
@@ -33,18 +30,9 @@ export class App extends React.Component {
       <PageContainer>
         <Helmet
           title="NDLA"
-          meta={[
-            { name: 'description', content: t('meta.description') },
-          ]}
+          meta={[{ name: 'description', content: t('meta.description') }]}
         />
-
-        <Masthead t={t} />
-
-        <Switch>
-          <Redirect from="/" exact to="/listing"/>
-          <Route path="/listing/:listingId" component={ListingPage}/>
-          <Route path="/listing" component={ThemePage}/>
-        </Switch>
+        <ListingPage />
         <Footer t={t} />
       </PageContainer>
     );
@@ -63,4 +51,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default withRouter(connect(mapStateToProps)(injectT(App)));
+export default connect(mapStateToProps)(injectT(App));

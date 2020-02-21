@@ -6,10 +6,9 @@
  *
  */
 import { all, fork } from 'redux-saga/effects';
-import listingSagas from './containers/ListingPage/listingSagas';
+import listingSaga from './containers/ListingPage/listingSaga';
+import subjectSaga from './containers/Subject/subjectSaga';
 
 export default function* root() {
-  yield all([
-    ...listingSagas.map(s => fork(s)),
-  ]);
+  yield all([fork(listingSaga), fork(subjectSaga)]);
 }

@@ -2,10 +2,10 @@
  * PRODUCTION WEBPACK CONFIGURATION
  */
 
-const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 
 module.exports = require('./webpack.config.base')({
@@ -27,10 +27,10 @@ module.exports = require('./webpack.config.base')({
   rules: [
     {
       // Extract css to seprate file. Run css url's trough file loader for hashing in prod build
-      test: /\.css$/,
+      test:/\.(s*)css$/,
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
-        use: ['css-loader', 'postcss-loader'],
+        use: ['css-loader', 'postcss-loader', 'sass-loader'],
       }),
     },
   ],
@@ -42,11 +42,19 @@ module.exports = require('./webpack.config.base')({
 
   plugins: [
     // Minify and optimize the JavaScript
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJsPlugin({
+      test: /\.js($|\?)/i,
       sourceMap: true,
-      compress: {
-        warnings: false, // ...but do not show warnings in the console (there is a lot of them)
-        screw_ie8: true, // drop IE 6-8 specific optimizations
+      uglifyOptions: {
+        mangle: {
+          keep_fnames: true,
+        },
+        compress: {
+          warnings: false,
+        },
+        output: {
+          beautify: false,
+        },
       },
     }),
     new BundleAnalyzerPlugin(
