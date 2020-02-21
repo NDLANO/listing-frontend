@@ -32,7 +32,6 @@ export class App extends React.Component {
           title="NDLA"
           meta={[{ name: 'description', content: t('meta.description') }]}
         />
-        {/* <Masthead t={t} /> */}
         <ListingPage />
         <Footer t={t} />
       </PageContainer>

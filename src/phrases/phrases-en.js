@@ -86,6 +86,11 @@ const phrases = {
     copyTitle: 'Copy reference',
     hasCopiedTitle: 'Copied!',
     download: 'Download',
+    title: 'Title',
+    originator: 'Originator',
+    rightsholder: 'Rightsholder',
+    source: 'Source',
+    published: 'Publihed',
   },
   searchPage: {
     searchFilterMessages: {

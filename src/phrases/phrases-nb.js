@@ -88,6 +88,11 @@ const phrases = {
     copyTitle: 'Kopier referanse',
     hasCopiedTitle: 'Kopiert!',
     download: 'Last ned',
+    title: 'Tittel',
+    originator: 'Opphaver',
+    rightsholder: 'Rettighetshaver',
+    source: 'Kilde',
+    published: 'Publiseringsdato',
   },
   searchPage: {
     searchFilterMessages: {
