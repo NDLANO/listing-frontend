@@ -142,33 +142,34 @@ const ListingPage = props => {
           ) : null
         }
         onSelectItem={setSelectedItem}
-        filters={props.listings.filters.main.length ? [
-          {
-            filterValues: queryParams.filters,
-            onChange: handleChangeFilters,
-            isGroupedOptions: true,
-            key: 'default',
-            label: 'Filter',
-            options: [
-              props.listings.filters.main.map(filter => ({
-                title: filter,
-                value: filter,
-                disabled: !listItems.some(item =>
-                  item.filters.main.includes(filter),
-                ),
-              })),
-              props.listings.filters.sub.map(filter => ({
-                title: filter,
-                value: filter,
-                disabled: !listItems.some(item =>
-                  item.filters.sub.includes(filter),
-                ),
-              })),
-            ],
-          },
-        ]
-          :
-          null
+        filters={
+          props.listings.filters.main.length
+            ? [
+                {
+                  filterValues: queryParams.filters,
+                  onChange: handleChangeFilters,
+                  isGroupedOptions: true,
+                  key: 'default',
+                  label: 'Filter',
+                  options: [
+                    props.listings.filters.main.map(filter => ({
+                      title: filter,
+                      value: filter,
+                      disabled: !listItems.some(item =>
+                        item.filters.main.includes(filter),
+                      ),
+                    })),
+                    props.listings.filters.sub.map(filter => ({
+                      title: filter,
+                      value: filter,
+                      disabled: !listItems.some(item =>
+                        item.filters.sub.includes(filter),
+                      ),
+                    })),
+                  ],
+                },
+              ]
+            : null
         }
       />
     </OneColumn>
