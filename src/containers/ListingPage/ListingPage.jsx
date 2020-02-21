@@ -117,6 +117,7 @@ const ListingPage = props => {
             value: item.id,
           }))}
           alignedGroup
+          showActiveFiltersOnSmallScreen
           values={queryParams.subjects}
           messages={{
             useFilter: t(`listview.filters.subject.useFilter`),
