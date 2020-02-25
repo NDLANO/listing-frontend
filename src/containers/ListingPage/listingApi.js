@@ -13,6 +13,7 @@ import {
 
 const baseListingUrl = apiResourceUrl('/concept-api/v1/concepts');
 const baseImageUrl = apiResourceUrl('/image-api/v2/images');
+const baseArticleUrl = apiResourceUrl('/article-api/v2/articles');
 
 export const fetchListing = pageSize =>
   fetch(`${baseListingUrl}?page-size=${pageSize}`).then(
@@ -30,3 +31,5 @@ export const fetchConcept = conceptId =>
   fetch(`${baseListingUrl}/${conceptId}`).then(resolveJsonOrRejectWithError);
 export const fetchImage = imageId =>
   fetch(`${baseImageUrl}/${imageId}`).then(resolveJsonOrRejectWithError);
+export const fetchArticle = articleId =>
+  fetch(`${baseArticleUrl}/${articleId}`).then(resolveJsonOrRejectWithError);

@@ -15,7 +15,7 @@ import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
 
 import config from '../../config';
-import { fetchConcept, fetchImage } from './listingApi';
+import { fetchConcept, fetchImage, fetchArticle } from './listingApi';
 import { TextContent, ImageContent } from './LicenseBox';
 
 const initialConcept = {
@@ -41,6 +41,7 @@ const initialImage = {
 
 const NotionDialog = props => {
   const [articleId, setArticleId] = useState(undefined);
+  const [articleTitle, setArticleTitle] = useState('');
   const [concept, setConcept] = useState(initialConcept);
   const [image, setImage] = useState(initialImage);
 
@@ -85,6 +86,15 @@ const NotionDialog = props => {
     }
   }, []);
 
+  useEffect(() => {
+    // Article
+    if (articleId) {
+      fetchArticle(articleId).then(response => {
+        setArticleTitle(response.title ? response.title.title : '');
+      });
+    }
+  }, [articleId]);
+
   const { t } = props;
 
   return (
@@ -108,7 +118,7 @@ const NotionDialog = props => {
           label={t(`listview.relatedLinks.label`)}
           links={[
             {
-              label: props.item.name,
+              label: articleTitle,
               href: `${config.ndlaFrontendDomain}/article/${articleId}`,
             },
           ]}
