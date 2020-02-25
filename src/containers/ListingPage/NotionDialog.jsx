@@ -91,9 +91,9 @@ const NotionDialog = props => {
     if (articleId) {
       fetchArticle(articleId).then(response => {
         setArticleTitle(response.title ? response.title.title : '');
-      })
+      });
     }
-  }, [articleId])
+  }, [articleId]);
 
   const { t } = props;
 

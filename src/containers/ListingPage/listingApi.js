@@ -31,5 +31,5 @@ export const fetchConcept = conceptId =>
   fetch(`${baseListingUrl}/${conceptId}`).then(resolveJsonOrRejectWithError);
 export const fetchImage = imageId =>
   fetch(`${baseImageUrl}/${imageId}`).then(resolveJsonOrRejectWithError);
-export const fetchArticle = articleId => 
+export const fetchArticle = articleId =>
   fetch(`${baseArticleUrl}/${articleId}`).then(resolveJsonOrRejectWithError);
