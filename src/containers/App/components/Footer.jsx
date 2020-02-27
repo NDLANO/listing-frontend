@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import { injectT } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
-import { Facebook, Twitter, EmailOutline } from '@ndla/icons/common';
 
 import { getLocale } from '../../Locale/localeSelectors';
 
