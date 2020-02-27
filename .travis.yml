@@ -22,6 +22,8 @@ matrix:
       script:
         - yarn check-all
         - yarn build
+      after_success:
+        - travis_wait yarn ndla-scripts now-travis
 
     - name: 'Release'
       language: python
