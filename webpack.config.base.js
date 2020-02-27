@@ -40,7 +40,7 @@ module.exports = options => ({
                   targets: options.babelPresetTargets,
                   useBuiltIns: 'usage',
                   corejs: 2,
-                  modules: 'auto',
+                  modules: 'commonjs',
                   exclude: [
                     'es6.symbol',
                     'es6.map',
