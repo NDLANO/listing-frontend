@@ -6,13 +6,12 @@
  *
  */
 
-import helmet from 'helmet';
 import express from 'express';
+import helmet from 'helmet';
 import compression from 'compression';
 
 import enableDevMiddleWare from './enableDevMiddleware';
 import { defaultRoute } from './routes/defaultRoute';
-
 
 const app = express();
 
@@ -21,9 +20,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(compression());
-app.use(express.static('htdocs', {
-  maxAge: 1000 * 60 * 60 * 24 * 365, // One year
-}));
+app.use(
+  express.static('htdocs', {
+    maxAge: 1000 * 60 * 60 * 24 * 365, // One year
+  }),
+);
 
 app.use(
   helmet({
@@ -117,12 +118,13 @@ app.use(
         ],
       },
     },
-    frameguard: process.env.NODE_ENV === 'development'
-      ? {
-        action: 'allow-from',
-        domain: '*://localhost',
-      }
-      : undefined,
+    frameguard:
+      process.env.NODE_ENV === 'development'
+        ? {
+            action: 'allow-from',
+            domain: '*://localhost',
+          }
+        : undefined,
   }),
 );
 

@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import { Remarkable } from 'remarkable';
 import styled from '@emotion/styled';
 import { injectT } from '@ndla/i18n';
 import ListView from '@ndla/listview';
@@ -32,6 +33,7 @@ const ListingPage = props => {
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
+  const [md, setMd] = useState(null);
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
     filters: [],
@@ -50,6 +52,14 @@ const ListingPage = props => {
       props.resetFilters();
     }
   }, [queryParams.subjects]);
+
+  useEffect(() => {
+    if (md === null) {
+      const markdown = new Remarkable();
+      markdown.inline.ruler.enable(['sub', 'sup']);
+      setMd(markdown);
+    }
+  }, []);
 
   const handleChangeSubject = values => {
     setQueryParams({ subjects: values, filters: [] });
@@ -88,6 +98,15 @@ const ListingPage = props => {
   if (!props.listings.listings || !props.subjects) {
     return null;
   }
+
+  const renderMarkdown = text => {
+    const rendered = md.render(text);
+    return (
+      <Fragment>
+        <span dangerouslySetInnerHTML={{ __html: rendered }} />
+      </Fragment>
+    );
+  };
 
   // Filtered list items, concepts without subjects are excluded
   const listItems = filterItems(
@@ -138,10 +157,15 @@ const ListingPage = props => {
         onChangedSearchValue={e => setSearchValue(e.target.value)}
         selectedItem={
           selectedItem ? (
-            <NotionDialog item={selectedItem} handleClose={setSelectedItem} />
+            <NotionDialog
+              item={selectedItem}
+              handleClose={setSelectedItem}
+              renderMarkdown={renderMarkdown}
+            />
           ) : null
         }
         onSelectItem={setSelectedItem}
+        renderMarkdown={renderMarkdown}
         filters={
           props.listings.filters.main.length
             ? [
@@ -185,8 +209,11 @@ ListingPage.propTypes = {
     listings: PropTypes.arrayOf(CoverShape),
   }),
   locale: PropTypes.string.isRequired,
+  fetchSubjects: PropTypes.func,
   fetchListing: PropTypes.func.isRequired,
   fetchListingBySubject: PropTypes.func.isRequired,
+  fetchFilters: PropTypes.func,
+  resetFilters: PropTypes.func,
   subjects: PropTypes.arrayOf(
     PropTypes.exact({
       id: PropTypes.string,

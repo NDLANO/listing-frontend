@@ -7,57 +7,61 @@ const path = require('path');
 const webpack = require('webpack');
 
 const entry = {
-  main: [
-    'babel-polyfill',
-    './src/index.jsx',
-    './style/index.css',
-  ],
+  main: ['@babel/polyfill', './src/index.jsx', './style/index.css'],
 };
 module.exports = options => ({
   entry: Object.assign(entry, {
     main: options.entry.main.concat(entry.main),
   }),
 
-  output: Object.assign({ // Compile into htdocs/assets
-    path: path.resolve(process.cwd(), 'htdocs/assets'),
-    publicPath: '/assets/',
-  }, options.output), // Merge with env dependent settings
+  output: Object.assign(
+    {
+      // Compile into htdocs/assets
+      path: path.resolve(process.cwd(), 'htdocs/assets'),
+      publicPath: '/assets/',
+    },
+    options.output,
+  ), // Merge with env dependent settings
 
   module: {
     rules: options.rules.concat([
       {
         test: /\.jsx?|\.js?$/, // Transform all .js and .jsx files required somewhere with Babel
         exclude: /node_modules/, // See .babelrc
-        use:
-        {
+        use: {
           loader: 'babel-loader',
           options: {
             babelrc: false,
             presets: [
-              'react', ['env', {
-                targets: options.babelPresetTargets,
-                useBuiltIns: true,
-                modules: false,
-                exclude: [
-                  'es6.symbol',
-                  'es6.map',
-                  'es6.set',
-                  'es6.weak-map',
-                  'es6.weak-set',
-                  'es6.typed.array-buffer',
-                  'es6.typed.int8-array',
-                  'es6.typed.uint8-array',
-                  'es6.typed.uint8-clamped-array',
-                  'es6.typed.int16-array',
-                  'es6.typed.uint16-array',
-                  'es6.typed.int32-array',
-                  'es6.typed.uint32-array',
-                  'es6.typed.float32-array',
-                  'es6.typed.float64-array',
-                ],
-              }],
+              '@babel/preset-react',
+              [
+                '@babel/preset-env',
+                {
+                  targets: options.babelPresetTargets,
+                  useBuiltIns: 'usage',
+                  corejs: 2,
+                  modules: 'auto',
+                  exclude: [
+                    'es6.symbol',
+                    'es6.map',
+                    'es6.set',
+                    'es6.weak-map',
+                    'es6.weak-set',
+                    'es6.typed.array-buffer',
+                    'es6.typed.int8-array',
+                    'es6.typed.uint8-array',
+                    'es6.typed.uint8-clamped-array',
+                    'es6.typed.int16-array',
+                    'es6.typed.uint16-array',
+                    'es6.typed.int32-array',
+                    'es6.typed.uint32-array',
+                    'es6.typed.float32-array',
+                    'es6.typed.float64-array',
+                  ],
+                },
+              ],
             ],
-            plugins: ['transform-object-rest-spread'],
+            plugins: ['@babel/plugin-proposal-object-rest-spread'],
           },
         },
       },

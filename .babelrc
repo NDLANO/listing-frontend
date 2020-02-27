@@ -1,13 +1,11 @@
 // Config is only used on the server (i.e node). Babel config for transpiling client code is located in webpack config
 {
   "presets": [
-    "react", ["env", {
-      "targets": {
-        "node": "current"
-      }
-    }]
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      { "modules": "auto", "useBuiltIns": "usage", "corejs": 2 }
+    ]
   ],
-  "plugins": [
-    "transform-object-rest-spread"
-  ],
+  "plugins": ["@babel/plugin-proposal-object-rest-spread"]
 }

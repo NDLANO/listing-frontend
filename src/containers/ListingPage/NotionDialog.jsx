@@ -95,7 +95,7 @@ const NotionDialog = props => {
     }
   }, [articleId]);
 
-  const { t } = props;
+  const { t, renderMarkdown } = props;
 
   return (
     <NotionDialogWrapper
@@ -108,7 +108,9 @@ const NotionDialog = props => {
             alt={props.item.description}
           />
         ) : null}
-        <NotionDialogText>{props.item.description}</NotionDialogText>
+        <NotionDialogText>
+          {renderMarkdown(props.item.description)}
+        </NotionDialogText>
       </NotionDialogContent>
       <NotionDialogTags
         tags={props.item.subject.map(subject => subject.title)}
@@ -182,6 +184,7 @@ NotionDialog.propTypes = {
     ),
   }),
   handleClose: PropTypes.func.isRequired,
+  renderMarkdown: PropTypes.func.isRequired,
 };
 
 export default injectT(NotionDialog);
