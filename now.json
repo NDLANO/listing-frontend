@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "htdoc/assets/**",
+      "use": "@now/static"
+    },
+    {
+      "src": "server/server.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "headers": { "cache-control": "s-maxage=86400" },
+      "dest": "htdocs/assets/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "headers": { "cache-control": "s-maxage=86400" },
+      "dest": "public/favicon.ico"
+    },
+    { "src": "/(.*)", "dest": "/server/server.js" }
+  ]
+}
