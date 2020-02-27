@@ -6,58 +6,48 @@ notifications:
       secure: aEE3FILmPONrxBuo67BMy/TJaBaHCvdf52RrK3UiNI9hpTZhPZBAXen2WX/4zMST8yoaVmI2n394Mb/hP2aQ+biFLHF+6135Pf6AvVObYWkSzp0y4XDWDL4TJgvAggNFxPp6n80d1IAzbw5xsM+n/DKn2JnDRaxCPhT5mz39qh1X/ZGn4FKmiObRZSQFYqP84HWYuKBxzrOVAIm6ZLi9OFpvXlMPo8ezLQGDle0S5DMO8P6pDlPEXelG1Wil5xy5cQzW3Vf4OBxpZSEatgOdASXR0GtBveGVUpFcqc7KS3BncsQGr+SqtlIRPYgBHdlwBTfYtXhK0Q8s1GIms3eGd+iy4JzTO/MqXh9E6ONjp/gYSiFP/2/ixZJwykfgSWBH3xyZGjpMZE9O/SxGEYj0aCmBxeKgXM0iqA/QUq73LE4MlOQS/UUtteSJ0nTP1kzyHHXrxU5CBab9ZPM4ZJuTYev7CH1s2l1fuCt1OUQ2OmuPZ1QbFuYMYmAaCP0njH/uZiC3mjKIMzrept89B1eyFRthWgmjPbtdvdMpEbXigqjAGlQnyGx1lV8jxQre0+4jfSy10+KZNqpv2+oNT1bogHuZv+cODEvTh1ClbVk2r8oKZQIcabDfrn+Islq8rTJTdEacbxNgsBhJiKryhonXSIEFpIDuX/4VmrABBoSJ2NQ=
 env:
   global:
-    - secure: r63p8uNYHB4y9+SeU+CCnSshA6jIN4f19wv7RzqomW3O5x1KlgAVDancpTQmQleztbTi/6esYfp3rp20ze4MgQUcjYW9914NGnRhsM2JlZ5NHXJvrJtoZR5Bd5JbcT8vYE5RFgRQY89XlSz9mAI/4JaZ1FCvUI6njC8VAuvLPHD1NrfDCefxOBj6UqJvn9tzgcqx1iVhk362U/1cKFUgUCWdw8cJpZi7zSnC++t4EUU7+hHFwRQDtCWeHb7mBqNomezK6+6S3AcQ3AAo62jRaYHP43CBjf7TrmEjtUvJAnvn2kXwk4kneIhTzt27LaEo47uHbfmTFC5tegpM4yzEsb8YDxkV7ESEyrYI0evK71+zI/MpdGw6fy/M58K2gtPE7MDvdUe90jRFsAOv/nh7cihae5eKMIwtSecLYkS6qjQnYk3wEQrdEKiCF56TONeC3+64TwKw6uVtUawfu4ADX6/JTvECjqyx7nzym3BiJXzsxDCJkMfxlMk9CNL/2pXma2Vjifffe+CbLLCDx6jf/Xoaul7xL8/Uc3cyY1QyPaBgGo6Ckaz91PUmzbAze4H6q7U0ZaprOf/rtJBZspJUGSfc2UEZ5sT+lTAC7pqIzpqTE83sI2NTvVep8262Cbs+l1tsTIouSzsTZrY2fgXikGHw5HKuIpebL6qglheKZfo=
-
+  - secure: PvNYLMxMuL58vjhs9M8YiVK4nI5YyUX+Qamz0r0pf3MDbZcLEejxlyCPPcNpd5BlEKdGP/FQcCeWRsJqSu30PGHBb0YCdYsjuMr/oK1NhGOg/2FXbRRnGN3/9+/Eg4akVage/TIkIigS1v6numtbWCcFtOU51cRoWuG+xnBN1lT96baN0VX6rhExbeFzbGAUskMj2veCboLy31xI1ohv1Mx0wJV7n20TRYlLfKK0jpatlgA+oDXQOnye0GiZ+fvoZiZ6GEoB65bFbfdGYrTPMNxnjhxhGkYEtCgeYRLuEuBiQXvzWiyzSdnCvM1DvUdBgRqmBkEHtNf+PJ0vNrJXEKvD2DjPZCHzhcjBQu272OaLJls7NjfmhiMluA6zqXZ8G/v041Zc+OMGAN3ThfkzAEXux+0eDPuHkK3TDzaGwVBJV5Fv61x/noGkZxu/cX/DbZT6uv8z1I9ZFFe7I4+2b8vvtBTCDpR18u/GWdRspooer9QOyPvaemMRGQxFK3uw7YFX7yEm6qDC2ekZmzjfBBB6qXomA9UlfoQGNiHoaPFHx4jPdeOaUSE+kX5u1FcjNOENmkZhLIiWZLGu3LEl46AY+E9oDxqLi2R/bLAlCLlMG021RLWrVzct75H1oqI15gHnwRo8dfuZnfSvhJz8/M4pKcyrK7c5rWRgFR4kgx0=
 matrix:
   fast_finish: true
   include:
-    - name: 'Tests'
-      language: node_js
-      node_js: '10'
-      cache:
-        yarn: true
-        directories:
-          - '~/.cache'
-          - '.eslintcache'
-      script:
-        - yarn check-all
-        - yarn build
-      after_success:
-        - travis_wait yarn ndla-scripts now-travis
-
-    - name: 'Release'
-      language: python
-      if: branch = master AND type = push
-      python: 3.7
-      dist: bionic
-      services:
-        - docker
-      cache: pip
-      before_install:
-        # Authenticate docker client to deploy aws registry
-        - pip install awscli
-        - $(aws ecr get-login --no-include-email --region eu-west-1)
-
-        # Fetch deploy repo
-        - git clone --depth 1 https://knowit-at-ndla:$TRAVIS_RELEASE_GITHUB_TOKEN@github.com/ndlano/deploy.git ../deploy
-
-        # Setup env
-        - export NDLA_HOME=$(realpath $(pwd)/../)
-        - export NDLA_DEPLOY=$NDLA_HOME/deploy
-        - export DEPLOY_VERSION=$(git -C $NDLA_DEPLOY rev-parse --short=7 HEAD)
-        - export DEPLOY_DOCKER_REPO=784120951859.dkr.ecr.eu-west-1.amazonaws.com/ndla/deploy
-
-        # Get cache, and don't fail if missing
-        - docker pull $DEPLOY_DOCKER_REPO:$DEPLOY_VERSION || true
-      install:
-        - eval "$($NDLA_DEPLOY/scripts/bin/ndla init -)"
-      env:
-        - SSH_AUTH_SOCK=/tmp/mock_sock
-      script:
-        - ndla release listing-frontend --update-chart
-
-      before_cache: # Save docker image as cache
-        - docker push $DEPLOY_DOCKER_REPO:$DEPLOY_VERSION
-
+  - name: Tests
+    language: node_js
+    node_js: '10'
+    cache:
+      yarn: true
+      directories:
+      - "~/.cache"
+      - ".eslintcache"
+    script:
+    - yarn check-all
+    - yarn build
+    after_success:
+    - travis_wait yarn ndla-scripts now-travis
+  - name: Release
+    language: python
+    if: branch = master AND type = push
+    python: 3.7
+    dist: bionic
+    services:
+    - docker
+    cache: pip
+    before_install:
+    - pip install awscli
+    - "$(aws ecr get-login --no-include-email --region eu-west-1)"
+    - git clone --depth 1 https://knowit-at-ndla:$TRAVIS_RELEASE_GITHUB_TOKEN@github.com/ndlano/deploy.git
+      ../deploy
+    - export NDLA_HOME=$(realpath $(pwd)/../)
+    - export NDLA_DEPLOY=$NDLA_HOME/deploy
+    - export DEPLOY_VERSION=$(git -C $NDLA_DEPLOY rev-parse --short=7 HEAD)
+    - export DEPLOY_DOCKER_REPO=784120951859.dkr.ecr.eu-west-1.amazonaws.com/ndla/deploy
+    - docker pull $DEPLOY_DOCKER_REPO:$DEPLOY_VERSION || true
+    install:
+    - eval "$($NDLA_DEPLOY/scripts/bin/ndla init -)"
+    env:
+    - SSH_AUTH_SOCK=/tmp/mock_sock
+    script:
+    - ndla release listing-frontend --update-chart
+    before_cache:
+    - docker push $DEPLOY_DOCKER_REPO:$DEPLOY_VERSION
   allow_failures:
-    - name: 'Release'
+  - name: Release
