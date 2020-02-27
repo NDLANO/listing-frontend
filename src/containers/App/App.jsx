@@ -9,6 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import { PageContainer } from '@ndla/ui';
 import { injectT } from '@ndla/i18n';
@@ -16,6 +17,13 @@ import { injectT } from '@ndla/i18n';
 import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
+
+const StyledPageWrapper = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 export class App extends React.Component {
   getChildContext() {
@@ -28,12 +36,14 @@ export class App extends React.Component {
     const { t } = this.props;
     return (
       <PageContainer>
-        <Helmet
-          title="NDLA"
-          meta={[{ name: 'description', content: t('meta.description') }]}
-        />
-        <ListingPage />
-        <Footer t={t} />
+        <StyledPageWrapper>
+          <Helmet
+            title="NDLA"
+            meta={[{ name: 'description', content: t('meta.description') }]}
+          />
+          <ListingPage />
+          <Footer t={t} />
+        </StyledPageWrapper>
       </PageContainer>
     );
   }
