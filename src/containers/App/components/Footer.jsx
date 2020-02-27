@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import { injectT } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
-import { Facebook, Twitter, EmailOutline } from '@ndla/icons/common';
 
 import { getLocale } from '../../Locale/localeSelectors';
 
@@ -21,27 +20,9 @@ const StyledFooterWrapper = styled.div`
 `;
 
 const FooterWrapper = ({ t, locale }) => {
-  const links = [
-    {
-      to: 'https://www.facebook.com/ndla.no',
-      text: t('footer.socialMediaLinks.facebook'),
-      icon: <Facebook />,
-    },
-    {
-      to: 'https://twitter.com/ndla_no',
-      text: t('footer.socialMediaLinks.twitter'),
-      icon: <Twitter />,
-    },
-    {
-      to: 'https://om.ndla.no/nyhetsbrev/',
-      text: t('footer.socialMediaLinks.newsletter'),
-      icon: <EmailOutline />,
-    },
-  ];
-
   return (
     <StyledFooterWrapper>
-      <Footer lang={locale} links={links}>
+      <Footer lang={locale}>
         <FooterText>
           <EditorName
             title={t('footer.footerEditiorInChief')}
