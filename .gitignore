@@ -6,3 +6,4 @@ npm-debug.log
 /htdocs/assets/
 /coverage/
 .vscode/launch.json
+.env
