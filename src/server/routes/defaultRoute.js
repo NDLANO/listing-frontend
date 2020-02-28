@@ -15,10 +15,10 @@ import defined from 'defined';
 import { IntlProvider } from '@ndla/i18n';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
-import configureStore from '../../src/configureStore';
-import rootSaga from '../../src/sagas';
-import { getLocaleObject, isValidLocale } from '../../src/i18n';
-import App from '../../src/containers/App/App';
+import configureStore from '../../configureStore';
+import rootSaga from '../../sagas';
+import { getLocaleObject, isValidLocale } from '../../i18n';
+import App from '../../containers/App/App';
 
 const renderHtmlString = (
   locale,

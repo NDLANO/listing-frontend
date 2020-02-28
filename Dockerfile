@@ -12,7 +12,7 @@ RUN mkdir -p $APP_PATH/htdocs/assets/ && \
     yarn
 
 # Copy necessary source files for server and client build
-COPY .babelrc webpack.config.base.js webpack.config.dev.js webpack.config.prod.js postcss.config.js $APP_PATH/
+COPY .babelrc razzle-add-entry-plugin.js razzle.config.js postcss.config.js $APP_PATH/
 
 COPY src $APP_PATH/src
 COPY style $APP_PATH/style

@@ -9,15 +9,14 @@
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
+import config from '../config';
 
-import enableDevMiddleWare from './enableDevMiddleware';
-import { defaultRoute } from './routes/defaultRoute';
+global.__CLIENT__ = false;
+global.__SERVER__ = true;
+global.__DISABLE_SSR__ = config.disableSSR; // Disables server side rendering
 
+const defaultRoute = require('./routes/defaultRoute').defaultRoute;
 const app = express();
-
-if (process.env.NODE_ENV === 'development') {
-  enableDevMiddleWare(app);
-}
 
 app.use(compression());
 app.use(
@@ -144,4 +143,4 @@ app.get('*', (req, res) => {
   defaultRoute(req, res);
 });
 
-module.exports = app;
+export default app;

@@ -12,11 +12,13 @@ import { renderToString } from 'react-dom/server';
 import serialize from 'serialize-javascript';
 import Helmet from 'react-helmet';
 
-import config from '../../src/config';
+import config from '../../config';
 
-const assets = config.isProduction
-  ? require('../../htdocs/assets/assets') // eslint-disable-line import/no-unresolved
-  : require('../developmentAssets');
+// TODO:
+// const assets = config.isProduction
+//   ? require('../../../htdocs/assets/assets') // eslint-disable-line import/no-unresolved
+//   : require('../developmentAssets');
+const assets = require('../developmentAssets');
 
 const GoogleTagMangerNoScript = () => {
   if (config.googleTagMangerId) {

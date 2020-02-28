@@ -15,7 +15,7 @@ import { IntlProvider } from '@ndla/i18n';
 import { getLocaleObject, isValidLocale } from './i18n';
 import configureStore from './configureStore';
 import rootSaga from './sagas';
-import App from '../src/containers/App/App';
+import App from './containers/App/App';
 
 const initialState = window.initialState;
 const localeString = initialState.locale;
@@ -28,7 +28,7 @@ const store = configureStore({ ...initialState });
 
 store.runSaga(rootSaga);
 
-ReactDOM.render(
+const renderApp = () => ReactDOM.render(
   <Provider store={store}>
     <IntlProvider locale={locale.abbreviation} messages={locale.messages}>
       <BrowserRouter basename={basename}>
@@ -38,3 +38,11 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 );
+
+renderApp();
+
+if (module.hot) {
+  module.hot.accept('./containers/App/App', () => {
+    renderApp();
+  });
+}
