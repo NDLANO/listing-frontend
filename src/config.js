@@ -63,9 +63,6 @@ const config = Object.assign(
   environment,
 );
 
-console.log(process.env.BUILD_TARGET);
-console.log(process.env.NODE_ENV);
-
 function getUniversalConfig() {
   return process.env.BUILD_TARGET === 'server' ||
     process.env.NODE_ENV === 'unittest'
