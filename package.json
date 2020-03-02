@@ -11,7 +11,7 @@
     "build": "cross-env NODE_ENV=production webpack --config ./webpack.config.prod.js --bail",
     "start": "cross-env NODE_ENV=unittest DISABLE_SSR=true nodemon server --watch server",
     "start-with-ssr": "cross-env NODE_ENV=unittest nodemon server --watch server",
-    "start-prod": "cross-env NODE_ENV=production DISABLE_SSR=true node server",
+    "start-prod": "cross-env NODE_ENV=production BUILD_TARGET=server DISABLE_SSR=true node server",
     "lint": "eslint --ext .js --ext .jsx src server",
     "format": "node prettier.js write",
     "format-check": "node prettier.js lint",

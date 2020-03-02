@@ -63,7 +63,7 @@ const config = Object.assign(
   environment,
 );
 
-function getUniversalConfig() {
+export function getUniversalConfig() {
   return process.env.BUILD_TARGET === 'server' ||
     process.env.NODE_ENV === 'unittest'
     ? config
