@@ -5,7 +5,7 @@
   "scripts": {
     "pretest": "npm run lint",
     "clean": "rimraf ./htdocs/assets/*",
-    "test": "cross-env NODE_ENV=unittest jest",
+    "test": "cross-env BABEL_ENV=test NODE_ENV=unittest jest",
     "tdd": "cross-env NODE_ENV=unittest jest --watch",
     "prebuild": "npm run clean",
     "build": "NODE_ENV=production razzle build",

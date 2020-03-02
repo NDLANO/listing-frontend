@@ -28,16 +28,17 @@ const store = configureStore({ ...initialState });
 
 store.runSaga(rootSaga);
 
-const renderApp = () => ReactDOM.render(
-  <Provider store={store}>
-    <IntlProvider locale={locale.abbreviation} messages={locale.messages}>
-      <BrowserRouter basename={basename}>
-        <App />
-      </BrowserRouter>
-    </IntlProvider>
-  </Provider>,
-  document.getElementById('root'),
-);
+const renderApp = () =>
+  ReactDOM.render(
+    <Provider store={store}>
+      <IntlProvider locale={locale.abbreviation} messages={locale.messages}>
+        <BrowserRouter basename={basename}>
+          <App />
+        </BrowserRouter>
+      </IntlProvider>
+    </Provider>,
+    document.getElementById('root'),
+  );
 
 renderApp();
 

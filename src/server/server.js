@@ -31,7 +31,7 @@ app.use(
       maxAge: 31536000,
       includeSubDomains: true,
     },
-    contentSecurityPolicy: {
+    /* TODO: Rydd opp i contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'", 'blob:'],
         scriptSrc: [
@@ -74,6 +74,7 @@ app.use(
           ' *.gallerysites.net',
           'ndla.no',
           '*.ndla.no',
+          'localhost:3001',
         ],
         frameSrc: [
           '*.nrk.no',
@@ -114,9 +115,11 @@ app.use(
           'https://secure.brightcove.com',
           'https://bcsecure01-a.akamaihd.net',
           'https://hlsak-a.akamaihd.net',
+          'http://localhost:3001',
+          'ws://localhost:3001',
         ],
       },
-    },
+    }, */
     frameguard:
       process.env.NODE_ENV === 'development'
         ? {

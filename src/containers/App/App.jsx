@@ -6,6 +6,9 @@
  *
  */
 
+// import before all other imports component to make sure it is loaded befor any emotion stuff.
+import '../../style/index.css';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';

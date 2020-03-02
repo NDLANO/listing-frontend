@@ -10,6 +10,7 @@ module.exports = {
 
     modifyRule(appConfig, { test: /\.css$/ }, rule => {
       rule.use.push({ loader: 'postcss-loader' });
+      rule.use.push({ loader: 'sass-loader' });
     });
 
     if (target === 'web') {
@@ -20,10 +21,9 @@ module.exports = {
       appConfig.output.globalObject = 'this'; // use this as global object to prevent webworker window error
 
       if (!dev) {
-        // TODO:
-        // appConfig.plugins.push(
-        //   new webpack.optimize.ModuleConcatenationPlugin(),
-        // );
+        appConfig.plugins.push(
+          new webpack.optimize.ModuleConcatenationPlugin(),
+        );
         appConfig.devtool = 'source-map';
         appConfig.performance = { hints: false };
       }

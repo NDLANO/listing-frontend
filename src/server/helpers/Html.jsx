@@ -14,21 +14,19 @@ import Helmet from 'react-helmet';
 
 import config from '../../config';
 
-// TODO:
-// const assets = config.isProduction
-//   ? require('../../../htdocs/assets/assets') // eslint-disable-line import/no-unresolved
-//   : require('../developmentAssets');
+// TODO: Bare bruke razzle for assets her...
 const assets = require('../developmentAssets');
+const razzleAssets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
 
 const GoogleTagMangerNoScript = () => {
   if (config.googleTagMangerId) {
     return (
       <noscript>
         <iframe
-          title='google tag manager'
+          title="google tag manager"
           src={`//www.googletagmanager.com/ns.html?id=${config.googleTagMangerId}`}
-          height='0'
-          width='0'
+          height="0"
+          width="0"
           style={{ display: 'none', visibility: 'hidden' }}
         />
       </noscript>
@@ -45,7 +43,7 @@ const GoogleTagMangerScript = () => {
           __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
         var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
         j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})
-        (window,document,'script','dataLayer','${config.googleTagMangerId}');`
+        (window,document,'script','dataLayer','${config.googleTagMangerId}');`,
         }}
       />
     );
@@ -61,51 +59,42 @@ const Html = props => {
   return (
     <html lang={lang} className={className}>
       <head>
-        <meta charSet='utf-8' />
-        <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         {head.title.toComponent()}
         {head.meta.toComponent()}
         {head.script.toComponent()}
-        {config.isProduction ? (
-          <link
-            rel='stylesheet'
-            type='text/css'
-            href={`/assets/${assets['main.css']}`}
-          />
-        ) : null}
         <link
-          rel='stylesheet'
-          href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300italic,400,600,700|Signika:400,600,300,700'
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300italic,400,600,700|Signika:400,600,300,700"
         />
         <link
-          rel='icon'
+          rel="icon"
           href={`/assets/${assets['favicon.ico']}`}
-          type='image/ico'
+          type="image/ico"
         />
       </head>
       <body>
         <GoogleTagMangerNoScript />
         <GoogleTagMangerScript />
-        <div id='root' dangerouslySetInnerHTML={{ __html: content }} />
+        <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.initialState = ${serialize(state)}`
+            __html: `window.initialState = ${serialize(state)}`,
           }}
         />
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.assets = ${serialize(assets)}`
+            __html: `window.assets = ${serialize(assets)}`,
           }}
         />
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.config = ${serialize(config)}`
+            __html: `window.config = ${serialize(config)}`,
           }}
         />
-        <script src={`/assets/${assets['manifest.js']}`} />
-        <script src={`/assets/${assets['vendor.js']}`} />
-        <script src={`/assets/${assets['main.js']}`} />
+        <script src={razzleAssets.client.js} />
         {/* <script type="text/javascript" async src={`https://cdn.mathjax.org/mathjax/2.7-latest/MathJax.js?config=/assets/${assets['mathjaxConfig.js']}`} /> */}
       </body>
     </html>
@@ -116,7 +105,7 @@ Html.propTypes = {
   lang: PropTypes.string.isRequired,
   component: PropTypes.node,
   state: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  className: PropTypes.string.isRequired
+  className: PropTypes.string.isRequired,
 };
 
 export default Html;
