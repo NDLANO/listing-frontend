@@ -69,11 +69,7 @@ const Html = props => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300italic,400,600,700|Signika:400,600,300,700"
         />
-        <link
-          rel="icon"
-          href={`/assets/${assets['favicon.ico']}`}
-          type="image/ico"
-        />
+        <link rel="icon" href={`/static/favicon.ico`} type="image/ico" />
       </head>
       <body>
         <GoogleTagMangerNoScript />
@@ -82,11 +78,6 @@ const Html = props => {
         <script
           dangerouslySetInnerHTML={{
             __html: `window.initialState = ${serialize(state)}`,
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.assets = ${serialize(assets)}`,
           }}
         />
         <script

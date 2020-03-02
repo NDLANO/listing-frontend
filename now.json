@@ -12,14 +12,9 @@
   ],
   "routes": [
     {
-      "src": "/assets/(.*)",
+      "src": "/public/(.*)",
       "headers": { "cache-control": "s-maxage=86400" },
-      "dest": "htdocs/assets/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "headers": { "cache-control": "s-maxage=86400" },
-      "dest": "public/favicon.ico"
+      "dest": "public/$1"
     },
     { "src": "/(.*)", "dest": "/server/server.js" }
   ]

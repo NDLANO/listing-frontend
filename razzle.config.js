@@ -21,9 +21,10 @@ module.exports = {
       appConfig.output.globalObject = 'this'; // use this as global object to prevent webworker window error
 
       if (!dev) {
-        appConfig.plugins.push(
-          new webpack.optimize.ModuleConcatenationPlugin(),
-        );
+        // TODO:
+        // appConfig.plugins.push(
+        //   new webpack.optimize.ModuleConcatenationPlugin(),
+        // );
         appConfig.devtool = 'source-map';
         appConfig.performance = { hints: false };
       }

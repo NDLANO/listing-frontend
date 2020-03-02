@@ -19,8 +19,10 @@ const defaultRoute = require('./routes/defaultRoute').defaultRoute;
 const app = express();
 
 app.use(compression());
+
 app.use(
-  express.static('htdocs', {
+  '/static',
+  express.static(process.env.RAZZLE_PUBLIC_DIR, {
     maxAge: 1000 * 60 * 60 * 24 * 365, // One year
   }),
 );
