@@ -6,7 +6,7 @@
  *
  */
 
-// import before all other imports component to make sure it is loaded befor any emotion stuff.
+// import before all other imports component to make sure it is loaded before any emotion stuff.
 import '../../style/index.css';
 
 import React from 'react';

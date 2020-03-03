@@ -14,8 +14,6 @@ import Helmet from 'react-helmet';
 
 import config from '../../config';
 
-// TODO: Bare bruke razzle for assets her...
-const assets = require('../developmentAssets');
 const razzleAssets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
 
 const GoogleTagMangerNoScript = () => {
@@ -65,6 +63,13 @@ const Html = props => {
         {head.title.toComponent()}
         {head.meta.toComponent()}
         {head.script.toComponent()}
+        {razzleAssets.client && razzleAssets.client.css && (
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href={razzleAssets.client.css}
+          />
+        )}
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300italic,400,600,700|Signika:400,600,300,700"
