@@ -2,20 +2,20 @@
   "version": 2,
   "builds": [
     {
-      "src": "htdoc/assets/**",
+      "src": "build/public/**",
       "use": "@now/static"
     },
     {
-      "src": "server/server.js",
+      "src": "build/server.js",
       "use": "@now/node-server"
     }
   ],
   "routes": [
     {
-      "src": "/public/(.*)",
+      "src": "/static/(.*)",
       "headers": { "cache-control": "s-maxage=86400" },
-      "dest": "public/$1"
+      "dest": "build/public/static/$1"
     },
-    { "src": "/(.*)", "dest": "/server/server.js" }
+    { "src": "/(.*)", "dest": "/build/server.js" }
   ]
 }
