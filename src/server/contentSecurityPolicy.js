@@ -61,8 +61,8 @@ const connectSrc = (() => {
   if (process.env.NODE_ENV === 'development') {
     return [
       ...defaultConnectSrc,
-      'http://localhost:3001',
-      'ws://localhost:3001',
+      `http://localhost:${hmrPort}`,
+      `ws://localhost:${hmrPort}`,
     ];
   }
   return defaultConnectSrc;
