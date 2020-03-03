@@ -8,7 +8,7 @@ COPY yarn.lock package.json $APP_PATH/
 
 # Run yarn before src copy to enable better layer caching
 WORKDIR $APP_PATH
-RUN mkdir -p $APP_PATH/htdocs/assets/ && \
+RUN mkdir -p $APP_PATH/build && \
     yarn
 
 # Copy necessary source files for server and client build

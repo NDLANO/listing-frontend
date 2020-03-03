@@ -17,5 +17,8 @@
       "dest": "build/public/static/$1"
     },
     { "src": "/(.*)", "dest": "/build/server.js" }
-  ]
+  ],
+  "env": {
+      "DISABLE_SSR": "true"
+  }
 }
