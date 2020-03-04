@@ -1,8 +1,15 @@
 node_modules
 npm-debug.log
+yarn-error.log
 .DS_Store
+/.eslintcache/
 *.iml
 /.idea
+/build/
+/htdocs/
 /htdocs/assets/
 /coverage/
+scripts/.cache/
 .vscode/launch.json
+.vscode
+.env

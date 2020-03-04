@@ -70,4 +70,4 @@ export function getUniversalConfig() {
     : window.config;
 }
 
-module.exports = getUniversalConfig();
+export default getUniversalConfig();

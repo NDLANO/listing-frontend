@@ -21,7 +21,7 @@ export default function configureStore(initialState, history) {
   const createFinalStore = compose(
     applyMiddleware(sagaMiddleware, errorReporter, middleware),
     /* eslint-disable no-underscore-dangle */
-    __CLIENT__ && window && window.__REDUX_DEVTOOLS_EXTENSION__
+    global.__CLIENT__ && window && window.__REDUX_DEVTOOLS_EXTENSION__
       ? window.__REDUX_DEVTOOLS_EXTENSION__()
       : f => f,
   )(createStore);

@@ -15,10 +15,10 @@ import defined from 'defined';
 import { IntlProvider } from '@ndla/i18n';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
-import configureStore from '../../src/configureStore';
-import rootSaga from '../../src/sagas';
-import { getLocaleObject, isValidLocale } from '../../src/i18n';
-import App from '../../src/containers/App/App';
+import configureStore from '../../configureStore';
+import rootSaga from '../../sagas';
+import { getLocaleObject, isValidLocale } from '../../i18n';
+import App from '../../containers/App/App';
 
 const renderHtmlString = (
   locale,
@@ -58,7 +58,7 @@ export function defaultRoute(req, res) {
     <Provider store={store}>
       <IntlProvider locale={locale} messages={messages}>
         <StaticRouter basename={basename} location={req.url} context={context}>
-        <App/>
+          <App />
         </StaticRouter>
       </IntlProvider>
     </Provider>
@@ -73,16 +73,16 @@ export function defaultRoute(req, res) {
     store
       .runSaga(rootSaga)
       .done.then(() => {
-      const state = store.getState();
-      const htmlString = renderHtmlString(
-        locale,
-        userAgentString,
-        state,
-        component,
-      );
-      const status = defined(context.status, 200);
-      res.status(status).send(`<!doctype html>\n${htmlString}`);
-    })
+        const state = store.getState();
+        const htmlString = renderHtmlString(
+          locale,
+          userAgentString,
+          state,
+          component,
+        );
+        const status = defined(context.status, 200);
+        res.status(status).send(`<!doctype html>\n${htmlString}`);
+      })
       .catch(error => {
         res.status(500).send(error.message);
       });
