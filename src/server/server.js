@@ -45,9 +45,6 @@ app.use(
   }),
 );
 
-// const renderHtmlString = (locale, userAgentString, state = {}, component = undefined) =>
-//   renderToString(<Html lang={locale} state={state} component={component} className={getConditionalClassnames(userAgentString)} />);
-
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
   res.send('User-agent: *\nDisallow: /');
