@@ -1,27 +1,28 @@
 import { useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import qs from 'query-string';
 
-const setQueryParameter = state => {
+const setQueryParameter = (state, history) => {
   const params = qs.stringify(state, { arrayFormat: 'bracket' });
-  const url = `${window.location.protocol}//${window.location.host}${
-    window.location.pathname
-  }${params.length > 0 ? `?${params}` : ''}`;
-  window.history.pushState({ path: url }, '', url);
+  const search = `${params.length > 0 ? `?${params}` : ''}`;
+  history.push({ search });
 };
 
-const getQueryParameter = initialValue =>
+const getQueryParameter = (initialValue, location) =>
   Object.assign(
     initialValue,
-    qs.parse(window.location.search, { arrayFormat: 'bracket' }),
+    qs.parse(location.search, { arrayFormat: 'bracket' }),
   );
 
 const useQueryParameter = initialValue => {
+  const history = useHistory();
+
   const [value, setValue] = useState(
-    getQueryParameter(initialValue) || initialValue,
+    getQueryParameter(initialValue, history.location) || initialValue,
   );
   const onSetValue = useCallback(newValue => {
     setValue(newValue);
-    setQueryParameter(newValue);
+    setQueryParameter(newValue, history);
   });
   return [value, onSetValue];
 };
