@@ -10,12 +10,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Remarkable } from 'remarkable';
+import Downshift from 'downshift';
+import { css } from '@emotion/core';
 import styled from '@emotion/styled';
+import { colors, fonts, spacing } from '@ndla/core';
 import { injectT } from '@ndla/i18n';
 import ListView from '@ndla/listview';
 import { OneColumn, FilterListPhone } from '@ndla/ui';
-import NotionDialog from './NotionDialog';
+import { DropdownInput, DropdownMenu } from '@ndla/forms';
+import { ChevronDown, Search } from '@ndla/icons/lib/common';
 
+import NotionDialog from './NotionDialog';
 import { mapConceptToListItem } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
 import * as actions from './listingActions';
@@ -24,16 +29,63 @@ import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
 
 const SubjectFilterWrapper = styled.div`
-  margin-top: 60px;
-  margin-bottom: 13px;
+  margin-top: ${spacing.large};
+  margin-bottom: ${spacing.small}
+`;
+
+const SeparatorWrapper = styled.div`
+  margin-bottom: ${spacing.small};
+  padding-left: ${spacing.small};
+`;
+
+const CategoriesFilterWrapper = styled.div`
+  margin-bottom: ${spacing.small};
+  position: relative;
+  display: inline-block;
+`;
+
+const placeholderCSS = css`
+  color: initial;
+  font-weight: initial;
+  opacity: 0.5;
+`;
+const placeholderHasValuesCSS = props =>
+  !props.hasValues
+    ? css`
+        color: ${colors.brand.primary};
+        font-weight: bold;
+        ${fonts.sizes('16px')};
+      `
+    : placeholderCSS;
+
+const categoryFilterCSS = props => css`
+  border: 2px solid ${colors.brand.primary};
+  min-height: auto;
+  cursor: pointer;
+  background-color: transparent;
+  flex-grow: 0;
+  input {
+    cursor: pointer;
+    ::placeholder {
+      ${placeholderHasValuesCSS(props)}
+    }
+    :focus {
+      ::placeholder {
+        ${placeholderCSS}
+      }
+    }
+  }
 `;
 
 const ListingPage = props => {
+  const [md, setMd] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [md, setMd] = useState(null);
+  const [categorySearchValue, setCategorySearchValue] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState([]);
+  const [categoryFilterOpen, setCategoryFilterOpen] = useState(false);
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
     filters: [],
@@ -122,6 +174,16 @@ const ListingPage = props => {
       ),
   );
 
+  const emptyFun = () => {};
+
+  const categoryFilterInputProps = {
+    value: categorySearchValue,
+    onChange: emptyFun,
+    onFocus: emptyFun,
+    onClick: emptyFun,
+    placeholder: 'category filter'
+  }
+
   const { t } = props;
 
   return (
@@ -130,7 +192,7 @@ const ListingPage = props => {
       <SubjectFilterWrapper>
         <FilterListPhone
           preid="subject-list"
-          label="Filtrer på fag"
+          label="Velg fag"
           options={props.subjects.map(item => ({
             title: item.name,
             value: item.id,
@@ -147,6 +209,55 @@ const ListingPage = props => {
           viewMode="allModal"
         />
       </SubjectFilterWrapper>
+      <SeparatorWrapper>eller</SeparatorWrapper>
+      <CategoriesFilterWrapper>
+        <Downshift
+          onSelect={emptyFun}
+          itemToString={item => {
+            return item ? item.title || '' : '';
+          }}
+          onStateChange={emptyFun}
+          isOpen={categoryFilterOpen}>
+          {({ getInputProps, getRootProps, getMenuProps, getItemProps }) => {
+            return (
+              <div>
+                <DropdownInput
+                  multiSelect
+                  {...getInputProps(categoryFilterInputProps)}
+                  data-testid={'dropdownInput'}
+                  idField="title"
+                  labelField="title"
+                  iconRight={
+                    categoryFilterOpen ? (
+                      <Search />
+                    ) : (
+                      <span onClick={emptyFun}>
+                        <ChevronDown />
+                      </span>
+                    )
+                  }
+                  values={categoryFilter}
+                  removeItem={emptyFun}
+                  customCSS={categoryFilterCSS({
+                    hasValues: categoryFilter.length,
+                  })}
+                />
+                <DropdownMenu
+                  getMenuProps={getMenuProps}
+                  getItemProps={getItemProps}
+                  isOpen={categoryFilterOpen}
+                  idField="title"
+                  labelField="title"
+                  items={[]}
+                  maxRender={1000}
+                  hideTotalSearchCount
+                  positionAbsolute
+                />
+              </div>
+            );
+          }}
+        </Downshift>
+      </CategoriesFilterWrapper>
       <ListView
         items={listItems}
         detailedItem={detailedItem}
