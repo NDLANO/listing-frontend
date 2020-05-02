@@ -21,18 +21,12 @@ export function mapTagsToFilters(tags) {
   return filters;
 }
 
-export function mapConceptToListItem(concept, subject) {
+export function mapConceptToListItem(concept) {
   return {
     id: concept.id.toString(),
     name: concept.title.title,
     description: concept.content.content,
     image: concept.metaImage.url,
-    subject: [
-      {
-        title: subject.name,
-        value: subject.id,
-      },
-    ],
     category: {
       title: '',
       value: '',

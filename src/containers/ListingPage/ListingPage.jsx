@@ -25,7 +25,7 @@ import { mapConceptToListItem, sortConcepts } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
-import { fetchConcepts } from './listingApi';
+import { fetchConcepts, fetchConceptsBySubject } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 
 const SubjectFilterWrapper = styled.div`
@@ -82,7 +82,7 @@ const PAGE_SIZE = 400;
 const ListingPage = props => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState({});
   const [md, setMd] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
@@ -104,17 +104,18 @@ const ListingPage = props => {
       .then(subjects => setSubjects(subjects))
   }, []);
 
-  /*
   useEffect(() => {
+    console.log(queryParams.subjects)
     if (queryParams.subjects.length > 0) {
-      props.fetchListingBySubject(queryParams.subjects);
-      props.fetchFilters(queryParams.subjects);
+      fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE)
+        .then(concepts => setConcepts(sortConcepts(concepts.results, props.locale)));
+      //props.fetchFilters(queryParams.subjects);
     } else {
-      props.fetchListing();
-      props.resetFilters();
+      fetchConcepts(PAGE_SIZE).then(concepts => 
+        setConcepts(sortConcepts(concepts.results, props.locale)));
+      //props.resetFilters();
     }
   }, [queryParams.subjects]);
-  */
 
   useEffect(() => {
     if (md === null) {
@@ -176,12 +177,7 @@ const ListingPage = props => {
     concepts
       .filter(concept => concept.subjectIds)
       .map(concept =>
-        mapConceptToListItem(
-          concept,
-          subjects.find(subject =>
-            concept.subjectIds.includes(subject.id),
-          ),
-        ),
+        mapConceptToListItem(concept),
       ),
   );
 
