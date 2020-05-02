@@ -14,6 +14,6 @@ import {
 const baseSubjectUrl = apiResourceUrl('/concept-api/v1/concepts/subjects/');
 const baseTaxonomyUrl = apiResourceUrl('/taxonomy/v1/subjects/');
 
-export const fetchSubjects = () =>
+export const fetchSubjectIds = () =>
   fetch(baseSubjectUrl).then(resolveJsonOrRejectWithError);
-export const fetchSubjectNames = id => fetch(baseTaxonomyUrl + id);
+export const fetchSubject = id => fetch(baseTaxonomyUrl + id).then(resolveJsonOrRejectWithError);

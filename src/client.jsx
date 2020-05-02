@@ -14,7 +14,6 @@ import { IntlProvider } from '@ndla/i18n';
 
 import { getLocaleObject, isValidLocale } from './i18n';
 import configureStore from './configureStore';
-import rootSaga from './sagas';
 import App from './containers/App/App';
 
 const initialState = window.initialState;
@@ -25,8 +24,6 @@ const paths = window.location.pathname.split('/');
 const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
 
 const store = configureStore({ ...initialState });
-
-store.runSaga(rootSaga);
 
 const renderApp = () =>
   ReactDOM.render(

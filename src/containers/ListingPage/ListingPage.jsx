@@ -21,12 +21,12 @@ import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
 
 import NotionDialog from './NotionDialog';
-import { mapConceptToListItem } from '../../util/listingHelpers';
+import { mapConceptToListItem, sortConcepts } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
-import * as actions from './listingActions';
-import { fetchSubjects } from '../Subject/subjectActions';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
+import { fetchConcepts } from './listingApi';
+import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
@@ -77,7 +77,12 @@ const categoryFilterCSS = props => css`
   }
 `;
 
+const PAGE_SIZE = 400;
+
 const ListingPage = props => {
+  const [concepts, setConcepts] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [filters, setFilters] = useState([]);
   const [md, setMd] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
@@ -92,9 +97,14 @@ const ListingPage = props => {
   });
 
   useEffect(() => {
-    props.fetchSubjects();
+    fetchConcepts(PAGE_SIZE).then(concepts => 
+      setConcepts(sortConcepts(concepts.results, props.locale)));
+    fetchSubjectIds()
+      .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
+      .then(subjects => setSubjects(subjects))
   }, []);
 
+  /*
   useEffect(() => {
     if (queryParams.subjects.length > 0) {
       props.fetchListingBySubject(queryParams.subjects);
@@ -104,6 +114,7 @@ const ListingPage = props => {
       props.resetFilters();
     }
   }, [queryParams.subjects]);
+  */
 
   useEffect(() => {
     if (md === null) {
@@ -147,7 +158,7 @@ const ListingPage = props => {
     return filteredItems;
   };
 
-  if (!props.listings.listings || !props.subjects) {
+  if (!concepts.length || !subjects.length) {
     return null;
   }
 
@@ -162,19 +173,19 @@ const ListingPage = props => {
 
   // Filtered list items, concepts without subjects are excluded
   const listItems = filterItems(
-    props.listings.listings
+    concepts
       .filter(concept => concept.subjectIds)
       .map(concept =>
         mapConceptToListItem(
           concept,
-          props.subjects.find(subject =>
+          subjects.find(subject =>
             concept.subjectIds.includes(subject.id),
           ),
         ),
       ),
   );
 
-  const emptyFun = () => {};
+  const emptyFun = () => { };
 
   const categoryFilterInputProps = {
     value: categorySearchValue,
@@ -193,7 +204,7 @@ const ListingPage = props => {
         <FilterListPhone
           preid="subject-list"
           label="Velg fag"
-          options={props.subjects.map(item => ({
+          options={subjects.map(item => ({
             title: item.name,
             value: item.id,
           }))}
@@ -231,10 +242,10 @@ const ListingPage = props => {
                     categoryFilterOpen ? (
                       <Search />
                     ) : (
-                      <span onClick={emptyFun}>
-                        <ChevronDown />
-                      </span>
-                    )
+                        <span onClick={emptyFun}>
+                          <ChevronDown />
+                        </span>
+                      )
                   }
                   values={categoryFilter}
                   removeItem={emptyFun}
@@ -278,32 +289,32 @@ const ListingPage = props => {
         onSelectItem={setSelectedItem}
         renderMarkdown={renderMarkdown}
         filters={
-          props.listings.filters.main.length
+          undefined
             ? [
-                {
-                  filterValues: queryParams.filters,
-                  onChange: handleChangeFilters,
-                  isGroupedOptions: true,
-                  key: 'default',
-                  label: 'Filter',
-                  options: [
-                    props.listings.filters.main.map(filter => ({
-                      title: filter,
-                      value: filter,
-                      disabled: !listItems.some(item =>
-                        item.filters.main.includes(filter),
-                      ),
-                    })),
-                    props.listings.filters.sub.map(filter => ({
-                      title: filter,
-                      value: filter,
-                      disabled: !listItems.some(item =>
-                        item.filters.sub.includes(filter),
-                      ),
-                    })),
-                  ],
-                },
-              ]
+              {
+                filterValues: queryParams.filters,
+                onChange: handleChangeFilters,
+                isGroupedOptions: true,
+                key: 'default',
+                label: 'Filter',
+                options: [
+                  props.listings.filters.main.map(filter => ({
+                    title: filter,
+                    value: filter,
+                    disabled: !listItems.some(item =>
+                      item.filters.main.includes(filter),
+                    ),
+                  })),
+                  props.listings.filters.sub.map(filter => ({
+                    title: filter,
+                    value: filter,
+                    disabled: !listItems.some(item =>
+                      item.filters.sub.includes(filter),
+                    ),
+                  })),
+                ],
+              },
+            ]
             : null
         }
       />
@@ -333,21 +344,10 @@ ListingPage.propTypes = {
   ),
 };
 
-const mapDispatchToProps = {
-  fetchSubjects,
-  fetchListing: actions.fetchListing,
-  fetchListingBySubject: actions.fetchListingBySubject,
-  fetchFilters: actions.fetchFilters,
-  resetFilters: actions.resetFilters,
-};
-
 const mapStateToProps = state => ({
-  subjects: state.subjects,
-  listings: state.listings,
   locale: getLocale(state),
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
 )(injectT(ListingPage));

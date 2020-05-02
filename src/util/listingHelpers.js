@@ -42,3 +42,8 @@ export function mapConceptToListItem(concept, subject) {
       : { main: [], sub: [] },
   };
 }
+
+export function sortConcepts(concepts, locale) {
+  return concepts.sort((a, b) =>
+    a.title.title.localeCompare(b.title.title, locale))
+}
