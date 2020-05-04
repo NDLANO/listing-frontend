@@ -235,10 +235,15 @@ const ListingPage = props => {
   // Filtered list items, concepts without subjects are excluded
   const listItems = filterItems(
     concepts
-      .filter(concept => concept.subjectIds)
-      .map(concept =>
-        mapConceptToListItem(concept),
+    .filter(concept => concept.subjectIds)
+    .map(concept =>
+      mapConceptToListItem(
+        concept,
+        subjects.find(subject =>
+          concept.subjectIds.includes(subject.id),
+        ),
       ),
+    ),
   );
 
   const emptyFun = () => { };

@@ -32,12 +32,18 @@ function mapTagsToList(tags) {
   return list;
 }
 
-export function mapConceptToListItem(concept) {
+export function mapConceptToListItem(concept, subject) {
   return {
     id: concept.id.toString(),
     name: concept.title.title,
     description: concept.content.content,
     image: concept.metaImage.url,
+    subject: [
+      {
+        title: subject.name,
+        value: subject.id,
+      },
+    ],
     category: {
       title: '',
       value: '',
