@@ -84,7 +84,7 @@ const ListingPage = props => {
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState(null);
   const [currentListFilters, setCurrentListFilters] = useState([]);
-  const [selectedListFilter, setSelectedListFilter] = useState([])
+  const [selectedListFilter, setSelectedListFilter] = useState(null)
   const [md, setMd] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
@@ -114,9 +114,8 @@ const ListingPage = props => {
         .then(concepts => setConcepts(sortConcepts(concepts.results, props.locale)));
       //props.fetchFilters(queryParams.subjects);
     } else {
-      fetchConcepts(PAGE_SIZE).then(concepts => 
+      fetchConcepts(PAGE_SIZE).then(concepts =>
         setConcepts(sortConcepts(concepts.results, props.locale)));
-      //props.resetFilters();
     }
   }, [queryParams.subjects]);
 
@@ -129,7 +128,11 @@ const ListingPage = props => {
   }, []);
 
   const handleChangeSubject = values => {
-    setQueryParams({ subjects: values, filters: [] });
+    setQueryParams({ 
+      subjects: values,
+      filters: [] 
+    });
+    setSelectedListFilter(null);
   };
 
   const handleChangeFilters = (key, values) => {
@@ -145,14 +148,14 @@ const ListingPage = props => {
       filters: [value],
     });
     setFilterListOpen(false);
-    setSelectedListFilter([value]);
+    setSelectedListFilter(value);
   }
 
   const onFilterSearch = e => {
     const {
       target: { value },
     } = e;
-    const filteredFilters = listFilters.filter(item => 
+    const filteredFilters = listFilters.filter(item =>
       item.toLowerCase().startsWith(value.toLowerCase()));
     setFilterSearchValue(value);
     setCurrentListFilters(filteredFilters);
@@ -185,6 +188,36 @@ const ListingPage = props => {
 
     return filteredItems;
   };
+
+  const getFilters = () => {
+    return selectedListFilter ? [
+      {
+        filterValues: queryParams.filters,
+        onChange: handleChangeFilters,
+        isGroupedOptions: true,
+        key: 'default',
+        label: 'Filter',
+        options: [
+          filters.get(selectedListFilter).main.map(filter => ({
+            title: filter,
+            value: filter,
+            disabled: !listItems.some(item =>
+              item.filters.includes(filter),
+            ),
+          })),
+          filters.get(selectedListFilter).sub.map(filter => ({
+            title: filter,
+            value: filter,
+            disabled: !listItems.some(item =>
+              item.filters.includes(filter),
+            ),
+          })),
+        ],
+      },
+    ]
+      :
+      []
+  }
 
   if (!concepts.length || !subjects.length) {
     return null;
@@ -270,7 +303,7 @@ const ListingPage = props => {
                         </span>
                       )
                   }
-                  values={selectedListFilter}
+                  values={selectedListFilter ? [selectedListFilter] : []}
                   removeItem={emptyFun}
                   customCSS={categoryFilterCSS({
                     hasValues: categoryFilter.length,
@@ -309,35 +342,7 @@ const ListingPage = props => {
         }
         onSelectItem={setSelectedItem}
         renderMarkdown={renderMarkdown}
-        filters={
-          undefined
-            ? [
-              {
-                filterValues: queryParams.filters,
-                onChange: handleChangeFilters,
-                isGroupedOptions: true,
-                key: 'default',
-                label: 'Filter',
-                options: [
-                  props.listings.filters.main.map(filter => ({
-                    title: filter,
-                    value: filter,
-                    disabled: !listItems.some(item =>
-                      item.filters.main.includes(filter),
-                    ),
-                  })),
-                  props.listings.filters.sub.map(filter => ({
-                    title: filter,
-                    value: filter,
-                    disabled: !listItems.some(item =>
-                      item.filters.sub.includes(filter),
-                    ),
-                  })),
-                ],
-              },
-            ]
-            : null
-        }
+        filters={getFilters()}
       />
     </OneColumn>
   );
