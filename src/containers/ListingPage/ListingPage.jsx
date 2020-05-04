@@ -77,7 +77,7 @@ const categoryFilterCSS = props => css`
   }
 `;
 
-const PAGE_SIZE = 400;
+const PAGE_SIZE = 1000;
 
 const ListingPage = props => {
   const [concepts, setConcepts] = useState([]);
@@ -85,18 +85,17 @@ const ListingPage = props => {
   const [filters, setFilters] = useState(null);
   const [currentListFilters, setCurrentListFilters] = useState([]);
   const [selectedListFilter, setSelectedListFilter] = useState(null)
-  const [md, setMd] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [filterSearchValue, setFilterSearchValue] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState([]);
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
     filters: [],
   });
+  const [md, setMd] = useState(null);
 
   useEffect(() => {
     fetchConcepts(PAGE_SIZE)
@@ -150,6 +149,21 @@ const ListingPage = props => {
     setFilterListOpen(false);
     setSelectedListFilter(value);
   }
+
+  const handleStateChangeListFilter = changes => {
+    const { isOpen, type } = changes;
+
+    if (type === Downshift.stateChangeTypes.mouseUp) {
+      setFilterListOpen(isOpen);
+      if (!isOpen) {
+        setFilterSearchValue('');
+      }
+    }
+
+    if (type === Downshift.stateChangeTypes.keyDownEnter) {
+      setFilterSearchValue('');
+    }
+  };
 
   const handleRemoveFilter = value => {
     setQueryParams({
@@ -254,8 +268,6 @@ const ListingPage = props => {
     ),
   );
 
-  const emptyFun = () => { };
-
   const categoryFilterInputProps = {
     value: filterSearchValue,
     onChange: onFilterSearch,
@@ -298,7 +310,7 @@ const ListingPage = props => {
           itemToString={item => {
             return item ? item.title || '' : '';
           }}
-          onStateChange={emptyFun}
+          onStateChange={handleStateChangeListFilter}
           isOpen={filterListOpen}>
           {({ getInputProps, getRootProps, getMenuProps, getItemProps }) => {
             return (
@@ -319,7 +331,7 @@ const ListingPage = props => {
                   values={selectedListFilter ? [selectedListFilter] : []}
                   removeItem={handleRemoveFilter}
                   customCSS={categoryFilterCSS({
-                    hasValues: categoryFilter.length,
+                    hasValues: 1,
                   })}
                 />
                 <DropdownMenu
