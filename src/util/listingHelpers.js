@@ -7,15 +7,18 @@
  */
 
 export function mapTagsToFilters(tags) {
-  const filters = {
-    main: [],
-    sub: [],
-  };
+  const filters = new Map()
   tags.forEach(tag => {
-    const splitTag = tag.split(':');
-    if (splitTag.length > 1) {
-      if (!filters.main.includes(splitTag[0])) filters.main.push(splitTag[0]);
-      if (!filters.sub.includes(splitTag[1])) filters.sub.push(splitTag[1]);
+    const [list, main, sub] = tag.split(':');
+    if (!filters.has(list)) {
+      filters.set(list, {
+        main: main ? [main] : [],
+        sub: sub ? [sub] : []
+      })
+    }
+    else {
+      main && filters.get(list).main.push(main);
+      sub && filters.get(list).sub.push(sub)
     }
   });
   return filters;
@@ -33,7 +36,7 @@ export function mapConceptToListItem(concept) {
     },
     filters: concept.tags
       ? mapTagsToFilters(concept.tags.tags)
-      : { main: [], sub: [] },
+      : { list: [], main: [], sub: [] },
   };
 }
 

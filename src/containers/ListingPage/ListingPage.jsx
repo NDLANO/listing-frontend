@@ -21,11 +21,11 @@ import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
 
 import NotionDialog from './NotionDialog';
-import { mapConceptToListItem, sortConcepts } from '../../util/listingHelpers';
+import { mapTagsToFilters, mapConceptToListItem, sortConcepts } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
-import { fetchConcepts, fetchConceptsBySubject } from './listingApi';
+import { fetchConcepts, fetchConceptsBySubject, fetchTags } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 
 const SubjectFilterWrapper = styled.div`
@@ -82,7 +82,7 @@ const PAGE_SIZE = 400;
 const ListingPage = props => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState(null);
   const [md, setMd] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
@@ -90,18 +90,20 @@ const ListingPage = props => {
   const [searchValue, setSearchValue] = useState('');
   const [categorySearchValue, setCategorySearchValue] = useState('');
   const [categoryFilter, setCategoryFilter] = useState([]);
-  const [categoryFilterOpen, setCategoryFilterOpen] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
     filters: [],
   });
 
   useEffect(() => {
-    fetchConcepts(PAGE_SIZE).then(concepts => 
-      setConcepts(sortConcepts(concepts.results, props.locale)));
+    fetchConcepts(PAGE_SIZE)
+      .then(concepts => setConcepts(sortConcepts(concepts.results, props.locale)));
     fetchSubjectIds()
       .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
-      .then(subjects => setSubjects(subjects))
+      .then(subjects => setSubjects(subjects));
+    fetchTags()
+      .then(tags => setFilters(mapTagsToFilters(tags)))
   }, []);
 
   useEffect(() => {
@@ -135,6 +137,10 @@ const ListingPage = props => {
       filters: values,
     });
   };
+
+  const onFilterSearchFocus = () => {
+    setFilterOpen(true);
+  }
 
   const filterItems = listItems => {
     let filteredItems = listItems;
@@ -186,8 +192,8 @@ const ListingPage = props => {
   const categoryFilterInputProps = {
     value: categorySearchValue,
     onChange: emptyFun,
-    onFocus: emptyFun,
-    onClick: emptyFun,
+    onFocus: onFilterSearchFocus,
+    onClick: onFilterSearchFocus,
     placeholder: 'category filter'
   }
 
@@ -224,7 +230,7 @@ const ListingPage = props => {
             return item ? item.title || '' : '';
           }}
           onStateChange={emptyFun}
-          isOpen={categoryFilterOpen}>
+          isOpen={filterOpen}>
           {({ getInputProps, getRootProps, getMenuProps, getItemProps }) => {
             return (
               <div>
@@ -232,13 +238,11 @@ const ListingPage = props => {
                   multiSelect
                   {...getInputProps(categoryFilterInputProps)}
                   data-testid={'dropdownInput'}
-                  idField="title"
-                  labelField="title"
                   iconRight={
-                    categoryFilterOpen ? (
+                    filterOpen ? (
                       <Search />
                     ) : (
-                        <span onClick={emptyFun}>
+                        <span onClick={onFilterSearchFocus}>
                           <ChevronDown />
                         </span>
                       )
@@ -252,10 +256,8 @@ const ListingPage = props => {
                 <DropdownMenu
                   getMenuProps={getMenuProps}
                   getItemProps={getItemProps}
-                  isOpen={categoryFilterOpen}
-                  idField="title"
-                  labelField="title"
-                  items={[]}
+                  isOpen={filterOpen}
+                  items={Array.from(filters.keys())}
                   maxRender={1000}
                   hideTotalSearchCount
                   positionAbsolute
