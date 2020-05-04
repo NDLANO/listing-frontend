@@ -83,14 +83,16 @@ const ListingPage = props => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState(null);
+  const [currentListFilters, setCurrentListFilters] = useState([]);
+  const [selectedListFilter, setSelectedListFilter] = useState([])
   const [md, setMd] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [searchValue, setSearchValue] = useState('');
-  const [categorySearchValue, setCategorySearchValue] = useState('');
+  const [filterSearchValue, setFilterSearchValue] = useState('');
   const [categoryFilter, setCategoryFilter] = useState([]);
-  const [filterOpen, setFilterOpen] = useState(false);
+  const [filterListOpen, setFilterListOpen] = useState(false);
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
     filters: [],
@@ -107,7 +109,6 @@ const ListingPage = props => {
   }, []);
 
   useEffect(() => {
-    console.log(queryParams.subjects)
     if (queryParams.subjects.length > 0) {
       fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE)
         .then(concepts => setConcepts(sortConcepts(concepts.results, props.locale)));
@@ -138,18 +139,38 @@ const ListingPage = props => {
     });
   };
 
+  const handleChangeListFilter = value => {
+    setQueryParams({
+      subjects: [],
+      filters: [value],
+    });
+    setFilterListOpen(false);
+    setSelectedListFilter([value]);
+  }
+
+  const onFilterSearch = e => {
+    const {
+      target: { value },
+    } = e;
+    const filteredFilters = listFilters.filter(item => 
+      item.toLowerCase().startsWith(value.toLowerCase()));
+    setFilterSearchValue(value);
+    setCurrentListFilters(filteredFilters);
+  }
+
   const onFilterSearchFocus = () => {
-    setFilterOpen(true);
+    setFilterListOpen(true);
+    setCurrentListFilters(listFilters);
   }
 
   const filterItems = listItems => {
     let filteredItems = listItems;
 
-    // Checkboxes
+    // Filters
     if (queryParams.filters.length) {
       filteredItems = filteredItems.filter(item =>
         queryParams.filters.every(filter =>
-          [...item.filters.main, ...item.filters.sub].includes(filter),
+          item.filters.includes(filter),
         ),
       );
     }
@@ -190,12 +211,14 @@ const ListingPage = props => {
   const emptyFun = () => { };
 
   const categoryFilterInputProps = {
-    value: categorySearchValue,
-    onChange: emptyFun,
+    value: filterSearchValue,
+    onChange: onFilterSearch,
     onFocus: onFilterSearchFocus,
     onClick: onFilterSearchFocus,
     placeholder: 'category filter'
   }
+
+  const listFilters = Array.from(filters.keys());
 
   const { t } = props;
 
@@ -225,12 +248,12 @@ const ListingPage = props => {
       <SeparatorWrapper>eller</SeparatorWrapper>
       <CategoriesFilterWrapper>
         <Downshift
-          onSelect={emptyFun}
+          onSelect={handleChangeListFilter}
           itemToString={item => {
             return item ? item.title || '' : '';
           }}
           onStateChange={emptyFun}
-          isOpen={filterOpen}>
+          isOpen={filterListOpen}>
           {({ getInputProps, getRootProps, getMenuProps, getItemProps }) => {
             return (
               <div>
@@ -239,7 +262,7 @@ const ListingPage = props => {
                   {...getInputProps(categoryFilterInputProps)}
                   data-testid={'dropdownInput'}
                   iconRight={
-                    filterOpen ? (
+                    filterListOpen ? (
                       <Search />
                     ) : (
                         <span onClick={onFilterSearchFocus}>
@@ -247,7 +270,7 @@ const ListingPage = props => {
                         </span>
                       )
                   }
-                  values={categoryFilter}
+                  values={selectedListFilter}
                   removeItem={emptyFun}
                   customCSS={categoryFilterCSS({
                     hasValues: categoryFilter.length,
@@ -256,8 +279,8 @@ const ListingPage = props => {
                 <DropdownMenu
                   getMenuProps={getMenuProps}
                   getItemProps={getItemProps}
-                  isOpen={filterOpen}
-                  items={Array.from(filters.keys())}
+                  isOpen={filterListOpen}
+                  items={currentListFilters}
                   maxRender={1000}
                   hideTotalSearchCount
                   positionAbsolute

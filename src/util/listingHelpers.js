@@ -24,6 +24,14 @@ export function mapTagsToFilters(tags) {
   return filters;
 }
 
+function mapTagsToList(tags) {
+  const list = [];
+  tags.forEach(tag => {
+    tag.split(':').forEach(filter => list.push(filter));
+  });
+  return list;
+}
+
 export function mapConceptToListItem(concept) {
   return {
     id: concept.id.toString(),
@@ -35,8 +43,8 @@ export function mapConceptToListItem(concept) {
       value: '',
     },
     filters: concept.tags
-      ? mapTagsToFilters(concept.tags.tags)
-      : { list: [], main: [], sub: [] },
+      ? mapTagsToList(concept.tags.tags)
+      : [],
   };
 }
 
