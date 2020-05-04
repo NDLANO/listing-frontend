@@ -151,6 +151,14 @@ const ListingPage = props => {
     setSelectedListFilter(value);
   }
 
+  const handleRemoveFilter = value => {
+    setQueryParams({
+      ...queryParams,
+      filters: [],
+    });
+    setSelectedListFilter(null);
+  }
+
   const onFilterSearch = e => {
     const {
       target: { value },
@@ -309,7 +317,7 @@ const ListingPage = props => {
                       )
                   }
                   values={selectedListFilter ? [selectedListFilter] : []}
-                  removeItem={emptyFun}
+                  removeItem={handleRemoveFilter}
                   customCSS={categoryFilterCSS({
                     hasValues: categoryFilter.length,
                   })}
