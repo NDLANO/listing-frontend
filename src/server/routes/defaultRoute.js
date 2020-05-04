@@ -69,8 +69,8 @@ export function defaultRoute(req, res) {
     });
     res.end();
   } else {
-    store
-      .done.then(() => {
+    store.done
+      .then(() => {
         const state = store.getState();
         const htmlString = renderHtmlString(
           locale,

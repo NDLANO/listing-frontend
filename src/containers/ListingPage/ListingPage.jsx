@@ -21,7 +21,11 @@ import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
 
 import NotionDialog from './NotionDialog';
-import { mapTagsToFilters, mapConceptToListItem, sortConcepts } from '../../util/listingHelpers';
+import {
+  mapTagsToFilters,
+  mapConceptToListItem,
+  sortConcepts,
+} from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
 import { CoverShape } from '../../shapes';
@@ -30,7 +34,7 @@ import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
-  margin-bottom: ${spacing.small}
+  margin-bottom: ${spacing.small};
 `;
 
 const SeparatorWrapper = styled.div`
@@ -84,7 +88,7 @@ const ListingPage = props => {
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState(null);
   const [currentListFilters, setCurrentListFilters] = useState([]);
-  const [selectedListFilter, setSelectedListFilter] = useState(null)
+  const [selectedListFilter, setSelectedListFilter] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -98,23 +102,25 @@ const ListingPage = props => {
   const [md, setMd] = useState(null);
 
   useEffect(() => {
-    fetchConcepts(PAGE_SIZE)
-      .then(concepts => setConcepts(sortConcepts(concepts.results, props.locale)));
+    fetchConcepts(PAGE_SIZE).then(concepts =>
+      setConcepts(sortConcepts(concepts.results, props.locale)),
+    );
     fetchSubjectIds()
       .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
       .then(subjects => setSubjects(subjects));
-    fetchTags()
-      .then(tags => setFilters(mapTagsToFilters(tags)))
+    fetchTags().then(tags => setFilters(mapTagsToFilters(tags)));
   }, []);
 
   useEffect(() => {
     if (queryParams.subjects.length > 0) {
-      fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE)
-        .then(concepts => setConcepts(sortConcepts(concepts.results, props.locale)));
+      fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE).then(concepts =>
+        setConcepts(sortConcepts(concepts.results, props.locale)),
+      );
       //props.fetchFilters(queryParams.subjects);
     } else {
       fetchConcepts(PAGE_SIZE).then(concepts =>
-        setConcepts(sortConcepts(concepts.results, props.locale)));
+        setConcepts(sortConcepts(concepts.results, props.locale)),
+      );
     }
   }, [queryParams.subjects]);
 
@@ -127,9 +133,9 @@ const ListingPage = props => {
   }, []);
 
   const handleChangeSubject = values => {
-    setQueryParams({ 
+    setQueryParams({
       subjects: values,
-      filters: [] 
+      filters: [],
     });
     setSelectedListFilter(null);
   };
@@ -148,7 +154,7 @@ const ListingPage = props => {
     });
     setFilterListOpen(false);
     setSelectedListFilter(value);
-  }
+  };
 
   const handleStateChangeListFilter = changes => {
     const { isOpen, type } = changes;
@@ -171,22 +177,23 @@ const ListingPage = props => {
       filters: [],
     });
     setSelectedListFilter(null);
-  }
+  };
 
   const onFilterSearch = e => {
     const {
       target: { value },
     } = e;
     const filteredFilters = listFilters.filter(item =>
-      item.toLowerCase().startsWith(value.toLowerCase()));
+      item.toLowerCase().startsWith(value.toLowerCase()),
+    );
     setFilterSearchValue(value);
     setCurrentListFilters(filteredFilters);
-  }
+  };
 
   const onFilterSearchFocus = () => {
     setFilterListOpen(true);
     setCurrentListFilters(listFilters);
-  }
+  };
 
   const filterItems = listItems => {
     let filteredItems = listItems;
@@ -194,9 +201,7 @@ const ListingPage = props => {
     // Filters
     if (queryParams.filters.length) {
       filteredItems = filteredItems.filter(item =>
-        queryParams.filters.every(filter =>
-          item.filters.includes(filter),
-        ),
+        queryParams.filters.every(filter => item.filters.includes(filter)),
       );
     }
 
@@ -212,34 +217,34 @@ const ListingPage = props => {
   };
 
   const getFilters = () => {
-    return selectedListFilter ? [
-      {
-        filterValues: queryParams.filters,
-        onChange: handleChangeFilters,
-        isGroupedOptions: true,
-        key: 'default',
-        label: 'Filter',
-        options: [
-          filters.get(selectedListFilter).main.map(filter => ({
-            title: filter,
-            value: filter,
-            disabled: !listItems.some(item =>
-              item.filters.includes(filter),
-            ),
-          })),
-          filters.get(selectedListFilter).sub.map(filter => ({
-            title: filter,
-            value: filter,
-            disabled: !listItems.some(item =>
-              item.filters.includes(filter),
-            ),
-          })),
-        ],
-      },
-    ]
-      :
-      []
-  }
+    return selectedListFilter
+      ? [
+          {
+            filterValues: queryParams.filters,
+            onChange: handleChangeFilters,
+            isGroupedOptions: true,
+            key: 'default',
+            label: 'Filter',
+            options: [
+              filters.get(selectedListFilter).main.map(filter => ({
+                title: filter,
+                value: filter,
+                disabled: !listItems.some(item =>
+                  item.filters.includes(filter),
+                ),
+              })),
+              filters.get(selectedListFilter).sub.map(filter => ({
+                title: filter,
+                value: filter,
+                disabled: !listItems.some(item =>
+                  item.filters.includes(filter),
+                ),
+              })),
+            ],
+          },
+        ]
+      : [];
+  };
 
   if (!concepts.length || !subjects.length) {
     return null;
@@ -257,15 +262,13 @@ const ListingPage = props => {
   // Filtered list items, concepts without subjects are excluded
   const listItems = filterItems(
     concepts
-    .filter(concept => concept.subjectIds)
-    .map(concept =>
-      mapConceptToListItem(
-        concept,
-        subjects.find(subject =>
-          concept.subjectIds.includes(subject.id),
+      .filter(concept => concept.subjectIds)
+      .map(concept =>
+        mapConceptToListItem(
+          concept,
+          subjects.find(subject => concept.subjectIds.includes(subject.id)),
         ),
       ),
-    ),
   );
 
   const categoryFilterInputProps = {
@@ -273,8 +276,8 @@ const ListingPage = props => {
     onChange: onFilterSearch,
     onFocus: onFilterSearchFocus,
     onClick: onFilterSearchFocus,
-    placeholder: 'category filter'
-  }
+    placeholder: 'category filter',
+  };
 
   const listFilters = Array.from(filters.keys());
 
@@ -323,10 +326,10 @@ const ListingPage = props => {
                     filterListOpen ? (
                       <Search />
                     ) : (
-                        <span onClick={onFilterSearchFocus}>
-                          <ChevronDown />
-                        </span>
-                      )
+                      <span onClick={onFilterSearchFocus}>
+                        <ChevronDown />
+                      </span>
+                    )
                   }
                   values={selectedListFilter ? [selectedListFilter] : []}
                   removeItem={handleRemoveFilter}
@@ -399,6 +402,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default connect(
-  mapStateToProps,
-)(injectT(ListingPage));
+export default connect(mapStateToProps)(injectT(ListingPage));

@@ -7,18 +7,17 @@
  */
 
 export function mapTagsToFilters(tags) {
-  const filters = new Map()
+  const filters = new Map();
   tags.forEach(tag => {
     const [list, main, sub] = tag.split(':');
     if (!filters.has(list)) {
       filters.set(list, {
         main: main ? [main] : [],
-        sub: sub ? [sub] : []
-      })
-    }
-    else {
+        sub: sub ? [sub] : [],
+      });
+    } else {
       main && filters.get(list).main.push(main);
-      sub && filters.get(list).sub.push(sub)
+      sub && filters.get(list).sub.push(sub);
     }
   });
   return filters;
@@ -48,13 +47,12 @@ export function mapConceptToListItem(concept, subject) {
       title: '',
       value: '',
     },
-    filters: concept.tags
-      ? mapTagsToList(concept.tags.tags)
-      : [],
+    filters: concept.tags ? mapTagsToList(concept.tags.tags) : [],
   };
 }
 
 export function sortConcepts(concepts, locale) {
   return concepts.sort((a, b) =>
-    a.title.title.localeCompare(b.title.title, locale))
+    a.title.title.localeCompare(b.title.title, locale),
+  );
 }

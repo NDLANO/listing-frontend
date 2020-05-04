@@ -16,4 +16,5 @@ const baseTaxonomyUrl = apiResourceUrl('/taxonomy/v1/subjects/');
 
 export const fetchSubjectIds = () =>
   fetch(baseSubjectUrl).then(resolveJsonOrRejectWithError);
-export const fetchSubject = id => fetch(baseTaxonomyUrl + id).then(resolveJsonOrRejectWithError);
+export const fetchSubject = id =>
+  fetch(baseTaxonomyUrl + id).then(resolveJsonOrRejectWithError);

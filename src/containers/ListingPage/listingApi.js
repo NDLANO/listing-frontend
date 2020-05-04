@@ -24,9 +24,7 @@ export const fetchConceptsBySubject = (subjectId, pageSize) =>
     resolveJsonOrRejectWithError,
   );
 export const fetchTags = () =>
-  fetch(`${baseListingUrl}/tags/`).then(
-    resolveJsonOrRejectWithError,
-  );
+  fetch(`${baseListingUrl}/tags/`).then(resolveJsonOrRejectWithError);
 export const fetchConcept = conceptId =>
   fetch(`${baseListingUrl}/${conceptId}`).then(resolveJsonOrRejectWithError);
 export const fetchImage = imageId =>
