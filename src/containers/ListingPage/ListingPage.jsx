@@ -116,7 +116,6 @@ const ListingPage = props => {
       fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE).then(concepts =>
         setConcepts(sortConcepts(concepts.results, props.locale)),
       );
-      //props.fetchFilters(queryParams.subjects);
     } else {
       fetchConcepts(PAGE_SIZE).then(concepts =>
         setConcepts(sortConcepts(concepts.results, props.locale)),
