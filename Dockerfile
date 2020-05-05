@@ -27,6 +27,6 @@ ENV APP_PATH=$HOME/listing-frontend
 WORKDIR $APP_PATH
 
 COPY --from=builder $APP_PATH/build build
-COPY package.json $APP_PATH/
+COPY .babelrc razzle-add-entry-plugin.js razzle.config.js postcss.config.js $APP_PATH/
 
-CMD ["yarn", "start-prod"]
+CMD ["NODE_ENV=production", "razzle", "start"]
