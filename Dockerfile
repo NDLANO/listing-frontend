@@ -26,8 +26,10 @@ ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
 
 RUN npm install razzle -g
+
 WORKDIR $APP_PATH
 COPY --from=builder $APP_PATH/build build
+COPY .babelrc razzle-add-entry-plugin.js razzle.config.js postcss.config.js package.json yarn.lock $APP_PATH/
 
 ENV NODE_ENV=production
 
