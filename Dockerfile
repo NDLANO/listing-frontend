@@ -26,6 +26,9 @@ ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
 WORKDIR $APP_PATH
 
+RUN npm config set unsafe-perm true
+RUN npm install -g cross-env razzle
+
 COPY --from=builder $APP_PATH/build build
 COPY --from=builder $APP_PATH/package.json .
 
