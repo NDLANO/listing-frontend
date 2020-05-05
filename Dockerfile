@@ -26,6 +26,7 @@ ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
 WORKDIR $APP_PATH
 
-COPY --from=builder $APP_PATH .
+COPY --from=builder $APP_PATH/build build
+COPY --from=builder $APP_PATH/package.json .
 
 CMD ["yarn", "start-prod"]
