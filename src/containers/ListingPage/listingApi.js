@@ -15,18 +15,16 @@ const baseListingUrl = apiResourceUrl('/concept-api/v1/concepts');
 const baseImageUrl = apiResourceUrl('/image-api/v2/images');
 const baseArticleUrl = apiResourceUrl('/article-api/v2/articles');
 
-export const fetchListing = pageSize =>
+export const fetchConcepts = pageSize =>
   fetch(`${baseListingUrl}?page-size=${pageSize}`).then(
     resolveJsonOrRejectWithError,
   );
-export const fetchListingBySubject = (subjectId, pageSize) =>
+export const fetchConceptsBySubject = (subjectId, pageSize) =>
   fetch(`${baseListingUrl}?subjects=${subjectId}&page-size=${pageSize}`).then(
     resolveJsonOrRejectWithError,
   );
-export const fetchTags = subjectIds =>
-  fetch(`${baseListingUrl}/tags/?subjects=${subjectIds}`).then(
-    resolveJsonOrRejectWithError,
-  );
+export const fetchTags = () =>
+  fetch(`${baseListingUrl}/tags/`).then(resolveJsonOrRejectWithError);
 export const fetchConcept = conceptId =>
   fetch(`${baseListingUrl}/${conceptId}`).then(resolveJsonOrRejectWithError);
 export const fetchImage = imageId =>

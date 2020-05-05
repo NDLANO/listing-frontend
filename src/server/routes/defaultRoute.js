@@ -16,7 +16,6 @@ import { IntlProvider } from '@ndla/i18n';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
 import configureStore from '../../configureStore';
-import rootSaga from '../../sagas';
 import { getLocaleObject, isValidLocale } from '../../i18n';
 import App from '../../containers/App/App';
 
@@ -70,9 +69,8 @@ export function defaultRoute(req, res) {
     });
     res.end();
   } else {
-    store
-      .runSaga(rootSaga)
-      .done.then(() => {
+    store.done
+      .then(() => {
         const state = store.getState();
         const htmlString = renderHtmlString(
           locale,
