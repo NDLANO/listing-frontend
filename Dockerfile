@@ -22,12 +22,13 @@ RUN yarn run build
 # Run stage
 FROM node:10.10.0-alpine
 
-RUN npm install razzle -g
-
 ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
-WORKDIR $APP_PATH
 
+RUN npm install razzle -g
+WORKDIR $APP_PATH
 COPY --from=builder $APP_PATH/build build
 
-CMD ["NODE_ENV=production", "razzle", "start"]
+ENV NODE_ENV=production
+
+CMD ["razzle", "start"]
