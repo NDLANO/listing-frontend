@@ -12,7 +12,7 @@ const phrases = {
       'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
   },
   themePage: {
-    heading: 'Utlisting',
+    heading: 'NDLA Utlisting',
     intro:
       'Dette er utlistingstjenesten til NDLA. Velg et område for å komme i gang.',
     chooseTheme: 'Velg område',
@@ -25,6 +25,7 @@ const phrases = {
     other: 'Annet',
   },
   listingPage: {
+    or: 'eller',
     noFilters: 'Har ingenting å filtrere',
   },
   logo: {
@@ -48,12 +49,12 @@ const phrases = {
     filters: {
       subject: {
         useFilter: 'Bruk filter',
-        openFilter: 'Filtrer på fag',
+        openFilter: 'Velg fag',
         closeFilter: 'Lukk filter',
       },
       category: {
         useFilter: 'Bruk filter',
-        openFilter: 'Filtrer på kategori',
+        openFilter: 'Velg liste',
         closeFilter: 'Lukk filter',
       },
       default: {

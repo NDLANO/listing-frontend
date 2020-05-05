@@ -270,25 +270,25 @@ const ListingPage = props => {
       ),
   );
 
+  const { t } = props;
+
   const categoryFilterInputProps = {
     value: filterSearchValue,
     onChange: onFilterSearch,
     onFocus: onFilterSearchFocus,
     onClick: onFilterSearchFocus,
-    placeholder: 'category filter',
+    placeholder: t(`listview.filters.category.openFilter`),
   };
 
   const listFilters = Array.from(filters.keys());
 
-  const { t } = props;
-
   return (
     <OneColumn>
-      <Helmet title={'NDLA Utlisting'} />
+      <Helmet title={t(`themePage.heading`)} />
       <SubjectFilterWrapper>
         <FilterListPhone
           preid="subject-list"
-          label="Velg fag"
+          label={t(`listview.filters.subject.openFilter`)}
           options={subjects.map(item => ({
             title: item.name,
             value: item.id,
@@ -305,13 +305,10 @@ const ListingPage = props => {
           viewMode="allModal"
         />
       </SubjectFilterWrapper>
-      <SeparatorWrapper>eller</SeparatorWrapper>
+      <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
       <CategoriesFilterWrapper>
         <Downshift
           onSelect={handleChangeListFilter}
-          itemToString={item => {
-            return item ? item.title || '' : '';
-          }}
           onStateChange={handleStateChangeListFilter}
           isOpen={filterListOpen}>
           {({ getInputProps, getRootProps, getMenuProps, getItemProps }) => {
@@ -333,7 +330,7 @@ const ListingPage = props => {
                   values={selectedListFilter ? [selectedListFilter] : []}
                   removeItem={handleRemoveFilter}
                   customCSS={categoryFilterCSS({
-                    hasValues: 1,
+                    hasValues: 0,
                   })}
                 />
                 <DropdownMenu

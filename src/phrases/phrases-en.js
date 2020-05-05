@@ -11,7 +11,7 @@ const phrases = {
     description: 'Norwegian Digital Learning Arena, Open Educational Resources',
   },
   themePage: {
-    heading: 'Listing',
+    heading: 'NDLA Listing',
     intro: 'This is NDLAs listing service. Choose a subject to start.',
     chooseTheme: 'Choose theme',
     toolTheme: 'Tools',
@@ -23,6 +23,7 @@ const phrases = {
     other: 'Other',
   },
   listingPage: {
+    or: 'or',
     noFilters: 'Have nothing to filter',
   },
   logo: {
@@ -46,12 +47,12 @@ const phrases = {
     filters: {
       subject: {
         useFilter: 'Use filter',
-        openFilter: 'Filter subject',
+        openFilter: 'Choose subject',
         closeFilter: 'Close filter',
       },
       category: {
         useFilter: 'Use filter',
-        openFilter: 'Filtrer category',
+        openFilter: 'Choose list',
         closeFilter: 'Close filter',
       },
       default: {
