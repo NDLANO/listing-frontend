@@ -26,10 +26,11 @@ ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
 WORKDIR $APP_PATH
 
-RUN npm config set unsafe-perm true
-RUN npm install -g cross-env razzle
+RUN npm install -g pm2
 
 COPY --from=builder $APP_PATH/build build
 COPY --from=builder $APP_PATH/package.json .
 
-CMD ["yarn", "start-prod"]
+ENV NODE_ENV=production
+
+CMD ["pm2-runtime -i max build/server.js"]
