@@ -330,7 +330,7 @@ const ListingPage = props => {
                   values={selectedListFilter ? [selectedListFilter] : []}
                   removeItem={handleRemoveFilter}
                   customCSS={categoryFilterCSS({
-                    hasValues: 0,
+                    hasValues: selectedListFilter,
                   })}
                 />
                 <DropdownMenu
