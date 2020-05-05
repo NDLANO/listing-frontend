@@ -12,6 +12,7 @@
     "start": "cross-env NODE_ENV=development razzle start",
     "start-without-ssr": "cross-env NODE_ENV=development DISABLE_SSR=true razzle start",
     "start-prod": "cross-env NODE_ENV=production node build/server | bunyan",
+    "start-prod-no-ssr": "cross-env NODE_ENV=production DISABLE_SSR=true node build/server | bunyan",
     "lint": "eslint --ext .js --ext .jsx src",
     "format": "node prettier.js write",
     "format-check": "node prettier.js lint",

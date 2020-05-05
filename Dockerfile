@@ -32,6 +32,6 @@ RUN npm install -g cross-env bunyan
 COPY --from=builder $APP_PATH/build build
 COPY --from=builder $APP_PATH/package.json $APP_PATH/
 
-ENV NODE_ENV=production
+ENV DISABLE_SSR=true
 
-CMD ["yarn", "start-prod"]
+CMD ["yarn", "start-prod-no-ssr"]
