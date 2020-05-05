@@ -373,25 +373,7 @@ const ListingPage = props => {
 };
 
 ListingPage.propTypes = {
-  listings: PropTypes.exact({
-    filters: PropTypes.exact({
-      main: PropTypes.arrayOf(PropTypes.string).isRequired,
-      sub: PropTypes.arrayOf(PropTypes.string).isRequired,
-    }),
-    listings: PropTypes.arrayOf(CoverShape),
-  }),
   locale: PropTypes.string.isRequired,
-  fetchSubjects: PropTypes.func,
-  fetchListing: PropTypes.func.isRequired,
-  fetchListingBySubject: PropTypes.func.isRequired,
-  fetchFilters: PropTypes.func,
-  resetFilters: PropTypes.func,
-  subjects: PropTypes.arrayOf(
-    PropTypes.exact({
-      id: PropTypes.string,
-      name: PropTypes.string,
-    }),
-  ),
 };
 
 const mapStateToProps = state => ({
