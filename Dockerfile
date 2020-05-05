@@ -34,4 +34,4 @@ COPY --from=builder $APP_PATH/package.json .
 
 ENV NODE_ENV=production
 
-CMD ["pm2-runtime -i max build/server.js '|' bunyan"]
+CMD ["sh", "-c", "pm2-runtime -i max build/server.js '|' bunyan"]
