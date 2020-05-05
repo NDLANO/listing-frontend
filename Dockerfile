@@ -22,11 +22,12 @@ RUN yarn run build
 # Run stage
 FROM node:10.10.0-alpine
 
+RUN npm install razzle -g
+
 ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
 WORKDIR $APP_PATH
 
 COPY --from=builder $APP_PATH/build build
-COPY yarn.lock package.json .babelrc razzle-add-entry-plugin.js razzle.config.js postcss.config.js $APP_PATH/
 
-CMD ["yarn", "start-prod"]
+CMD ["NODE_ENV=production", "razzle", "start"]
