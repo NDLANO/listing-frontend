@@ -14,16 +14,13 @@ export function mapTagsToFilters(tags) {
       const [list, main, sub] = tag.split(':');
       if (!filters.has(list)) {
         filters.set(list, {
-          main: main ? [main] : [],
-          sub: sub ? [sub] : [],
+          main: [main],
+          sub: [sub],
         });
       } else {
-        main &&
-          !filters.get(list).main.includes(main) &&
+        !filters.get(list).main.includes(main) &&
           filters.get(list).main.push(main);
-        sub &&
-          !filters.get(list).sub.includes(sub) &&
-          filters.get(list).sub.push(sub);
+        !filters.get(list).sub.includes(sub) && filters.get(list).sub.push(sub);
       }
     });
   return filters;
