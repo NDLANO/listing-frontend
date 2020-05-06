@@ -28,7 +28,6 @@ import {
 } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
-import { CoverShape } from '../../shapes';
 import { fetchConcepts, fetchConceptsBySubject, fetchTags } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 

@@ -8,18 +8,21 @@
 
 export function mapTagsToFilters(tags) {
   const filters = new Map();
-  tags.forEach(tag => {
-    const [list, main, sub] = tag.split(':');
-    if (!filters.has(list)) {
-      filters.set(list, {
-        main: main ? [main] : [],
-        sub: sub ? [sub] : [],
-      });
-    } else {
-      main && filters.get(list).main.push(main);
-      sub && filters.get(list).sub.push(sub);
-    }
-  });
+  tags
+    .filter(tag => tag.match(/.+:.+:.+/))
+    .forEach(tag => {
+      const [list, main, sub] = tag.split(':');
+      if (!filters.has(list)) {
+        filters.set(list, {
+          main: [main],
+          sub: [sub],
+        });
+      } else {
+        !filters.get(list).main.includes(main) &&
+          filters.get(list).main.push(main);
+        !filters.get(list).sub.includes(sub) && filters.get(list).sub.push(sub);
+      }
+    });
   return filters;
 }
 
