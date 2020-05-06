@@ -9,6 +9,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
+import bodyParser from 'body-parser';
 import config from '../config';
 import contentSecurityPolicy from './contentSecurityPolicy';
 
@@ -19,16 +20,20 @@ global.__DISABLE_SSR__ = config.disableSSR; // Disables server side rendering
 const defaultRoute = require('./routes/defaultRoute').defaultRoute;
 const app = express();
 
-app.use(compression());
+const allowedBodyContentTypes = [
+  'application/json',
+  'application/x-www-form-urlencoded',
+];
 
-app.use(
-  '/static',
+const ndlaMiddleware = [
   express.static(process.env.RAZZLE_PUBLIC_DIR, {
     maxAge: 1000 * 60 * 60 * 24 * 365, // One year
   }),
-);
 
-app.use(
+  bodyParser.urlencoded({ extended: true }),
+  bodyParser.json({
+    type: req => allowedBodyContentTypes.includes(req.headers['content-type']),
+  }),
   helmet({
     hsts: {
       maxAge: 31536000,
@@ -43,7 +48,12 @@ app.use(
           }
         : undefined,
   }),
-);
+];
+
+app.use(compression());
+app.use(ndlaMiddleware);
+
+app.get('/static/*');
 
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');

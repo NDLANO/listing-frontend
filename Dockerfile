@@ -27,11 +27,9 @@ ENV APP_PATH=$HOME/listing-frontend
 WORKDIR $APP_PATH
 
 RUN npm config set unsafe-perm true
-RUN npm install -g pm2
+RUN npm install -g cross-env bunyan
 
 COPY --from=builder $APP_PATH/build build
-COPY --from=builder $APP_PATH/package.json .
+COPY --from=builder $APP_PATH/package.json $APP_PATH/
 
-ENV NODE_ENV=production
-
-CMD ["pm2-runtime -i max build/server.js '|' bunyan"]
+CMD ["yarn", "start-prod-no-ssr"]
