@@ -18,8 +18,12 @@ export function mapTagsToFilters(tags) {
           sub: sub ? [sub] : [],
         });
       } else {
-        main && filters.get(list).main.push(main);
-        sub && filters.get(list).sub.push(sub);
+        main &&
+          !filters.get(list).main.includes(main) &&
+          filters.get(list).main.push(main);
+        sub &&
+          !filters.get(list).sub.includes(sub) &&
+          filters.get(list).sub.push(sub);
       }
     });
   return filters;
