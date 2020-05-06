@@ -43,9 +43,9 @@ const ndlaMiddleware = [
     frameguard:
       process.env.NODE_ENV === 'development'
         ? {
-          action: 'allow-from',
-          domain: '*://localhost',
-        }
+            action: 'allow-from',
+            domain: '*://localhost',
+          }
         : undefined,
   }),
 ];
@@ -53,8 +53,7 @@ const ndlaMiddleware = [
 app.use(compression());
 app.use(ndlaMiddleware);
 
-app.get( '/static/*');
-
+app.get('/static/*');
 
 app.get('/robots.txt', (req, res) => {
   res.type('text/plain');
