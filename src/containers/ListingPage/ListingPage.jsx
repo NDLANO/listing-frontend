@@ -108,6 +108,7 @@ const ListingPage = props => {
       .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
       .then(subjects => setSubjects(subjects));
     fetchTags().then(tags => setFilters(mapTagsToFilters(tags)));
+    setSelectedListFilter(queryParams.filters?.[0])
   }, []);
 
   useEffect(() => {
