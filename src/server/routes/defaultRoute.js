@@ -69,21 +69,19 @@ export function defaultRoute(req, res) {
     });
     res.end();
   } else {
-    store.done
-      .then(() => {
-        const state = store.getState();
-        const htmlString = renderHtmlString(
-          locale,
-          userAgentString,
-          state,
-          component,
-        );
-        const status = defined(context.status, 200);
-        res.status(status).send(`<!doctype html>\n${htmlString}`);
-      })
-      .catch(error => {
-        res.status(500).send(error.message);
-      });
+    try {
+      const state = store.getState();
+      const htmlString = renderHtmlString(
+        locale,
+        userAgentString,
+        state,
+        component,
+      );
+      const status = defined(context.status, 200);
+      res.status(status).send(`<!doctype html>\n${htmlString}`);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
   }
 
   // Trigger sagas for components by rendering them

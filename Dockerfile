@@ -32,4 +32,4 @@ RUN npm install -g cross-env bunyan
 COPY --from=builder $APP_PATH/build build
 COPY --from=builder $APP_PATH/package.json $APP_PATH/
 
-CMD ["yarn", "start-prod-no-ssr"]
+CMD ["yarn", "start-prod"]
