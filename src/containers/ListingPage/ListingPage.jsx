@@ -101,9 +101,6 @@ const ListingPage = props => {
   const [md, setMd] = useState(null);
 
   useEffect(() => {
-    fetchConcepts(PAGE_SIZE).then(concepts =>
-      setConcepts(sortConcepts(concepts.results, props.locale)),
-    );
     fetchSubjectIds()
       .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
       .then(subjects => setSubjects(subjects));
