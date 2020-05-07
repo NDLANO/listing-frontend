@@ -85,7 +85,7 @@ const PAGE_SIZE = 1000;
 const ListingPage = props => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [filters, setFilters] = useState(null);
+  const [filters, setFilters] = useState([]);
   const [currentListFilters, setCurrentListFilters] = useState([]);
   const [selectedListFilter, setSelectedListFilter] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
