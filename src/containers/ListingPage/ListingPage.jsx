@@ -85,7 +85,7 @@ const PAGE_SIZE = 1000;
 const ListingPage = props => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [filters, setFilters] = useState(null);
+  const [filters, setFilters] = useState([]);
   const [currentListFilters, setCurrentListFilters] = useState([]);
   const [selectedListFilter, setSelectedListFilter] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
@@ -101,13 +101,11 @@ const ListingPage = props => {
   const [md, setMd] = useState(null);
 
   useEffect(() => {
-    fetchConcepts(PAGE_SIZE).then(concepts =>
-      setConcepts(sortConcepts(concepts.results, props.locale)),
-    );
     fetchSubjectIds()
       .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
       .then(subjects => setSubjects(subjects));
     fetchTags().then(tags => setFilters(mapTagsToFilters(tags)));
+    setSelectedListFilter(queryParams.filters?.[0]);
   }, []);
 
   useEffect(() => {
