@@ -16,6 +16,19 @@ test('split list into filters', () => {
   expect(mapTagsToFilters(['Liste:filter1:filter2'])).toEqual(result);
 });
 
+test('split list into filters with whitespaces', () => {
+  expect(typeof mapTagsToFilters).toBe('function');
+
+  const result = new Map();
+  result.set('Liste nummer 1', {
+    main: ['filter nummer 1'],
+    sub: ['filter nummer 2'],
+  });
+  expect(
+    mapTagsToFilters(['Liste nummer 1:filter nummer 1:filter nummer 2']),
+  ).toEqual(result);
+});
+
 test('split list into filters without sub', () => {
   expect(typeof mapTagsToFilters).toBe('function');
 
