@@ -9,7 +9,7 @@
 export function mapTagsToFilters(tags) {
   const filters = new Map();
   tags
-    .filter(tag => tag.match(/.+:?.+:?.+/))
+    .filter(tag => tag.match(/.+:(.+)?:(.+)?/))
     .forEach(tag => {
       const [list, main, sub] = tag.split(':');
       if (!filters.has(list)) {
