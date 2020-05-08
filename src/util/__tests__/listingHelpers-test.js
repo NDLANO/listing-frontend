@@ -31,3 +31,10 @@ test('split list into filters without main and sub', () => {
   result.set('Liste', { main: [], sub: [] });
   expect(mapTagsToFilters(['Liste::'])).toEqual(result);
 });
+
+test('do not split into lists if not two columns', () => {
+  expect(typeof mapTagsToFilters).toBe('function');
+
+  const result = new Map();
+  expect(mapTagsToFilters(['Teststring'])).toEqual(result);
+});
