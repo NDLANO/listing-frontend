@@ -80,7 +80,7 @@ const categoryFilterCSS = props => css`
   }
 `;
 
-const PAGE_SIZE = 1000;
+const PAGE_SIZE = 2000;
 
 const ListingPage = props => {
   const [concepts, setConcepts] = useState([]);
