@@ -28,7 +28,7 @@ import {
 } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
-import { fetchConcepts, fetchConceptsBySubject, fetchTags } from './listingApi';
+import { fetchConcepts, fetchConceptsBySubject, fetchConceptsByTags, fetchTags } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 
 const SubjectFilterWrapper = styled.div`
@@ -109,14 +109,20 @@ const ListingPage = props => {
   }, []);
 
   useEffect(() => {
-    if (queryParams.subjects.length > 0) {
+    if (queryParams.subjects.length) {
       fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE).then(concepts =>
-        setConcepts(sortConcepts(concepts.results, props.locale)),
+        setConcepts(sortConcepts(concepts.results, props.locale))
       );
-    } else {
+    }
+    else if (queryParams.filters.length) {
+      fetchConceptsByTags(queryParams.filters, PAGE_SIZE).then(concepts => 
+        console.log(concepts)
+      );
+    }
+    else {
       setConcepts([])
     }
-  }, [queryParams.subjects]);
+  }, [queryParams]);
 
   useEffect(() => {
     if (md === null) {
@@ -145,7 +151,7 @@ const ListingPage = props => {
     setSearchValue(value);
     if (value.length) {
       const filteredConcepts = await fetchConcepts(value, PAGE_SIZE);
-      setConcepts(filteredConcepts.results);
+      setConcepts(sortConcepts(filteredConcepts.results, props.locale));
     }
     else {
       setConcepts([]);
