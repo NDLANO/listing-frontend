@@ -144,7 +144,7 @@ const ListingPage = props => {
   const onConceptSearch = async value => {
     setSearchValue(value);
     if (value.length) {
-      const filteredConcepts = await fetchConcepts(PAGE_SIZE, value);
+      const filteredConcepts = await fetchConcepts(value, PAGE_SIZE);
       setConcepts(filteredConcepts.results);
     }
     else {
