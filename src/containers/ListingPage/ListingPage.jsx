@@ -114,9 +114,7 @@ const ListingPage = props => {
         setConcepts(sortConcepts(concepts.results, props.locale)),
       );
     } else {
-      fetchConcepts(PAGE_SIZE).then(concepts =>
-        setConcepts(sortConcepts(concepts.results, props.locale)),
-      );
+      setConcepts([])
     }
   }, [queryParams.subjects]);
 
@@ -241,10 +239,6 @@ const ListingPage = props => {
         ]
       : [];
   };
-
-  if (!concepts.length || !subjects.length) {
-    return null;
-  }
 
   const renderMarkdown = text => {
     const rendered = md.render(text);
