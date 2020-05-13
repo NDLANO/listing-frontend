@@ -143,8 +143,13 @@ const ListingPage = props => {
 
   const onConceptSearch = async value => {
     setSearchValue(value);
-    const filteredConcepts = await fetchConcepts(PAGE_SIZE, value);
-    setConcepts(filteredConcepts.results)
+    if (value.length) {
+      const filteredConcepts = await fetchConcepts(PAGE_SIZE, value);
+      setConcepts(filteredConcepts.results);
+    }
+    else {
+      setConcepts([]);
+    }
   }
 
   const handleChangeListFilter = value => {
