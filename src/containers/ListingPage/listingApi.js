@@ -15,8 +15,8 @@ const baseListingUrl = apiResourceUrl('/concept-api/v1/concepts');
 const baseImageUrl = apiResourceUrl('/image-api/v2/images');
 const baseArticleUrl = apiResourceUrl('/article-api/v2/articles');
 
-export const fetchConcepts = pageSize =>
-  fetch(`${baseListingUrl}?page-size=${pageSize}`).then(
+export const fetchConcepts = (pageSize, query) =>
+  fetch(`${baseListingUrl}?page-size=${pageSize}&query=${query}`).then(
     resolveJsonOrRejectWithError,
   );
 export const fetchConceptsBySubject = (subjectId, pageSize) =>

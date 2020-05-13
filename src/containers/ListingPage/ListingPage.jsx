@@ -141,6 +141,12 @@ const ListingPage = props => {
     });
   };
 
+  const onConceptSearch = async value => {
+    setSearchValue(value);
+    const filteredConcepts = await fetchConcepts(PAGE_SIZE, value);
+    setConcepts(filteredConcepts.results)
+  }
+
   const handleChangeListFilter = value => {
     setQueryParams({
       subjects: [],
@@ -196,14 +202,6 @@ const ListingPage = props => {
     if (queryParams.filters.length) {
       filteredItems = filteredItems.filter(item =>
         queryParams.filters.every(filter => item.filters.includes(filter)),
-      );
-    }
-
-    // Search
-    if (searchValue.length > 0) {
-      const searchValueLowercase = searchValue.toLowerCase();
-      filteredItems = filteredItems.filter(item =>
-        item.name.toLowerCase().startsWith(searchValueLowercase),
       );
     }
 
@@ -345,7 +343,7 @@ const ListingPage = props => {
         viewStyle={viewStyle}
         onChangedViewStyle={e => setViewStyle(e.viewStyle)}
         searchValue={searchValue}
-        onChangedSearchValue={e => setSearchValue(e.target.value)}
+        onChangedSearchValue={e => onConceptSearch(e.target.value)}
         selectedItem={
           selectedItem ? (
             <NotionDialog
