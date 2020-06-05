@@ -39,7 +39,7 @@ const initialImage = {
   origin: '',
 };
 
-const NotionDialog = props => {
+const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
   const [articleId, setArticleId] = useState(undefined);
   const [articleTitle, setArticleTitle] = useState('');
   const [concept, setConcept] = useState(initialConcept);
@@ -47,7 +47,7 @@ const NotionDialog = props => {
 
   useEffect(() => {
     // Concept
-    fetchConcept(props.item.id).then(response => {
+    fetchConcept(item.id).then(response => {
       setArticleId(response.articleId);
       setConcept({
         title: response.title ? response.title.title : '',
@@ -64,7 +64,7 @@ const NotionDialog = props => {
     });
 
     // Image
-    const imageId = props.item.image.split('/').pop();
+    const imageId = item.image.split('/').pop();
     if (imageId.length) {
       fetchImage(imageId).then(response => {
         setImage({
@@ -95,25 +95,20 @@ const NotionDialog = props => {
     }
   }, [articleId]);
 
-  const { t, renderMarkdown } = props;
-
   return (
     <NotionDialogWrapper
-      title={props.item.name}
-      closeCallback={() => props.handleClose(null)}>
+      title={item.name}
+      closeCallback={() => handleClose(null)}>
       <NotionDialogContent>
-        {props.item.image ? (
-          <NotionDialogImage
-            src={props.item.image}
-            alt={props.item.description}
-          />
+        {item.image ? (
+          <NotionDialogImage src={item.image} alt={item.description} />
         ) : null}
-        <NotionDialogText>
-          {renderMarkdown(props.item.description)}
-        </NotionDialogText>
+        <NotionDialogText>{renderMarkdown(item.description)}</NotionDialogText>
       </NotionDialogContent>
       <NotionDialogTags
-        tags={props.item.subject.map(subject => subject.title)}
+        tags={subjects
+          .filter(subject => item.subjectIds.includes(subject.id))
+          .map(s => s.name)}
       />
       {articleId && (
         <NotionDialogRelatedLinks
@@ -176,13 +171,9 @@ NotionDialog.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     image: PropTypes.string,
-    subject: PropTypes.arrayOf(
-      PropTypes.exact({
-        title: PropTypes.string.isRequired,
-        value: PropTypes.string,
-      }),
-    ),
+    subjectIds: PropTypes.arrayOf(PropTypes.string),
   }),
+  subjects: PropTypes.arrayOf(PropTypes.object),
   handleClose: PropTypes.func.isRequired,
   renderMarkdown: PropTypes.func.isRequired,
 };

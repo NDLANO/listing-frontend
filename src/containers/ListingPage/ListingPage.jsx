@@ -28,7 +28,13 @@ import {
 } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
-import { fetchConcepts, fetchConceptsBySubject, fetchConceptsByTags, fetchTags } from './listingApi';
+import {
+  fetchConcepts,
+  fetchConcept,
+  fetchConceptsBySubject,
+  fetchConceptsByTags,
+  fetchTags,
+} from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 
 const SubjectFilterWrapper = styled.div`
@@ -97,6 +103,7 @@ const ListingPage = props => {
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
     filters: [],
+    concept: null,
   });
   const [md, setMd] = useState(null);
 
@@ -111,18 +118,32 @@ const ListingPage = props => {
   useEffect(() => {
     if (queryParams.subjects.length) {
       fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE).then(concepts =>
-        setConcepts(sortConcepts(concepts.results, props.locale))
+        setConcepts(sortConcepts(concepts.results, props.locale)),
       );
-    }
-    else if (queryParams.filters.length) {
-      fetchConceptsByTags(queryParams.filters, PAGE_SIZE).then(concepts => 
-        console.log(concepts)
+    } else if (queryParams.filters.length) {
+      fetchConceptsByTags(queryParams.filters, PAGE_SIZE).then(concepts =>
+        console.log(concepts),
       );
+    } else {
+      setConcepts([]);
     }
-    else {
-      setConcepts([])
+  }, [queryParams.subjects, queryParams.filters]);
+
+  useEffect(() => {
+    if (queryParams.concept) {
+      if (concepts.length) {
+        const selectedConcept = concepts.find(
+          concept => concept.id.toString() === queryParams.concept,
+        );
+        setSelectedItem(mapConceptToListItem(selectedConcept));
+      } else {
+        fetchConcept(queryParams.concept).then(concept => {
+          setConcepts([concept]);
+          setSelectedItem(mapConceptToListItem(concept));
+        });
+      }
     }
-  }, [queryParams]);
+  }, [queryParams.concept]);
 
   useEffect(() => {
     if (md === null) {
@@ -147,16 +168,23 @@ const ListingPage = props => {
     });
   };
 
+  const handleSelectItem = value => {
+    setSelectedItem(value);
+    setQueryParams({
+      ...queryParams,
+      concept: value?.id,
+    });
+  };
+
   const onConceptSearch = async value => {
     setSearchValue(value);
     if (value.length) {
       const filteredConcepts = await fetchConcepts(value, PAGE_SIZE);
       setConcepts(sortConcepts(filteredConcepts.results, props.locale));
-    }
-    else {
+    } else {
       setConcepts([]);
     }
-  }
+  };
 
   const handleChangeListFilter = value => {
     setQueryParams({
@@ -262,12 +290,7 @@ const ListingPage = props => {
   const listItems = filterItems(
     concepts
       .filter(concept => concept.subjectIds)
-      .map(concept =>
-        mapConceptToListItem(
-          concept,
-          subjects.find(subject => concept.subjectIds.includes(subject.id)),
-        ),
-      ),
+      .map(concept => mapConceptToListItem(concept)),
   );
 
   const { t } = props;
@@ -356,15 +379,16 @@ const ListingPage = props => {
         searchValue={searchValue}
         onChangedSearchValue={e => onConceptSearch(e.target.value)}
         selectedItem={
-          selectedItem ? (
+          selectedItem && subjects ? (
             <NotionDialog
               item={selectedItem}
-              handleClose={setSelectedItem}
+              subjects={subjects}
+              handleClose={handleSelectItem}
               renderMarkdown={renderMarkdown}
             />
           ) : null
         }
-        onSelectItem={setSelectedItem}
+        onSelectItem={handleSelectItem}
         renderMarkdown={renderMarkdown}
         filters={getFilters()}
       />
