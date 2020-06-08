@@ -92,6 +92,7 @@ const ListingPage = props => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [tags, setTags] = useState([]);
   const [currentListFilters, setCurrentListFilters] = useState([]);
   const [selectedListFilter, setSelectedListFilter] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
@@ -111,7 +112,10 @@ const ListingPage = props => {
     fetchSubjectIds()
       .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
       .then(subjects => setSubjects(subjects));
-    fetchTags().then(tags => setFilters(mapTagsToFilters(tags)));
+    fetchTags().then(tags => {
+      setTags(tags);
+      setFilters(mapTagsToFilters(tags));
+    });
     setSelectedListFilter(queryParams.filters?.[0]);
   }, []);
 
@@ -121,8 +125,13 @@ const ListingPage = props => {
         setConcepts(sortConcepts(concepts.results, props.locale)),
       );
     } else if (queryParams.filters.length) {
-      fetchConceptsByTags(queryParams.filters, PAGE_SIZE).then(concepts =>
-        console.log(concepts),
+      fetchConceptsByTags(
+        tags.filter(tag =>
+          queryParams.filters.every(filter => tag.includes(filter)),
+        ),
+        PAGE_SIZE,
+      ).then(concepts =>
+        setConcepts(sortConcepts(concepts.results, props.locale)),
       );
     } else {
       setConcepts([]);
