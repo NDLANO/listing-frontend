@@ -18,6 +18,7 @@ import { OneColumn, FilterListPhone } from '@ndla/ui';
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
 import Button from '@ndla/button';
+import { Spinner } from '@ndla/editor';
 
 import NotionDialog from './NotionDialog';
 import {
@@ -49,6 +50,12 @@ const CategoriesFilterWrapper = styled.div`
   position: relative;
   display: inline-block;
 `;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: ${spacing.medium};
+`
 
 const placeholderCSS = css`
   color: initial;
@@ -91,6 +98,7 @@ const ListingPage = ({ t }) => {
   const [filters, setFilters] = useState([]);
   const [tags, setTags] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
   const [currentListFilters, setCurrentListFilters] = useState([]);
   const [selectedListFilter, setSelectedListFilter] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
@@ -105,6 +113,7 @@ const ListingPage = ({ t }) => {
     concept: null,
   });
   const [md, setMd] = useState(null);
+
   useEffect(() => {
     if (md === null) {
       const markdown = new Remarkable();
@@ -147,6 +156,7 @@ const ListingPage = ({ t }) => {
 
   const getConcepts = async page => {
     const replace = page === 1;
+    setLoading(!replace);
     if (queryParams.subjects.length) {
       const concepts = await fetchConceptsBySubject(queryParams.subjects, page, PAGE_SIZE)
       handleSetConcepts(concepts.results, replace);
@@ -163,6 +173,7 @@ const ListingPage = ({ t }) => {
       const concepts = await fetchConcepts('', page, PAGE_SIZE);
       handleSetConcepts(concepts.results, replace);
     }
+    setLoading(false);
   }
 
   const handleSetConcepts = (newConcepts, replace) => {
@@ -416,9 +427,16 @@ const ListingPage = ({ t }) => {
         renderMarkdown={renderMarkdown}
         filters={getFilters()}
       />
-      <Button onClick={onLoadMoreClick}>
-        Last mer
-      </Button>
+      <ButtonWrapper>
+        {loading ?
+          <Spinner/>
+          :
+          <Button onClick={onLoadMoreClick}>
+            Last mer
+          </Button>
+        }
+      </ButtonWrapper>
+      
     </OneColumn>
   );
 };
