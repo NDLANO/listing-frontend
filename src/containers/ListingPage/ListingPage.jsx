@@ -128,7 +128,7 @@ const ListingPage = ({ t }) => {
   }, []);
 
   useEffect(() => {
-    getConcepts(1);
+    getConcepts(1, true);
   }, [queryParams.subjects, queryParams.filters, searchValue, tags]);
 
   useEffect(() => {
@@ -144,8 +144,7 @@ const ListingPage = ({ t }) => {
     setFilters(mapTagsToFilters(tags));
   }
 
-  const getConcepts = async page => {
-    const replace = page === 1;
+  const getConcepts = async (page, replace) => {
     setLoading(!replace);
     if (queryParams.subjects.length) {
       const concepts = await fetchConceptsBySubject(searchValue, queryParams.subjects, page, PAGE_SIZE)
@@ -160,7 +159,7 @@ const ListingPage = ({ t }) => {
         PAGE_SIZE,
       )
       handleSetConcepts(concepts.results, replace);
-    } else {
+    } else if (!queryParams.concept) {
       const concepts = await fetchConcepts(searchValue, page, PAGE_SIZE);
       handleSetConcepts(concepts.results, replace);
     }
@@ -178,6 +177,7 @@ const ListingPage = ({ t }) => {
         const selectedConcept = await fetchConcept(queryParams.concept);
         handleSetConcepts([selectedConcept], false);
         setSelectedItem(mapConceptToListItem(selectedConcept));
+        setPage(0);
       }
     }
   }
@@ -268,7 +268,7 @@ const ListingPage = ({ t }) => {
   };
 
   const onLoadMoreClick = () => {
-    getConcepts(page + 1);
+    getConcepts(page + 1, false);
     setPage(page + 1);
   }
 
