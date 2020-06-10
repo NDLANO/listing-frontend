@@ -129,7 +129,7 @@ const ListingPage = ({ t }) => {
   }, []);
 
   useEffect(() => {
-    getConcepts(1, true);
+    getConcepts(1);
   }, [queryParams.subjects, queryParams.filters, searchValue, tags]);
 
   useEffect(() => {
@@ -145,7 +145,8 @@ const ListingPage = ({ t }) => {
     setFilters(mapTagsToFilters(tags));
   };
 
-  const getConcepts = async (page, replace) => {
+  const getConcepts = async page => {
+    const replace = page === 1;
     setLoading(!replace);
     if (queryParams.subjects.length) {
       const concepts = await fetchConceptsBySubject(
@@ -278,7 +279,7 @@ const ListingPage = ({ t }) => {
   };
 
   const onLoadMoreClick = () => {
-    getConcepts(page + 1, false);
+    getConcepts(page + 1);
     setPage(page + 1);
   };
 
