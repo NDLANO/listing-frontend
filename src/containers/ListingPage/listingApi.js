@@ -16,17 +16,17 @@ const baseImageUrl = apiResourceUrl('/image-api/v2/images');
 const baseArticleUrl = apiResourceUrl('/article-api/v2/articles');
 
 export const fetchConcepts = (query, page, pageSize) =>
-  fetch(`${baseListingUrl}?sort=title&query=${query}&page=${page}&page-size=${pageSize}`).then(
-    resolveJsonOrRejectWithError,
-  );
+  fetch(
+    `${baseListingUrl}?sort=title&query=${query}&page=${page}&page-size=${pageSize}`,
+  ).then(resolveJsonOrRejectWithError);
 export const fetchConceptsBySubject = (query, subjectId, page, pageSize) =>
-  fetch(`${baseListingUrl}?sort=title&query=${query}&subjects=${subjectId}&page=${page}&page-size=${pageSize}`).then(
-    resolveJsonOrRejectWithError,
-  );
+  fetch(
+    `${baseListingUrl}?sort=title&query=${query}&subjects=${subjectId}&page=${page}&page-size=${pageSize}`,
+  ).then(resolveJsonOrRejectWithError);
 export const fetchConceptsByTags = (query, tags, page, pageSize) =>
-  fetch(`${baseListingUrl}?sort=title&query=${query}&tags=${tags}&page=${page}&page-size=${pageSize}`).then(
-    resolveJsonOrRejectWithError,
-  );
+  fetch(
+    `${baseListingUrl}?sort=title&query=${query}&tags=${tags}&page=${page}&page-size=${pageSize}`,
+  ).then(resolveJsonOrRejectWithError);
 export const fetchTags = () =>
   fetch(`${baseListingUrl}/tags/`).then(resolveJsonOrRejectWithError);
 export const fetchConcept = conceptId =>

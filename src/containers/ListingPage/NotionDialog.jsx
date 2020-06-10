@@ -63,9 +63,11 @@ const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
       created: concept.created,
       license: concept.copyright?.license?.license,
       authors: concept.copyright?.creators.map(creator => creator.name),
-      rightsholders: concept.copyright?.rightsholders.map(holder => holder.name),
+      rightsholders: concept.copyright?.rightsholders.map(
+        holder => holder.name,
+      ),
     });
-  }
+  };
 
   const getImage = async () => {
     const imageId = item.image.split('/').pop();
@@ -79,18 +81,20 @@ const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
         },
         license: image.copyright?.license?.license,
         authors: image.copyright?.creators.map(creator => creator.name),
-        rightsholders: image.copyright?.rightsholders.map(holder => holder.name),
+        rightsholders: image.copyright?.rightsholders.map(
+          holder => holder.name,
+        ),
         origin: image.copyright?.origin,
       });
     }
-  }
+  };
 
   const getArticle = async () => {
     if (articleId) {
       const article = await fetchArticle(articleId);
       setArticleTitle(article.title?.title);
     }
-  }
+  };
 
   return (
     <NotionDialogWrapper

@@ -55,7 +55,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: ${spacing.medium};
-`
+`;
 
 const placeholderCSS = css`
   color: initial;
@@ -143,12 +143,17 @@ const ListingPage = ({ t }) => {
     const tags = await fetchTags();
     setTags(tags);
     setFilters(mapTagsToFilters(tags));
-  }
+  };
 
   const getConcepts = async (page, replace) => {
     setLoading(!replace);
     if (queryParams.subjects.length) {
-      const concepts = await fetchConceptsBySubject(searchValue, queryParams.subjects, page, PAGE_SIZE)
+      const concepts = await fetchConceptsBySubject(
+        searchValue,
+        queryParams.subjects,
+        page,
+        PAGE_SIZE,
+      );
       handleSetConcepts(concepts.results, replace);
     } else if (queryParams.filters.length) {
       const concepts = await fetchConceptsByTags(
@@ -158,14 +163,14 @@ const ListingPage = ({ t }) => {
         ),
         page,
         PAGE_SIZE,
-      )
+      );
       handleSetConcepts(concepts.results, replace);
     } else if (!queryParams.concept) {
       const concepts = await fetchConcepts(searchValue, page, PAGE_SIZE);
       handleSetConcepts(concepts.results, replace);
     }
     setLoading(false);
-  }
+  };
 
   const getConceptFromQuery = async () => {
     if (queryParams.concept) {
@@ -181,7 +186,7 @@ const ListingPage = ({ t }) => {
         setPage(0);
       }
     }
-  }
+  };
 
   const handleSetConcepts = (newConcepts, replace) => {
     if (newConcepts.length) {
@@ -189,15 +194,13 @@ const ListingPage = ({ t }) => {
       if (replace) {
         setConcepts(newConcepts);
         setPage(1);
-      }
-      else {
+      } else {
         setConcepts([...concepts, ...newConcepts]);
       }
-    }
-    else {
+    } else {
       setShowButton(false);
     }
-  }
+  };
 
   const handleChangeSubject = values => {
     setQueryParams({
@@ -277,7 +280,7 @@ const ListingPage = ({ t }) => {
   const onLoadMoreClick = () => {
     getConcepts(page + 1, false);
     setPage(page + 1);
-  }
+  };
 
   const filterItems = listItems => {
     let filteredItems = listItems;
@@ -430,17 +433,17 @@ const ListingPage = ({ t }) => {
         renderMarkdown={renderMarkdown}
         filters={getFilters()}
       />
-      {showButton &&
+      {showButton && (
         <ButtonWrapper>
-          {loading ?
-            <Spinner/>
-            :
+          {loading ? (
+            <Spinner />
+          ) : (
             <Button onClick={onLoadMoreClick}>
               {t('listingPage.loadMore')}
             </Button>
-          }
+          )}
         </ButtonWrapper>
-      }
+      )}
     </OneColumn>
   );
 };
