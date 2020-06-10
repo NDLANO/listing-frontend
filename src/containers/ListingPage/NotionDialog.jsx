@@ -49,17 +49,14 @@ const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
     // Concept
     fetchConcept(item.id).then(response => {
       setArticleId(response.articleId);
+      console.log(response)
       setConcept({
-        title: response.title ? response.title.title : '',
+        title: response?.title?.title,
         source: response.source,
         created: response.created,
-        license: response.copyright ? response.copyright.license.license : '',
-        authors: response.copyright
-          ? response.copyright.creators.map(creator => creator.name)
-          : [],
-        rightsholders: response.copyright
-          ? response.copyright.rightsholders.map(holder => holder.name)
-          : [],
+        license: response?.copyright?.license?.license,
+        authors: response?.copyright?.creators.map(creator => creator.name),
+        rightsholders: response?.copyright?.rightsholders.map(holder => holder.name),
       });
     });
 
@@ -68,19 +65,15 @@ const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
     if (imageId.length) {
       fetchImage(imageId).then(response => {
         setImage({
-          title: response.title ? response.title.title : '',
+          title: response?.title?.title,
           image: {
             url: response.imageUrl,
-            alt: response.alttext ? response.alttext.alttext : '',
+            alt: response?.alttext?.alttext,
           },
-          license: response.copyright ? response.copyright.license.license : '',
-          authors: response.copyright
-            ? response.copyright.creators.map(creator => creator.name)
-            : [],
-          rightsholders: response.copyright
-            ? response.copyright.rightsholders.map(holder => holder.name)
-            : [],
-          origin: response.copyright ? response.copyright.origin : '',
+          license: response?.copyright?.license?.license,
+          authors: response?.copyright?.creators.map(creator => creator.name),
+          rightsholders: response?.copyright?.rightsholders.map(holder => holder.name),
+          origin: response?.copyright?.origin,
         });
       });
     }
