@@ -51,9 +51,3 @@ export function mapConceptToListItem(concept) {
     filters: concept.tags ? mapTagsToList(concept.tags.tags) : [],
   };
 }
-
-export function sortConcepts(concepts, locale) {
-  return concepts.sort((a, b) =>
-    a.title.title.localeCompare(b.title.title, locale),
-  );
-}

@@ -16,15 +16,15 @@ const baseImageUrl = apiResourceUrl('/image-api/v2/images');
 const baseArticleUrl = apiResourceUrl('/article-api/v2/articles');
 
 export const fetchConcepts = (query, pageSize) =>
-  fetch(`${baseListingUrl}?query=${query}&page-size=${pageSize}`).then(
+  fetch(`${baseListingUrl}?sort=title&query=${query}&page-size=${pageSize}`).then(
     resolveJsonOrRejectWithError,
   );
 export const fetchConceptsBySubject = (subjectId, pageSize) =>
-  fetch(`${baseListingUrl}?subjects=${subjectId}&page-size=${pageSize}`).then(
+  fetch(`${baseListingUrl}?sort=title&subjects=${subjectId}&page-size=${pageSize}`).then(
     resolveJsonOrRejectWithError,
   );
 export const fetchConceptsByTags = (tags, pageSize) =>
-  fetch(`${baseListingUrl}?tags=${tags}&page-size=${pageSize}`).then(
+  fetch(`${baseListingUrl}?sort=title&tags=${tags}&page-size=${pageSize}`).then(
     resolveJsonOrRejectWithError,
   );
 export const fetchTags = () =>

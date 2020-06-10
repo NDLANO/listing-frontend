@@ -6,8 +6,6 @@
  *
  */
 import React, { useState, useEffect, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Remarkable } from 'remarkable';
 import Downshift from 'downshift';
@@ -24,10 +22,8 @@ import NotionDialog from './NotionDialog';
 import {
   mapTagsToFilters,
   mapConceptToListItem,
-  sortConcepts,
 } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
-import { getLocale } from '../Locale/localeSelectors';
 import {
   fetchConcepts,
   fetchConcept,
@@ -88,7 +84,7 @@ const categoryFilterCSS = props => css`
 
 const PAGE_SIZE = 2000;
 
-const ListingPage = props => {
+const ListingPage = ({ t }) => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState([]);
@@ -122,7 +118,7 @@ const ListingPage = props => {
   useEffect(() => {
     if (queryParams.subjects.length) {
       fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE).then(concepts =>
-        setConcepts(sortConcepts(concepts.results, props.locale)),
+        setConcepts(concepts.results),
       );
     } else if (queryParams.filters.length) {
       fetchConceptsByTags(
@@ -131,7 +127,7 @@ const ListingPage = props => {
         ),
         PAGE_SIZE,
       ).then(concepts =>
-        setConcepts(sortConcepts(concepts.results, props.locale)),
+        setConcepts(concepts.results),
       );
     } else {
       setConcepts([]);
@@ -189,7 +185,7 @@ const ListingPage = props => {
     setSearchValue(value);
     if (value.length) {
       const filteredConcepts = await fetchConcepts(value, PAGE_SIZE);
-      setConcepts(sortConcepts(filteredConcepts.results, props.locale));
+      setConcepts(filteredConcepts.results);
     } else {
       setConcepts([]);
     }
@@ -302,8 +298,6 @@ const ListingPage = props => {
       .map(concept => mapConceptToListItem(concept)),
   );
 
-  const { t } = props;
-
   const categoryFilterInputProps = {
     value: filterSearchValue,
     onChange: onFilterSearch,
@@ -408,12 +402,4 @@ const ListingPage = props => {
   );
 };
 
-ListingPage.propTypes = {
-  locale: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = state => ({
-  locale: getLocale(state),
-});
-
-export default connect(mapStateToProps)(injectT(ListingPage));
+export default injectT(ListingPage);
