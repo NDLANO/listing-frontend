@@ -25,6 +25,7 @@ const phrases = {
   listingPage: {
     or: 'or',
     noFilters: 'Have nothing to filter',
+    loadMore: 'Load more',
   },
   logo: {
     altText: 'The Norwegian Digital Learning Arena',

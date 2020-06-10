@@ -98,6 +98,7 @@ const ListingPage = ({ t }) => {
   const [filters, setFilters] = useState(new Map());
   const [tags, setTags] = useState([]);
   const [page, setPage] = useState(1);
+  const [showButton, setShowButton] = useState(true);
   const [loading, setLoading] = useState(false);
   const [currentListFilters, setCurrentListFilters] = useState([]);
   const [selectedListFilter, setSelectedListFilter] = useState(null);
@@ -183,12 +184,18 @@ const ListingPage = ({ t }) => {
   }
 
   const handleSetConcepts = (newConcepts, replace) => {
-    if (replace) {
-      setConcepts(newConcepts);
-      setPage(1);
+    if (newConcepts.length) {
+      setShowButton(true);
+      if (replace) {
+        setConcepts(newConcepts);
+        setPage(1);
+      }
+      else {
+        setConcepts([...concepts, ...newConcepts]);
+      }
     }
     else {
-      setConcepts([...concepts, ...newConcepts]);
+      setShowButton(false);
     }
   }
 
@@ -423,16 +430,17 @@ const ListingPage = ({ t }) => {
         renderMarkdown={renderMarkdown}
         filters={getFilters()}
       />
-      <ButtonWrapper>
-        {loading ?
-          <Spinner/>
-          :
-          <Button onClick={onLoadMoreClick}>
-            Last mer
-          </Button>
-        }
-      </ButtonWrapper>
-      
+      {showButton &&
+        <ButtonWrapper>
+          {loading ?
+            <Spinner/>
+            :
+            <Button onClick={onLoadMoreClick}>
+              {t('listingPage.loadMore')}
+            </Button>
+          }
+        </ButtonWrapper>
+      }
     </OneColumn>
   );
 };
