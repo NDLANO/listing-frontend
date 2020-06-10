@@ -200,12 +200,8 @@ const ListingPage = ({ t }) => {
 
   const onConceptSearch = async value => {
     setSearchValue(value);
-    if (value.length) {
-      const filteredConcepts = await fetchConcepts(value, PAGE_SIZE);
-      setConcepts(filteredConcepts.results);
-    } else {
-      setConcepts([]);
-    }
+    const filteredConcepts = await fetchConcepts(value, 1, PAGE_SIZE);
+    setConcepts(filteredConcepts.results);
   };
 
   const handleChangeListFilter = value => {
