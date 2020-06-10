@@ -15,8 +15,17 @@ import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
 
 import config from '../../config';
-import { fetchImage, fetchArticle } from './listingApi';
+import { fetchConcept, fetchImage, fetchArticle } from './listingApi';
 import { TextContent, ImageContent } from './LicenseBox';
+
+const initialConcept = {
+  title: '',
+  source: '',
+  created: '',
+  license: '',
+  authors: [],
+  rightsholders: [],
+};
 
 const initialImage = {
   title: '',
@@ -30,21 +39,31 @@ const initialImage = {
   origin: '',
 };
 
-const NotionDialog = ({
-  t,
-  renderMarkdown,
-  item,
-  subjects,
-  handleClose,
-  concept,
-}) => {
+const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
   const [articleId, setArticleId] = useState(undefined);
   const [articleTitle, setArticleTitle] = useState('');
+  const [concept, setConcept] = useState(initialConcept);
   const [image, setImage] = useState(initialImage);
 
   useEffect(() => {
-    setArticleId(concept.articleId);
+    // Concept
+    fetchConcept(item.id).then(response => {
+      setArticleId(response.articleId);
+      setConcept({
+        title: response.title ? response.title.title : '',
+        source: response.source,
+        created: response.created,
+        license: response.copyright ? response.copyright.license.license : '',
+        authors: response.copyright
+          ? response.copyright.creators.map(creator => creator.name)
+          : [],
+        rightsholders: response.copyright
+          ? response.copyright.rightsholders.map(holder => holder.name)
+          : [],
+      });
+    });
 
+    // Image
     const imageId = item.image.split('/').pop();
     if (imageId.length) {
       fetchImage(imageId).then(response => {
@@ -68,25 +87,13 @@ const NotionDialog = ({
   }, []);
 
   useEffect(() => {
+    // Article
     if (articleId) {
       fetchArticle(articleId).then(response => {
         setArticleTitle(response.title ? response.title.title : '');
       });
     }
   }, [articleId]);
-
-  const notionDialogConcept = {
-    title: concept.title ? concept.title.title : '',
-    source: concept.source,
-    created: concept.created,
-    license: concept.copyright ? concept.copyright.license.license : '',
-    authors: concept.copyright
-      ? concept.copyright.creators.map(creator => creator.name)
-      : [],
-    rightsholders: concept.copyright
-      ? concept.copyright.rightsholders.map(holder => holder.name)
-      : [],
-  };
 
   return (
     <NotionDialogWrapper
@@ -115,9 +122,9 @@ const NotionDialog = ({
         />
       )}
       <NotionDialogLicenses
-        license={notionDialogConcept.license}
-        source={notionDialogConcept.source}
-        authors={notionDialogConcept.authors}
+        license={concept.license}
+        source={concept.source}
+        authors={concept.authors}
         licenseBox={
           <Modal
             activateButton={<Button link>{t('article.useContent')}</Button>}
@@ -135,9 +142,7 @@ const NotionDialog = ({
                       tabs={[
                         {
                           title: t('license.tabs.text'),
-                          content: (
-                            <TextContent t={t} concept={notionDialogConcept} />
-                          ),
+                          content: <TextContent t={t} concept={concept} />,
                         },
                         ...(image.image.url.length
                           ? [
@@ -161,21 +166,6 @@ const NotionDialog = ({
 };
 
 NotionDialog.propTypes = {
-  concept: PropTypes.shape({
-    articleId: PropTypes.string,
-    title: {
-      title: PropTypes.string,
-    },
-    source: PropTypes.string,
-    created: PropTypes.string,
-    copyright: PropTypes.shape({
-      creators: PropTypes.arrayOf(PropTypes.string),
-      rightsholders: PropTypes.arrayOf(PropTypes.string),
-      license: PropTypes.shape({
-        license: PropTypes.string,
-      }),
-    }),
-  }),
   item: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,

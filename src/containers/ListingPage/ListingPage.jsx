@@ -411,9 +411,6 @@ const ListingPage = ({ t }) => {
         selectedItem={
           selectedItem ? (
             <NotionDialog
-              concept={concepts.find(
-                concept => concept.id.toString() === selectedItem.id,
-              )}
               item={selectedItem}
               subjects={subjects}
               handleClose={handleSelectItem}
