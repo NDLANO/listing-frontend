@@ -95,7 +95,7 @@ const PAGE_SIZE = 20;
 const ListingPage = ({ t }) => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState(new Map());
   const [tags, setTags] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -135,7 +135,7 @@ const ListingPage = ({ t }) => {
 
   useEffect(() => {
     getConcepts(1);
-  }, [queryParams.subjects, queryParams.filters]);
+  }, [queryParams.subjects, queryParams.filters, tags]);
 
   useEffect(() => {
     if (queryParams.concept) {
@@ -146,7 +146,7 @@ const ListingPage = ({ t }) => {
         setSelectedItem(mapConceptToListItem(selectedConcept));
       } else {
         fetchConcept(queryParams.concept).then(concept => {
-          setConcepts([concept]);
+          handleSetConcepts([concept], false);
           setSelectedItem(mapConceptToListItem(concept));
         });
       }
@@ -251,7 +251,7 @@ const ListingPage = ({ t }) => {
     const {
       target: { value },
     } = e;
-    const filteredFilters = listFilters.filter(item =>
+    const filteredFilters = Array.from(filters.keys()).filter(item =>
       item.toLowerCase().startsWith(value.toLowerCase()),
     );
     setFilterSearchValue(value);
@@ -260,7 +260,7 @@ const ListingPage = ({ t }) => {
 
   const onFilterSearchFocus = () => {
     setFilterListOpen(true);
-    setCurrentListFilters(listFilters);
+    setCurrentListFilters(Array.from(filters.keys()));
   };
 
   const onLoadMoreClick = () => {
@@ -282,7 +282,7 @@ const ListingPage = ({ t }) => {
   };
 
   const getFilters = () => {
-    return selectedListFilter
+    return filters.get(selectedListFilter)
       ? [
           {
             filterValues: queryParams.filters,
@@ -334,8 +334,6 @@ const ListingPage = ({ t }) => {
     onClick: onFilterSearchFocus,
     placeholder: t(`listview.filters.category.openFilter`),
   };
-
-  const listFilters = Array.from(filters.keys());
 
   return (
     <OneColumn>
@@ -411,7 +409,7 @@ const ListingPage = ({ t }) => {
         searchValue={searchValue}
         onChangedSearchValue={e => onConceptSearch(e.target.value)}
         selectedItem={
-          selectedItem && subjects ? (
+          selectedItem ? (
             <NotionDialog
               concept={concepts.find(
                 concept => concept.id.toString() === selectedItem.id,
