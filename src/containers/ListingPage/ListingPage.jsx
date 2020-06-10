@@ -17,6 +17,7 @@ import ListView from '@ndla/listview';
 import { OneColumn, FilterListPhone } from '@ndla/ui';
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
+import Button from '@ndla/button';
 
 import NotionDialog from './NotionDialog';
 import {
@@ -82,13 +83,14 @@ const categoryFilterCSS = props => css`
   }
 `;
 
-const PAGE_SIZE = 2000;
+const PAGE_SIZE = 20;
 
 const ListingPage = ({ t }) => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState([]);
   const [tags, setTags] = useState([]);
+  const [page, setPage] = useState(1);
   const [currentListFilters, setCurrentListFilters] = useState([]);
   const [selectedListFilter, setSelectedListFilter] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
@@ -103,6 +105,13 @@ const ListingPage = ({ t }) => {
     concept: null,
   });
   const [md, setMd] = useState(null);
+  useEffect(() => {
+    if (md === null) {
+      const markdown = new Remarkable();
+      markdown.inline.ruler.enable(['sub', 'sup']);
+      setMd(markdown);
+    }
+  }, []);
 
   useEffect(() => {
     fetchSubjectIds()
@@ -116,22 +125,7 @@ const ListingPage = ({ t }) => {
   }, []);
 
   useEffect(() => {
-    if (queryParams.subjects.length) {
-      fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE).then(concepts =>
-        setConcepts(concepts.results),
-      );
-    } else if (queryParams.filters.length) {
-      fetchConceptsByTags(
-        tags.filter(tag =>
-          queryParams.filters.every(filter => tag.includes(filter)),
-        ),
-        PAGE_SIZE,
-      ).then(concepts =>
-        setConcepts(concepts.results),
-      );
-    } else {
-      setConcepts([]);
-    }
+    getConcepts(1);
   }, [queryParams.subjects, queryParams.filters]);
 
   useEffect(() => {
@@ -150,13 +144,36 @@ const ListingPage = ({ t }) => {
     }
   }, [queryParams.concept]);
 
-  useEffect(() => {
-    if (md === null) {
-      const markdown = new Remarkable();
-      markdown.inline.ruler.enable(['sub', 'sup']);
-      setMd(markdown);
+
+  const getConcepts = async page => {
+    const replace = page === 1;
+    if (queryParams.subjects.length) {
+      const concepts = await fetchConceptsBySubject(queryParams.subjects, page, PAGE_SIZE)
+      handleSetConcepts(concepts.results, replace);
+    } else if (queryParams.filters.length) {
+      const concepts = await fetchConceptsByTags(
+        tags.filter(tag =>
+          queryParams.filters.every(filter => tag.includes(filter)),
+        ),
+        page,
+        PAGE_SIZE,
+      )
+      handleSetConcepts(concepts.results, replace);
+    } else {
+      const concepts = await fetchConcepts('', page, PAGE_SIZE);
+      handleSetConcepts(concepts.results, replace);
     }
-  }, []);
+  }
+
+  const handleSetConcepts = (newConcepts, replace) => {
+    if (replace) {
+      setConcepts(newConcepts);
+      setPage(1);
+    }
+    else {
+      setConcepts([...concepts, ...newConcepts]);
+    }
+  }
 
   const handleChangeSubject = values => {
     setQueryParams({
@@ -238,6 +255,11 @@ const ListingPage = ({ t }) => {
     setFilterListOpen(true);
     setCurrentListFilters(listFilters);
   };
+
+  const onLoadMoreClick = () => {
+    getConcepts(page + 1);
+    setPage(page + 1);
+  }
 
   const filterItems = listItems => {
     let filteredItems = listItems;
@@ -398,6 +420,9 @@ const ListingPage = ({ t }) => {
         renderMarkdown={renderMarkdown}
         filters={getFilters()}
       />
+      <Button onClick={onLoadMoreClick}>
+        Last mer
+      </Button>
     </OneColumn>
   );
 };
