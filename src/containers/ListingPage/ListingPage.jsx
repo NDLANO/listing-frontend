@@ -135,7 +135,7 @@ const ListingPage = ({ t }) => {
 
   useEffect(() => {
     getConcepts(1);
-  }, [queryParams.subjects, queryParams.filters, tags]);
+  }, [queryParams.subjects, queryParams.filters, searchValue, tags]);
 
   useEffect(() => {
     if (queryParams.concept) {
@@ -158,10 +158,11 @@ const ListingPage = ({ t }) => {
     const replace = page === 1;
     setLoading(!replace);
     if (queryParams.subjects.length) {
-      const concepts = await fetchConceptsBySubject(queryParams.subjects, page, PAGE_SIZE)
+      const concepts = await fetchConceptsBySubject(searchValue, queryParams.subjects, page, PAGE_SIZE)
       handleSetConcepts(concepts.results, replace);
     } else if (queryParams.filters.length) {
       const concepts = await fetchConceptsByTags(
+        searchValue,
         tags.filter(tag =>
           queryParams.filters.every(filter => tag.includes(filter)),
         ),
@@ -170,7 +171,7 @@ const ListingPage = ({ t }) => {
       )
       handleSetConcepts(concepts.results, replace);
     } else {
-      const concepts = await fetchConcepts('', page, PAGE_SIZE);
+      const concepts = await fetchConcepts(searchValue, page, PAGE_SIZE);
       handleSetConcepts(concepts.results, replace);
     }
     setLoading(false);
@@ -211,8 +212,6 @@ const ListingPage = ({ t }) => {
 
   const onConceptSearch = async value => {
     setSearchValue(value);
-    const filteredConcepts = await fetchConcepts(value, 1, PAGE_SIZE);
-    setConcepts(filteredConcepts.results);
   };
 
   const handleChangeListFilter = value => {
@@ -270,14 +269,11 @@ const ListingPage = ({ t }) => {
 
   const filterItems = listItems => {
     let filteredItems = listItems;
-
-    // Filters
     if (queryParams.filters.length) {
       filteredItems = filteredItems.filter(item =>
         queryParams.filters.every(filter => item.filters.includes(filter)),
       );
     }
-
     return filteredItems;
   };
 

@@ -19,12 +19,12 @@ export const fetchConcepts = (query, page, pageSize) =>
   fetch(`${baseListingUrl}?sort=title&query=${query}&page=${page}&page-size=${pageSize}`).then(
     resolveJsonOrRejectWithError,
   );
-export const fetchConceptsBySubject = (subjectId, page, pageSize) =>
-  fetch(`${baseListingUrl}?sort=title&subjects=${subjectId}&page=${page}&page-size=${pageSize}`).then(
+export const fetchConceptsBySubject = (query, subjectId, page, pageSize) =>
+  fetch(`${baseListingUrl}?sort=title&query=${query}&subjects=${subjectId}&page=${page}&page-size=${pageSize}`).then(
     resolveJsonOrRejectWithError,
   );
-export const fetchConceptsByTags = (tags, page, pageSize) =>
-  fetch(`${baseListingUrl}?sort=title&tags=${tags}&page=${page}&page-size=${pageSize}`).then(
+export const fetchConceptsByTags = (query, tags, page, pageSize) =>
+  fetch(`${baseListingUrl}?sort=title&query=${query}&tags=${tags}&page=${page}&page-size=${pageSize}`).then(
     resolveJsonOrRejectWithError,
   );
 export const fetchTags = () =>
