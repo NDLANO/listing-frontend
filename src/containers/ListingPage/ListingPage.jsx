@@ -123,13 +123,7 @@ const ListingPage = ({ t }) => {
   }, []);
 
   useEffect(() => {
-    fetchSubjectIds()
-      .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
-      .then(subjects => setSubjects(subjects));
-    fetchTags().then(tags => {
-      setTags(tags);
-      setFilters(mapTagsToFilters(tags));
-    });
+    getInitialData();
     setSelectedListFilter(queryParams.filters?.[0]);
   }, []);
 
@@ -138,21 +132,17 @@ const ListingPage = ({ t }) => {
   }, [queryParams.subjects, queryParams.filters, searchValue, tags]);
 
   useEffect(() => {
-    if (queryParams.concept) {
-      if (concepts.length) {
-        const selectedConcept = concepts.find(
-          concept => concept.id.toString() === queryParams.concept,
-        );
-        setSelectedItem(mapConceptToListItem(selectedConcept));
-      } else {
-        fetchConcept(queryParams.concept).then(concept => {
-          handleSetConcepts([concept], false);
-          setSelectedItem(mapConceptToListItem(concept));
-        });
-      }
-    }
+    getConceptFromQuery();
   }, [queryParams.concept]);
 
+  const getInitialData = async () => {
+    const subjectIds = await fetchSubjectIds();
+    const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
+    setSubjects(subjects);
+    const tags = await fetchTags();
+    setTags(tags);
+    setFilters(mapTagsToFilters(tags));
+  }
 
   const getConcepts = async page => {
     const replace = page === 1;
@@ -175,6 +165,21 @@ const ListingPage = ({ t }) => {
       handleSetConcepts(concepts.results, replace);
     }
     setLoading(false);
+  }
+
+  const getConceptFromQuery = async () => {
+    if (queryParams.concept) {
+      if (concepts.length) {
+        const selectedConcept = concepts.find(
+          concept => concept.id.toString() === queryParams.concept,
+        );
+        setSelectedItem(mapConceptToListItem(selectedConcept));
+      } else {
+        const selectedConcept = await fetchConcept(queryParams.concept);
+        handleSetConcepts([selectedConcept], false);
+        setSelectedItem(mapConceptToListItem(selectedConcept));
+      }
+    }
   }
 
   const handleSetConcepts = (newConcepts, replace) => {

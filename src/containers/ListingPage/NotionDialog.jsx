@@ -46,47 +46,51 @@ const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
   const [image, setImage] = useState(initialImage);
 
   useEffect(() => {
-    // Concept
-    fetchConcept(item.id).then(response => {
-      setArticleId(response.articleId);
-      console.log(response)
-      setConcept({
-        title: response?.title?.title,
-        source: response.source,
-        created: response.created,
-        license: response?.copyright?.license?.license,
-        authors: response?.copyright?.creators.map(creator => creator.name),
-        rightsholders: response?.copyright?.rightsholders.map(holder => holder.name),
-      });
-    });
-
-    // Image
-    const imageId = item.image.split('/').pop();
-    if (imageId.length) {
-      fetchImage(imageId).then(response => {
-        setImage({
-          title: response?.title?.title,
-          image: {
-            url: response.imageUrl,
-            alt: response?.alttext?.alttext,
-          },
-          license: response?.copyright?.license?.license,
-          authors: response?.copyright?.creators.map(creator => creator.name),
-          rightsholders: response?.copyright?.rightsholders.map(holder => holder.name),
-          origin: response?.copyright?.origin,
-        });
-      });
-    }
+    getConcept();
+    getImage();
   }, []);
 
   useEffect(() => {
-    // Article
-    if (articleId) {
-      fetchArticle(articleId).then(response => {
-        setArticleTitle(response.title ? response.title.title : '');
+    getArticle();
+  }, [articleId]);
+
+  const getConcept = async () => {
+    const concept = await fetchConcept(item.id);
+    setArticleId(concept.articleId);
+    setConcept({
+      title: concept.title?.title,
+      source: concept.source,
+      created: concept.created,
+      license: concept.copyright?.license?.license,
+      authors: concept.copyright?.creators.map(creator => creator.name),
+      rightsholders: concept.copyright?.rightsholders.map(holder => holder.name),
+    });
+  }
+
+  const getImage = async () => {
+    const imageId = item.image.split('/').pop();
+    if (imageId.length) {
+      const image = await fetchImage(imageId);
+      setImage({
+        title: image.title?.title,
+        image: {
+          url: image.imageUrl,
+          alt: image.alttext?.alttext,
+        },
+        license: image.copyright?.license?.license,
+        authors: image.copyright?.creators.map(creator => creator.name),
+        rightsholders: image.copyright?.rightsholders.map(holder => holder.name),
+        origin: image.copyright?.origin,
       });
     }
-  }, [articleId]);
+  }
+
+  const getArticle = async () => {
+    if (articleId) {
+      const article = await fetchArticle(articleId);
+      setArticleTitle(article.title?.title);
+    }
+  }
 
   return (
     <NotionDialogWrapper
