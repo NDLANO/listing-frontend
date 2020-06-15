@@ -115,6 +115,8 @@ const ListingPage = ({ t }) => {
   });
   const [md, setMd] = useState(null);
 
+  let storedConcepts = [];
+
   useEffect(() => {
     if (md === null) {
       const markdown = new Remarkable();
@@ -167,7 +169,7 @@ const ListingPage = ({ t }) => {
       );
       handleSetConcepts(concepts.results, replace);
     } else if (!queryParams.concept) {
-      const concepts = await fetchConcepts(searchValue, page, PAGE_SIZE);
+      const concepts = await fetchConcepts(searchValue, page, 6 * PAGE_SIZE);
       handleSetConcepts(concepts.results, replace);
     }
     setLoading(false);
@@ -192,12 +194,16 @@ const ListingPage = ({ t }) => {
   const handleSetConcepts = (newConcepts, replace) => {
     if (newConcepts.length) {
       setShowButton(true);
+      const filteredConcepts = newConcepts.filter(concept => concept.subjectIds);
+      const mergedConcepts = [...storedConcepts, ...filteredConcepts.slice(0, PAGE_SIZE)];
       if (replace) {
-        setConcepts(newConcepts);
+        setConcepts(mergedConcepts);
         setPage(1);
+        storedConcepts = [];
       } else {
-        setConcepts([...concepts, ...newConcepts]);
+        setConcepts([...concepts, ...mergedConcepts]);
       }
+      storedConcepts = (filteredConcepts.slice(PAGE_SIZE));
     } else {
       setShowButton(false);
     }
@@ -332,11 +338,8 @@ const ListingPage = ({ t }) => {
     );
   };
 
-  // Filtered list items, concepts without subjects are excluded
   const listItems = filterItems(
-    concepts
-      .filter(concept => concept.subjectIds)
-      .map(concept => mapConceptToListItem(concept)),
+    concepts.map(concept => mapConceptToListItem(concept))
   );
 
   const categoryFilterInputProps = {
