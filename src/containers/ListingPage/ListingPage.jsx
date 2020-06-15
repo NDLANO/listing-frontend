@@ -194,8 +194,13 @@ const ListingPage = ({ t }) => {
   const handleSetConcepts = (newConcepts, replace) => {
     if (newConcepts.length) {
       setShowButton(true);
-      const filteredConcepts = newConcepts.filter(concept => concept.subjectIds);
-      const mergedConcepts = [...storedConcepts, ...filteredConcepts.slice(0, PAGE_SIZE)];
+      const filteredConcepts = newConcepts.filter(
+        concept => concept.subjectIds,
+      );
+      const mergedConcepts = [
+        ...storedConcepts,
+        ...filteredConcepts.slice(0, PAGE_SIZE),
+      ];
       if (replace) {
         setConcepts(mergedConcepts);
         setPage(1);
@@ -203,7 +208,7 @@ const ListingPage = ({ t }) => {
       } else {
         setConcepts([...concepts, ...mergedConcepts]);
       }
-      storedConcepts = (filteredConcepts.slice(PAGE_SIZE));
+      storedConcepts = filteredConcepts.slice(PAGE_SIZE);
     } else {
       setShowButton(false);
     }
@@ -339,7 +344,7 @@ const ListingPage = ({ t }) => {
   };
 
   const listItems = filterItems(
-    concepts.map(concept => mapConceptToListItem(concept))
+    concepts.map(concept => mapConceptToListItem(concept)),
   );
 
   const categoryFilterInputProps = {
