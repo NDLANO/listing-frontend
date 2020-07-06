@@ -10,6 +10,7 @@
 import '../../style/index.css';
 
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
@@ -44,7 +45,9 @@ export class App extends React.Component {
             title="NDLA"
             meta={[{ name: 'description', content: t('meta.description') }]}
           />
-          <ListingPage />
+          <Switch>
+            <Route path="/" component={ListingPage} />
+          </Switch>
           <Footer t={t} />
         </StyledPageWrapper>
       </PageContainer>

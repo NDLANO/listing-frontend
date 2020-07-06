@@ -9,24 +9,24 @@
 const phrases = {
   meta: {
     description:
-      'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',
+      'Kvalitetssikra fritt tilgjengelege nettbaserte læremiddel for vidaregåande opplæring',
   },
   themePage: {
     heading: 'NDLA Utlisting',
     intro:
-      'Dette er utlistingstjenesten til NDLA. Velg et område for å komme i gang.',
-    chooseTheme: 'Velg område',
+      'Dette er utlistingstjenesten til NDLA. Vel eit område for å komma i gang.',
+    chooseTheme: 'Vel område',
     toolTheme: 'Verktøy',
     natureTheme: 'Naturbruk',
   },
   labels: {
     category: 'Kategori',
     subject: 'Fag',
-    other: 'Annet',
+    other: 'Anna',
   },
   listingPage: {
     or: 'eller',
-    noFilters: 'Har ingenting å filtrere',
+    noFilters: 'Har ikkje noko å filtrera',
   },
   logo: {
     altText: 'Nasjonal digital læringsarena',
@@ -40,7 +40,7 @@ const phrases = {
     closeNotion: 'Lukk',
   },
   article: {
-    useContent: 'Bruk innhold',
+    useContent: 'Bruk innhald',
   },
   listview: {
     search: {
@@ -49,12 +49,12 @@ const phrases = {
     filters: {
       subject: {
         useFilter: 'Bruk filter',
-        openFilter: 'Velg fag',
+        openFilter: 'Vel fag',
         closeFilter: 'Lukk filter',
       },
       category: {
         useFilter: 'Bruk filter',
-        openFilter: 'Velg liste',
+        openFilter: 'Vel liste',
         closeFilter: 'Lukk filter',
       },
       default: {
@@ -65,34 +65,34 @@ const phrases = {
       },
     },
     relatedLinks: {
-      label: 'Tilknyttede artikler',
+      label: 'Tilknytta artiklar',
     },
   },
   license: {
-    heading: 'Slik gjenbruker du innhold',
+    heading: 'Slik gjenbruker du innhald',
     text: {
-      heading: 'Slik bruker du tekst fra artikkelen',
-      description: 'Husk å henvise til kilden når du gjenbruker tekst.',
-      rules: 'Regler for bruk av teksten:',
+      heading: 'Slik bruker du tekst frå artikkelen',
+      description: 'Hugs å vise til kjelda når du gjenbruker tekst.',
+      rules: 'Reglar for bruk av teksten:',
       published: 'Publiseringsdato',
     },
     images: {
-      heading: 'Slik bruker du bilder fra artikkelen',
+      heading: 'Slik bruker du bilete frå artikkelen',
       description:
-        'Husk å kopiere teksten som skal legges ved bildet der du bruker det.',
-      rules: 'Regler for bruk av bildet:',
+        'Hugs å kopiere teksten som skal leggjast ved biletet der du bruker det.',
+      rules: 'Reglar for bruk av biletet:',
     },
     tabs: {
       text: 'Tekst',
-      images: 'Bilder',
+      images: 'Bilete',
     },
     copyTitle: 'Kopier referanse',
     hasCopiedTitle: 'Kopiert!',
     download: 'Last ned',
     title: 'Tittel',
-    originator: 'Opphaver',
-    rightsholder: 'Rettighetshaver',
-    source: 'Kilde',
+    originator: 'Opphavar',
+    rightsholder: 'Rettshavar',
+    source: 'Kjelde',
     published: 'Publiseringsdato',
   },
   searchPage: {
@@ -102,24 +102,24 @@ const phrases = {
   },
   footer: {
     aboutNDLA: 'Om NDLA',
-    selectLanguage: 'Velg språk (language): ',
+    selectLanguage: 'Vel språk (language): ',
     vision:
-      'NDLA sin visjon er å lage gode, åpne digitale læremidler for alle fag i videregående opplæring og støtte opp om elever og lærere i aktivt og deltakende læringsarbeid.',
-    footerLinksHeader: 'Andre NDLA nettsteder',
-    footerInfo: 'Nettstedet er utarbeidet av NDLA med åpen kildekode.',
-    footerEditiorInChief: 'Ansvarlig redaktør: ',
-    footerManagingEditor: 'Utgaveansvarlig: ',
+      'NDLA sin visjon er å lage gode, opne digitale læremiddel for alle faga i vidaregåande opplæring og støtte opp om elevar og lærarar i aktivt og deltakande læringsarbeid.',
+    footerLinksHeader: 'Andre NDLA nettstader',
+    footerInfo: 'Nettstaden er utarbeida av NDLA med open kjeldekode.',
+    footerEditiorInChief: 'Ansvarleg redaktør: ',
+    footerManagingEditor: 'Utgåveansvarleg: ',
     footerPrivacyLink: 'Personvernerklæring',
     socialMediaLinks: {
       facebook: 'NDLA på Facebook',
-      newsletter: 'Meld deg på vårt nyhetsbrev',
+      newsletter: 'Meld deg på vårt nyheitsbrev',
       twitter: 'NDLA på Twitter',
     },
     ndlaLinks: {
       omNdla: 'Om NDLA',
       aboutNdla: 'About NDLA',
       blog: 'Fagblogg',
-      tips: 'Tips til elever',
+      tips: 'Tips til elevar',
       fyr: 'FYR-prosjektet',
       sharing: 'Delingsarena',
     },
@@ -134,7 +134,7 @@ const phrases = {
     es: 'Spansk',
     zh: 'Kinesisk',
     unknown: 'Ukjent',
-    prefixChangeLanguage: 'Velg målform',
+    prefixChangeLanguage: 'Vel målform',
   },
   changeLanguage: {
     nb: 'Endre språk til bokmål',
@@ -142,8 +142,8 @@ const phrases = {
     en: 'Change language to English',
   },
   currentLanguageText: {
-    nb: 'Sidene vises på bokmål',
-    nn: 'Sidene vises på nynorsk',
+    nb: 'Sidene blir viste på bokmål',
+    nn: 'Sidene blir viste på nynorsk',
     en:
       'Not all pages are available in English. These will be shown in Norwegian',
   },

@@ -16,7 +16,12 @@ import styled from '@emotion/styled';
 import { colors, fonts, spacing } from '@ndla/core';
 import { injectT } from '@ndla/i18n';
 import ListView from '@ndla/listview';
-import { OneColumn, FilterListPhone } from '@ndla/ui';
+import {
+  OneColumn,
+  FilterListPhone,
+  LanguageSelector,
+  MastheadItem,
+} from '@ndla/ui';
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
 
@@ -30,10 +35,20 @@ import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
 import { fetchConcepts, fetchConceptsBySubject, fetchTags } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
+import { getLocaleUrls } from '../../util/localeHelpers';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
   margin-bottom: ${spacing.small};
+`;
+
+const HeaderWithLanguageWrapper = styled.div`
+  display: flex;
+`;
+
+const StyledLanguageSelector = styled.div`
+  margin-top: ${spacing.large};
+  margin-left: auto;
 `;
 
 const SeparatorWrapper = styled.div`
@@ -104,17 +119,21 @@ const ListingPage = props => {
     fetchSubjectIds()
       .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
       .then(subjects => setSubjects(subjects));
-    fetchTags().then(tags => setFilters(mapTagsToFilters(tags)));
+    fetchTags(props.locale).then(tags => setFilters(mapTagsToFilters(tags)));
     setSelectedListFilter(queryParams.filters?.[0]);
   }, []);
 
   useEffect(() => {
     if (queryParams.subjects.length > 0) {
-      fetchConceptsBySubject(queryParams.subjects, PAGE_SIZE).then(concepts =>
+      fetchConceptsBySubject(
+        queryParams.subjects,
+        PAGE_SIZE,
+        props.locale,
+      ).then(concepts =>
         setConcepts(sortConcepts(concepts.results, props.locale)),
       );
     } else {
-      fetchConcepts(PAGE_SIZE).then(concepts =>
+      fetchConcepts(PAGE_SIZE, props.locale).then(concepts =>
         setConcepts(sortConcepts(concepts.results, props.locale)),
       );
     }
@@ -282,26 +301,36 @@ const ListingPage = props => {
   return (
     <OneColumn>
       <Helmet title={t(`themePage.heading`)} />
-      <SubjectFilterWrapper>
-        <FilterListPhone
-          preid="subject-list"
-          label={t(`listview.filters.subject.openFilter`)}
-          options={subjects.map(item => ({
-            title: item.name,
-            value: item.id,
-          }))}
-          alignedGroup
-          showActiveFiltersOnSmallScreen
-          values={queryParams.subjects}
-          messages={{
-            useFilter: t(`listview.filters.subject.useFilter`),
-            openFilter: t(`listview.filters.subject.openFilter`),
-            closeFilter: t(`listview.filters.subject.closeFilter`),
-          }}
-          onChange={handleChangeSubject}
-          viewMode="allModal"
-        />
-      </SubjectFilterWrapper>
+      <HeaderWithLanguageWrapper>
+        <SubjectFilterWrapper>
+          <FilterListPhone
+            preid="subject-list"
+            label={t(`listview.filters.subject.openFilter`)}
+            options={subjects.map(item => ({
+              title: item.name,
+              value: item.id,
+            }))}
+            alignedGroup
+            showActiveFiltersOnSmallScreen
+            values={queryParams.subjects}
+            messages={{
+              useFilter: t(`listview.filters.subject.useFilter`),
+              openFilter: t(`listview.filters.subject.openFilter`),
+              closeFilter: t(`listview.filters.subject.closeFilter`),
+            }}
+            onChange={handleChangeSubject}
+            viewMode="allModal"
+          />
+        </SubjectFilterWrapper>
+        <StyledLanguageSelector>
+          <MastheadItem>
+            <LanguageSelector
+              options={getLocaleUrls(props.locale, props.location)}
+              currentLanguage={props.locale}
+            />
+          </MastheadItem>
+        </StyledLanguageSelector>
+      </HeaderWithLanguageWrapper>
       <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
       <CategoriesFilterWrapper>
         <Downshift
@@ -371,6 +400,10 @@ const ListingPage = props => {
 
 ListingPage.propTypes = {
   locale: PropTypes.string.isRequired,
+  location: PropTypes.shape({
+    search: PropTypes.string,
+    pathname: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = state => ({

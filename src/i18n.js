@@ -7,6 +7,7 @@
  */
 
 import nb from './phrases/phrases-nb';
+import nn from './phrases/phrases-nn';
 import en from './phrases/phrases-en';
 
 function* entries(obj) {
@@ -45,7 +46,7 @@ const NB = {
 const NN = {
   name: 'Nynorsk',
   abbreviation: 'nn',
-  messages: formatNestedMessages(nb),
+  messages: formatNestedMessages(nn),
 };
 const EN = {
   name: 'English',
@@ -55,6 +56,9 @@ const EN = {
 
 export const appLocales = [NB, NN, EN];
 export const preferdLocales = [NB, NN, EN];
+
+// As of now only NB and NN is required, use one of the above if the requirement changes in the future
+export const languageSelectorLocales = [NB, NN];
 
 export const getLocaleObject = localeAbbreviation => {
   const locale = appLocales.find(l => l.abbreviation === localeAbbreviation);
