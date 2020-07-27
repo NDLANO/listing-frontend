@@ -308,6 +308,12 @@ const ListingPage = ({ t, locale, location }) => {
         queryParams.filters.every(filter => item.filters.includes(filter)),
       );
     }
+    if (searchValue.length > 0) {
+      const searchValueLowercase = searchValue.toLowerCase();
+      filteredItems = filteredItems.filter(item =>
+        item.name.toLowerCase().startsWith(searchValueLowercase),
+      );
+    }
     return filteredItems;
   };
 
