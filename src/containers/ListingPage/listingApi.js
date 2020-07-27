@@ -16,12 +16,12 @@ const baseImageUrl = apiResourceUrl('/image-api/v2/images');
 const baseArticleUrl = apiResourceUrl('/article-api/v2/articles');
 
 export const fetchConcepts = (page, pageSize, language) =>
-  fetch(`${baseListingUrl}?page=${page}&page-size=${pageSize}&language=${language}`).then(
+  fetch(`${baseListingUrl}?sort=title&page=${page}&page-size=${pageSize}&language=${language}`).then(
     resolveJsonOrRejectWithError,
   );
 export const fetchConceptsBySubject = (subjectId, page, pageSize, language) =>
   fetch(
-    `${baseListingUrl}?subjects=${subjectId}&page${page}&page-size=${pageSize}&language=${language}`,
+    `${baseListingUrl}?sort=title&subjects=${subjectId}&page=${page}&page-size=${pageSize}&language=${language}`,
   ).then(resolveJsonOrRejectWithError);
 export const fetchTags = language =>
   fetch(`${baseListingUrl}/tags/?language=${language}`).then(

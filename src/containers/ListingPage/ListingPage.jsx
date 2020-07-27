@@ -38,7 +38,6 @@ import {
   fetchConcepts,
   fetchConcept,
   fetchConceptsBySubject,
-  fetchConceptsByTags,
   fetchTags,
 } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
@@ -150,7 +149,7 @@ const ListingPage = ({ t, locale, location }) => {
 
   useEffect(() => {
     getConcepts(1);
-  }, [queryParams.subjects, queryParams.filters, searchValue, tags]);
+  }, [queryParams.subjects, queryParams.filters, tags]);
 
   useEffect(() => {
     getConceptFromQuery();
@@ -170,25 +169,14 @@ const ListingPage = ({ t, locale, location }) => {
     setLoading(!replace);
     if (queryParams.subjects.length) {
       const concepts = await fetchConceptsBySubject(
-        searchValue,
         queryParams.subjects,
         page,
         PAGE_SIZE,
         locale
       );
       handleSetConcepts(concepts.results, replace);
-    } else if (queryParams.filters.length) {
-      const concepts = await fetchConceptsByTags(
-        searchValue,
-        tags.filter(tag =>
-          queryParams.filters.every(filter => tag.includes(filter)),
-        ),
-        page,
-        PAGE_SIZE,
-      );
-      handleSetConcepts(concepts.results, replace);
     } else if (!queryParams.concept) {
-      const concepts = await fetchConcepts(searchValue, page, 6 * PAGE_SIZE);
+      const concepts = await fetchConcepts(page, 6 * PAGE_SIZE, locale);
       handleSetConcepts(concepts.results, replace);
     }
     setLoading(false);
