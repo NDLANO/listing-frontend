@@ -24,16 +24,23 @@ import {
 } from '@ndla/ui';
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
+import Button from '@ndla/button';
+import { Spinner } from '@ndla/editor';
 
 import NotionDialog from './NotionDialog';
 import {
   mapTagsToFilters,
   mapConceptToListItem,
-  sortConcepts,
 } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
-import { fetchConcepts, fetchConceptsBySubject, fetchTags } from './listingApi';
+import {
+  fetchConcepts,
+  fetchConcept,
+  fetchConceptsBySubject,
+  fetchConceptsByTags,
+  fetchTags,
+} from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
 
@@ -60,6 +67,12 @@ const CategoriesFilterWrapper = styled.div`
   margin-bottom: ${spacing.small};
   position: relative;
   display: inline-block;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: ${spacing.medium};
 `;
 
 const placeholderCSS = css`
@@ -95,12 +108,16 @@ const categoryFilterCSS = props => css`
   }
 `;
 
-const PAGE_SIZE = 2000;
+const PAGE_SIZE = 20;
 
-const ListingPage = props => {
+const ListingPage = ({ t, locale, location }) => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState(new Map());
+  const [tags, setTags] = useState([]);
+  const [page, setPage] = useState(1);
+  const [showButton, setShowButton] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentListFilters, setCurrentListFilters] = useState([]);
   const [selectedListFilter, setSelectedListFilter] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
@@ -112,32 +129,11 @@ const ListingPage = props => {
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
     filters: [],
+    concept: null,
   });
   const [md, setMd] = useState(null);
 
-  useEffect(() => {
-    fetchSubjectIds()
-      .then(subjectIds => Promise.all(subjectIds.map(id => fetchSubject(id))))
-      .then(subjects => setSubjects(subjects));
-    fetchTags(props.locale).then(tags => setFilters(mapTagsToFilters(tags)));
-    setSelectedListFilter(queryParams.filters?.[0]);
-  }, []);
-
-  useEffect(() => {
-    if (queryParams.subjects.length > 0) {
-      fetchConceptsBySubject(
-        queryParams.subjects,
-        PAGE_SIZE,
-        props.locale,
-      ).then(concepts =>
-        setConcepts(sortConcepts(concepts.results, props.locale)),
-      );
-    } else {
-      fetchConcepts(PAGE_SIZE, props.locale).then(concepts =>
-        setConcepts(sortConcepts(concepts.results, props.locale)),
-      );
-    }
-  }, [queryParams.subjects]);
+  let storedConcepts = [];
 
   useEffect(() => {
     if (md === null) {
@@ -146,6 +142,96 @@ const ListingPage = props => {
       setMd(markdown);
     }
   }, []);
+
+  useEffect(() => {
+    getInitialData();
+    setSelectedListFilter(queryParams.filters?.[0]);
+  }, []);
+
+  useEffect(() => {
+    getConcepts(1);
+  }, [queryParams.subjects, queryParams.filters, searchValue, tags]);
+
+  useEffect(() => {
+    getConceptFromQuery();
+  }, [queryParams.concept]);
+
+  const getInitialData = async () => {
+    const subjectIds = await fetchSubjectIds();
+    const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
+    setSubjects(subjects);
+    const tags = await fetchTags(locale);
+    setTags(tags);
+    setFilters(mapTagsToFilters(tags));
+  };
+
+  const getConcepts = async page => {
+    const replace = page === 1;
+    setLoading(!replace);
+    if (queryParams.subjects.length) {
+      const concepts = await fetchConceptsBySubject(
+        searchValue,
+        queryParams.subjects,
+        page,
+        PAGE_SIZE,
+        locale
+      );
+      handleSetConcepts(concepts.results, replace);
+    } else if (queryParams.filters.length) {
+      const concepts = await fetchConceptsByTags(
+        searchValue,
+        tags.filter(tag =>
+          queryParams.filters.every(filter => tag.includes(filter)),
+        ),
+        page,
+        PAGE_SIZE,
+      );
+      handleSetConcepts(concepts.results, replace);
+    } else if (!queryParams.concept) {
+      const concepts = await fetchConcepts(searchValue, page, 6 * PAGE_SIZE);
+      handleSetConcepts(concepts.results, replace);
+    }
+    setLoading(false);
+  };
+
+  const getConceptFromQuery = async () => {
+    if (queryParams.concept) {
+      if (concepts.length) {
+        const selectedConcept = concepts.find(
+          concept => concept.id.toString() === queryParams.concept,
+        );
+        setSelectedItem(mapConceptToListItem(selectedConcept));
+      } else {
+        const selectedConcept = await fetchConcept(queryParams.concept);
+        handleSetConcepts([selectedConcept], false);
+        setSelectedItem(mapConceptToListItem(selectedConcept));
+        setPage(0);
+      }
+    }
+  };
+
+  const handleSetConcepts = (newConcepts, replace) => {
+    if (newConcepts.length) {
+      setShowButton(true);
+      const filteredConcepts = newConcepts.filter(
+        concept => concept.subjectIds,
+      );
+      const mergedConcepts = [
+        ...storedConcepts,
+        ...filteredConcepts.slice(0, PAGE_SIZE),
+      ];
+      if (replace) {
+        setConcepts(mergedConcepts);
+        setPage(1);
+        storedConcepts = [];
+      } else {
+        setConcepts([...concepts, ...mergedConcepts]);
+      }
+      storedConcepts = filteredConcepts.slice(PAGE_SIZE);
+    } else {
+      setShowButton(false);
+    }
+  };
 
   const handleChangeSubject = values => {
     setQueryParams({
@@ -160,6 +246,18 @@ const ListingPage = props => {
       ...queryParams,
       filters: values,
     });
+  };
+
+  const handleSelectItem = value => {
+    setSelectedItem(value);
+    setQueryParams({
+      ...queryParams,
+      concept: value?.id,
+    });
+  };
+
+  const onConceptSearch = async value => {
+    setSearchValue(value);
   };
 
   const handleChangeListFilter = value => {
@@ -198,7 +296,7 @@ const ListingPage = props => {
     const {
       target: { value },
     } = e;
-    const filteredFilters = listFilters.filter(item =>
+    const filteredFilters = Array.from(filters.keys()).filter(item =>
       item.toLowerCase().startsWith(value.toLowerCase()),
     );
     setFilterSearchValue(value);
@@ -207,32 +305,26 @@ const ListingPage = props => {
 
   const onFilterSearchFocus = () => {
     setFilterListOpen(true);
-    setCurrentListFilters(listFilters);
+    setCurrentListFilters(Array.from(filters.keys()));
+  };
+
+  const onLoadMoreClick = () => {
+    getConcepts(page + 1);
+    setPage(page + 1);
   };
 
   const filterItems = listItems => {
     let filteredItems = listItems;
-
-    // Filters
     if (queryParams.filters.length) {
       filteredItems = filteredItems.filter(item =>
         queryParams.filters.every(filter => item.filters.includes(filter)),
       );
     }
-
-    // Search
-    if (searchValue.length > 0) {
-      const searchValueLowercase = searchValue.toLowerCase();
-      filteredItems = filteredItems.filter(item =>
-        item.name.toLowerCase().startsWith(searchValueLowercase),
-      );
-    }
-
     return filteredItems;
   };
 
   const getFilters = () => {
-    return selectedListFilter
+    return filters.get(selectedListFilter)
       ? [
           {
             filterValues: queryParams.filters,
@@ -261,10 +353,6 @@ const ListingPage = props => {
       : [];
   };
 
-  if (!concepts.length || !subjects.length) {
-    return null;
-  }
-
   const renderMarkdown = text => {
     const rendered = md.render(text);
     return (
@@ -274,19 +362,9 @@ const ListingPage = props => {
     );
   };
 
-  // Filtered list items, concepts without subjects are excluded
   const listItems = filterItems(
-    concepts
-      .filter(concept => concept.subjectIds)
-      .map(concept =>
-        mapConceptToListItem(
-          concept,
-          subjects.find(subject => concept.subjectIds.includes(subject.id)),
-        ),
-      ),
+    concepts.map(concept => mapConceptToListItem(concept)),
   );
-
-  const { t } = props;
 
   const categoryFilterInputProps = {
     value: filterSearchValue,
@@ -295,8 +373,6 @@ const ListingPage = props => {
     onClick: onFilterSearchFocus,
     placeholder: t(`listview.filters.category.openFilter`),
   };
-
-  const listFilters = Array.from(filters.keys());
 
   return (
     <OneColumn>
@@ -325,8 +401,8 @@ const ListingPage = props => {
         <StyledLanguageSelector>
           <MastheadItem>
             <LanguageSelector
-              options={getLocaleUrls(props.locale, props.location)}
-              currentLanguage={props.locale}
+              options={getLocaleUrls(locale, location)}
+              currentLanguage={locale}
             />
           </MastheadItem>
         </StyledLanguageSelector>
@@ -380,20 +456,32 @@ const ListingPage = props => {
         viewStyle={viewStyle}
         onChangedViewStyle={e => setViewStyle(e.viewStyle)}
         searchValue={searchValue}
-        onChangedSearchValue={e => setSearchValue(e.target.value)}
+        onChangedSearchValue={e => onConceptSearch(e.target.value)}
         selectedItem={
           selectedItem ? (
             <NotionDialog
               item={selectedItem}
-              handleClose={setSelectedItem}
+              subjects={subjects}
+              handleClose={handleSelectItem}
               renderMarkdown={renderMarkdown}
             />
           ) : null
         }
-        onSelectItem={setSelectedItem}
+        onSelectItem={handleSelectItem}
         renderMarkdown={renderMarkdown}
         filters={getFilters()}
       />
+      {showButton && (
+        <ButtonWrapper>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <Button onClick={onLoadMoreClick}>
+              {t('listingPage.loadMore')}
+            </Button>
+          )}
+        </ButtonWrapper>
+      )}
     </OneColumn>
   );
 };

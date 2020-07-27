@@ -37,28 +37,17 @@ function mapTagsToList(tags) {
   return list;
 }
 
-export function mapConceptToListItem(concept, subject) {
+export function mapConceptToListItem(concept) {
   return {
     id: concept.id.toString(),
     name: concept.title.title,
     description: concept.content.content,
     image: concept.metaImage.url,
-    subject: [
-      {
-        title: subject.name,
-        value: subject.id,
-      },
-    ],
+    subjectIds: concept.subjectIds,
     category: {
       title: '',
       value: '',
     },
     filters: concept.tags ? mapTagsToList(concept.tags.tags) : [],
   };
-}
-
-export function sortConcepts(concepts, locale) {
-  return concepts.sort((a, b) =>
-    a.title.title.localeCompare(b.title.title, locale),
-  );
 }
