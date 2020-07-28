@@ -113,7 +113,6 @@ const ListingPage = ({ t, locale, location }) => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState(new Map());
-  const [tags, setTags] = useState([]);
   const [page, setPage] = useState(1);
   const [showButton, setShowButton] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -132,8 +131,6 @@ const ListingPage = ({ t, locale, location }) => {
   });
   const [md, setMd] = useState(null);
 
-  let storedConcepts = [];
-
   useEffect(() => {
     if (md === null) {
       const markdown = new Remarkable();
@@ -149,7 +146,7 @@ const ListingPage = ({ t, locale, location }) => {
 
   useEffect(() => {
     getConcepts(1);
-  }, [queryParams.subjects, queryParams.filters, tags]);
+  }, [queryParams.subjects, queryParams.filters]);
 
   useEffect(() => {
     getConceptFromQuery();
@@ -160,7 +157,6 @@ const ListingPage = ({ t, locale, location }) => {
     const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
     setSubjects(subjects);
     const tags = await fetchTags(locale);
-    setTags(tags);
     setFilters(mapTagsToFilters(tags));
   };
 
@@ -176,8 +172,17 @@ const ListingPage = ({ t, locale, location }) => {
       );
       handleSetConcepts(concepts.results, replace);
     } else if (!queryParams.concept) {
-      const concepts = await fetchConcepts(page, 6 * PAGE_SIZE, locale);
-      handleSetConcepts(concepts.results, replace);
+      let conceptArray = [];
+      let currentPage = page;
+      while (conceptArray.length < PAGE_SIZE) {
+        const concepts = await fetchConcepts(currentPage, PAGE_SIZE, locale);
+        if (!concepts.results.length) break;
+        const filteredConcepts = concepts.results.filter(concept => concept.subjectIds);
+        conceptArray = [...conceptArray, ...filteredConcepts];
+        currentPage++;
+      }
+      setPage(currentPage);
+      handleSetConcepts(conceptArray.slice(0, PAGE_SIZE), replace);
     }
     setLoading(false);
   };
@@ -201,21 +206,11 @@ const ListingPage = ({ t, locale, location }) => {
   const handleSetConcepts = (newConcepts, replace) => {
     if (newConcepts.length) {
       setShowButton(true);
-      const filteredConcepts = newConcepts.filter(
-        concept => concept.subjectIds,
-      );
-      const mergedConcepts = [
-        ...storedConcepts,
-        ...filteredConcepts.slice(0, PAGE_SIZE),
-      ];
       if (replace) {
-        setConcepts(mergedConcepts);
-        setPage(1);
-        storedConcepts = [];
+        setConcepts(newConcepts);
       } else {
-        setConcepts([...concepts, ...mergedConcepts]);
+        setConcepts([...concepts, ...newConcepts]);
       }
-      storedConcepts = filteredConcepts.slice(PAGE_SIZE);
     } else {
       setShowButton(false);
     }
@@ -227,6 +222,7 @@ const ListingPage = ({ t, locale, location }) => {
       filters: [],
     });
     setSelectedListFilter(null);
+    setPage(1);
   };
 
   const handleChangeFilters = (key, values) => {
@@ -234,6 +230,7 @@ const ListingPage = ({ t, locale, location }) => {
       ...queryParams,
       filters: values,
     });
+    setPage(1);
   };
 
   const handleSelectItem = value => {
