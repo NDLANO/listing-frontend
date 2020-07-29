@@ -39,6 +39,7 @@ import {
   fetchConcept,
   fetchConceptsBySubject,
   fetchTags,
+  fetchConceptsByTags
 } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
@@ -113,6 +114,7 @@ const ListingPage = ({ t, locale, location }) => {
   const [concepts, setConcepts] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState(new Map());
+  const [tags, setTags] = useState([]);
   const [page, setPage] = useState(1);
   const [showButton, setShowButton] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -157,6 +159,7 @@ const ListingPage = ({ t, locale, location }) => {
     const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
     setSubjects(subjects);
     const tags = await fetchTags(locale);
+    setTags(tags);
     setFilters(mapTagsToFilters(tags));
   };
 
@@ -166,6 +169,16 @@ const ListingPage = ({ t, locale, location }) => {
     if (queryParams.subjects.length) {
       const concepts = await fetchConceptsBySubject(
         queryParams.subjects,
+        page,
+        PAGE_SIZE,
+        locale
+      );
+      handleSetConcepts(concepts.results, replace);
+    } else if (queryParams.filters.length) {
+      const concepts = await fetchConceptsByTags(
+        tags.filter(tag =>
+          queryParams.filters.every(filter => tag.includes(filter)),
+        ),
         page,
         PAGE_SIZE,
         locale
@@ -252,6 +265,7 @@ const ListingPage = ({ t, locale, location }) => {
     });
     setFilterListOpen(false);
     setSelectedListFilter(value);
+    setPage(1);
   };
 
   const handleStateChangeListFilter = changes => {

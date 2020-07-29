@@ -23,6 +23,12 @@ export const fetchConceptsBySubject = (subjectId, page, pageSize, language) =>
   fetch(
     `${baseListingUrl}?sort=title&subjects=${subjectId}&page=${page}&page-size=${pageSize}&language=${language}`,
   ).then(resolveJsonOrRejectWithError);
+
+  export const fetchConceptsByTags = (tags, page, pageSize, language) =>
+  fetch(
+    `${baseListingUrl}?sort=title&tags=${tags}&page=${page}&page-size=${pageSize}&language=${language}`,
+  ).then(resolveJsonOrRejectWithError);
+
 export const fetchTags = language =>
   fetch(`${baseListingUrl}/tags/?language=${language}`).then(
     resolveJsonOrRejectWithError,
