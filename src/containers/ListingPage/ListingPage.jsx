@@ -220,7 +220,7 @@ const ListingPage = ({ t, locale, location }) => {
 
   const handleSetConcepts = (newConcepts, replace) => {
     if (newConcepts.length) {
-      setShowButton(true);
+      setShowButton(newConcepts.length === PAGE_SIZE);
       if (replace) {
         setConcepts(newConcepts);
       } else {
