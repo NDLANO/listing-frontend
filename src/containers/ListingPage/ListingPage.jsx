@@ -39,7 +39,7 @@ import {
   fetchConcept,
   fetchConceptsBySubject,
   fetchTags,
-  fetchConceptsByTags
+  fetchConceptsByTags,
 } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
@@ -173,7 +173,7 @@ const ListingPage = ({ t, locale, location }) => {
         queryParams.subjects,
         page,
         PAGE_SIZE,
-        locale
+        locale,
       );
       handleSetConcepts(concepts.results, replace);
     } else if (queryParams.filters.length) {
@@ -183,7 +183,7 @@ const ListingPage = ({ t, locale, location }) => {
         ),
         page,
         PAGE_SIZE,
-        locale
+        locale,
       );
       handleSetConcepts(concepts.results, replace);
     } else if (!queryParams.concept) {
@@ -192,7 +192,9 @@ const ListingPage = ({ t, locale, location }) => {
       while (conceptArray.length < PAGE_SIZE) {
         const concepts = await fetchConcepts(currentPage, PAGE_SIZE, locale);
         if (!concepts.results.length) break;
-        const filteredConcepts = concepts.results.filter(concept => concept.subjectIds);
+        const filteredConcepts = concepts.results.filter(
+          concept => concept.subjectIds,
+        );
         conceptArray = [...conceptArray, ...filteredConcepts];
         currentPage++;
       }
