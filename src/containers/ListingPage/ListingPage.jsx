@@ -147,8 +147,10 @@ const ListingPage = ({ t, locale, location }) => {
   }, []);
 
   useEffect(() => {
-    getConcepts(1);
-  }, [queryParams.subjects, queryParams.filters]);
+    if (tags.length) {
+      getConcepts(1);
+    }
+  }, [queryParams.subjects, queryParams.filters, tags]);
 
   useEffect(() => {
     getConceptFromQuery();
