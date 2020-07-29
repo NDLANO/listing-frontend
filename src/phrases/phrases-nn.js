@@ -27,6 +27,7 @@ const phrases = {
   listingPage: {
     or: 'eller',
     noFilters: 'Har ikkje noko å filtrera',
+    loadMore: 'Last meir',
   },
   logo: {
     altText: 'Nasjonal digital læringsarena',
