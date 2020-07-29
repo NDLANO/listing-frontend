@@ -258,6 +258,7 @@ const ListingPage = ({ t, locale, location }) => {
 
   const onConceptSearch = async value => {
     setSearchValue(value);
+    setShowButton(!value);
   };
 
   const handleChangeListFilter = value => {
