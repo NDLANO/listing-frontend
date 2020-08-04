@@ -1734,6 +1734,14 @@
     "@ndla/core" "^0.6.23"
     "@ndla/icons" "^0.6.22"
 
+"@ndla/button@^0.3.28":
+  version "0.3.28"
+  resolved "https://registry.yarnpkg.com/@ndla/button/-/button-0.3.28.tgz#1ecf650528f2ae1288fb0addb3f5a4c5d544624e"
+  integrity sha512-2vhG/2wl5MqamLVEAUNGnUlTk92bYSi+1sftbO8tQECA7g/fpuEhTGCrSHfiKIdA/re6ETG6l9WMlD+p2+hLSQ==
+  dependencies:
+    "@ndla/core" "^0.6.24"
+    "@ndla/icons" "^0.6.23"
+
 "@ndla/carousel@^0.3.22":
   version "0.3.22"
   resolved "https://registry.yarnpkg.com/@ndla/carousel/-/carousel-0.3.22.tgz#4d47c5a9dcb1e7af5f549a56b728e0ba7d3cea95"
@@ -1752,13 +1760,23 @@
     polished "^2.3.3"
     sass-mq "^5.0.0"
 
-"@ndla/editor@^0.7.12":
-  version "0.7.12"
-  resolved "https://registry.yarnpkg.com/@ndla/editor/-/editor-0.7.12.tgz#06300cc7e0eeb027f28cd01323dd6adf87a5169f"
-  integrity sha512-Ykm30PxTCvDv5hqqW9MuyHOvou+e6mbq+LpHXA55U9SxcUJbaAscw0374jIazf7Qh9jOOFmAzsY4jD63qHfiEQ==
+"@ndla/core@^0.6.24":
+  version "0.6.24"
+  resolved "https://registry.yarnpkg.com/@ndla/core/-/core-0.6.24.tgz#ce942933beeb4316bf315859c652fad090cb5d78"
+  integrity sha512-WVkirkjPywujL1fCbnn3vCfNVlbPMSn5o6P4eSIzdwwQ82hBWUmd/uc2IW81DYdJ9Yxz+/bbRLAs/nV6dXid5w==
   dependencies:
-    "@ndla/core" "^0.6.23"
-    "@ndla/icons" "^0.6.22"
+    facepaint "^1.2.1"
+    inuitcss "6.0.0-beta.4"
+    polished "^2.3.3"
+    sass-mq "^5.0.0"
+
+"@ndla/editor@^0.7.13":
+  version "0.7.13"
+  resolved "https://registry.yarnpkg.com/@ndla/editor/-/editor-0.7.13.tgz#e1595e5a6925e4c101b16ebe009e6c5c09ee952f"
+  integrity sha512-M31ImWz9dzTeeYgzUgwQ3fOFiuwWm89NJP1hxR5YJXyM+/CgEmGf3CYZgZ4plylSXXt9UiMy/LMPDqZCGOwwkg==
+  dependencies:
+    "@ndla/core" "^0.6.24"
+    "@ndla/icons" "^0.6.23"
     "@types/react-beautiful-dnd" "^11.0.3"
     react-beautiful-dnd "^12.0.0"
 
@@ -1793,6 +1811,11 @@
   version "0.6.22"
   resolved "https://registry.yarnpkg.com/@ndla/icons/-/icons-0.6.22.tgz#0e5b44d6982f2e7541360e9e01443eab966378da"
   integrity sha512-9Y9Nl4Vw+mwz+LhQCJRWwWcQYAu2HuK/6ZTY5LUBZEQrrcI/5tbru2W9cadcdGtOh9++chJ80tTAIyM8wbB9rA==
+
+"@ndla/icons@^0.6.23":
+  version "0.6.23"
+  resolved "https://registry.yarnpkg.com/@ndla/icons/-/icons-0.6.23.tgz#e66d1c2129a5a0d34ca33a804dce85a1db7b76ec"
+  integrity sha512-KiwHxX00P9/DPbXtBJSjqQhWHJosDCkgo544wixO+vk0f3XhH6Reqnwtf53zOqPcao1IWhHwGBsYFKQ19PXaHQ==
 
 "@ndla/licenses@^0.6.26":
   version "0.6.26"
