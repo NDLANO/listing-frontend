@@ -471,6 +471,7 @@ const ListingPage = ({ t, locale, location }) => {
           selectedItem ? (
             <NotionDialog
               item={selectedItem}
+              locale={locale}
               subjects={subjects}
               handleClose={handleSelectItem}
               renderMarkdown={renderMarkdown}
