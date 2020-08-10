@@ -39,7 +39,14 @@ const initialImage = {
   origin: '',
 };
 
-const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
+const NotionDialog = ({
+  t,
+  renderMarkdown,
+  item,
+  locale,
+  subjects,
+  handleClose,
+}) => {
   const [articleId, setArticleId] = useState(undefined);
   const [articleTitle, setArticleTitle] = useState('');
   const [concept, setConcept] = useState(initialConcept);
@@ -55,7 +62,7 @@ const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
   }, [articleId]);
 
   const getConcept = async () => {
-    const concept = await fetchConcept(item.id);
+    const concept = await fetchConcept(item.id, locale);
     setArticleId(concept.articleId);
     setConcept({
       title: concept.title?.title,
@@ -72,7 +79,7 @@ const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
   const getImage = async () => {
     const imageId = item.image.split('/').pop();
     if (imageId.length) {
-      const image = await fetchImage(imageId);
+      const image = await fetchImage(imageId, locale);
       setImage({
         title: image.title?.title,
         image: {
@@ -91,7 +98,7 @@ const NotionDialog = ({ t, renderMarkdown, item, subjects, handleClose }) => {
 
   const getArticle = async () => {
     if (articleId) {
-      const article = await fetchArticle(articleId);
+      const article = await fetchArticle(articleId, locale);
       setArticleTitle(article.title?.title);
     }
   };
@@ -174,6 +181,7 @@ NotionDialog.propTypes = {
     image: PropTypes.string,
     subjectIds: PropTypes.arrayOf(PropTypes.string),
   }),
+  locale: PropTypes.string,
   subjects: PropTypes.arrayOf(PropTypes.object),
   handleClose: PropTypes.func.isRequired,
   renderMarkdown: PropTypes.func.isRequired,

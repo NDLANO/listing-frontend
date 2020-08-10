@@ -17,25 +17,31 @@ const baseArticleUrl = apiResourceUrl('/article-api/v2/articles');
 
 export const fetchConcepts = (page, pageSize, language) =>
   fetch(
-    `${baseListingUrl}?sort=title&page=${page}&page-size=${pageSize}&language=${language}`,
+    `${baseListingUrl}?sort=title&page=${page}&page-size=${pageSize}&language=${language}&fallback=true`,
   ).then(resolveJsonOrRejectWithError);
 export const fetchConceptsBySubject = (subjectId, page, pageSize, language) =>
   fetch(
-    `${baseListingUrl}?sort=title&subjects=${subjectId}&page=${page}&page-size=${pageSize}&language=${language}`,
+    `${baseListingUrl}?sort=title&subjects=${subjectId}&page=${page}&page-size=${pageSize}&language=${language}&fallback=true`,
   ).then(resolveJsonOrRejectWithError);
 
 export const fetchConceptsByTags = (tags, page, pageSize, language) =>
   fetch(
-    `${baseListingUrl}?sort=title&tags=${tags}&page=${page}&page-size=${pageSize}&language=${language}`,
+    `${baseListingUrl}?sort=title&tags=${tags}&page=${page}&page-size=${pageSize}&language=${language}&fallback=true`,
   ).then(resolveJsonOrRejectWithError);
 
 export const fetchTags = language =>
   fetch(`${baseListingUrl}/tags/?language=${language}`).then(
     resolveJsonOrRejectWithError,
   );
-export const fetchConcept = conceptId =>
-  fetch(`${baseListingUrl}/${conceptId}`).then(resolveJsonOrRejectWithError);
-export const fetchImage = imageId =>
-  fetch(`${baseImageUrl}/${imageId}`).then(resolveJsonOrRejectWithError);
-export const fetchArticle = articleId =>
-  fetch(`${baseArticleUrl}/${articleId}`).then(resolveJsonOrRejectWithError);
+export const fetchConcept = (conceptId, language) =>
+  fetch(
+    `${baseListingUrl}/${conceptId}?language=${language}&fallback=true`,
+  ).then(resolveJsonOrRejectWithError);
+export const fetchImage = (imageId, language) =>
+  fetch(`${baseImageUrl}/${imageId}?language=${language}&fallback=true`).then(
+    resolveJsonOrRejectWithError,
+  );
+export const fetchArticle = (articleId, language) =>
+  fetch(
+    `${baseArticleUrl}/${articleId}?language=${language}&fallback=true`,
+  ).then(resolveJsonOrRejectWithError);
