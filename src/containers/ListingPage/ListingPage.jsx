@@ -35,7 +35,6 @@ import {
 import useQueryParameter from '../../util/useQueryParameter';
 import { getLocale } from '../Locale/localeSelectors';
 import {
-  fetchConcepts,
   fetchConcept,
   fetchConceptsBySubject,
   fetchTags,
@@ -112,6 +111,7 @@ const PAGE_SIZE = 100;
 
 const ListingPage = ({ t, locale, location }) => {
   const [concepts, setConcepts] = useState([]);
+  const [subjectIds, setSubjectIds] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState(new Map());
   const [tags, setTags] = useState([]);
@@ -147,7 +147,7 @@ const ListingPage = ({ t, locale, location }) => {
   }, []);
 
   useEffect(() => {
-    if (tags.length) {
+    if (tags.length && subjectIds.length) {
       getConcepts(1);
     }
   }, [queryParams.subjects, queryParams.filters, tags]);
@@ -158,6 +158,7 @@ const ListingPage = ({ t, locale, location }) => {
 
   const getInitialData = async () => {
     const subjectIds = await fetchSubjectIds();
+    setSubjectIds(subjectIds);
     const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
     setSubjects(subjects);
     const tags = await fetchTags(locale);
@@ -187,19 +188,13 @@ const ListingPage = ({ t, locale, location }) => {
       );
       handleSetConcepts(concepts.results, replace);
     } else if (!queryParams.concept) {
-      let conceptArray = [];
-      let currentPage = page;
-      while (conceptArray.length < PAGE_SIZE) {
-        const concepts = await fetchConcepts(currentPage, PAGE_SIZE, locale);
-        if (!concepts.results.length) break;
-        const filteredConcepts = concepts.results.filter(
-          concept => concept.subjectIds,
-        );
-        conceptArray = [...conceptArray, ...filteredConcepts];
-        currentPage++;
-      }
-      setPage(currentPage);
-      handleSetConcepts(conceptArray.slice(0, PAGE_SIZE), replace);
+      const concepts = await fetchConceptsBySubject(
+        subjectIds,
+        page,
+        PAGE_SIZE,
+        locale,
+      );
+      handleSetConcepts(concepts.results, replace);
     }
     setLoading(false);
   };
