@@ -408,6 +408,7 @@ const ListingPage = ({ t, locale, location }) => {
             <LanguageSelector
               options={getLocaleUrls(locale, location)}
               currentLanguage={locale}
+              alwaysVisible
             />
           </MastheadItem>
         </StyledLanguageSelector>
