@@ -1,10 +1,8 @@
 const { modifyRule } = require('razzle-config-utils');
 const webpack = require('webpack'); // eslint-disable-line import/no-extraneous-dependencies
-const addEntry = require('./razzle-add-entry-plugin');
 
 module.exports = {
-  plugins: [
-  ],
+  plugins: [],
   modify(config, { target, dev }) {
     const appConfig = config;
 
@@ -22,7 +20,7 @@ module.exports = {
 
       if (!dev) {
         appConfig.plugins.push(
-           new webpack.optimize.ModuleConcatenationPlugin(),
+          new webpack.optimize.ModuleConcatenationPlugin(),
         );
         appConfig.devtool = 'source-map';
         appConfig.performance = { hints: false };

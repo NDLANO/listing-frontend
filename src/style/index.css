@@ -6,5 +6,8 @@
  *
  */
 
- @import '~@ndla/ui/src/all.scss';
- @import '~@ndla/ui/src/main.scss';
+@import '~@ndla/core/scss/core';
+@import '~@ndla/core/scss/utilities';
+@import '~@ndla/icons/scss/icons';
+@import '~@ndla/tabs/scss/tabs';
+@import '~@ndla/ui/src/main';
