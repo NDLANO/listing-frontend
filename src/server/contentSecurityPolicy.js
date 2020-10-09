@@ -12,6 +12,7 @@ const scriptSrc = (() => {
     '*.nrk.no',
     'https://www.googletagmanager.com',
     'https://www.google-analytics.com',
+    'https://tagmanager.google.com',
     'https://www.youtube.com',
     'https://s.ytimg.com',
     'https://cdn.auth0.com',
@@ -57,6 +58,7 @@ const connectSrc = (() => {
     'https://secure.brightcove.com',
     'https://bcsecure01-a.akamaihd.net',
     'https://hlsak-a.akamaihd.net',
+    'https://www.google-analytics.com',
   ];
   if (process.env.NODE_ENV === 'development') {
     return [
@@ -79,6 +81,7 @@ export default {
       "'self'",
       "'unsafe-inline'",
       "'unsafe-eval'",
+      'https://tagmanager.google.com',
       'https://fonts.googleapis.com',
       'https://fonts.gstatic.com',
     ],
@@ -92,6 +95,8 @@ export default {
       "'self'",
       'https://*.ndla.no',
       'https://www.google-analytics.com',
+      'https://ssl.gstatic.com',
+      'https://www.gstatic.com',
       'https://stats.g.doubleclick.net',
       'http://metrics.brightcove.com',
       'https://httpsak-a.akamaihd.net',

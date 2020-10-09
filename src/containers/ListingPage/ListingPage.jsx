@@ -25,7 +25,7 @@ import {
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
 import Button from '@ndla/button';
-import { Spinner } from '@ndla/editor';
+import { Spinner } from '@ndla/ui';
 
 import NotionDialog from './NotionDialog';
 import {
