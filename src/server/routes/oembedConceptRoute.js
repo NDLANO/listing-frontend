@@ -10,6 +10,7 @@ import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status';
 import config from '../../config';
 import { fetchConcept } from '../../containers/ListingPage/listingApi';
 import { isValidListeUrl } from '../../util/listingHelpers';
+import handleError from '../../util/handleError';
 
 const getOembedObject = (req, title, html) => {
   return {
@@ -24,24 +25,17 @@ const getOembedObject = (req, title, html) => {
   };
 };
 
-const getHTMLandTitle = (id, lang) => {
-  console.log('id : lang', id, lang);
-  const concept = fetchConcept(id, lang);
+const getHTMLandTitle = async (id) => {
+  const concept = await fetchConcept(id);
+  const title = concept.title?.title;
   return {
-    title: concept.title?.title,
-    html: `<iframe aria-label="${concept.title?.title}" src="${config.ndlaListingFrontendDomain}?concept=${id}&removeRelatedContent=true" frameborder="0" allowFullscreen="" />`,
+    title: title,
+    html: `<iframe aria-label="${title}" src="${config.ndlaListingFrontendDomain}/concepts/${id}" frameborder="0" allowFullscreen="" />`,
   };
 };
 
-const getConceptId = url => {
-  if (isValidListeUrl(url)) {
-    const idAndLang = url.split('/concepts/')[1];
-    const [id, lang] = idAndLang.split('/');
-    return [id, lang];
-  } else {
-    return [undefined, undefined];
-  }
-};
+const getConceptId = url =>
+  isValidListeUrl(url) ? url.split('=')[1] : undefined;
 
 export async function oembedConceptRoute(req) {
   const { url } = req.query;
@@ -52,7 +46,7 @@ export async function oembedConceptRoute(req) {
     };
   }
 
-  const [id, lang] = getConceptId(url);
+  const id = getConceptId(url);
   if (!id) {
     return {
       status: BAD_REQUEST,
@@ -61,11 +55,10 @@ export async function oembedConceptRoute(req) {
   }
 
   try {
-    const { html, title } = getHTMLandTitle(id, lang);
+    const { html, title } = await getHTMLandTitle(id);
     return getOembedObject(req, title, html);
   } catch (error) {
-    //handleError(error);
-    console.error(error);
+    handleError(error);
     const status = error.status || INTERNAL_SERVER_ERROR;
     return {
       status,

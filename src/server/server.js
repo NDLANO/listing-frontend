@@ -13,6 +13,7 @@ import bodyParser from 'body-parser';
 import { OK, MOVED_PERMANENTLY, TEMPORARY_REDIRECT } from 'http-status';
 import config from '../config';
 import contentSecurityPolicy from './contentSecurityPolicy';
+import handleError from '../util/handleError';
 
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
@@ -68,7 +69,7 @@ async function handleRequest(req, res, route) {
     const { data, status } = await route(req);
     sendResponse(res, data, status);
   } catch (err) {
-    console.error(err);
+    handleError(err);
   }
 }
 

@@ -53,6 +53,6 @@ export function mapConceptToListItem(concept) {
 }
 
 export const isValidListeUrl = url =>
-  /(https?:\/\/)?(www\.)?liste\.?(test|staging)?\.ndla\.no\/concepts\/[0-9]+\/?(nb|nn|en)?/.test(
+  /^(https?:\/\/)?(www\.)?liste(\.?(test|staging))?\.ndla\.no\/\?concept=\d+$/.test(
     url,
   );
