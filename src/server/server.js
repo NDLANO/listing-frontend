@@ -10,6 +10,8 @@ import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
 import bodyParser from 'body-parser';
+import { OK, MOVED_PERMANENTLY, TEMPORARY_REDIRECT } from 'http-status';
+import { oembedConceptRoute } from './routes/oembedConceptRoute';
 import config from '../config';
 import contentSecurityPolicy from './contentSecurityPolicy';
 
@@ -46,9 +48,31 @@ const ndlaMiddleware = [
             action: 'allow-from',
             domain: '*://localhost',
           }
-        : undefined,
+        : undefined, // sjekk ut
   }),
 ];
+
+function sendResponse(res, data, status = OK) {
+  if (status === MOVED_PERMANENTLY || status === TEMPORARY_REDIRECT) {
+    res.writeHead(status, data);
+    res.end();
+  } else if (res.getHeader('Content-Type') === 'application/json') {
+    res.status(status).json(data);
+  } else {
+    res.status(status).send(data);
+  }
+}
+
+async function handleRequest(req, res, route) {
+  try {
+    const { data, status } = await route(req);
+    sendResponse(res, data, status);
+  } catch (err) {
+    console.error(err);
+    //handleError(err);
+    //await sendInternalServerError(req, res);
+  }
+}
 
 app.use(compression());
 app.use(ndlaMiddleware);
@@ -62,6 +86,11 @@ app.get('/robots.txt', (req, res) => {
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 200, text: 'Health check ok' });
+});
+
+app.get('/oembed', ndlaMiddleware, async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  handleRequest(req, res, oembedConceptRoute);
 });
 
 app.get('*', (req, res) => {
