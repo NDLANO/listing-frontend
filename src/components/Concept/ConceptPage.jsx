@@ -17,7 +17,7 @@ import {
   NotionDialogTags,
   NotionDialogText,
   NotionDialogWrapper,
-  NotionHeaderNoExitButton,
+  NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
 import { injectT } from '@ndla/i18n';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
@@ -245,11 +245,11 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
         </NotionDialogWrapper>
       ) : (
         <>
-          <NotionHeaderNoExitButton title={item.name} />
+          <NotionHeaderWithoutExitButton title={item.name} />
           {conceptBody}
           <CreatedBy
-            name={'Forklaring'}
-            description={' er en del av'}
+            name={t('createdBy.content')}
+            description={t('createdBy.text')}
             url={`${config.ndlaListingFrontendDomain}/?concept=${conceptId}`}
           />
         </>

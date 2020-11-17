@@ -123,6 +123,10 @@ const phrases = {
       sharing: 'Sharing arena',
     },
   },
+  createdBy: {
+    content: 'The concept',
+    text: 'is created by',
+  },
 };
 
 export default phrases;

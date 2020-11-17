@@ -153,6 +153,10 @@ const phrases = {
       close: 'Lukk',
     },
   },
+  createdBy: {
+    content: 'Forklaringen',
+    text: 'er utarbeidet av',
+  },
 };
 
 export default phrases;
