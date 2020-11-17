@@ -20,7 +20,8 @@ global.__SERVER__ = true;
 global.__DISABLE_SSR__ = config.disableSSR; // Disables server side rendering
 
 const defaultRoute = require('./routes/defaultRoute').defaultRoute;
-const oembedConceptRoute = require('./routes/oembedConceptRoute').oembedConceptRoute;
+const oembedConceptRoute = require('./routes/oembedConceptRoute')
+  .oembedConceptRoute;
 const app = express();
 
 const allowedBodyContentTypes = [

@@ -25,7 +25,7 @@ const getOembedObject = (req, title, html) => {
   };
 };
 
-const getHTMLandTitle = async (id) => {
+const getHTMLandTitle = async id => {
   const concept = await fetchConcept(id);
   const title = concept.title?.title;
   return {
