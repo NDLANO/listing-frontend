@@ -8,6 +8,9 @@
 
 import defined from 'defined';
 import config from '../config';
+import { default as createFetch } from './fetch';
+
+export const fetch = createFetch;
 
 const NDLA_API_URL = global.__SERVER__
   ? config.ndlaApiUrl

@@ -11,7 +11,6 @@ import helmet from 'helmet';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import { OK, MOVED_PERMANENTLY, TEMPORARY_REDIRECT } from 'http-status';
-import { oembedConceptRoute } from './routes/oembedConceptRoute';
 import config from '../config';
 import contentSecurityPolicy from './contentSecurityPolicy';
 
@@ -20,6 +19,7 @@ global.__SERVER__ = true;
 global.__DISABLE_SSR__ = config.disableSSR; // Disables server side rendering
 
 const defaultRoute = require('./routes/defaultRoute').defaultRoute;
+const oembedConceptRoute = require('./routes/oembedConceptRoute').oembedConceptRoute;
 const app = express();
 
 const allowedBodyContentTypes = [
@@ -48,7 +48,7 @@ const ndlaMiddleware = [
             action: 'allow-from',
             domain: '*://localhost',
           }
-        : undefined, // sjekk ut
+        : undefined,
   }),
 ];
 
@@ -69,8 +69,6 @@ async function handleRequest(req, res, route) {
     sendResponse(res, data, status);
   } catch (err) {
     console.error(err);
-    //handleError(err);
-    //await sendInternalServerError(req, res);
   }
 }
 
