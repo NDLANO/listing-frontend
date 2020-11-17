@@ -7,11 +7,13 @@
  */
 
 import React from 'react';
+import Footer from '../App/components/Footer';
 
 export default function NotFound() {
   return (
     <div>
       <h2>404 - The page cannot be found</h2>
+      <Footer />
     </div>
   );
 }
