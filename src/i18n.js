@@ -6,6 +6,7 @@
  *
  */
 
+import { messagesNB, messagesEN, messagesNN } from '@ndla/ui';
 import nb from './phrases/phrases-nb';
 import nn from './phrases/phrases-nn';
 import en from './phrases/phrases-en';
@@ -41,17 +42,17 @@ export const formatNestedMessages = (
 const NB = {
   name: 'Bokmål',
   abbreviation: 'nb',
-  messages: formatNestedMessages(nb),
+  messages: formatNestedMessages({ ...messagesNB, ...nb }),
 };
 const NN = {
   name: 'Nynorsk',
   abbreviation: 'nn',
-  messages: formatNestedMessages(nn),
+  messages: formatNestedMessages({ ...messagesNN, ...nn }),
 };
 const EN = {
   name: 'English',
   abbreviation: 'en',
-  messages: formatNestedMessages(en),
+  messages: formatNestedMessages({ ...messagesEN, ...en }),
 };
 
 export const appLocales = [NB, NN, EN];
