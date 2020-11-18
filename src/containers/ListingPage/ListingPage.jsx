@@ -39,6 +39,7 @@ import {
   fetchConceptsBySubject,
   fetchTags,
   fetchConceptsByTags,
+  fetchConcepts,
 } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
@@ -166,6 +167,34 @@ const ListingPage = ({ t, locale, location }) => {
     setFilters(mapTagsToFilters(tags));
   };
 
+  const useDebounce = (val, delay) => {
+    const [debouncedVal, setDebouncedVal] = useState(val);
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedVal(val);
+      }, delay);
+      return () => clearTimeout(handler);
+    }, [val, delay]);
+    return debouncedVal;
+  };
+
+  const debouncedSearchVal = useDebounce(searchValue, 200);
+
+  const fetchConceptsBySearch = async val => {
+    const concepts = await fetchConcepts(1, PAGE_SIZE, locale, val);
+    console.log(val);
+    console.log(concepts);
+    handleSetConcepts(concepts.results, true);
+  };
+
+  useEffect(() => {
+    if (debouncedSearchVal) {
+      fetchConceptsBySearch(debouncedSearchVal);
+    } else {
+      getConcepts(page);
+    }
+  }, [debouncedSearchVal]);
+
   const getConcepts = async page => {
     const replace = page === 1;
     setLoading(!replace);
@@ -175,6 +204,7 @@ const ListingPage = ({ t, locale, location }) => {
         page,
         PAGE_SIZE,
         locale,
+        debouncedSearchVal,
       );
       handleSetConcepts(concepts.results, replace);
     } else if (queryParams.filters.length) {
@@ -185,6 +215,7 @@ const ListingPage = ({ t, locale, location }) => {
         page,
         PAGE_SIZE,
         locale,
+        debouncedSearchVal,
       );
       handleSetConcepts(concepts.results, replace);
     } else if (!queryParams.concept) {
@@ -193,6 +224,7 @@ const ListingPage = ({ t, locale, location }) => {
         page,
         PAGE_SIZE,
         locale,
+        debouncedSearchVal,
       );
       handleSetConcepts(concepts.results, replace);
     }
@@ -317,12 +349,6 @@ const ListingPage = ({ t, locale, location }) => {
     if (queryParams.filters.length) {
       filteredItems = filteredItems.filter(item =>
         queryParams.filters.every(filter => item.filters.includes(filter)),
-      );
-    }
-    if (searchValue.length > 0) {
-      const searchValueLowercase = searchValue.toLowerCase();
-      filteredItems = filteredItems.filter(item =>
-        item.name.toLowerCase().startsWith(searchValueLowercase),
       );
     }
     return filteredItems;
