@@ -169,12 +169,12 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
       activateButton={<Button link>{t('article.useContent')}</Button>}
       size="medium">
       {onClose => (
-        <div>
+        <>
           <ModalHeader modifier="no-bottom-padding">
-            <ModalCloseButton onClick={onClose} title="lukk" />
+            <ModalCloseButton onClick={onClose} title={t('modal.closeModal')} />
           </ModalHeader>
           <ModalBody>
-            <div>
+            <>
               <h1>{t('license.heading')}</h1>
               <Tabs
                 singleLine
@@ -193,9 +193,9 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
                     : []),
                 ]}
               />
-            </div>
+            </>
           </ModalBody>
-        </div>
+        </>
       )}
     </Modal>
   );
@@ -233,11 +233,13 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
     </>
   );
 
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : inModal ? (
+      {inModal ? (
         <NotionDialogWrapper
           title={item.name}
           closeCallback={() => handleClose(null)}>

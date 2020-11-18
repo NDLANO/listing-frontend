@@ -154,8 +154,8 @@ const phrases = {
     },
   },
   createdBy: {
-    content: 'Forklaringen',
-    text: 'er utarbeidet av',
+    content: 'Forklaringa',
+    text: 'er utarbeida av',
   },
 };
 

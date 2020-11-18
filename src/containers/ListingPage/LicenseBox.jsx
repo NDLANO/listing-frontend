@@ -22,7 +22,7 @@ import { metaTypes } from '@ndla/licenses';
 import Button, { CopyButton } from '@ndla/button';
 
 const getLicenseItems = (entity, t) => {
-  let licenseItems = [];
+  const licenseItems = [];
 
   entity.title &&
     licenseItems.push({
@@ -49,7 +49,7 @@ const getLicenseItems = (entity, t) => {
 };
 
 export const TextContent = ({ t, concept }) => {
-  let licenseItems = getLicenseItems(concept, t);
+  const licenseItems = getLicenseItems(concept, t);
 
   concept.created &&
     licenseItems.push({
@@ -59,7 +59,7 @@ export const TextContent = ({ t, concept }) => {
     });
 
   return (
-    <div>
+    <>
       <div className="u-introduction">
         <h2>{t('license.text.heading')}</h2>
         <p>{t('license.text.description')}</p>
@@ -89,7 +89,7 @@ export const TextContent = ({ t, concept }) => {
           </MediaListItemBody>
         </MediaListItem>
       </MediaList>
-    </div>
+    </>
   );
 };
 
@@ -107,7 +107,8 @@ TextContent.propTypes = {
 };
 
 export const ImageContent = ({ t, image }) => {
-  let licenseItems = getLicenseItems(image, t);
+  const licenseItems = getLicenseItems(image, t);
+
   image.created &&
     licenseItems.push({
       label: t('license.source'),
@@ -116,7 +117,7 @@ export const ImageContent = ({ t, image }) => {
     });
 
   return (
-    <div>
+    <>
       <div className="u-introduction">
         <h2>{t('license.images.heading')}</h2>
         <p>{t('license.images.description')}</p>
@@ -146,7 +147,7 @@ export const ImageContent = ({ t, image }) => {
           </MediaListItemBody>
         </MediaListItem>
       </MediaList>
-    </div>
+    </>
   );
 };
 
