@@ -53,15 +53,17 @@ export function resolveJsonOrRejectWithError(res) {
     if (res.ok) {
       return res.status === 204 ? resolve() : resolve(res.json());
     }
-    return res
+    res
       .json()
-      .then(json =>
-        createErrorPayload(
-          res.status,
-          defined(json.message, res.statusText),
-          json,
-        ),
-      )
+      .then(json => {
+        reject(
+          createErrorPayload(
+            res.status,
+            defined(json.message, res.statusText),
+            json,
+          ),
+        );
+      })
       .catch(reject);
   });
 }
