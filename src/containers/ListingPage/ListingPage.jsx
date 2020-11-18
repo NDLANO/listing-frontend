@@ -182,8 +182,6 @@ const ListingPage = ({ t, locale, location }) => {
 
   const fetchConceptsBySearch = async val => {
     const concepts = await fetchConcepts(1, PAGE_SIZE, locale, val);
-    console.log(val);
-    console.log(concepts);
     handleSetConcepts(concepts.results, true);
   };
 
