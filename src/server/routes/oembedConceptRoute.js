@@ -34,8 +34,10 @@ const getHTMLandTitle = async id => {
   };
 };
 
-const getConceptId = url =>
-  isValidListeUrl(url) ? url.split('=')[1] : undefined;
+const getConceptId = url => {
+  const decodedUrl = decodeURIComponent(url);
+  return isValidListeUrl(decodedUrl) ? decodedUrl.split('=')[1] : undefined;
+};
 
 export async function oembedConceptRoute(req) {
   const { url } = req.query;
