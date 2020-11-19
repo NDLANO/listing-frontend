@@ -180,21 +180,12 @@ const ListingPage = ({ t, locale, location }) => {
 
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
-  const fetchConceptsBySearch = async val => {
-    const concepts = await fetchConcepts(1, PAGE_SIZE, locale, val);
-    handleSetConcepts(concepts.results, true);
-  };
-
   useEffect(() => {
-    if (debouncedSearchVal) {
-      fetchConceptsBySearch(debouncedSearchVal);
-    } else {
-      getConcepts(page);
-    }
+    if (debouncedSearchVal) getConcepts(page);
   }, [debouncedSearchVal]);
 
   const getConcepts = async page => {
-    const replace = page === 1;
+    const replace = page === 1 || !debouncedSearchVal.length;
     setLoading(!replace);
     if (queryParams.subjects.length) {
       const concepts = await fetchConceptsBySubject(
@@ -217,8 +208,7 @@ const ListingPage = ({ t, locale, location }) => {
       );
       handleSetConcepts(concepts.results, replace);
     } else if (!queryParams.concept) {
-      const concepts = await fetchConceptsBySubject(
-        subjectIds,
+      const concepts = await fetchConcepts(
         page,
         PAGE_SIZE,
         locale,
