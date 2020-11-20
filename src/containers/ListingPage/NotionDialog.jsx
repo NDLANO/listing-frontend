@@ -113,11 +113,13 @@ const NotionDialog = ({
         ) : null}
         <NotionDialogText>{renderMarkdown(item.description)}</NotionDialogText>
       </NotionDialogContent>
-      <NotionDialogTags
-        tags={subjects
-          .filter(subject => item.subjectIds.includes(subject.id))
-          .map(s => s.name)}
-      />
+      {item.subjectIds && (
+        <NotionDialogTags
+          tags={subjects
+            .filter(subject => item.subjectIds.includes(subject.id))
+            .map(s => s.name)}
+        />
+      )}
       {articleId && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}
