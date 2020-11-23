@@ -207,7 +207,7 @@ const ListingPage = ({ t, locale, location }) => {
         debouncedSearchVal,
       );
       handleSetConcepts(concepts.results, replace);
-    } else if (!queryParams.concept) {
+    } else {
       const concepts = await fetchConcepts(
         page,
         PAGE_SIZE,
@@ -228,9 +228,9 @@ const ListingPage = ({ t, locale, location }) => {
         setSelectedItem(mapConceptToListItem(selectedConcept));
       } else {
         const selectedConcept = await fetchConcept(queryParams.concept);
-        handleSetConcepts([selectedConcept], false);
+        getConcepts(page);
         setSelectedItem(mapConceptToListItem(selectedConcept));
-        setPage(0);
+        setPage(1);
       }
     }
   };
