@@ -115,7 +115,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
         holder => holder.name,
       ),
       source: concept.source,
-      subjectIds: concept.subjectIds,
+      subjectIds: concept?.subjectIds,
       title: concept.title?.title,
     });
     return concept;
@@ -161,11 +161,6 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
     const tabs = [];
 
     tabs.push({
-      title: t('license.tabs.text'),
-      content: <TextContent t={t} concept={concept} />,
-    });
-
-    tabs.push({
       title: t('license.tabs.embedlink'),
       content: (
         <OembedContent
@@ -174,6 +169,13 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
         />
       ),
     });
+
+    concept.license &&
+      concept.license !== 'unknown' &&
+      tabs.push({
+        title: t('license.tabs.text'),
+        content: <TextContent t={t} concept={concept} />,
+      });
 
     image?.image?.url?.length &&
       tabs.push({
@@ -212,11 +214,13 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
-      <NotionDialogTags
-        tags={subjects
-          .filter(subject => concept.subjectIds?.includes(subject.id))
-          .map(s => s.name)}
-      />
+      {concept.subjectIds?.length && (
+        <NotionDialogTags
+          tags={subjects
+            .filter(subject => concept.subjectIds?.includes(subject.id))
+            .map(s => s.name)}
+        />
+      )}
       {article.id && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}

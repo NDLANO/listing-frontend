@@ -38,6 +38,7 @@ import {
   fetchConceptsBySubject,
   fetchTags,
   fetchConceptsByTags,
+  fetchConcepts,
 } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
@@ -167,6 +168,23 @@ const ListingPage = ({ t, locale, location }) => {
     setFilters(mapTagsToFilters(tags));
   };
 
+  const useDebounce = (val, delay) => {
+    const [debouncedVal, setDebouncedVal] = useState(val);
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedVal(val);
+      }, delay);
+      return () => clearTimeout(handler);
+    }, [val, delay]);
+    return debouncedVal;
+  };
+
+  const debouncedSearchVal = useDebounce(searchValue, 200);
+
+  useEffect(() => {
+    getConcepts(page);
+  }, [debouncedSearchVal]);
+
   const getConcepts = async page => {
     const replace = page === 1;
     setLoading(!replace);
@@ -176,6 +194,7 @@ const ListingPage = ({ t, locale, location }) => {
         page,
         PAGE_SIZE,
         locale,
+        debouncedSearchVal,
       );
       handleSetConcepts(concepts.results, replace);
     } else if (queryParams.filters.length) {
@@ -186,14 +205,15 @@ const ListingPage = ({ t, locale, location }) => {
         page,
         PAGE_SIZE,
         locale,
+        debouncedSearchVal,
       );
       handleSetConcepts(concepts.results, replace);
-    } else if (!queryParams.concept) {
-      const concepts = await fetchConceptsBySubject(
-        subjectIds,
+    } else {
+      const concepts = await fetchConcepts(
         page,
         PAGE_SIZE,
         locale,
+        debouncedSearchVal,
       );
       handleSetConcepts(concepts.results, replace);
     }
@@ -209,9 +229,9 @@ const ListingPage = ({ t, locale, location }) => {
         setSelectedConcept(selectedConcept);
       } else {
         const selectedConcept = await fetchConcept(queryParams.concept);
-        handleSetConcepts([selectedConcept], false);
+        getConcepts(page);
         setSelectedConcept(selectedConcept);
-        setPage(0);
+        setPage(1);
       }
     }
   };
@@ -318,12 +338,6 @@ const ListingPage = ({ t, locale, location }) => {
     if (queryParams.filters.length) {
       filteredItems = filteredItems.filter(item =>
         queryParams.filters.every(filter => item.filters.includes(filter)),
-      );
-    }
-    if (searchValue.length > 0) {
-      const searchValueLowercase = searchValue.toLowerCase();
-      filteredItems = filteredItems.filter(item =>
-        item.name.toLowerCase().startsWith(searchValueLowercase),
       );
     }
     return filteredItems;
@@ -468,7 +482,7 @@ const ListingPage = ({ t, locale, location }) => {
           selectedItem={
             selectedConcept ? (
               <ConceptPage
-                conceptId={selectedConcept.id}
+                conceptId={Number(selectedConcept.id)}
                 language={locale}
                 inModal={true}
                 handleClose={handleSelectItem}

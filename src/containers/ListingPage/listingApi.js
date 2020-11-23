@@ -16,19 +16,25 @@ const baseListingUrl = apiResourceUrl('/concept-api/v1/concepts');
 const baseImageUrl = apiResourceUrl('/image-api/v2/images');
 const baseArticleUrl = apiResourceUrl('/article-api/v2/articles');
 
-export const fetchConcepts = (page, pageSize, language) =>
+export const fetchConcepts = (page, pageSize, language, query) =>
   fetch(
-    `${baseListingUrl}?sort=title&page=${page}&page-size=${pageSize}&language=${language}&fallback=true`,
+    `${baseListingUrl}?sort=title&page=${page}&page-size=${pageSize}&language=${language}&query=${query}&fallback=true`,
   ).then(resolveJsonOrRejectWithError);
 
-export const fetchConceptsBySubject = (subjectId, page, pageSize, language) =>
+export const fetchConceptsBySubject = (
+  subjectId,
+  page,
+  pageSize,
+  language,
+  query,
+) =>
   fetch(
-    `${baseListingUrl}?sort=title&subjects=${subjectId}&page=${page}&page-size=${pageSize}&language=${language}&fallback=true`,
+    `${baseListingUrl}?sort=title&subjects=${subjectId}&page=${page}&page-size=${pageSize}&language=${language}&query=${query}&fallback=true`,
   ).then(resolveJsonOrRejectWithError);
 
-export const fetchConceptsByTags = (tags, page, pageSize, language) =>
+export const fetchConceptsByTags = (tags, page, pageSize, language, query) =>
   fetch(
-    `${baseListingUrl}?sort=title&tags=${tags}&page=${page}&page-size=${pageSize}&language=${language}&fallback=true`,
+    `${baseListingUrl}?sort=title&tags=${tags}&page=${page}&page-size=${pageSize}&language=${language}&query=${query}&fallback=true`,
   ).then(resolveJsonOrRejectWithError);
 
 export const fetchTags = language =>
