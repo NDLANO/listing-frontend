@@ -90,9 +90,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   const [subjects, setSubjects] = useState([]);
 
   useEffect(() => {
-    getConcept();
-    getImage();
-    getSubjects();
+    init();
 
     if (markdown === null) {
       const md = new Remarkable();
@@ -106,6 +104,12 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
     getArticle();
   }, [article.id]);
 
+  const init = async () => {
+    const listItem = await getConcept();
+    getImage(listItem);
+    getSubjects();
+  };
+
   const getSubjects = async () => {
     const subjectIds = await fetchSubjectIds();
     const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
@@ -114,7 +118,8 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
 
   const getConcept = async () => {
     const concept = await fetchConcept(conceptId, language);
-    setItem(mapConceptToListItem(concept));
+    const listItem = mapConceptToListItem(concept);
+    setItem(listItem);
     setConcept({
       articleId: concept.articleId,
       title: concept.title?.title,
@@ -126,9 +131,10 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
         holder => holder.name,
       ),
     });
+    return listItem;
   };
 
-  const getImage = async () => {
+  const getImage = async item => {
     const imageId = item.image.split('/').pop();
     if (imageId.length) {
       const image = await fetchImage(imageId, language);
