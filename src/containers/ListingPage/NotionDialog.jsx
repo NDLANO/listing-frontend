@@ -131,7 +131,8 @@ const NotionDialog = ({
           ]}
         />
       )}
-      {concept.license && concept.license !== 'unknown' && (
+      {((concept.license && concept.license !== 'unknown') ||
+        image.image.url.length > 0) && (
         <NotionDialogLicenses
           license={concept.license}
           source={concept.source}
@@ -151,10 +152,16 @@ const NotionDialog = ({
                       <Tabs
                         singleLine
                         tabs={[
-                          {
-                            title: t('license.tabs.text'),
-                            content: <TextContent t={t} concept={concept} />,
-                          },
+                          ...(concept.license && concept.license !== 'unknown'
+                            ? [
+                                {
+                                  title: t('license.tabs.text'),
+                                  content: (
+                                    <TextContent t={t} concept={concept} />
+                                  ),
+                                },
+                              ]
+                            : []),
                           ...(image.image.url.length
                             ? [
                                 {
