@@ -19,7 +19,10 @@ import {
 } from '@ndla/ui';
 import { FileDocumentOutline } from '@ndla/icons/common';
 import { metaTypes } from '@ndla/licenses';
-import Button, { CopyButton } from '@ndla/button';
+import { StyledButton } from '@ndla/button';
+import CopyTextButton from '../../components/util/CopyTextButton';
+import { getCopyrightCopyString } from '../../util/getCopyrightCopyString';
+import { downloadUrl } from '../../util/downloadHelpers';
 
 const getLicenseItems = (entity, t) => {
   const licenseItems = [];
@@ -31,14 +34,14 @@ const getLicenseItems = (entity, t) => {
       metaType: metaTypes.title,
     });
 
-  entity.authors &&
+  entity.authors?.length &&
     licenseItems.push({
       label: t('license.originator'),
-      description: entity.authors.toString(),
+      description: entity.authors.map(author => author.name).toString(),
       metaType: metaTypes.author,
     });
 
-  entity.rightsholders &&
+  entity.rightsholders?.length &&
     licenseItems.push({
       label: t('license.rightsholder'),
       description: entity.rightsholders.toString(),
@@ -78,12 +81,11 @@ export const TextContent = ({ t, concept }) => {
             <MediaListItemActions>
               <div className="c-medialist__ref">
                 <MediaListItemMeta items={licenseItems} />
-                <CopyButton outline copyNode={t('license.hasCopiedTitle')}>
-                  {t('license.copyTitle')}
-                </CopyButton>
-                <Button outline onClick={() => {}}>
-                  {t('license.download')}
-                </Button>
+                <CopyTextButton
+                  hasCopiedTitle={t('license.hasCopiedTitle')}
+                  copyTitle={t('license.copyTitle')}
+                  stringToCopy={getCopyrightCopyString(concept, t)}
+                />
               </div>
             </MediaListItemActions>
           </MediaListItemBody>
@@ -100,8 +102,16 @@ TextContent.propTypes = {
     title: PropTypes.string,
     source: PropTypes.string,
     created: PropTypes.string,
+    content: PropTypes.string,
+    image: PropTypes.string,
+    subjectIds: PropTypes.arrayOf(PropTypes.string),
     license: PropTypes.string,
-    authors: PropTypes.arrayOf(PropTypes.string),
+    authors: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        type: PropTypes.string,
+      }),
+    ),
     rightsholders: PropTypes.arrayOf(PropTypes.string),
   }),
 };
@@ -115,6 +125,8 @@ export const ImageContent = ({ t, image }) => {
       description: image.origin,
       metaType: metaTypes.other,
     });
+
+  const AnchorButton = StyledButton.withComponent('a');
 
   return (
     <>
@@ -136,12 +148,17 @@ export const ImageContent = ({ t, image }) => {
             <MediaListItemActions>
               <div className="c-medialist__ref">
                 <MediaListItemMeta items={licenseItems} />
-                <CopyButton outline copyNode={t('license.hasCopiedTitle')}>
-                  {t('license.copyTitle')}
-                </CopyButton>
-                <Button outline onClick={() => {}}>
+                <CopyTextButton
+                  hasCopiedTitle={t('license.hasCopiedTitle')}
+                  copyTitle={t('license.copyTitle')}
+                  stringToCopy={getCopyrightCopyString(image, t)}
+                />
+                <AnchorButton
+                  href={downloadUrl(image.image.url)}
+                  appearance="outline"
+                  download>
                   {t('license.download')}
-                </Button>
+                </AnchorButton>
               </div>
             </MediaListItemActions>
           </MediaListItemBody>
@@ -160,8 +177,29 @@ ImageContent.propTypes = {
       alt: PropTypes.string,
     }),
     license: PropTypes.string,
-    authors: PropTypes.arrayOf(PropTypes.string),
+    authors: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        type: PropTypes.string,
+      }),
+    ),
     rightsholders: PropTypes.arrayOf(PropTypes.string),
     origin: PropTypes.string,
   }),
+};
+
+export const OembedContent = ({ oembed, t }) => (
+  <>
+    <h2>{t('license.embedlink.heading')}</h2>
+    <p>{t('license.embedlink.description')}</p>
+    <CopyTextButton
+      copyTitle={t('license.embedlink.copyTitle')}
+      hasCopiedTitle={t('license.embedlink.hasCopiedTitle')}
+      stringToCopy={oembed}
+    />
+  </>
+);
+
+OembedContent.propTypes = {
+  oembed: PropTypes.string.isRequired,
 };

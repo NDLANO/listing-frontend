@@ -28,6 +28,7 @@ import config from '../../config';
 import {
   ImageContent,
   TextContent,
+  OembedContent,
 } from '../../containers/ListingPage/LicenseBox';
 import {
   fetchArticle,
@@ -38,7 +39,6 @@ import {
   fetchSubject,
   fetchSubjectIds,
 } from '../../containers/Subject/subjectApi';
-import { mapConceptToListItem } from '../../util/listingHelpers';
 
 const initialArticle = {
   id: '',
@@ -67,24 +67,10 @@ const initialImage = {
   origin: '',
 };
 
-const initialItem = {
-  id: '',
-  name: '',
-  description: '',
-  image: '',
-  subjectIds: [],
-  category: {
-    title: '',
-    value: '',
-  },
-  filters: [],
-};
-
 const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   const [article, setArticle] = useState(initialArticle);
   const [concept, setConcept] = useState(initialConcept);
   const [image, setImage] = useState(initialImage);
-  const [item, setItem] = useState(initialItem);
   const [loading, setLoading] = useState(true);
   const [markdown, setMarkdown] = useState(null);
   const [subjects, setSubjects] = useState([]);
@@ -118,24 +104,25 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
 
   const getConcept = async () => {
     const concept = await fetchConcept(conceptId, language);
-    const listItem = mapConceptToListItem(concept);
-    setItem(listItem);
     setConcept({
       articleId: concept.articleId,
-      title: concept.title?.title,
-      source: concept.source,
+      authors: concept.copyright?.creators,
+      content: concept.content.content,
       created: concept.created,
+      image: concept.metaImage?.url,
       license: concept.copyright?.license?.license,
-      authors: concept.copyright?.creators.map(creator => creator.name),
-      rightsholders: concept.copyright?.rightsholders.map(
+      rightsholders: concept.copyright?.rightsholders?.map(
         holder => holder.name,
       ),
+      source: concept.source,
+      subjectIds: concept.subjectIds,
+      title: concept.title?.title,
     });
-    return listItem;
+    return concept;
   };
 
-  const getImage = async item => {
-    const imageId = item.image.split('/').pop();
+  const getImage = async concept => {
+    const imageId = concept.metaImage?.url?.split('/').pop();
     if (imageId.length) {
       const image = await fetchImage(imageId, language);
       setImage({
@@ -145,7 +132,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
           alt: image.alttext?.alttext,
         },
         license: image.copyright?.license?.license,
-        authors: image.copyright?.creators.map(creator => creator.name),
+        authors: image.copyright?.creators,
         rightsholders: image.copyright?.rightsholders.map(
           holder => holder.name,
         ),
@@ -170,6 +157,33 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
     );
   };
 
+  const getTabs = () => {
+    const tabs = [];
+
+    tabs.push({
+      title: t('license.tabs.text'),
+      content: <TextContent t={t} concept={concept} />,
+    });
+
+    tabs.push({
+      title: t('license.tabs.embedlink'),
+      content: (
+        <OembedContent
+          t={t}
+          oembed={`${config.ndlaListingFrontendDomain}/concepts/${conceptId}`}
+        />
+      ),
+    });
+
+    image?.image?.url?.length &&
+      tabs.push({
+        title: t('license.tabs.images'),
+        content: <ImageContent t={t} image={image} />,
+      });
+
+    return tabs;
+  };
+
   const licenseBox = (
     <Modal
       activateButton={<Button link>{t('article.useContent')}</Button>}
@@ -182,23 +196,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
           <ModalBody>
             <>
               <h1>{t('license.heading')}</h1>
-              <Tabs
-                singleLine
-                tabs={[
-                  {
-                    title: t('license.tabs.text'),
-                    content: <TextContent t={t} concept={concept} />,
-                  },
-                  ...(image.image.url.length
-                    ? [
-                        {
-                          title: t('license.tabs.images'),
-                          content: <ImageContent t={t} image={image} />,
-                        },
-                      ]
-                    : []),
-                ]}
-              />
+              <Tabs singleLine tabs={getTabs()} />
             </>
           </ModalBody>
         </>
@@ -209,14 +207,14 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   const conceptBody = (
     <>
       <NotionDialogContent>
-        {item.image ? (
-          <NotionDialogImage src={item.image} alt={item.description} />
+        {concept.image ? (
+          <NotionDialogImage src={concept.image} alt={concept.content} />
         ) : null}
-        <NotionDialogText>{renderMarkdown(item.description)}</NotionDialogText>
+        <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
       <NotionDialogTags
         tags={subjects
-          .filter(subject => item.subjectIds?.includes(subject.id))
+          .filter(subject => concept.subjectIds?.includes(subject.id))
           .map(s => s.name)}
       />
       {article.id && (
@@ -233,7 +231,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
       <NotionDialogLicenses
         license={concept.license}
         source={concept.source}
-        authors={concept.authors}
+        authors={concept.authors?.map(author => author?.name) || []}
         licenseBox={licenseBox}
       />
     </>
@@ -247,18 +245,18 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
     <>
       {inModal ? (
         <NotionDialogWrapper
-          title={item.name}
+          title={concept.title}
           closeCallback={() => handleClose(null)}>
           {conceptBody}
         </NotionDialogWrapper>
       ) : (
         <>
-          <NotionHeaderWithoutExitButton title={item.name} />
+          <NotionHeaderWithoutExitButton title={concept.title} />
           {conceptBody}
           <CreatedBy
             name={t('createdBy.content')}
             description={t('createdBy.text')}
-            url={`${config.ndlaListingFrontendDomain}/?concept=${conceptId}`}
+            url={`${config.ndlaListingFrontendDomain}/concepts/${conceptId}`}
           />
         </>
       )}

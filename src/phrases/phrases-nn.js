@@ -77,6 +77,13 @@ const phrases = {
       rules: 'Reglar for bruk av teksten:',
       published: 'Publiseringsdato',
     },
+    embedlink: {
+      heading: 'Slik viser du artikkelen i anna innhald',
+      description:
+        'Denne lenka viser artikkelen utan kontekst(meny og botntekst)',
+      copyTitle: 'Kopier lenke',
+      hasCopiedTitle: 'Lenke kopiert',
+    },
     images: {
       heading: 'Slik bruker du bilete frå artikkelen',
       description:
@@ -86,6 +93,7 @@ const phrases = {
     tabs: {
       text: 'Tekst',
       images: 'Bilete',
+      embedlink: 'Innbyggingslenke',
     },
     copyTitle: 'Kopier referanse',
     hasCopiedTitle: 'Kopiert!',
