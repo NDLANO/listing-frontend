@@ -33,7 +33,7 @@ export const TextContent = ({ t, concept }) => (
           <FileDocumentOutline className="c-medialist__icon" />
         </MediaListItemImage>
         <MediaListItemBody
-          license={concept.license || 'N/A'}
+          license={concept.license}
           title={t('license.text.rules')}
           resourceUrl=""
           locale="nb"
