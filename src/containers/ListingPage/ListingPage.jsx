@@ -185,7 +185,7 @@ const ListingPage = ({ t, locale, location }) => {
   }, [debouncedSearchVal]);
 
   const getConcepts = async page => {
-    const replace = page === 1 || !debouncedSearchVal.length;
+    const replace = page === 1;
     setLoading(!replace);
     if (queryParams.subjects.length) {
       const concepts = await fetchConceptsBySubject(
