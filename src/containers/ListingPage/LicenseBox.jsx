@@ -47,22 +47,26 @@ export const TextContent = ({ t, concept }) => (
                     description: concept.title,
                     metaType: metaTypes.title,
                   },
-                  {
-                    label: t('license.originator'),
-                    description: concept.authors.toString(),
-                    metaType: metaTypes.author,
-                  },
-                  {
-                    label: t('license.rightsholder'),
-                    description: concept.rightsholders.toString(),
-                    metaType: metaTypes.copyrightHolder,
-                  },
+                  concept.authors
+                    ? {
+                        label: t('license.originator'),
+                        description: concept.authors.toString(),
+                        metaType: metaTypes.author,
+                      }
+                    : null,
+                  concept.rightsholders
+                    ? {
+                        label: t('license.rightsholder'),
+                        description: concept.rightsholders.toString(),
+                        metaType: metaTypes.copyrightHolder,
+                      }
+                    : null,
                   {
                     label: t('license.published'),
                     description: concept.created,
                     metaType: metaTypes.other,
                   },
-                ]}
+                ].filter(i => i !== null)}
               />
               <CopyButton outline copyNode={t('license.hasCopiedTitle')}>
                 {t('license.copyTitle')}

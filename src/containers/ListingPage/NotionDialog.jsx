@@ -113,11 +113,13 @@ const NotionDialog = ({
         ) : null}
         <NotionDialogText>{renderMarkdown(item.description)}</NotionDialogText>
       </NotionDialogContent>
-      <NotionDialogTags
-        tags={subjects
-          .filter(subject => item.subjectIds.includes(subject.id))
-          .map(s => s.name)}
-      />
+      {item.subjectIds && (
+        <NotionDialogTags
+          tags={subjects
+            .filter(subject => item.subjectIds.includes(subject.id))
+            .map(s => s.name)}
+        />
+      )}
       {articleId && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}
@@ -129,46 +131,55 @@ const NotionDialog = ({
           ]}
         />
       )}
-      <NotionDialogLicenses
-        license={concept.license}
-        source={concept.source}
-        authors={concept.authors}
-        licenseBox={
-          <Modal
-            activateButton={<Button link>{t('article.useContent')}</Button>}
-            size="medium">
-            {onClose => (
-              <div>
-                <ModalHeader modifier="no-bottom-padding">
-                  <ModalCloseButton onClick={onClose} title="lukk" />
-                </ModalHeader>
-                <ModalBody>
-                  <div>
-                    <h1>{t('license.heading')}</h1>
-                    <Tabs
-                      singleLine
-                      tabs={[
-                        {
-                          title: t('license.tabs.text'),
-                          content: <TextContent t={t} concept={concept} />,
-                        },
-                        ...(image.image.url.length
-                          ? [
-                              {
-                                title: t('license.tabs.images'),
-                                content: <ImageContent t={t} image={image} />,
-                              },
-                            ]
-                          : []),
-                      ]}
-                    />
-                  </div>
-                </ModalBody>
-              </div>
-            )}
-          </Modal>
-        }
-      />
+      {((concept.license && concept.license !== 'unknown') ||
+        image.image.url.length > 0) && (
+        <NotionDialogLicenses
+          license={concept.license}
+          source={concept.source}
+          authors={concept.authors}
+          licenseBox={
+            <Modal
+              activateButton={<Button link>{t('article.useContent')}</Button>}
+              size="medium">
+              {onClose => (
+                <div>
+                  <ModalHeader modifier="no-bottom-padding">
+                    <ModalCloseButton onClick={onClose} title="lukk" />
+                  </ModalHeader>
+                  <ModalBody>
+                    <div>
+                      <h1>{t('license.heading')}</h1>
+                      <Tabs
+                        singleLine
+                        tabs={[
+                          ...(concept.license && concept.license !== 'unknown'
+                            ? [
+                                {
+                                  title: t('license.tabs.text'),
+                                  content: (
+                                    <TextContent t={t} concept={concept} />
+                                  ),
+                                },
+                              ]
+                            : []),
+                          ...(image.image.url.length
+                            ? [
+                                {
+                                  title: t('license.tabs.images'),
+                                  content: <ImageContent t={t} image={image} />,
+                                },
+                              ]
+                            : []),
+                        ]}
+                      />
+                    </div>
+                  </ModalBody>
+                </div>
+              )}
+            </Modal>
+          }
+        />
+      )}
     </NotionDialogWrapper>
   );
 };
