@@ -181,7 +181,7 @@ const ListingPage = ({ t, locale, location }) => {
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
   useEffect(() => {
-    if (debouncedSearchVal) getConcepts(page);
+    getConcepts(page);
   }, [debouncedSearchVal]);
 
   const getConcepts = async page => {
