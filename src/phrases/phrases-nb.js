@@ -77,6 +77,13 @@ const phrases = {
       rules: 'Regler for bruk av teksten:',
       published: 'Publiseringsdato',
     },
+    embedlink: {
+      heading: 'Slik viser du forklaringen i annet innhold',
+      description:
+        'Denne lenken viser forklaringen uten kontekst (meny og bunntekst)',
+      copyTitle: 'Kopier lenke',
+      hasCopiedTitle: 'Lenke kopiert',
+    },
     images: {
       heading: 'Slik bruker du bilder fra artikkelen',
       description:
@@ -86,6 +93,7 @@ const phrases = {
     tabs: {
       text: 'Tekst',
       images: 'Bilder',
+      embedlink: 'Innbyggingslenke',
     },
     copyTitle: 'Kopier referanse',
     hasCopiedTitle: 'Kopiert!',
@@ -152,6 +160,10 @@ const phrases = {
     menu: {
       close: 'Lukk',
     },
+  },
+  createdBy: {
+    content: 'Forklaringen',
+    text: 'er utarbeidet av',
   },
 };
 

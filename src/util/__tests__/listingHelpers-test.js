@@ -6,7 +6,7 @@
  *
  */
 
-import { mapTagsToFilters } from '../listingHelpers';
+import { mapTagsToFilters, isValidListeUrl } from '../listingHelpers';
 
 test('split list into filters', () => {
   expect(typeof mapTagsToFilters).toBe('function');
@@ -50,4 +50,28 @@ test('do not split into lists if not two columns', () => {
 
   const result = new Map();
   expect(mapTagsToFilters(['Teststring'])).toEqual(result);
+});
+
+test('isValidListeUrl correct behavior', () => {
+  const urls = new Map();
+  urls.set('https://liste.ndla.no/?concept=603', true);
+  urls.set('https://liste.test.ndla.no/?concept=603', true);
+  urls.set('https://liste.staging.ndla.no/?concept=603', true);
+  urls.set('http://liste.ndla.no/?concept=603', true);
+  urls.set('http://liste.test.ndla.no/?concept=603', true);
+  urls.set('http://liste.staging.ndla.no/?concept=603', true);
+  urls.set('www.liste.ndla.no/?concept=603', true);
+  urls.set('www.liste.test.ndla.no/?concept=603', true);
+  urls.set('www.liste.staging.ndla.no/?concept=603', true);
+  urls.set('liste.ndla.no/?concept=603', true);
+  urls.set('liste.test.ndla.no/?concept=603', true);
+  urls.set('liste.staging.ndla.no/?concept=603', true);
+  urls.set('https://liste.ndla.no/?concept=w', false);
+  urls.set('https://liste.ndla.no/?concept=3w6', false);
+  urls.set('https://liste.ndla.no/?concept=', false);
+  urls.set('https://liste.ndla.no/?concepts=603', false);
+  urls.set('https://liste.ndla.no/', false);
+  urls.set('https://liste..ndla.no/?concept=603', false);
+
+  urls.forEach((value, key) => expect(isValidListeUrl(key)).toBe(value));
 });

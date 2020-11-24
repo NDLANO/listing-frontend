@@ -51,3 +51,8 @@ export function mapConceptToListItem(concept) {
     filters: concept.tags ? mapTagsToList(concept.tags.tags) : [],
   };
 }
+
+export const isValidListeUrl = url =>
+  /^(https?:\/\/)?(www\.)?liste(\.?(test|staging))?\.ndla\.no\/\?concept=\d+$/.test(
+    url,
+  );
