@@ -80,7 +80,7 @@ const phrases = {
     embedlink: {
       heading: 'Slik viser du forklaringen i annet innhold',
       description:
-        'Denne lenken viser forklaringen uten kontekst(meny og bunntekst)',
+        'Denne lenken viser forklaringen uten kontekst (meny og bunntekst)',
       copyTitle: 'Kopier lenke',
       hasCopiedTitle: 'Lenke kopiert',
     },
