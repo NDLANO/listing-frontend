@@ -175,7 +175,7 @@ const ListingPage = ({ t, locale, location }) => {
       }, delay);
       return () => clearTimeout(handler);
     }, [val, delay]);
-    return debouncedVal;
+    return `${debouncedVal}*`;
   };
 
   const debouncedSearchVal = useDebounce(searchValue, 200);
@@ -236,15 +236,11 @@ const ListingPage = ({ t, locale, location }) => {
   };
 
   const handleSetConcepts = (newConcepts, replace) => {
-    if (newConcepts.length) {
-      setShowButton(newConcepts.length === PAGE_SIZE);
-      if (replace) {
-        setConcepts(newConcepts);
-      } else {
-        setConcepts([...concepts, ...newConcepts]);
-      }
+    setShowButton(newConcepts.length === PAGE_SIZE);
+    if (replace) {
+      setConcepts(newConcepts);
     } else {
-      setShowButton(false);
+      setConcepts([...concepts, ...newConcepts]);
     }
   };
 
