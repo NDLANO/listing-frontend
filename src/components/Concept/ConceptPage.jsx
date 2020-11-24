@@ -160,16 +160,6 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   const getTabs = () => {
     const tabs = [];
 
-    tabs.push({
-      title: t('license.tabs.embedlink'),
-      content: (
-        <OembedContent
-          t={t}
-          oembed={`${config.ndlaListingFrontendDomain}/concepts/${conceptId}`}
-        />
-      ),
-    });
-
     concept.license &&
       concept.license !== 'unknown' &&
       tabs.push({
@@ -182,6 +172,16 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
         title: t('license.tabs.images'),
         content: <ImageContent t={t} image={image} />,
       });
+
+    tabs.push({
+      title: t('license.tabs.embedlink'),
+      content: (
+        <OembedContent
+          t={t}
+          oembed={`${config.ndlaListingFrontendDomain}/concepts/${conceptId}`}
+        />
+      ),
+    });
 
     return tabs;
   };
