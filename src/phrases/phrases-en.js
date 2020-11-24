@@ -76,8 +76,8 @@ const phrases = {
       published: 'Published',
     },
     embedlink: {
-      heading: 'How to show the article in other content',
-      description: 'This url shows the article without menu and footer',
+      heading: 'How to show the concept in other content',
+      description: 'This url shows the concept without menu and footer',
       copyTitle: 'Copy link',
       hasCopiedTitle: 'Link copied',
     },

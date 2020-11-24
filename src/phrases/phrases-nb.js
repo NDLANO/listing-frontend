@@ -78,9 +78,9 @@ const phrases = {
       published: 'Publiseringsdato',
     },
     embedlink: {
-      heading: 'Slik viser du artikkelen i annet innhold',
+      heading: 'Slik viser du forklaringen i annet innhold',
       description:
-        'Denne lenken viser artikkelen uten kontekst(meny og bunntekst)',
+        'Denne lenken viser forklaringen uten kontekst(meny og bunntekst)',
       copyTitle: 'Kopier lenke',
       hasCopiedTitle: 'Lenke kopiert',
     },

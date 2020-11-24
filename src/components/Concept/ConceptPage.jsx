@@ -260,7 +260,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
           <CreatedBy
             name={t('createdBy.content')}
             description={t('createdBy.text')}
-            url={`${config.ndlaListingFrontendDomain}/concepts/${conceptId}`}
+            url={`${config.ndlaListingFrontendDomain}/?concept=${conceptId}`}
           />
         </>
       )}
