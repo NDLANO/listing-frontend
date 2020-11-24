@@ -23,6 +23,7 @@ import { StyledButton } from '@ndla/button';
 import CopyTextButton from '../../components/util/CopyTextButton';
 import { getCopyrightCopyString } from '../../util/getCopyrightCopyString';
 import { downloadUrl } from '../../util/downloadHelpers';
+import formatDate from '../../util/formatDate';
 
 const getLicenseItems = (entity, t) => {
   const licenseItems = [];
@@ -51,13 +52,13 @@ const getLicenseItems = (entity, t) => {
   return licenseItems;
 };
 
-export const TextContent = ({ t, concept }) => {
+export const TextContent = ({ t, concept, locale }) => {
   const licenseItems = getLicenseItems(concept, t);
 
   concept.created &&
     licenseItems.push({
       label: t('license.published'),
-      description: concept.created,
+      description: formatDate(concept.created, locale),
       metaType: metaTypes.other,
     });
 
@@ -97,6 +98,7 @@ export const TextContent = ({ t, concept }) => {
 
 TextContent.propTypes = {
   t: PropTypes.func.isRequired,
+  locale: PropTypes.string,
   concept: PropTypes.exact({
     articleId: PropTypes.number,
     title: PropTypes.string,

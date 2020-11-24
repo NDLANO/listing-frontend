@@ -164,7 +164,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
       concept.license !== 'unknown' &&
       tabs.push({
         title: t('license.tabs.text'),
-        content: <TextContent t={t} concept={concept} />,
+        content: <TextContent t={t} concept={concept} locale={language} />,
       });
 
     image?.image?.url?.length &&
