@@ -27,7 +27,6 @@ import { ChevronDown, Search } from '@ndla/icons/lib/common';
 import Button from '@ndla/button';
 import { Spinner } from '@ndla/ui';
 
-import NotionDialog from './NotionDialog';
 import {
   mapTagsToFilters,
   mapConceptToListItem,
@@ -43,6 +42,8 @@ import {
 } from './listingApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
+import ConceptPage from '../../components/Concept/ConceptPage';
+import Footer from '../App/components/Footer';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
@@ -124,7 +125,7 @@ const ListingPage = ({ t, locale, location }) => {
   const [selectedListFilter, setSelectedListFilter] = useState(null);
   const [viewStyle, setViewStyle] = useState('grid');
   const [detailedItem, setDetailedItem] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedConcept, setSelectedConcept] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [filterListOpen, setFilterListOpen] = useState(false);
@@ -226,11 +227,11 @@ const ListingPage = ({ t, locale, location }) => {
         const selectedConcept = concepts.find(
           concept => concept.id.toString() === queryParams.concept,
         );
-        setSelectedItem(mapConceptToListItem(selectedConcept));
+        setSelectedConcept(selectedConcept);
       } else {
         const selectedConcept = await fetchConcept(queryParams.concept);
         getConcepts(page);
-        setSelectedItem(mapConceptToListItem(selectedConcept));
+        setSelectedConcept(selectedConcept);
         setPage(1);
       }
     }
@@ -264,7 +265,7 @@ const ListingPage = ({ t, locale, location }) => {
   };
 
   const handleSelectItem = value => {
-    setSelectedItem(value);
+    setSelectedConcept(value);
     setQueryParams({
       ...queryParams,
       concept: value?.id,
@@ -392,117 +393,119 @@ const ListingPage = ({ t, locale, location }) => {
   };
 
   return (
-    <OneColumn>
-      <Helmet title={t(`themePage.heading`)} />
-      <HeaderWithLanguageWrapper>
-        <SubjectFilterWrapper>
-          <FilterListPhone
-            preid="subject-list"
-            label={t(`listview.filters.subject.openFilter`)}
-            options={subjects.map(item => ({
-              title: item.name,
-              value: item.id,
-            }))}
-            alignedGroup
-            showActiveFiltersOnSmallScreen
-            values={queryParams.subjects}
-            messages={{
-              useFilter: t(`listview.filters.subject.useFilter`),
-              openFilter: t(`listview.filters.subject.openFilter`),
-              closeFilter: t(`listview.filters.subject.closeFilter`),
+    <>
+      <OneColumn>
+        <Helmet title={t(`themePage.heading`)} />
+        <HeaderWithLanguageWrapper>
+          <SubjectFilterWrapper>
+            <FilterListPhone
+              preid="subject-list"
+              label={t(`listview.filters.subject.openFilter`)}
+              options={subjects.map(item => ({
+                title: item.name,
+                value: item.id,
+              }))}
+              alignedGroup
+              showActiveFiltersOnSmallScreen
+              values={queryParams.subjects}
+              messages={{
+                useFilter: t(`listview.filters.subject.useFilter`),
+                openFilter: t(`listview.filters.subject.openFilter`),
+                closeFilter: t(`listview.filters.subject.closeFilter`),
+              }}
+              onChange={handleChangeSubject}
+              viewMode="allModal"
+            />
+          </SubjectFilterWrapper>
+          <StyledLanguageSelector>
+            <MastheadItem>
+              <LanguageSelector
+                options={getLocaleUrls(locale, location)}
+                currentLanguage={locale}
+                alwaysVisible
+              />
+            </MastheadItem>
+          </StyledLanguageSelector>
+        </HeaderWithLanguageWrapper>
+        <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
+        <CategoriesFilterWrapper>
+          <Downshift
+            onSelect={handleChangeListFilter}
+            onStateChange={handleStateChangeListFilter}
+            isOpen={filterListOpen}>
+            {({ getInputProps, getRootProps, getMenuProps, getItemProps }) => {
+              return (
+                <div>
+                  <DropdownInput
+                    multiSelect
+                    {...getInputProps(categoryFilterInputProps)}
+                    data-testid={'dropdownInput'}
+                    iconRight={
+                      filterListOpen ? (
+                        <Search />
+                      ) : (
+                        <span onClick={onFilterSearchFocus}>
+                          <ChevronDown />
+                        </span>
+                      )
+                    }
+                    values={selectedListFilter ? [selectedListFilter] : []}
+                    removeItem={handleRemoveFilter}
+                    customCSS={categoryFilterCSS({
+                      hasValues: selectedListFilter,
+                    })}
+                  />
+                  <DropdownMenu
+                    getMenuProps={getMenuProps}
+                    getItemProps={getItemProps}
+                    isOpen={filterListOpen}
+                    items={currentListFilters}
+                    maxRender={1000}
+                    hideTotalSearchCount
+                    positionAbsolute
+                  />
+                </div>
+              );
             }}
-            onChange={handleChangeSubject}
-            viewMode="allModal"
-          />
-        </SubjectFilterWrapper>
-        <StyledLanguageSelector>
-          <MastheadItem>
-            <LanguageSelector
-              options={getLocaleUrls(locale, location)}
-              currentLanguage={locale}
-              alwaysVisible
-            />
-          </MastheadItem>
-        </StyledLanguageSelector>
-      </HeaderWithLanguageWrapper>
-      <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
-      <CategoriesFilterWrapper>
-        <Downshift
-          onSelect={handleChangeListFilter}
-          onStateChange={handleStateChangeListFilter}
-          isOpen={filterListOpen}>
-          {({ getInputProps, getRootProps, getMenuProps, getItemProps }) => {
-            return (
-              <div>
-                <DropdownInput
-                  multiSelect
-                  {...getInputProps(categoryFilterInputProps)}
-                  data-testid={'dropdownInput'}
-                  iconRight={
-                    filterListOpen ? (
-                      <Search />
-                    ) : (
-                      <span onClick={onFilterSearchFocus}>
-                        <ChevronDown />
-                      </span>
-                    )
-                  }
-                  values={selectedListFilter ? [selectedListFilter] : []}
-                  removeItem={handleRemoveFilter}
-                  customCSS={categoryFilterCSS({
-                    hasValues: selectedListFilter,
-                  })}
-                />
-                <DropdownMenu
-                  getMenuProps={getMenuProps}
-                  getItemProps={getItemProps}
-                  isOpen={filterListOpen}
-                  items={currentListFilters}
-                  maxRender={1000}
-                  hideTotalSearchCount
-                  positionAbsolute
-                />
-              </div>
-            );
-          }}
-        </Downshift>
-      </CategoriesFilterWrapper>
-      <ListView
-        items={listItems}
-        detailedItem={detailedItem}
-        selectCallback={setDetailedItem}
-        viewStyle={viewStyle}
-        onChangedViewStyle={e => setViewStyle(e.viewStyle)}
-        searchValue={searchValue}
-        onChangedSearchValue={e => onConceptSearch(e.target.value)}
-        selectedItem={
-          selectedItem ? (
-            <NotionDialog
-              item={selectedItem}
-              locale={locale}
-              subjects={subjects}
-              handleClose={handleSelectItem}
-              renderMarkdown={renderMarkdown}
-            />
-          ) : null
-        }
-        onSelectItem={handleSelectItem}
-        renderMarkdown={renderMarkdown}
-        filters={getFilters()}
-        totalCount={totalCount}
-      />
-      {showButton && (
-        <ButtonWrapper>
-          {loading ? (
-            <Spinner />
-          ) : (
-            <Button onClick={onLoadMoreClick}>
-              {t('listingPage.loadMore')}
-            </Button>
-          )}
-        </ButtonWrapper>
-      )}
-    </OneColumn>
+          </Downshift>
+        </CategoriesFilterWrapper>
+        <ListView
+          items={listItems}
+          detailedItem={detailedItem}
+          selectCallback={setDetailedItem}
+          viewStyle={viewStyle}
+          onChangedViewStyle={e => setViewStyle(e.viewStyle)}
+          searchValue={searchValue}
+          onChangedSearchValue={e => onConceptSearch(e.target.value)}
+          selectedItem={
+            selectedConcept ? (
+              <ConceptPage
+                conceptId={Number(selectedConcept.id)}
+                language={locale}
+                inModal={true}
+                handleClose={handleSelectItem}
+              />
+            ) : null
+          }
+          onSelectItem={handleSelectItem}
+          renderMarkdown={renderMarkdown}
+          filters={getFilters()}
+          totalCount={totalCount}
+        />
+        {showButton && (
+          <ButtonWrapper>
+            {loading ? (
+              <Spinner />
+            ) : (
+              <Button onClick={onLoadMoreClick}>
+                {t('listingPage.loadMore')}
+              </Button>
+            )}
+          </ButtonWrapper>
+        )}
+      </OneColumn>
+      <Footer t={t} />
+    </>
   );
 };
 

@@ -10,14 +10,18 @@ import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
 import bodyParser from 'body-parser';
+import { OK, MOVED_PERMANENTLY, TEMPORARY_REDIRECT } from 'http-status';
 import config from '../config';
 import contentSecurityPolicy from './contentSecurityPolicy';
+import handleError from '../util/handleError';
 
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
 global.__DISABLE_SSR__ = config.disableSSR; // Disables server side rendering
 
 const defaultRoute = require('./routes/defaultRoute').defaultRoute;
+const oembedConceptRoute = require('./routes/oembedConceptRoute')
+  .oembedConceptRoute;
 const app = express();
 
 const allowedBodyContentTypes = [
@@ -50,6 +54,26 @@ const ndlaMiddleware = [
   }),
 ];
 
+function sendResponse(res, data, status = OK) {
+  if (status === MOVED_PERMANENTLY || status === TEMPORARY_REDIRECT) {
+    res.writeHead(status, data);
+    res.end();
+  } else if (res.getHeader('Content-Type') === 'application/json') {
+    res.status(status).json(data);
+  } else {
+    res.status(status).send(data);
+  }
+}
+
+async function handleRequest(req, res, route) {
+  try {
+    const { data, status } = await route(req);
+    sendResponse(res, data, status);
+  } catch (err) {
+    handleError(err);
+  }
+}
+
 app.use(compression());
 app.use(ndlaMiddleware);
 
@@ -63,6 +87,11 @@ app.get('/robots.txt', (req, res) => {
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 200, text: 'Health check ok' });
+});
+
+app.get('/oembed', ndlaMiddleware, async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  handleRequest(req, res, oembedConceptRoute);
 });
 
 app.get('*', (req, res) => {

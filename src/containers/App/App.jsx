@@ -18,9 +18,10 @@ import Helmet from 'react-helmet';
 import { PageContainer } from '@ndla/ui';
 import { injectT } from '@ndla/i18n';
 
-import Footer from './components/Footer';
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
+import ConceptRoute from '../ConceptPage/ConceptRoute';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const StyledPageWrapper = styled.div`
   min-height: 100vh;
@@ -46,9 +47,10 @@ export class App extends React.Component {
             meta={[{ name: 'description', content: t('meta.description') }]}
           />
           <Switch>
-            <Route path="/" component={ListingPage} />
+            <Route path="/" exact component={ListingPage} />
+            <Route path="/concepts" component={ConceptRoute} />
+            <Route component={NotFoundPage} />
           </Switch>
-          <Footer t={t} />
         </StyledPageWrapper>
       </PageContainer>
     );

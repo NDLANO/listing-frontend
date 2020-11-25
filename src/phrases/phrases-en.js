@@ -76,6 +76,12 @@ const phrases = {
       rules: 'Rules for use of text:',
       published: 'Published',
     },
+    embedlink: {
+      heading: 'How to show the concept in other content',
+      description: 'This url shows the concept without menu and footer',
+      copyTitle: 'Copy link',
+      hasCopiedTitle: 'Link copied',
+    },
     images: {
       heading: 'How to use images from the article',
       description:
@@ -85,6 +91,7 @@ const phrases = {
     tabs: {
       text: 'Text',
       images: 'Images',
+      embedlink: 'Embedded link',
     },
     copyTitle: 'Copy reference',
     hasCopiedTitle: 'Copied!',
@@ -123,6 +130,10 @@ const phrases = {
       fyr: 'FYR project',
       sharing: 'Sharing arena',
     },
+  },
+  createdBy: {
+    content: 'The concept',
+    text: 'is created by',
   },
 };
 

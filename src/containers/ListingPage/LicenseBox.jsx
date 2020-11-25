@@ -19,137 +19,156 @@ import {
 } from '@ndla/ui';
 import { FileDocumentOutline } from '@ndla/icons/common';
 import { metaTypes } from '@ndla/licenses';
-import Button, { CopyButton } from '@ndla/button';
+import { StyledButton } from '@ndla/button';
+import CopyTextButton from '../../components/util/CopyTextButton';
+import { getCopyrightCopyString } from '../../util/getCopyrightCopyString';
+import { downloadUrl } from '../../util/downloadHelpers';
+import formatDate from '../../util/formatDate';
 
-export const TextContent = ({ t, concept }) => (
-  <div>
-    <div className="u-introduction">
-      <h2>{t('license.text.heading')}</h2>
-      <p>{t('license.text.description')}</p>
-    </div>
-    <MediaList>
-      <MediaListItem>
-        <MediaListItemImage>
-          <FileDocumentOutline className="c-medialist__icon" />
-        </MediaListItemImage>
-        <MediaListItemBody
-          license={concept.license}
-          title={t('license.text.rules')}
-          resourceUrl=""
-          locale="nb"
-          resourceType="text">
-          <MediaListItemActions>
-            <div className="c-medialist__ref">
-              <MediaListItemMeta
-                items={[
-                  {
-                    label: t('license.title'),
-                    description: concept.title,
-                    metaType: metaTypes.title,
-                  },
-                  concept.authors
-                    ? {
-                        label: t('license.originator'),
-                        description: concept.authors.toString(),
-                        metaType: metaTypes.author,
-                      }
-                    : null,
-                  concept.rightsholders
-                    ? {
-                        label: t('license.rightsholder'),
-                        description: concept.rightsholders.toString(),
-                        metaType: metaTypes.copyrightHolder,
-                      }
-                    : null,
-                  {
-                    label: t('license.published'),
-                    description: concept.created,
-                    metaType: metaTypes.other,
-                  },
-                ].filter(i => i !== null)}
-              />
-              <CopyButton outline copyNode={t('license.hasCopiedTitle')}>
-                {t('license.copyTitle')}
-              </CopyButton>
-              <Button outline onClick={() => {}}>
-                {t('license.download')}
-              </Button>
-            </div>
-          </MediaListItemActions>
-        </MediaListItemBody>
-      </MediaListItem>
-    </MediaList>
-  </div>
-);
+const getLicenseItems = (entity, t) => {
+  const licenseItems = [];
+
+  entity.title &&
+    licenseItems.push({
+      label: t('license.title'),
+      description: entity.title,
+      metaType: metaTypes.title,
+    });
+
+  entity.authors?.length &&
+    licenseItems.push({
+      label: t('license.originator'),
+      description: entity.authors.map(author => author.name).toString(),
+      metaType: metaTypes.author,
+    });
+
+  entity.rightsholders?.length &&
+    licenseItems.push({
+      label: t('license.rightsholder'),
+      description: entity.rightsholders.toString(),
+      metaType: metaTypes.copyrightHolder,
+    });
+
+  return licenseItems;
+};
+
+export const TextContent = ({ t, concept, locale }) => {
+  const licenseItems = getLicenseItems(concept, t);
+
+  concept.created &&
+    licenseItems.push({
+      label: t('license.published'),
+      description: formatDate(concept.created, locale),
+      metaType: metaTypes.other,
+    });
+
+  return (
+    <>
+      <div className="u-introduction">
+        <h2>{t('license.text.heading')}</h2>
+        <p>{t('license.text.description')}</p>
+      </div>
+      <MediaList>
+        <MediaListItem>
+          <MediaListItemImage>
+            <FileDocumentOutline className="c-medialist__icon" />
+          </MediaListItemImage>
+          <MediaListItemBody
+            license={concept.license}
+            title={t('license.text.rules')}
+            resourceUrl=""
+            locale="nb"
+            resourceType="text">
+            <MediaListItemActions>
+              <div className="c-medialist__ref">
+                <MediaListItemMeta items={licenseItems} />
+                <CopyTextButton
+                  hasCopiedTitle={t('license.hasCopiedTitle')}
+                  copyTitle={t('license.copyTitle')}
+                  stringToCopy={getCopyrightCopyString(concept, t)}
+                />
+              </div>
+            </MediaListItemActions>
+          </MediaListItemBody>
+        </MediaListItem>
+      </MediaList>
+    </>
+  );
+};
 
 TextContent.propTypes = {
   t: PropTypes.func.isRequired,
+  locale: PropTypes.string,
   concept: PropTypes.exact({
+    articleId: PropTypes.number,
     title: PropTypes.string,
     source: PropTypes.string,
     created: PropTypes.string,
+    content: PropTypes.string,
+    image: PropTypes.string,
+    subjectIds: PropTypes.arrayOf(PropTypes.string),
     license: PropTypes.string,
-    authors: PropTypes.arrayOf(PropTypes.string),
+    authors: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        type: PropTypes.string,
+      }),
+    ),
     rightsholders: PropTypes.arrayOf(PropTypes.string),
   }),
 };
 
-export const ImageContent = ({ t, image }) => (
-  <div>
-    <div className="u-introduction">
-      <h2>{t('license.images.heading')}</h2>
-      <p>{t('license.images.description')}</p>
-    </div>
-    <MediaList>
-      <MediaListItem>
-        <MediaListItemImage>
-          <img src={image.image.url} alt={image.image.alt} />
-        </MediaListItemImage>
-        <MediaListItemBody
-          license={image.license}
-          title={t('license.images.rules')}
-          resourceUrl=""
-          locale="nb"
-          resourceType="image">
-          <MediaListItemActions>
-            <div className="c-medialist__ref">
-              <MediaListItemMeta
-                items={[
-                  {
-                    label: t('license.title'),
-                    description: image.title,
-                    metaType: metaTypes.title,
-                  },
-                  {
-                    label: t('license.originator'),
-                    description: image.authors.toString(),
-                    metaType: metaTypes.author,
-                  },
-                  {
-                    label: t('license.rightsholder'),
-                    description: image.rightsholders.toString(),
-                    metaType: metaTypes.copyrightHolder,
-                  },
-                  {
-                    label: t('license.source'),
-                    description: image.origin,
-                    metaType: metaTypes.other,
-                  },
-                ]}
-              />
-              <CopyButton outline copyNode={t('license.hasCopiedTitle')}>
-                {t('license.copyTitle')}
-              </CopyButton>
-              <Button outline onClick={() => {}}>
-                {t('license.download')}
-              </Button>
-            </div>
-          </MediaListItemActions>
-        </MediaListItemBody>
-      </MediaListItem>
-    </MediaList>
-  </div>
-);
+export const ImageContent = ({ t, image }) => {
+  const licenseItems = getLicenseItems(image, t);
+
+  image.created &&
+    licenseItems.push({
+      label: t('license.source'),
+      description: image.origin,
+      metaType: metaTypes.other,
+    });
+
+  const AnchorButton = StyledButton.withComponent('a');
+
+  return (
+    <>
+      <div className="u-introduction">
+        <h2>{t('license.images.heading')}</h2>
+        <p>{t('license.images.description')}</p>
+      </div>
+      <MediaList>
+        <MediaListItem>
+          <MediaListItemImage>
+            <img src={image.image.url} alt={image.image.alt} />
+          </MediaListItemImage>
+          <MediaListItemBody
+            license={image.license}
+            title={t('license.images.rules')}
+            resourceUrl=""
+            locale="nb"
+            resourceType="image">
+            <MediaListItemActions>
+              <div className="c-medialist__ref">
+                <MediaListItemMeta items={licenseItems} />
+                <CopyTextButton
+                  hasCopiedTitle={t('license.hasCopiedTitle')}
+                  copyTitle={t('license.copyTitle')}
+                  stringToCopy={getCopyrightCopyString(image, t)}
+                />
+                <AnchorButton
+                  href={downloadUrl(image.image.url)}
+                  appearance="outline"
+                  download>
+                  {t('license.download')}
+                </AnchorButton>
+              </div>
+            </MediaListItemActions>
+          </MediaListItemBody>
+        </MediaListItem>
+      </MediaList>
+    </>
+  );
+};
 
 ImageContent.propTypes = {
   t: PropTypes.func.isRequired,
@@ -160,8 +179,29 @@ ImageContent.propTypes = {
       alt: PropTypes.string,
     }),
     license: PropTypes.string,
-    authors: PropTypes.arrayOf(PropTypes.string),
+    authors: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        type: PropTypes.string,
+      }),
+    ),
     rightsholders: PropTypes.arrayOf(PropTypes.string),
     origin: PropTypes.string,
   }),
+};
+
+export const OembedContent = ({ oembed, t }) => (
+  <>
+    <h2>{t('license.embedlink.heading')}</h2>
+    <p>{t('license.embedlink.description')}</p>
+    <CopyTextButton
+      copyTitle={t('license.embedlink.copyTitle')}
+      hasCopiedTitle={t('license.embedlink.hasCopiedTitle')}
+      stringToCopy={oembed}
+    />
+  </>
+);
+
+OembedContent.propTypes = {
+  oembed: PropTypes.string.isRequired,
 };
