@@ -20,7 +20,8 @@ import { injectT } from '@ndla/i18n';
 
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
-import ConceptRoute from '../ConceptPage/ConceptRoute';
+import ConceptRoute from '../Routes/ConceptRoute';
+import ListingRoute from '../Routes/ListingRoute';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const StyledPageWrapper = styled.div`
@@ -49,6 +50,7 @@ export class App extends React.Component {
           <Switch>
             <Route path="/" exact component={ListingPage} />
             <Route path="/concepts" component={ConceptRoute} />
+            <Route path="/listing" component={ListingRoute} />
             <Route component={NotFoundPage} />
           </Switch>
         </StyledPageWrapper>
