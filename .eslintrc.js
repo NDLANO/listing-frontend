@@ -6,6 +6,13 @@ module.exports = {
   rules: {
     'react/prop-types': [ 2, {'ignore': ['children', 'className', 't'] }],
   },
+  overrides: {
+    files: ['**/*.ts', '**/*.tsx'],
+    parser: '@typescript-eslint/parser',
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 2,
+    },
+  },
   'globals': {
     '__CLIENT__': true,
     '__SERVER__': true,
