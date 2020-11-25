@@ -39,7 +39,7 @@ import {
   fetchTags,
   fetchConceptsByTags,
   fetchConcepts,
-} from './listingApi';
+} from '../../api/concept/conceptApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
 import ConceptPage from '../../components/Concept/ConceptPage';

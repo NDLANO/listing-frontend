@@ -8,7 +8,7 @@
 
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status';
 import config from '../../config';
-import { fetchConcept } from '../../containers/ListingPage/listingApi';
+import { fetchConcept } from '../../api/concept/conceptApi';
 import { isValidListeUrl } from '../../util/listingHelpers';
 import handleError from '../../util/handleError';
 

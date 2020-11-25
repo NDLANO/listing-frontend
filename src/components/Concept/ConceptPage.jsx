@@ -30,11 +30,9 @@ import {
   TextContent,
   OembedContent,
 } from '../../containers/ListingPage/LicenseBox';
-import {
-  fetchArticle,
-  fetchConcept,
-  fetchImage,
-} from '../../containers/ListingPage/listingApi';
+import { fetchArticle } from '../../api/article/articleApi';
+import { fetchConcept } from '../../api/concept/conceptApi';
+import { fetchImage } from '../../api/image/imageApi';
 import {
   fetchSubject,
   fetchSubjectIds,
