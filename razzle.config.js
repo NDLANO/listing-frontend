@@ -2,7 +2,22 @@ const { modifyRule } = require('razzle-config-utils');
 const webpack = require('webpack'); // eslint-disable-line import/no-extraneous-dependencies
 
 module.exports = {
-  plugins: [],
+  plugins: [{
+    name: 'typescript',
+    options: {
+      useBabel: true,
+      tsLoader: {
+        transpileOnly: false,
+        experimentalWatchApi: true,
+      },
+      forkTsChecker: {
+        tsconfig: './tsconfig.json',
+        tslint: undefined,
+        watch: './src',
+        typeCheck: false,
+      },
+    },
+  }],
   modify(config, { target, dev }) {
     const appConfig = config;
 

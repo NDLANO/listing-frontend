@@ -8,7 +8,7 @@
 
 import format from 'date-fns/format';
 
-export default function formatDate(date, locale) {
+export default function formatDate(date: string, locale: string): string {
   if (locale === 'nb' || locale === 'nn') {
     return format(date, 'DD.MM.YYYY');
   }
