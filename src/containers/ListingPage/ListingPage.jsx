@@ -43,7 +43,7 @@ import {
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
 import ConceptPage from '../../components/Concept/ConceptPage';
-import Footer from '../App/components/Footer';
+import Footer from '../../components/Footer';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};

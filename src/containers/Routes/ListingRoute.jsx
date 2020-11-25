@@ -19,6 +19,7 @@ const ListingRoute = ({ match }) => {
         <Switch>
           <Route
             path={`${match.url}/:listingFilter/:selectedLanguage?`}
+            // send props that indicates that embed-button and filters should not be visible
             render={routeProps => <ListingPage />}
           />
         </Switch>

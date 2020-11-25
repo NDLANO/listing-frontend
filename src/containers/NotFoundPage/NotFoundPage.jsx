@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import Footer from '../App/components/Footer';
+import Footer from '../../components/Footer';
 
 export default function NotFound() {
   return (
