@@ -178,6 +178,7 @@ ImageContent.propTypes = {
       url: PropTypes.string,
       alt: PropTypes.string,
     }),
+    created: PropTypes.string,
     license: PropTypes.string,
     authors: PropTypes.arrayOf(
       PropTypes.shape({
