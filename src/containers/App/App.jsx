@@ -20,8 +20,7 @@ import { injectT } from '@ndla/i18n';
 
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
-import ConceptRoute from '../Routes/ConceptRoute';
-import ListingRoute from '../Routes/ListingRoute';
+import ConceptPage from '../../components/Concept';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const StyledPageWrapper = styled.div`
@@ -39,7 +38,7 @@ export class App extends React.Component {
   }
 
   render() {
-    const { t } = this.props;
+    const { t, locale } = this.props;
     return (
       <PageContainer>
         <StyledPageWrapper>
@@ -48,9 +47,38 @@ export class App extends React.Component {
             meta={[{ name: 'description', content: t('meta.description') }]}
           />
           <Switch>
-            <Route path="/" exact component={ListingPage} />
-            <Route path="/concepts" component={ConceptRoute} />
-            <Route path="/listing" component={ListingRoute} />
+            <Route
+              path="/"
+              exact
+              component={routeProps => (
+                <ListingPage
+                  locale={locale}
+                  location={routeProps.location}
+                  isOembed={false}
+                />
+              )}
+            />
+            <Route
+              path="/concepts/:conceptId/:selectedLanguage?"
+              component={routeProps => (
+                <ConceptPage
+                  conceptId={Number(routeProps.match.params.conceptId)}
+                  inModal={false}
+                  language={routeProps.match.params.selectedLanguage || locale}
+                  locale={locale}
+                />
+              )}
+            />
+            <Route
+              path="/listing"
+              component={routeProps => (
+                <ListingPage
+                  isOembed={true}
+                  locale={locale}
+                  location={routeProps.location}
+                />
+              )}
+            />
             <Route component={NotFoundPage} />
           </Switch>
         </StyledPageWrapper>
