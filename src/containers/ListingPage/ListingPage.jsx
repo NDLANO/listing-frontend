@@ -150,12 +150,6 @@ const ListingPage = ({ t, locale, location }) => {
   }, []);
 
   useEffect(() => {
-    if (tags.length && subjectIds.length) {
-      getConcepts(1);
-    }
-  }, [queryParams.subjects, queryParams.filters, tags]);
-
-  useEffect(() => {
     getConceptFromQuery();
   }, [queryParams.concept]);
 
@@ -183,10 +177,13 @@ const ListingPage = ({ t, locale, location }) => {
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
   useEffect(() => {
-    getConcepts(page);
-  }, [debouncedSearchVal]);
+    if (tags.length && subjectIds.length) {
+      getConcepts(1);
+    }
+  }, [queryParams.subjects, queryParams.filters, tags, debouncedSearchVal]);
 
   const getConcepts = async page => {
+    console.log('Fetching stuff');
     const replace = page === 1;
     setLoading(!replace);
     if (queryParams.subjects.length) {
