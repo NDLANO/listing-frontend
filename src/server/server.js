@@ -77,6 +77,7 @@ async function handleRequest(req, res, route) {
 app.use(compression());
 app.use(ndlaMiddleware);
 
+app.get('/favicon.ico');
 app.get('/static/*');
 
 app.get('/robots.txt', (req, res) => {

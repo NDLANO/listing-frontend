@@ -66,6 +66,7 @@ const phrases = {
     relatedLinks: {
       label: 'Related articles',
     },
+    hits: '{count} hits',
   },
   license: {
     heading: 'How to reuse content',

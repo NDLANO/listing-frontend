@@ -113,6 +113,7 @@ const PAGE_SIZE = 100;
 
 const ListingPage = ({ t, locale, location }) => {
   const [concepts, setConcepts] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [subjectIds, setSubjectIds] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [filters, setFilters] = useState(new Map());
@@ -149,12 +150,6 @@ const ListingPage = ({ t, locale, location }) => {
   }, []);
 
   useEffect(() => {
-    if (tags.length && subjectIds.length) {
-      getConcepts(1);
-    }
-  }, [queryParams.subjects, queryParams.filters, tags]);
-
-  useEffect(() => {
     getConceptFromQuery();
   }, [queryParams.concept]);
 
@@ -176,14 +171,16 @@ const ListingPage = ({ t, locale, location }) => {
       }, delay);
       return () => clearTimeout(handler);
     }, [val, delay]);
-    return debouncedVal;
+    return `${debouncedVal}*`;
   };
 
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
   useEffect(() => {
-    getConcepts(page);
-  }, [debouncedSearchVal]);
+    if (tags.length && subjectIds.length) {
+      getConcepts(1);
+    }
+  }, [queryParams.subjects, queryParams.filters, tags, debouncedSearchVal]);
 
   const getConcepts = async page => {
     const replace = page === 1;
@@ -196,7 +193,7 @@ const ListingPage = ({ t, locale, location }) => {
         locale,
         debouncedSearchVal,
       );
-      handleSetConcepts(concepts.results, replace);
+      handleSetConcepts(concepts.results, concepts.totalCount, replace);
     } else if (queryParams.filters.length) {
       const concepts = await fetchConceptsByTags(
         tags.filter(tag =>
@@ -207,7 +204,7 @@ const ListingPage = ({ t, locale, location }) => {
         locale,
         debouncedSearchVal,
       );
-      handleSetConcepts(concepts.results, replace);
+      handleSetConcepts(concepts.results, concepts.totalCount, replace);
     } else {
       const concepts = await fetchConcepts(
         page,
@@ -215,7 +212,7 @@ const ListingPage = ({ t, locale, location }) => {
         locale,
         debouncedSearchVal,
       );
-      handleSetConcepts(concepts.results, replace);
+      handleSetConcepts(concepts.results, concepts.totalCount, replace);
     }
     setLoading(false);
   };
@@ -236,17 +233,14 @@ const ListingPage = ({ t, locale, location }) => {
     }
   };
 
-  const handleSetConcepts = (newConcepts, replace) => {
-    if (newConcepts.length) {
-      setShowButton(newConcepts.length === PAGE_SIZE);
-      if (replace) {
-        setConcepts(newConcepts);
-      } else {
-        setConcepts([...concepts, ...newConcepts]);
-      }
+  const handleSetConcepts = (newConcepts, totalCount, replace) => {
+    setShowButton(newConcepts.length === PAGE_SIZE);
+    if (replace) {
+      setConcepts(newConcepts);
     } else {
-      setShowButton(false);
+      setConcepts([...concepts, ...newConcepts]);
     }
+    setTotalCount(totalCount);
   };
 
   const handleChangeSubject = values => {
@@ -492,6 +486,7 @@ const ListingPage = ({ t, locale, location }) => {
           onSelectItem={handleSelectItem}
           renderMarkdown={renderMarkdown}
           filters={getFilters()}
+          totalCount={totalCount}
         />
         {showButton && (
           <ButtonWrapper>
