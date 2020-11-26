@@ -65,7 +65,6 @@ export class App extends React.Component {
                   conceptId={Number(routeProps.match.params.conceptId)}
                   inModal={false}
                   language={routeProps.match.params.selectedLanguage || locale}
-                  locale={locale}
                 />
               )}
             />
