@@ -9,18 +9,22 @@
 // import before all other imports component to make sure it is loaded before any emotion stuff.
 import '../../style/index.css';
 
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
+import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
+// @ts-ignore
 import { PageContainer } from '@ndla/ui';
-import { injectT } from '@ndla/i18n';
+import { injectT, tType } from '@ndla/i18n';
 
+// @ts-ignore
 import { getLocale } from '../Locale/localeSelectors';
+// @ts-ignore
 import ListingPage from '../ListingPage/ListingPage';
+// @ts-ignore
 import ConceptPage from '../../components/Concept';
+// @ts-ignore
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const StyledPageWrapper = styled.div`
@@ -30,72 +34,66 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export class App extends React.Component {
-  getChildContext() {
-    return {
-      locale: this.props.locale,
-    };
-  }
-
-  render() {
-    const { t, locale } = this.props;
-    return (
-      <PageContainer>
-        <StyledPageWrapper>
-          <Helmet
-            title="NDLA"
-            meta={[{ name: 'description', content: t('meta.description') }]}
-          />
-          <Switch>
-            <Route
-              path="/"
-              exact
-              component={routeProps => (
-                <ListingPage
-                  locale={locale}
-                  location={routeProps.location}
-                  isOembed={false}
-                />
-              )}
-            />
-            <Route
-              path="/concepts/:conceptId/:selectedLanguage?"
-              component={routeProps => (
-                <ConceptPage
-                  conceptId={Number(routeProps.match.params.conceptId)}
-                  inModal={false}
-                  language={routeProps.match.params.selectedLanguage || locale}
-                />
-              )}
-            />
-            <Route
-              path="/listing"
-              component={routeProps => (
-                <ListingPage
-                  isOembed={true}
-                  locale={locale}
-                  location={routeProps.location}
-                />
-              )}
-            />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </StyledPageWrapper>
-      </PageContainer>
-    );
-  }
+interface Props {
+  locale: string;
 }
 
-App.propTypes = {
-  locale: PropTypes.string.isRequired,
+interface ParamsProps {
+  conceptId: string;
+  selectedLanguage: string;
+}
+
+const App = ({ t, locale }: Props & tType): ReactElement => {
+  return (
+    <PageContainer>
+      <StyledPageWrapper>
+        <Helmet
+          title="NDLA"
+          meta={[{ name: 'description', content: t('meta.description') }]}
+        />
+        <Switch>
+          <Route
+            path="/"
+            exact
+            component={(routeProps: RouteComponentProps): ReactElement => (
+              <ListingPage
+                locale={locale}
+                location={routeProps.location}
+                isOembed={false}
+              />
+            )}
+          />
+          <Route
+            path="/concepts/:conceptId/:selectedLanguage?"
+            component={(
+              routeProps: RouteComponentProps<ParamsProps>,
+            ): ReactElement => (
+              <ConceptPage
+                conceptId={Number(routeProps.match.params.conceptId)}
+                inModal={false}
+                language={routeProps.match.params.selectedLanguage || locale}
+              />
+            )}
+          />
+          <Route
+            path="/listing"
+            component={(routeProps: RouteComponentProps): ReactElement => (
+              <ListingPage
+                isOembed={true}
+                locale={locale}
+                location={routeProps.location}
+              />
+            )}
+          />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </StyledPageWrapper>
+    </PageContainer>
+  );
 };
 
-App.childContextTypes = {
-  locale: PropTypes.string,
-};
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state: { locale: '' }): { locale: string } => ({
   locale: getLocale(state),
 });
 
-export default connect(mapStateToProps)(injectT(App));
+export default injectT(connect(mapStateToProps)(App));
