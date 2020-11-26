@@ -183,7 +183,6 @@ const ListingPage = ({ t, locale, location }) => {
   }, [queryParams.subjects, queryParams.filters, tags, debouncedSearchVal]);
 
   const getConcepts = async page => {
-    console.log('Fetching stuff');
     const replace = page === 1;
     setLoading(!replace);
     if (queryParams.subjects.length) {
