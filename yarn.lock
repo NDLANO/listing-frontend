@@ -1989,14 +1989,14 @@
     "@ndla/util" "^0.4.4"
     raven-js "^3.22.3"
 
-"@ndla/forms@^0.3.141":
-  version "0.3.141"
-  resolved "https://registry.yarnpkg.com/@ndla/forms/-/forms-0.3.141.tgz#70f4e5b1d77e7b2ce08c53dd793f561ad5897ad4"
-  integrity sha512-c2I1ktU421bZWubGtxWHx+TQho1zmN1taLISVu6wcHskth0Oa/yoK7XNy9qtNagGQIoNWigqie6a1ETmsY651w==
+"@ndla/forms@^0.3.142":
+  version "0.3.142"
+  resolved "https://registry.yarnpkg.com/@ndla/forms/-/forms-0.3.142.tgz#94f776eba13869162499995447e5c9348555279b"
+  integrity sha512-zygx0THqEu/jtQrukrS8cYqtlM4rQPf4QnnIhSgMB1gopj6nGJ33Hpyn5hcIN4yB8S+Zu5lvcE2BfdVcwHHEoA==
   dependencies:
     "@ndla/core" "^0.6.31"
     "@ndla/icons" "^0.6.25"
-    "@ndla/ui" "^0.29.0"
+    "@ndla/ui" "^0.29.1"
 
 "@ndla/hooks@^0.1.17":
   version "0.1.17"
@@ -2031,15 +2031,15 @@
     defined "1.0.0"
     react-bem-helper "1.4.1"
 
-"@ndla/listview@^0.3.72":
-  version "0.3.72"
-  resolved "https://registry.yarnpkg.com/@ndla/listview/-/listview-0.3.72.tgz#551f501eca916c8f5386b0f12a6e5220949841bc"
-  integrity sha512-Xd1gp9S+SKhfw6cxHqjIxMjDOJtCn4mjoAhbh/6bUHZE1bO8QkoUB+2AohlMOTYzuKdFc+uf3LXItTouGAzfiA==
+"@ndla/listview@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@ndla/listview/-/listview-0.4.0.tgz#8aa042a231ab87360f76bf933bda1134fae9a818"
+  integrity sha512-b8QlR3/V1sqE3K4ovUFB4Q6JW2aNWRpalnvuCi3+TCJo5wHuN82ZHjT4eE/b+WVQg+/wlVJMeiyObSE6moXQfQ==
   dependencies:
     "@ndla/core" "^0.6.31"
     "@ndla/i18n" "^0.5.1"
     "@ndla/icons" "^0.6.25"
-    "@ndla/ui" "^0.29.0"
+    "@ndla/ui" "^0.29.1"
 
 "@ndla/modal@^0.4.32":
   version "0.4.32"
@@ -2100,10 +2100,10 @@
   dependencies:
     "@ndla/core" "^0.6.31"
 
-"@ndla/ui@^0.29.0":
-  version "0.29.0"
-  resolved "https://registry.yarnpkg.com/@ndla/ui/-/ui-0.29.0.tgz#bb8bd4dbbe7c4731233a9961a85f26a66ae85fbc"
-  integrity sha512-LmEEcaZsrT+roRng1hnKzCFkIzXtsxp1lILLhunnxjZB9LL/OXtoEsDgYHvFKEI/9lCQ3wZvsJtTYRjkUOVuCA==
+"@ndla/ui@^0.29.1":
+  version "0.29.1"
+  resolved "https://registry.yarnpkg.com/@ndla/ui/-/ui-0.29.1.tgz#498d07ffd8c6f6137289869e3d68eaa86418947f"
+  integrity sha512-scp8QsCUAy08X8Thr6EGG7k0+z3oUFfICvU88+jxjabkW8flAm4tcVLhno4TQVM7KgBM9VBN7IqvHHchG3/AAg==
   dependencies:
     "@ndla/button" "^0.3.41"
     "@ndla/carousel" "^0.3.31"
