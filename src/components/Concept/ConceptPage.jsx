@@ -23,7 +23,7 @@ import { injectT } from '@ndla/i18n';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
-import { CreatedBy, Spinner } from '@ndla/ui';
+import { CreatedBy, OneColumn, Spinner } from '@ndla/ui';
 import config from '../../config';
 import { ImageContent, TextContent, OembedContent } from '../LicenseBox';
 import { fetchArticle } from '../../api/article/articleApi';
@@ -240,7 +240,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   }
 
   return (
-    <>
+    <OneColumn>
       {inModal ? (
         <NotionDialogWrapper
           title={concept.title}
@@ -258,7 +258,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
           />
         </>
       )}
-    </>
+    </OneColumn>
   );
 };
 

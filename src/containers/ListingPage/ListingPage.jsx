@@ -7,7 +7,6 @@
  */
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Remarkable } from 'remarkable';
 import Downshift from 'downshift';
@@ -32,7 +31,6 @@ import {
   mapConceptToListItem,
 } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
-import { getLocale } from '../Locale/localeSelectors';
 import {
   fetchConcept,
   fetchConceptsBySubject,
@@ -111,7 +109,7 @@ const categoryFilterCSS = props => css`
 
 const PAGE_SIZE = 100;
 
-const ListingPage = ({ t, locale, location }) => {
+const ListingPage = ({ t, locale, location, isOembed }) => {
   const [concepts, setConcepts] = useState([]);
   const [subjectIds, setSubjectIds] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -512,14 +510,11 @@ const ListingPage = ({ t, locale, location }) => {
 
 ListingPage.propTypes = {
   locale: PropTypes.string.isRequired,
+  isOembed: PropTypes.bool,
   location: PropTypes.shape({
     search: PropTypes.string,
     pathname: PropTypes.string,
   }),
 };
 
-const mapStateToProps = state => ({
-  locale: getLocale(state),
-});
-
-export default connect(mapStateToProps)(injectT(ListingPage));
+export default injectT(ListingPage);
