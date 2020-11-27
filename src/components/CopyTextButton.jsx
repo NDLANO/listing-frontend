@@ -11,7 +11,12 @@ import PropTypes from 'prop-types';
 import { copyTextToClipboard } from '@ndla/util';
 import Button from '@ndla/button';
 
-const CopyTextButton = ({ copyTitle, hasCopiedTitle, stringToCopy }) => {
+const CopyTextButton = ({
+  copyTitle,
+  hasCopiedTitle,
+  stringToCopy,
+  timeout,
+}) => {
   const [hasCopied, setHasCopied] = useState(false);
   let buttonContainer = useRef(null);
   let timer;
@@ -29,7 +34,7 @@ const CopyTextButton = ({ copyTitle, hasCopiedTitle, stringToCopy }) => {
       timer = setTimeout(() => {
         // Reset state after 10 seconds
         setHasCopied(false);
-      }, 10000);
+      }, timeout || 10000);
     }
   };
 
@@ -53,6 +58,7 @@ CopyTextButton.propTypes = {
   stringToCopy: PropTypes.string.isRequired,
   copyTitle: PropTypes.string.isRequired,
   hasCopiedTitle: PropTypes.string.isRequired,
+  timeout: PropTypes.number,
 };
 
 export default CopyTextButton;

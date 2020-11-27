@@ -252,8 +252,8 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
           <NotionHeaderWithoutExitButton title={concept.title} />
           {conceptBody}
           <CreatedBy
-            name={t('createdBy.content')}
-            description={t('createdBy.text')}
+            name={t('createdBy.concept.content')}
+            description={t('createdBy.concept.text')}
             url={`${config.ndlaListingFrontendDomain}/?concept=${conceptId}`}
           />
         </>

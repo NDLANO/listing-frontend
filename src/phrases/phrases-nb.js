@@ -162,8 +162,14 @@ const phrases = {
     },
   },
   createdBy: {
-    content: 'Forklaringen',
-    text: 'er utarbeidet av',
+    concept: {
+      content: 'Forklaringen',
+      text: 'er utarbeidet av',
+    },
+    listing: {
+      content: 'Liste',
+      text: 'er utarbeidet av',
+    },
   },
 };
 

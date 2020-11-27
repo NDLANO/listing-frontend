@@ -131,8 +131,14 @@ const phrases = {
     },
   },
   createdBy: {
-    content: 'The concept',
-    text: 'is created by',
+    concept: {
+      content: 'The concept',
+      text: 'is created by',
+    },
+    listing: {
+      content: 'Listing',
+      text: 'is created by',
+    },
   },
 };
 
