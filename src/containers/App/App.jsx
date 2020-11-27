@@ -9,22 +9,18 @@
 // import before all other imports component to make sure it is loaded before any emotion stuff.
 import '../../style/index.css';
 
-import React, { ReactElement } from 'react';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
-// @ts-ignore
 import { PageContainer } from '@ndla/ui';
-import { injectT, tType } from '@ndla/i18n';
+import { injectT } from '@ndla/i18n';
 
-// @ts-ignore
 import { getLocale } from '../Locale/localeSelectors';
-// @ts-ignore
 import ListingPage from '../ListingPage/ListingPage';
-// @ts-ignore
 import ConceptPage from '../../components/Concept';
-// @ts-ignore
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const StyledPageWrapper = styled.div`
@@ -34,16 +30,7 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-interface Props {
-  locale: string;
-}
-
-interface ParamsProps {
-  conceptId: string;
-  selectedLanguage: string;
-}
-
-const App = ({ t, locale }: Props & tType): ReactElement => {
+const App = ({ locale, t }) => {
   return (
     <PageContainer>
       <StyledPageWrapper>
@@ -55,7 +42,7 @@ const App = ({ t, locale }: Props & tType): ReactElement => {
           <Route
             path="/"
             exact
-            component={(routeProps: RouteComponentProps): ReactElement => (
+            component={routeProps => (
               <ListingPage
                 locale={locale}
                 location={routeProps.location}
@@ -65,9 +52,7 @@ const App = ({ t, locale }: Props & tType): ReactElement => {
           />
           <Route
             path="/concepts/:conceptId/:selectedLanguage?"
-            component={(
-              routeProps: RouteComponentProps<ParamsProps>,
-            ): ReactElement => (
+            component={routeProps => (
               <ConceptPage
                 conceptId={Number(routeProps.match.params.conceptId)}
                 inModal={false}
@@ -77,7 +62,7 @@ const App = ({ t, locale }: Props & tType): ReactElement => {
           />
           <Route
             path="/listing"
-            component={(routeProps: RouteComponentProps): ReactElement => (
+            component={routeProps => (
               <ListingPage
                 isOembed={true}
                 locale={locale}
@@ -92,8 +77,12 @@ const App = ({ t, locale }: Props & tType): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: { locale: '' }): { locale: string } => ({
+App.propTypes = {
+  locale: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default injectT(connect(mapStateToProps)(App));
+export default connect(mapStateToProps)(injectT(App));
