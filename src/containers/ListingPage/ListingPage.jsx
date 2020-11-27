@@ -423,12 +423,13 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
                 />
               </SubjectFilterWrapper>
               <StyledLanguageSelector>
+                {
+                  // TODO: Bedre styling på CopyTextButton, sjekk issue-Trello
+                }
                 <CopyTextButton
                   copyTitle={t('license.embedlink.copyTitle')}
                   hasCopiedTitle={t('license.embedlink.hasCopiedTitle')}
-                  stringToCopy={`${
-                    config.ndlaListingFrontendDomain
-                  }/listing${decodeURIComponent(location.search)}`}
+                  stringToCopy={`${config.ndlaListingFrontendDomain}/listing${location.search}`}
                   timeout={2000}
                 />
               </StyledLanguageSelector>

@@ -25,7 +25,7 @@ const getOembedObject = (req, title, html) => {
   };
 };
 
-const getHTMLandTitle = async id => {
+const getConceptHTMLandTitle = async id => {
   const concept = await fetchConcept(id);
   const title = concept.title?.title;
   return {
@@ -39,16 +39,8 @@ const getConceptId = url => {
   return isValidListeUrl(decodedUrl) ? decodedUrl.split('=')[1] : undefined;
 };
 
-export async function oembedConceptRoute(req) {
-  const { url } = req.query;
-  if (!url) {
-    return {
-      status: BAD_REQUEST,
-      data: 'Bad request. Missing url param.',
-    };
-  }
-
-  const id = getConceptId(url);
+const oembedConceptRoute = async (req, url) => {
+  const id = await getConceptId(url);
   if (!id) {
     return {
       status: BAD_REQUEST,
@@ -57,7 +49,7 @@ export async function oembedConceptRoute(req) {
   }
 
   try {
-    const { html, title } = await getHTMLandTitle(id);
+    const { html, title } = await getConceptHTMLandTitle(id);
     return getOembedObject(req, title, html);
   } catch (error) {
     handleError(error);
@@ -65,6 +57,39 @@ export async function oembedConceptRoute(req) {
     return {
       status,
       data: 'Internal server error',
+    };
+  }
+};
+
+const oembedListingRoute = (req, url) => {
+  const title = url.split('filters[]=')[1]; // TODO: Tittelen skal være første liste filter
+  const html = `<iframe aria-label="${'decodedTitle'}" src="${
+    config.ndlaListingFrontendDomain
+  }/listing${5}" frameborder="0" allowFullscreen="" />`;
+
+  return getOembedObject(req, title, html);
+};
+
+export async function oembedRoute(req) {
+  // TODO: To encode or not to encode, that is the question
+
+  const { url } = req.query;
+
+  if (!url) {
+    return {
+      status: BAD_REQUEST,
+      data: 'Bad request. Missing url param.',
+    };
+  }
+
+  if (url.includes('concept')) {
+    return await oembedConceptRoute(req, url);
+  } else if (url.includes('filters')) {
+    return oembedListingRoute(req, url);
+  } else {
+    return {
+      status: BAD_REQUEST,
+      data: 'Bad request.',
     };
   }
 }
