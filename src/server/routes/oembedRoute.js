@@ -62,17 +62,17 @@ const oembedConceptRoute = async (req, url) => {
 };
 
 const oembedListingRoute = (req, url) => {
-  const title = url.split('filters[]=')[1]; // TODO: Tittelen skal være første liste filter
+  const decodedUrl = decodeURIComponent(url);
+  // This currently only supports one filter
+  const filter = decodedUrl.split('filters[]=')[1];
   const html = `<iframe aria-label="${'decodedTitle'}" src="${
     config.ndlaListingFrontendDomain
-  }/listing${5}" frameborder="0" allowFullscreen="" />`;
+  }/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
 
-  return getOembedObject(req, title, html);
+  return getOembedObject(req, filter, html);
 };
 
 export async function oembedRoute(req) {
-  // TODO: To encode or not to encode, that is the question
-
   const { url } = req.query;
 
   if (!url) {
