@@ -16,6 +16,7 @@ const CopyTextButton = ({
   hasCopiedTitle,
   stringToCopy,
   timeout,
+  ghostPill,
 }) => {
   const [hasCopied, setHasCopied] = useState(false);
   let buttonContainer = useRef(null);
@@ -44,10 +45,11 @@ const CopyTextButton = ({
         buttonContainer = r;
       }}>
       <Button
-        outline
-        className="c-licenseToggle__button"
+        outline={!ghostPill}
+        className={ghostPill ? '' : 'c-licenseToggle__button'}
         disabled={hasCopied}
-        onClick={handleClick}>
+        onClick={handleClick}
+        ghostPill={ghostPill}>
         {hasCopied ? hasCopiedTitle : copyTitle}
       </Button>
     </span>
@@ -59,6 +61,7 @@ CopyTextButton.propTypes = {
   copyTitle: PropTypes.string.isRequired,
   hasCopiedTitle: PropTypes.string.isRequired,
   timeout: PropTypes.number,
+  ghostPill: PropTypes.bool,
 };
 
 export default CopyTextButton;
