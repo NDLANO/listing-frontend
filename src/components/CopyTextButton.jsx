@@ -9,6 +9,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { copyTextToClipboard } from '@ndla/util';
+import { Code } from '@ndla/icons/editor';
 import Button from '@ndla/button';
 
 const CopyTextButton = ({
@@ -50,7 +51,7 @@ const CopyTextButton = ({
         disabled={hasCopied}
         onClick={handleClick}
         ghostPill={ghostPill}>
-        {hasCopied ? hasCopiedTitle : copyTitle}
+        <Code /> {hasCopied ? hasCopiedTitle : copyTitle}
       </Button>
     </span>
   );

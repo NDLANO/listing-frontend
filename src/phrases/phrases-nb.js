@@ -82,8 +82,8 @@ const phrases = {
       heading: 'Slik viser du forklaringen i annet innhold',
       description:
         'Denne lenken viser forklaringen uten kontekst (meny og bunntekst)',
-      copyTitle: 'Kopier lenke',
-      hasCopiedTitle: 'Lenke kopiert',
+      copyTitle: 'Kopier innbyggingslenke',
+      hasCopiedTitle: 'Innbyggingslenke kopiert',
     },
     images: {
       heading: 'Slik bruker du bilder fra artikkelen',
