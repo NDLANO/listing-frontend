@@ -82,8 +82,8 @@ const phrases = {
       heading: 'Slik viser du forklaringa i anna innhald',
       description:
         'Denne lenka viser forklaringa utan kontekst (meny og botntekst)',
-      copyTitle: 'Kopier lenke',
-      hasCopiedTitle: 'Lenke kopiert',
+      copyTitle: 'Kopier innbyggingslenke',
+      hasCopiedTitle: 'Innbyggingslenke kopiert',
     },
     images: {
       heading: 'Slik bruker du bilete frå artikkelen',
@@ -163,8 +163,14 @@ const phrases = {
     },
   },
   createdBy: {
-    content: 'Forklaringa',
-    text: 'er utarbeida av',
+    concept: {
+      content: 'Forklaringa',
+      text: 'er utarbeida av',
+    },
+    listing: {
+      content: 'Lista',
+      text: 'er utarbeida av',
+    },
   },
 };
 

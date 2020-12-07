@@ -20,7 +20,7 @@ import { injectT } from '@ndla/i18n';
 
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
-import ConceptRoute from '../ConceptPage/ConceptRoute';
+import ConceptPage from '../../components/Concept';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const StyledPageWrapper = styled.div`
@@ -30,39 +30,55 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export class App extends React.Component {
-  getChildContext() {
-    return {
-      locale: this.props.locale,
-    };
-  }
-
-  render() {
-    const { t } = this.props;
-    return (
-      <PageContainer>
-        <StyledPageWrapper>
-          <Helmet
-            title="NDLA"
-            meta={[{ name: 'description', content: t('meta.description') }]}
+const App = ({ locale, t }) => {
+  return (
+    <PageContainer>
+      <StyledPageWrapper>
+        <Helmet
+          title="NDLA"
+          meta={[{ name: 'description', content: t('meta.description') }]}
+        />
+        <Switch>
+          <Route
+            path="/"
+            exact
+            component={routeProps => (
+              <ListingPage
+                locale={locale}
+                location={routeProps.location}
+                isOembed={false}
+              />
+            )}
           />
-          <Switch>
-            <Route path="/" exact component={ListingPage} />
-            <Route path="/concepts" component={ConceptRoute} />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </StyledPageWrapper>
-      </PageContainer>
-    );
-  }
-}
+          <Route
+            path="/concepts/:conceptId/:selectedLanguage?"
+            component={routeProps => (
+              <ConceptPage
+                conceptId={Number(routeProps.match.params.conceptId)}
+                inModal={false}
+                language={routeProps.match.params.selectedLanguage || locale}
+              />
+            )}
+          />
+          <Route
+            path="/listing"
+            component={routeProps => (
+              <ListingPage
+                isOembed={true}
+                locale={locale}
+                location={routeProps.location}
+              />
+            )}
+          />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </StyledPageWrapper>
+    </PageContainer>
+  );
+};
 
 App.propTypes = {
   locale: PropTypes.string.isRequired,
-};
-
-App.childContextTypes = {
-  locale: PropTypes.string,
 };
 
 const mapStateToProps = state => ({

@@ -13,7 +13,7 @@ import styled from '@emotion/styled';
 import { injectT } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
 
-import { getLocale } from '../../Locale/localeSelectors';
+import { getLocale } from '../containers/Locale/localeSelectors';
 
 const StyledFooterWrapper = styled.div`
   margin-top: 52px;

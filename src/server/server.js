@@ -20,8 +20,7 @@ global.__SERVER__ = true;
 global.__DISABLE_SSR__ = config.disableSSR; // Disables server side rendering
 
 const defaultRoute = require('./routes/defaultRoute').defaultRoute;
-const oembedConceptRoute = require('./routes/oembedConceptRoute')
-  .oembedConceptRoute;
+const oembedRoute = require('./routes/oembedRoute').oembedRoute;
 const app = express();
 
 const allowedBodyContentTypes = [
@@ -44,13 +43,6 @@ const ndlaMiddleware = [
       includeSubDomains: true,
     },
     contentSecurityPolicy,
-    frameguard:
-      process.env.NODE_ENV === 'development'
-        ? {
-            action: 'allow-from',
-            domain: '*://localhost',
-          }
-        : undefined,
   }),
 ];
 
@@ -91,7 +83,7 @@ app.get('/health', (req, res) => {
 
 app.get('/oembed', ndlaMiddleware, async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  handleRequest(req, res, oembedConceptRoute);
+  handleRequest(req, res, oembedRoute);
 });
 
 app.get('*', (req, res) => {

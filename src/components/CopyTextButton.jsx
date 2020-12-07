@@ -9,9 +9,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { copyTextToClipboard } from '@ndla/util';
+import { Code } from '@ndla/icons/editor';
 import Button from '@ndla/button';
 
-const CopyTextButton = ({ copyTitle, hasCopiedTitle, stringToCopy }) => {
+const CopyTextButton = ({
+  copyTitle,
+  hasCopiedTitle,
+  stringToCopy,
+  timeout,
+  ghostPill,
+}) => {
   const [hasCopied, setHasCopied] = useState(false);
   let buttonContainer = useRef(null);
   let timer;
@@ -29,7 +36,7 @@ const CopyTextButton = ({ copyTitle, hasCopiedTitle, stringToCopy }) => {
       timer = setTimeout(() => {
         // Reset state after 10 seconds
         setHasCopied(false);
-      }, 10000);
+      }, timeout || 10000);
     }
   };
 
@@ -39,11 +46,12 @@ const CopyTextButton = ({ copyTitle, hasCopiedTitle, stringToCopy }) => {
         buttonContainer = r;
       }}>
       <Button
-        outline
-        className="c-licenseToggle__button"
+        outline={!ghostPill}
+        className={ghostPill ? '' : 'c-licenseToggle__button'}
         disabled={hasCopied}
-        onClick={handleClick}>
-        {hasCopied ? hasCopiedTitle : copyTitle}
+        onClick={handleClick}
+        ghostPill={ghostPill}>
+        <Code /> {hasCopied ? hasCopiedTitle : copyTitle}
       </Button>
     </span>
   );
@@ -53,6 +61,8 @@ CopyTextButton.propTypes = {
   stringToCopy: PropTypes.string.isRequired,
   copyTitle: PropTypes.string.isRequired,
   hasCopiedTitle: PropTypes.string.isRequired,
+  timeout: PropTypes.number,
+  ghostPill: PropTypes.bool,
 };
 
 export default CopyTextButton;

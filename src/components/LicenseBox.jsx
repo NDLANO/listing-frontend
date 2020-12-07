@@ -20,10 +20,10 @@ import {
 import { FileDocumentOutline } from '@ndla/icons/common';
 import { metaTypes } from '@ndla/licenses';
 import { StyledButton } from '@ndla/button';
-import CopyTextButton from '../../components/util/CopyTextButton';
-import { getCopyrightCopyString } from '../../util/getCopyrightCopyString';
-import { downloadUrl } from '../../util/downloadHelpers';
-import formatDate from '../../util/formatDate';
+import CopyTextButton from './CopyTextButton';
+import { getCopyrightCopyString } from '../util/getCopyrightCopyString';
+import { downloadUrl } from '../util/downloadHelpers';
+import formatDate from '../util/formatDate';
 
 const getLicenseItems = (entity, t) => {
   const licenseItems = [];
@@ -178,6 +178,7 @@ ImageContent.propTypes = {
       url: PropTypes.string,
       alt: PropTypes.string,
     }),
+    created: PropTypes.string,
     license: PropTypes.string,
     authors: PropTypes.arrayOf(
       PropTypes.shape({

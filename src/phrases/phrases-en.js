@@ -79,8 +79,8 @@ const phrases = {
     embedlink: {
       heading: 'How to show the concept in other content',
       description: 'This url shows the concept without menu and footer',
-      copyTitle: 'Copy link',
-      hasCopiedTitle: 'Link copied',
+      copyTitle: 'Copy embed link',
+      hasCopiedTitle: 'Embed link copied',
     },
     images: {
       heading: 'How to use images from the article',
@@ -132,8 +132,14 @@ const phrases = {
     },
   },
   createdBy: {
-    content: 'The concept',
-    text: 'is created by',
+    concept: {
+      content: 'The concept',
+      text: 'is created by',
+    },
+    listing: {
+      content: 'The list',
+      text: 'is created by',
+    },
   },
 };
 

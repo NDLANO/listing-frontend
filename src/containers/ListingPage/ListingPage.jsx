@@ -7,7 +7,6 @@
  */
 import React, { useState, useEffect, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { Remarkable } from 'remarkable';
 import Downshift from 'downshift';
@@ -21,6 +20,7 @@ import {
   FilterListPhone,
   LanguageSelector,
   MastheadItem,
+  CreatedBy,
 } from '@ndla/ui';
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
@@ -32,18 +32,19 @@ import {
   mapConceptToListItem,
 } from '../../util/listingHelpers';
 import useQueryParameter from '../../util/useQueryParameter';
-import { getLocale } from '../Locale/localeSelectors';
 import {
   fetchConcept,
   fetchConceptsBySubject,
   fetchTags,
   fetchConceptsByTags,
   fetchConcepts,
-} from './listingApi';
+} from '../../api/concept/conceptApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
 import ConceptPage from '../../components/Concept/ConceptPage';
-import Footer from '../App/components/Footer';
+import Footer from '../../components/Footer';
+import CopyTextButton from '../../components/CopyTextButton';
+import config from '../../config';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
@@ -55,6 +56,10 @@ const HeaderWithLanguageWrapper = styled.div`
 `;
 
 const StyledLanguageSelector = styled.div`
+  margin-top: ${spacing.large};
+`;
+
+const StyledEmbedCopyButton = styled.div`
   margin-top: ${spacing.large};
   margin-left: auto;
 `;
@@ -111,7 +116,7 @@ const categoryFilterCSS = props => css`
 
 const PAGE_SIZE = 100;
 
-const ListingPage = ({ t, locale, location }) => {
+const ListingPage = ({ t, locale, location, isOembed }) => {
   const [concepts, setConcepts] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [subjectIds, setSubjectIds] = useState([]);
@@ -392,80 +397,97 @@ const ListingPage = ({ t, locale, location }) => {
     <>
       <OneColumn>
         <Helmet title={t(`themePage.heading`)} />
-        <HeaderWithLanguageWrapper>
-          <SubjectFilterWrapper>
-            <FilterListPhone
-              preid="subject-list"
-              label={t(`listview.filters.subject.openFilter`)}
-              options={subjects.map(item => ({
-                title: item.name,
-                value: item.id,
-              }))}
-              alignedGroup
-              showActiveFiltersOnSmallScreen
-              values={queryParams.subjects}
-              messages={{
-                useFilter: t(`listview.filters.subject.useFilter`),
-                openFilter: t(`listview.filters.subject.openFilter`),
-                closeFilter: t(`listview.filters.subject.closeFilter`),
-              }}
-              onChange={handleChangeSubject}
-              viewMode="allModal"
-            />
-          </SubjectFilterWrapper>
-          <StyledLanguageSelector>
-            <MastheadItem>
-              <LanguageSelector
-                options={getLocaleUrls(locale, location)}
-                currentLanguage={locale}
-                alwaysVisible
-              />
-            </MastheadItem>
-          </StyledLanguageSelector>
-        </HeaderWithLanguageWrapper>
-        <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
-        <CategoriesFilterWrapper>
-          <Downshift
-            onSelect={handleChangeListFilter}
-            onStateChange={handleStateChangeListFilter}
-            isOpen={filterListOpen}>
-            {({ getInputProps, getRootProps, getMenuProps, getItemProps }) => {
-              return (
-                <div>
-                  <DropdownInput
-                    multiSelect
-                    {...getInputProps(categoryFilterInputProps)}
-                    data-testid={'dropdownInput'}
-                    iconRight={
-                      filterListOpen ? (
-                        <Search />
-                      ) : (
-                        <span onClick={onFilterSearchFocus}>
-                          <ChevronDown />
-                        </span>
-                      )
-                    }
-                    values={selectedListFilter ? [selectedListFilter] : []}
-                    removeItem={handleRemoveFilter}
-                    customCSS={categoryFilterCSS({
-                      hasValues: selectedListFilter,
-                    })}
+        {!isOembed && (
+          <>
+            <HeaderWithLanguageWrapper>
+              <SubjectFilterWrapper>
+                <FilterListPhone
+                  preid="subject-list"
+                  label={t(`listview.filters.subject.openFilter`)}
+                  options={subjects.map(item => ({
+                    title: item.name,
+                    value: item.id,
+                  }))}
+                  alignedGroup
+                  showActiveFiltersOnSmallScreen
+                  values={queryParams.subjects}
+                  messages={{
+                    useFilter: t(`listview.filters.subject.useFilter`),
+                    openFilter: t(`listview.filters.subject.openFilter`),
+                    closeFilter: t(`listview.filters.subject.closeFilter`),
+                  }}
+                  onChange={handleChangeSubject}
+                  viewMode="allModal"
+                />
+              </SubjectFilterWrapper>
+              <StyledEmbedCopyButton>
+                {selectedListFilter && (
+                  <CopyTextButton
+                    copyTitle={t('license.embedlink.copyTitle')}
+                    hasCopiedTitle={t('license.embedlink.hasCopiedTitle')}
+                    stringToCopy={`${config.ndlaListingFrontendDomain}/listing?filters[]=${selectedListFilter}`}
+                    timeout={5000}
+                    ghostPill
                   />
-                  <DropdownMenu
-                    getMenuProps={getMenuProps}
-                    getItemProps={getItemProps}
-                    isOpen={filterListOpen}
-                    items={currentListFilters}
-                    maxRender={1000}
-                    hideTotalSearchCount
-                    positionAbsolute
+                )}
+              </StyledEmbedCopyButton>
+              <StyledLanguageSelector>
+                <MastheadItem>
+                  <LanguageSelector
+                    options={getLocaleUrls(locale, location)}
+                    currentLanguage={locale}
+                    alwaysVisible
                   />
-                </div>
-              );
-            }}
-          </Downshift>
-        </CategoriesFilterWrapper>
+                </MastheadItem>
+              </StyledLanguageSelector>
+            </HeaderWithLanguageWrapper>
+            <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
+            <CategoriesFilterWrapper>
+              <Downshift
+                onSelect={handleChangeListFilter}
+                onStateChange={handleStateChangeListFilter}
+                isOpen={filterListOpen}>
+                {({ getInputProps, getMenuProps, getItemProps }) => {
+                  return (
+                    <div>
+                      <DropdownInput
+                        multiSelect
+                        {...getInputProps(categoryFilterInputProps)}
+                        data-testid={'dropdownInput'}
+                        iconRight={
+                          filterListOpen ? (
+                            <Search />
+                          ) : (
+                            <span onClick={onFilterSearchFocus}>
+                              <ChevronDown />
+                            </span>
+                          )
+                        }
+                        values={selectedListFilter ? [selectedListFilter] : []}
+                        removeItem={handleRemoveFilter}
+                        customCSS={categoryFilterCSS({
+                          hasValues: selectedListFilter,
+                        })}
+                      />
+                      <DropdownMenu
+                        getMenuProps={getMenuProps}
+                        getItemProps={getItemProps}
+                        isOpen={filterListOpen}
+                        items={currentListFilters}
+                        maxRender={1000}
+                        hideTotalSearchCount
+                        positionAbsolute
+                      />
+                    </div>
+                  );
+                }}
+              </Downshift>
+            </CategoriesFilterWrapper>
+          </>
+        )}
         <ListView
+          disableSearch={isOembed}
+          disableViewOption={isOembed}
           items={listItems}
           detailedItem={detailedItem}
           selectCallback={setDetailedItem}
@@ -485,7 +507,7 @@ const ListingPage = ({ t, locale, location }) => {
           }
           onSelectItem={handleSelectItem}
           renderMarkdown={renderMarkdown}
-          filters={getFilters()}
+          filters={isOembed ? [] : getFilters()}
           totalCount={totalCount}
         />
         {showButton && (
@@ -499,22 +521,28 @@ const ListingPage = ({ t, locale, location }) => {
             )}
           </ButtonWrapper>
         )}
+        {isOembed && (
+          <CreatedBy
+            name={t('createdBy.listing.content')}
+            description={t('createdBy.listing.text')}
+            url={`${config.ndlaListingFrontendDomain}/${decodeURIComponent(
+              location.search,
+            )}`}
+          />
+        )}
       </OneColumn>
-      <Footer t={t} />
+      {!isOembed && <Footer t={t} />}
     </>
   );
 };
 
 ListingPage.propTypes = {
   locale: PropTypes.string.isRequired,
+  isOembed: PropTypes.bool,
   location: PropTypes.shape({
     search: PropTypes.string,
     pathname: PropTypes.string,
   }),
 };
 
-const mapStateToProps = state => ({
-  locale: getLocale(state),
-});
-
-export default connect(mapStateToProps)(injectT(ListingPage));
+export default injectT(ListingPage);

@@ -23,18 +23,12 @@ import { injectT } from '@ndla/i18n';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
-import { CreatedBy, Spinner } from '@ndla/ui';
+import { CreatedBy, OneColumn, Spinner } from '@ndla/ui';
 import config from '../../config';
-import {
-  ImageContent,
-  TextContent,
-  OembedContent,
-} from '../../containers/ListingPage/LicenseBox';
-import {
-  fetchArticle,
-  fetchConcept,
-  fetchImage,
-} from '../../containers/ListingPage/listingApi';
+import { ImageContent, TextContent, OembedContent } from '../LicenseBox';
+import { fetchArticle } from '../../api/article/articleApi';
+import { fetchConcept } from '../../api/concept/conceptApi';
+import { fetchImage } from '../../api/image/imageApi';
 import {
   fetchSubject,
   fetchSubjectIds,
@@ -246,7 +240,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   }
 
   return (
-    <>
+    <OneColumn>
       {inModal ? (
         <NotionDialogWrapper
           title={concept.title}
@@ -258,13 +252,13 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
           <NotionHeaderWithoutExitButton title={concept.title} />
           {conceptBody}
           <CreatedBy
-            name={t('createdBy.content')}
-            description={t('createdBy.text')}
+            name={t('createdBy.concept.content')}
+            description={t('createdBy.concept.text')}
             url={`${config.ndlaListingFrontendDomain}/?concept=${conceptId}`}
           />
         </>
       )}
-    </>
+    </OneColumn>
   );
 };
 
