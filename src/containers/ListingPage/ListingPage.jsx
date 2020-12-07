@@ -57,6 +57,10 @@ const HeaderWithLanguageWrapper = styled.div`
 
 const StyledLanguageSelector = styled.div`
   margin-top: ${spacing.large};
+`;
+
+const StyledEmbedCopyButton = styled.div`
+  margin-top: ${spacing.large};
   margin-left: auto;
 `;
 
@@ -416,20 +420,17 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
                   viewMode="allModal"
                 />
               </SubjectFilterWrapper>
-              <StyledLanguageSelector>
-                {
-                  // TODO: Bedre styling på CopyTextButton, sjekk issue-Trello
-                }
+              <StyledEmbedCopyButton>
                 {selectedListFilter && (
                   <CopyTextButton
                     copyTitle={t('license.embedlink.copyTitle')}
                     hasCopiedTitle={t('license.embedlink.hasCopiedTitle')}
                     stringToCopy={`${config.ndlaListingFrontendDomain}/listing?filters[]=${selectedListFilter}`}
-                    timeout={2000}
+                    timeout={5000}
                     ghostPill
                   />
                 )}
-              </StyledLanguageSelector>
+              </StyledEmbedCopyButton>
               <StyledLanguageSelector>
                 <MastheadItem>
                   <LanguageSelector
