@@ -168,7 +168,7 @@ const phrases = {
       text: 'er utarbeida av',
     },
     listing: {
-      content: 'Liste',
+      content: 'Lista',
       text: 'er utarbeida av',
     },
   },

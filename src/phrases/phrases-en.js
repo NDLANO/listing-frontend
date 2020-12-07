@@ -137,7 +137,7 @@ const phrases = {
       text: 'is created by',
     },
     listing: {
-      content: 'Listing',
+      content: 'The list',
       text: 'is created by',
     },
   },
