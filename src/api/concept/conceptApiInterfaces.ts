@@ -6,7 +6,7 @@
  *
  */
 
-import { Copyright, MetaImage, Title } from '../../../interfaces';
+import { Copyright, MetaImage, Title } from '../../interfaces';
 
 interface ConceptCopyright extends Omit<Copyright, 'license' | 'origin'> {
   license?: {

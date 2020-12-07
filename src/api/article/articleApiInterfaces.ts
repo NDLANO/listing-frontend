@@ -6,7 +6,7 @@
  *
  */
 
-import { Copyright, MetaImage, Title } from '../../../interfaces';
+import { Copyright, MetaImage, Title } from '../../interfaces';
 
 export interface ArticleSearchSummaryApiType {
   id: number;
