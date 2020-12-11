@@ -115,6 +115,7 @@ TextContent.propTypes = {
       }),
     ),
     rightsholders: PropTypes.arrayOf(PropTypes.string),
+    visualElement: PropTypes.string,
   }),
 };
 

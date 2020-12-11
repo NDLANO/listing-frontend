@@ -33,6 +33,7 @@ import {
   fetchSubject,
   fetchSubjectIds,
 } from '../../containers/Subject/subjectApi';
+import VisualElement from './VisualElement';
 
 const initialArticle = {
   id: '',
@@ -47,6 +48,7 @@ const initialConcept = {
   license: '',
   authors: [],
   rightsholders: [],
+  visualElement: null,
 };
 
 const initialImage = {
@@ -111,6 +113,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
       source: concept.source,
       subjectIds: concept?.subjectIds,
       title: concept.title?.title,
+      visualElement: concept.visualElement?.visualElement,
     });
     return concept;
   };
@@ -199,13 +202,11 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
       )}
     </Modal>
   );
-
+  
   const conceptBody = (
     <>
       <NotionDialogContent>
-        {concept.image ? (
-          <NotionDialogImage src={concept.image} alt={concept.content} />
-        ) : null}
+        {concept.visualElement ? <VisualElement visualElement={concept.visualElement} /> : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
       {concept.subjectIds?.length && (
