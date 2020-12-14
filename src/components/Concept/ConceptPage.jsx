@@ -202,11 +202,13 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
       )}
     </Modal>
   );
-  
+
   const conceptBody = (
     <>
       <NotionDialogContent>
-        {concept.visualElement ? <VisualElement visualElement={concept.visualElement} /> : null}
+        {concept.visualElement ? (
+          <VisualElement visualElement={concept.visualElement} />
+        ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
       {concept.subjectIds?.length && (
