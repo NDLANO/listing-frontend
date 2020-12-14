@@ -2,6 +2,7 @@
 import { NotionDialogImage } from '@ndla/notion';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { fetch, resolveJsonOrRejectWithError } from '../../util/apiHelpers'
 
 const reduceElementDataAttributes = (el, filter) => {
   if (!el.attributes) return null;
@@ -31,16 +32,20 @@ const parseEmbedTag = embedTag => {
   return obj;
 }
 
+// TODO Flytte ut til en api fil?
+const fetchImage = async url => {
+  const res = await fetch(url);
+  const resolved = resolveJsonOrRejectWithError(res);
+  return resolved;
+}
+
 const VisualElement = (visualElement) => {
     if (!visualElement) return null;
     const parsedElement = parseEmbedTag(visualElement.visualElement);
-    console.log(visualElement)
-    console.log(parsedElement)
     if (parsedElement?.resource === "image") {
-        // const image = getImage(visualElement.url)
-        // console.log(image);
-        // TODO: parsedElement.url returnerer ett json object med image url. Må håndteres. Må også tillate cors for json objecter
-        return <NotionDialogImage src={parsedElement.url} alt={parsedElement.alt} />
+      const image = fetchImage(parsedElement.url);
+      // TODO: Fiks slik at image faktisk resolver og man kan hente ut imageUrl
+      return <NotionDialogImage src={image.imageUrl} alt={parsedElement.alt} />
     // TODO: Håndtere og teste forskjellige typer visuelt element
     } if (parsedElement?.resource) {
         return <iframe title={"visual element"} src={parsedElement.url} alt={parsedElement.alt} />
@@ -49,7 +54,9 @@ const VisualElement = (visualElement) => {
 }
 
 VisualElement.propTypes = {
-    visualElement: PropTypes.string,
+    visualElement: PropTypes.shape({
+      visualElement: PropTypes.string,
+    }),
 }
 
 export default VisualElement;
