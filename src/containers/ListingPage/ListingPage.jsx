@@ -434,7 +434,6 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
                       selectedListFilter,
                     )}
                     timeout={5000}
-                    blue
                     ghostPill
                   />
                 )}
