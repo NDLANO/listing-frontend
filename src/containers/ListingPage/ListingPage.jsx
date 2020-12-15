@@ -44,7 +44,6 @@ import { getLocaleUrls } from '../../util/localeHelpers';
 import ConceptPage from '../../components/Concept/ConceptPage';
 import Footer from '../../components/Footer';
 import CopyTextButton from '../../components/CopyTextButton';
-import { getConceptHTMLandTitle } from '../../server/routes/oembedRoute';
 import config from '../../config';
 
 const SubjectFilterWrapper = styled.div`
