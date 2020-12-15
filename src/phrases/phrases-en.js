@@ -45,6 +45,10 @@ const phrases = {
     search: {
       placeholder: 'Search',
     },
+    embedlink: {
+      copyTitle: 'Copy embed code',
+      hasCopiedTitle: 'Embed code copied',
+    },
     filters: {
       subject: {
         useFilter: 'Use filter',
