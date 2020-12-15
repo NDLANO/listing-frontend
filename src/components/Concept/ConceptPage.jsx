@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import { Remarkable } from 'remarkable';
 import {
   NotionDialogContent,
-  NotionDialogImage,
   NotionDialogLicenses,
   NotionDialogRelatedLinks,
   NotionDialogTags,

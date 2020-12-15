@@ -98,6 +98,7 @@
     "@ndla/util": "^0.4.4",
     "btoa": "^1.1.2",
     "bunyan": "^1.8.12",
+    "cheerio": "^1.0.0-rc.3",
     "classnames": "2.2.5",
     "compression": "1.6.2",
     "date-fns": "^1.29.0",

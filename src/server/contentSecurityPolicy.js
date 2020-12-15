@@ -78,6 +78,7 @@ export default {
     frameSrc: [
       '*.nrk.no',
       'https://www.youtube.com',
+      'players.brightcove.net',
       'ndla.no',
       '*.ndla.no',
       '*.ndlah5p.com',
