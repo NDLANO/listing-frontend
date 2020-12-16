@@ -7,17 +7,17 @@
  */
 
 export interface OembedProxyApiType {
-  type: string;
-  version: string;
-  title?: string;
   authorName?: string;
   authorUrl?: string;
-  providerName?: string;
-  providerUrl?: string;
-  thumbnailUrl?: string;
-  thumbnailWidth?: number;
-  thumbnailHeight?: number;
-  width?: number;
   height?: number;
   html?: string;
+  providerName?: string;
+  providerUrl?: string;
+  thumbnailHeight?: number;
+  thumbnailUrl?: string;
+  thumbnailWidth?: number;
+  title?: string;
+  type: string;
+  version: string;
+  width?: number;
 }
