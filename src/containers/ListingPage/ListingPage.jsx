@@ -372,8 +372,8 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
       : [];
   };
 
-  const getEmbedCode = (title, domain, filter) => {
-    return `<iframe aria-label="${title}" src="${domain}/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
+  const getEmbedCode = (domain, filter) => {
+    return `<iframe aria-label="${filter}" src="${domain}/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
   };
 
   const renderMarkdown = text => {
@@ -430,7 +430,6 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
                     copyTitle={t('listview.embedlink.copyTitle')}
                     hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
                     stringToCopy={getEmbedCode(
-                      'temp',
                       config.ndlaListingFrontendDomain,
                       selectedListFilter,
                     )}
