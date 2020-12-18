@@ -47,6 +47,10 @@ const phrases = {
     search: {
       placeholder: 'Søk',
     },
+    embedlink: {
+      copyTitle: 'Kopier innbyggingskode',
+      hasCopiedTitle: 'Innbyggingskode kopiert',
+    },
     filters: {
       subject: {
         useFilter: 'Bruk filter',
