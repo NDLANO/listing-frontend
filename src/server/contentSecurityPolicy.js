@@ -75,7 +75,14 @@ export default {
     scriptSrc,
     connectSrc,
     defaultSrc: ["'self'", 'blob:'],
-    frameSrc: ['*.nrk.no', 'https://www.youtube.com', 'ndla.no', '*.ndla.no'],
+    frameSrc: [
+      '*.nrk.no',
+      'https://www.youtube.com',
+      'players.brightcove.net',
+      'ndla.no',
+      '*.ndla.no',
+      '*.ndlah5p.com',
+    ],
     workerSrc: ["'self'", 'blob:'],
     styleSrc: [
       "'self'",

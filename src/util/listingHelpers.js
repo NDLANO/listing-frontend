@@ -42,7 +42,7 @@ export function mapConceptToListItem(concept) {
     id: concept.id.toString(),
     name: concept.title.title,
     description: concept.content.content,
-    image: concept.metaImage.url
+    image: concept.metaImage?.url
       ? `${concept.metaImage.url}?width=200`
       : undefined,
     subjectIds: concept.subjectIds,
