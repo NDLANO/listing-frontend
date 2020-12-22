@@ -70,31 +70,14 @@ const VisualElement = visualElement => {
           />,
         );
       }
-      if (data?.resource === 'external' && data?.url?.includes('youtu')) {
-        const youtubeEmbedUrl = `https://www.youtube.com/embed/${data.url
-          .split('/')
-          .pop()
-          .split('v=')
-          .pop()}?`;
-        setElement(
-          <iframe
-            src={youtubeEmbedUrl}
-            width={data.width || 600}
-            height={data.height || 400}
-            title={data.title}
-            allowFullScreen={data.fullscreen || true}
-            frameBorder="0"
-          />,
-        );
-      }
-      if (data?.resource === 'h5p') {
+      if (data?.resource === 'h5p' || data?.resource === 'external') {
         const oembed = await fetchOembed(data.url);
         const url = getIframeSrcFromHtmlString(oembed.html);
         setElement(
           <iframe
             src={url}
-            width={oembed.width || 600}
-            height={oembed.height || 400}
+            width={600}
+            height={400}
             title={oembed.title}
             allowFullScreen={oembed.fullscreen || true}
             frameBorder="0"
