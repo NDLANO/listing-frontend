@@ -51,10 +51,10 @@ const VisualElement = visualElement => {
 
         setElement(
           <Image
-            focalPoint={focalPoint}
+            alt={data?.alt}
             contentType={image.contentType}
             crop={crop}
-            alt={data?.alt}
+            focalPoint={focalPoint}
             src={`${image.imageUrl}`}
           />,
         );
@@ -63,11 +63,12 @@ const VisualElement = visualElement => {
         const src = `https://players.brightcove.net/${data.account}/${data.player}_default/index.html?videoId=${data.videoid}`;
         setElement(
           <iframe
-            title={data.title}
+            frameBorder="0"
+            height={400}
             src={src}
-            width={data.width || 600}
-            height={data.height || 400}
-          />,
+            title={data.title}
+            width={600}
+            />,
         );
       }
       if (data?.resource === 'h5p' || data?.resource === 'external') {
@@ -75,12 +76,12 @@ const VisualElement = visualElement => {
         const url = getIframeSrcFromHtmlString(oembed.html);
         setElement(
           <iframe
-            src={url}
-            width={600}
-            height={400}
-            title={oembed.title}
             allowFullScreen={oembed.fullscreen || true}
             frameBorder="0"
+            height={400}
+            src={url}
+            title={oembed.title}
+            width={600}
           />,
         );
       }
