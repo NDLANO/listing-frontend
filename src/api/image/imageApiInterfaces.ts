@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { Copyright, Title } from '../../../interfaces';
+import { Copyright, Title } from '../../interfaces';
 
 interface ImageCopyright extends Omit<Copyright, 'license'> {
   license: {

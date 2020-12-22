@@ -38,6 +38,10 @@ export function defaultRoute(req, res) {
   const paths = req.url.split('/');
   const { abbreviation: locale, messages } = getLocaleObject(paths[1]);
   const userAgentString = req.headers['user-agent'];
+  // Oembed-hack
+  if (paths.find(p => p.includes('listing')) || paths.includes('concepts')) {
+    res.removeHeader('X-Frame-Options');
+  }
 
   if (__DISABLE_SSR__) {
     // eslint-disable-line no-underscore-dangle
