@@ -68,7 +68,7 @@ const VisualElement = visualElement => {
             src={src}
             title={data.title}
             width={600}
-            />,
+          />,
         );
       }
       if (data?.resource === 'h5p' || data?.resource === 'external') {
