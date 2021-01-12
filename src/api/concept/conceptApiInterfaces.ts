@@ -41,7 +41,7 @@ export interface ConceptApiType {
   updated: string;
   updatedBy?: string[];
   supportedLanguages: string[];
-  articleId?: number;
+  articleIds: number[];
   status: {
     current: string;
     other: string[];
