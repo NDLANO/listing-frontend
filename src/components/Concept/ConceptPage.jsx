@@ -9,6 +9,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Remarkable } from 'remarkable';
+import styled from "@emotion/styled";
 import {
   NotionDialogContent,
   NotionDialogLicenses,
@@ -33,6 +34,10 @@ import {
   fetchSubjectIds,
 } from '../../containers/Subject/subjectApi';
 import VisualElement from './VisualElement';
+
+const StyledConcept = styled.div`
+    width: 90%;
+  `
 
 const initialArticle = {
   id: '',
@@ -250,7 +255,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
           {conceptBody}
         </NotionDialogWrapper>
       ) : (
-        <>
+        <StyledConcept>
           <NotionHeaderWithoutExitButton title={concept.title} />
           {conceptBody}
           <CreatedBy
@@ -258,7 +263,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
             description={t('createdBy.concept.text')}
             url={`${config.ndlaListingFrontendDomain}/?concept=${conceptId}`}
           />
-        </>
+        </StyledConcept>
       )}
     </OneColumn>
   );
