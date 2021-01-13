@@ -34,13 +34,8 @@ import {
 } from '../../containers/Subject/subjectApi';
 import VisualElement from './VisualElement';
 
-const initialArticle = {
-  id: '',
-  title: { title: '' },
-};
-
 const initialConcept = {
-  articleId: null,
+  articleIds: [],
   title: '',
   source: '',
   created: '',
@@ -63,13 +58,12 @@ const initialImage = {
 };
 
 const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
-  const [article, setArticle] = useState(initialArticle);
+  const [articles, setArticles] = useState([]);
   const [concept, setConcept] = useState(initialConcept);
   const [image, setImage] = useState(initialImage);
   const [loading, setLoading] = useState(true);
   const [markdown, setMarkdown] = useState(null);
   const [subjects, setSubjects] = useState([]);
-
   useEffect(() => {
     init();
 
@@ -82,8 +76,8 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   }, []);
 
   useEffect(() => {
-    getArticle();
-  }, [article.id]);
+    getArticles();
+  }, [concept.articleIds]);
 
   const init = async () => {
     const listItem = await getConcept();
@@ -100,7 +94,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   const getConcept = async () => {
     const concept = await fetchConcept(conceptId, language);
     setConcept({
-      articleId: concept.articleId,
+      articleIds: concept.articleIds,
       authors: concept.copyright?.creators,
       content: concept.content.content,
       created: concept.created,
@@ -137,10 +131,12 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
     }
   };
 
-  const getArticle = async () => {
-    if (concept.articleId) {
-      const article = await fetchArticle(concept.articleId, language);
-      setArticle(article);
+  const getArticles = async () => {
+    if (concept.articleIds) {
+      const articles = await Promise.all(
+        concept.articleIds.map(articleId => fetchArticle(articleId, language)),
+      );
+      setArticles(articles);
     }
   };
 
@@ -217,15 +213,13 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
             .map(s => s.name)}
         />
       )}
-      {article.id && (
+      {articles.length > 0 && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}
-          links={[
-            {
-              label: article.title?.title,
-              href: `${config.ndlaFrontendDomain}/article/${concept.articleId}`,
-            },
-          ]}
+          links={articles.map(article => ({
+            label: article.title?.title,
+            href: `${config.ndlaFrontendDomain}/article/${article.id}`,
+          }))}
         />
       )}
       <NotionDialogLicenses
