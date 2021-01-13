@@ -42,6 +42,8 @@ const scriptSrc = (() => {
     ' *.gallerysites.net',
     'ndla.no',
     '*.ndla.no',
+    '*.static.hotjar.com',
+    '*.hotjar.com',
   ];
   if (process.env.NODE_ENV === 'development') {
     return [...defaultScriptSrc, `http://localhost:${hmrPort}`];
