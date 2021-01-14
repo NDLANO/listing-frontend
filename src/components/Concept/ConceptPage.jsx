@@ -9,7 +9,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Remarkable } from 'remarkable';
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 import {
   NotionDialogContent,
   NotionDialogLicenses,
@@ -36,8 +36,8 @@ import {
 import VisualElement from './VisualElement';
 
 const StyledConcept = styled.div`
-    width: 90%;
-  `
+  width: 90%;
+`;
 
 const initialArticle = {
   id: '',
