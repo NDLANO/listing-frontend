@@ -42,8 +42,9 @@ const scriptSrc = (() => {
     ' *.gallerysites.net',
     'ndla.no',
     '*.ndla.no',
-    '*.static.hotjar.com',
-    '*.hotjar.com',
+    'ws://*.hotjar.com',
+    'wss://*.hotjar.com',
+    'https://*.hotjar.com',
   ];
   if (process.env.NODE_ENV === 'development') {
     return [...defaultScriptSrc, `http://localhost:${hmrPort}`];
@@ -61,6 +62,9 @@ const connectSrc = (() => {
     'https://bcsecure01-a.akamaihd.net',
     'https://hlsak-a.akamaihd.net',
     'https://www.google-analytics.com',
+    'ws://*.hotjar.com wss://*.hotjar.com',
+    'https://*.hotjar.com',
+    'https://*.hotjar.com:*',
   ];
   if (process.env.NODE_ENV === 'development') {
     return [
@@ -84,6 +88,7 @@ export default {
       'ndla.no',
       '*.ndla.no',
       '*.ndlah5p.com',
+      'https://*.hotjar.com',
     ],
     workerSrc: ["'self'", 'blob:'],
     styleSrc: [
@@ -98,6 +103,7 @@ export default {
       "'self'",
       'https://fonts.googleapis.com',
       'https://fonts.gstatic.com',
+      'https://*.hotjar.com',
       'data:',
     ],
     imgSrc: [
@@ -110,6 +116,7 @@ export default {
       'http://metrics.brightcove.com',
       'https://httpsak-a.akamaihd.net',
       'https://www.nrk.no/',
+      'https://*.hotjar.com',
       ' data:',
     ],
     mediaSrc: ["'self'", 'blob:', 'https://*.ndla.no'],
