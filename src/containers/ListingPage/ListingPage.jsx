@@ -34,10 +34,8 @@ import {
 import useQueryParameter from '../../util/useQueryParameter';
 import {
   fetchConcept,
-  fetchConceptsBySubject,
-  fetchTags,
-  fetchConceptsByTags,
   fetchConcepts,
+  fetchTags,
 } from '../../api/concept/conceptApi';
 import { fetchSubjectIds, fetchSubject } from '../Subject/subjectApi';
 import { getLocaleUrls } from '../../util/localeHelpers';
@@ -190,35 +188,19 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
   const getConcepts = async page => {
     const replace = page === 1;
     setLoading(!replace);
-    if (queryParams.subjects.length) {
-      const concepts = await fetchConceptsBySubject(
-        queryParams.subjects,
-        page,
-        PAGE_SIZE,
-        locale,
-        debouncedSearchVal,
-      );
-      handleSetConcepts(concepts.results, concepts.totalCount, replace);
-    } else if (queryParams.filters.length) {
-      const concepts = await fetchConceptsByTags(
-        tags.filter(tag =>
-          queryParams.filters.every(filter => tag.includes(filter)),
-        ),
-        page,
-        PAGE_SIZE,
-        locale,
-        debouncedSearchVal,
-      );
-      handleSetConcepts(concepts.results, concepts.totalCount, replace);
-    } else {
-      const concepts = await fetchConcepts(
-        page,
-        PAGE_SIZE,
-        locale,
-        debouncedSearchVal,
-      );
-      handleSetConcepts(concepts.results, concepts.totalCount, replace);
-    }
+    const concepts = await fetchConcepts(
+      page,
+      PAGE_SIZE,
+      locale,
+      debouncedSearchVal,
+      queryParams.filters.length
+        ? tags.filter(tag =>
+            queryParams.filters.every(filter => tag.includes(filter)),
+          )
+        : [],
+      queryParams.subjects.length ? queryParams.subjects.toString() : undefined,
+    );
+    handleSetConcepts(concepts.results, concepts.totalCount, replace);
     setLoading(false);
   };
 
@@ -280,7 +262,7 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
 
   const handleChangeListFilter = value => {
     setQueryParams({
-      subjects: [],
+      ...queryParams,
       filters: [value],
     });
     setFilterListOpen(false);
