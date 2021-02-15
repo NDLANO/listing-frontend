@@ -1,3 +1,5 @@
+![CI](https://github.com/NDLANO/listing-frontend/workflows/CI/badge.svg)
+
 # NDLA Listing frontend 
 
 ## Requirements
