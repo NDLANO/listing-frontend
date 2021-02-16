@@ -135,17 +135,13 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
     if (concept.articleIds) {
       const articles = await Promise.allSettled(
         concept.articleIds.map(articleId => fetchArticle(articleId, language)),
-      )
-        .then(results => {
-          return results
-            .filter(res => res.status === 'fulfilled')
-            .map(res => res.value);
-        })
-        .catch(e => {
-          console.error('Something went wrong while fetching related articles');
-          return [];
-        });
-      setArticles(articles);
+      );
+
+      const filteredArticles = articles
+        .filter(res => res.status === 'fulfilled')
+        .map(res => res.value);
+
+      setArticles(filteredArticles);
     }
   };
 
