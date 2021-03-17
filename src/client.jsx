@@ -10,9 +10,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
 import { IntlProvider } from '@ndla/i18n';
 import { setCookie, getCookie } from '@ndla/util';
 
+import { createApolloClient } from './util/apiHelpers';
 import { getLocaleObject, isValidLocale } from './i18n';
 import configureStore from './configureStore';
 import App from './containers/App/App';
@@ -38,15 +40,19 @@ if (
   setCookie('language', basename);
 }
 
+const client = createApolloClient(locale.abbreviation);
+
 const renderApp = () =>
   ReactDOM.render(
-    <Provider store={store}>
-      <IntlProvider locale={locale.abbreviation} messages={locale.messages}>
-        <BrowserRouter basename={basename}>
-          <App />
-        </BrowserRouter>
-      </IntlProvider>
-    </Provider>,
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <IntlProvider locale={locale.abbreviation} messages={locale.messages}>
+          <BrowserRouter basename={basename}>
+            <App />
+          </BrowserRouter>
+        </IntlProvider>
+      </Provider>
+    </ApolloProvider>,
     document.getElementById('root'),
   );
 

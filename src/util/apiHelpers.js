@@ -7,10 +7,17 @@
  */
 
 import defined from 'defined';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
+import { onError } from '@apollo/client/link/error';
+import { setContext } from '@apollo/client/link/context';
+import handleError from './handleError';
 import config from '../config';
 import { default as createFetch } from './fetch';
 
 export const fetch = createFetch;
+
+const __CLIENT__ = process.env.BUILD_TARGET === 'client'; //eslint-disable-line
 
 const NDLA_API_URL = global.__SERVER__
   ? config.ndlaApiUrl
@@ -67,3 +74,51 @@ export function resolveJsonOrRejectWithError(res) {
       .catch(reject);
   });
 }
+
+const uri = (() => {
+  if (config.localGraphQLApi) {
+    return 'http://localhost:4000/graphql-api/graphql';
+  }
+  return apiResourceUrl('/graphql-api/graphql');
+})();
+
+export const createApolloClient = (language = 'nb') => {
+  const headersLink = setContext(async (_, { headers }) => ({
+    headers: {
+      ...headers,
+      'Accept-Language': language,
+    },
+  }));
+
+  const cache = __CLIENT__
+    ? new InMemoryCache().restore(window.DATA.apolloState)
+    : new InMemoryCache();
+
+  const client = new ApolloClient({
+    ssrMode: true,
+    link: ApolloLink.from([
+      onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors) {
+          graphQLErrors.map(({ message, locations, path }) =>
+            handleError(
+              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+          );
+        }
+        if (networkError) {
+          handleError(`[Network error]: ${networkError}`, {
+            clientTime: new Date().getTime(),
+          });
+        }
+      }),
+      headersLink,
+      new BatchHttpLink({
+        uri,
+        fetch: createFetch,
+      }),
+    ]),
+    cache,
+  });
+
+  return client;
+};

@@ -11,10 +11,12 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import defined from 'defined';
+import { ApolloProvider } from '@apollo/client';
 
 import { IntlProvider } from '@ndla/i18n';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
+import { createApolloClient } from '../../util/apiHelpers';
 import configureStore from '../../configureStore';
 import { getLocaleObject, isValidLocale } from '../../i18n';
 import App from '../../containers/App/App';
@@ -23,6 +25,7 @@ const renderHtmlString = (
   locale,
   userAgentString,
   state = {},
+  data = {},
   component = undefined,
 ) =>
   renderToString(
@@ -31,6 +34,7 @@ const renderHtmlString = (
       state={state}
       component={component}
       className={getConditionalClassnames(userAgentString)}
+      data={data}
     />,
   );
 
@@ -43,11 +47,21 @@ export function defaultRoute(req, res) {
     res.removeHeader('X-Frame-Options');
   }
 
+  const client = createApolloClient(locale);
+
   if (__DISABLE_SSR__) {
     // eslint-disable-line no-underscore-dangle
-    const htmlString = renderHtmlString(locale, userAgentString, {
+    const apolloState = client.extract();
+    const htmlString = renderHtmlString(
       locale,
-    });
+      userAgentString,
+      {
+        locale,
+      },
+      {
+        apolloState,
+      },
+    );
     res.send(`<!doctype html>\n${htmlString}`);
     return;
   }
@@ -58,13 +72,18 @@ export function defaultRoute(req, res) {
 
   const context = {};
   const component = (
-    <Provider store={store}>
-      <IntlProvider locale={locale} messages={messages}>
-        <StaticRouter basename={basename} location={req.url} context={context}>
-          <App />
-        </StaticRouter>
-      </IntlProvider>
-    </Provider>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <IntlProvider locale={locale} messages={messages}>
+          <StaticRouter
+            basename={basename}
+            location={req.url}
+            context={context}>
+            <App />
+          </StaticRouter>
+        </IntlProvider>
+      </Provider>
+    </ApolloProvider>
   );
 
   if (context.url) {
@@ -75,10 +94,12 @@ export function defaultRoute(req, res) {
   } else {
     try {
       const state = store.getState();
+      const apolloState = client.extract();
       const htmlString = renderHtmlString(
         locale,
         userAgentString,
         state,
+        { apolloState },
         component,
       );
       const status = defined(context.status, 200);

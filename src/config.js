@@ -59,6 +59,7 @@ const config = Object.assign(
     ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
     ndlaListingFrontendDomain: ndlaListingFrontendDomain(),
     ndlaFrontendDomain: ndlaFrontendDomain(),
+    localGraphQLApi: process.env.LOCAL_GRAPHQL_API || false,
   },
   environment,
 );

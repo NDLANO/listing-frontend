@@ -13,10 +13,12 @@
     "start-without-ssr": "cross-env NODE_ENV=development DISABLE_SSR=true razzle start",
     "start-prod": "cross-env NODE_ENV=production node build/server | bunyan",
     "start-prod-no-ssr": "cross-env NODE_ENV=production DISABLE_SSR=true node build/server | bunyan",
+    "start-with-local-graphql": "cross-env LOCAL_GRAPHQL_API=true yarn start",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
     "format": "node prettier.js write",
     "format-check": "node prettier.js lint",
-    "check-all": "yarn format-check && yarn lint && yarn test"
+    "check-all": "yarn format-check && yarn lint && yarn test",
+    "get-gql-schema-local": "apollo schema:download --endpoint=http://localhost:4000/graphql-api/graphql src/gqlSchema.json"
   },
   "jest": {
     "testRegex": "/__tests__/.*-test.(js|jsx)$",
@@ -78,6 +80,7 @@
     "typescript": "^4.1.2"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.12",
     "@babel/polyfill": "^7.2.3",
     "@babel/register": "^7.2.3",
     "@emotion/core": "^10.0.27",
@@ -105,6 +108,7 @@
     "defined": "1.0.0",
     "downshift": "^5.2.2",
     "express": "^4.16.2",
+    "graphql": "^15.5.0",
     "helmet": "^4.2.0",
     "history": "^4.7.2",
     "http-status": "^1.0.1",
@@ -117,8 +121,8 @@
     "prop-types": "^15.6.0",
     "query-string": "^6.10.1",
     "razzle": "^3.3.7",
-    "razzle-plugin-typescript": "^3.3.7",
     "razzle-config-utils": "^0.1.0",
+    "razzle-plugin-typescript": "^3.3.7",
     "react": "^16.13.1",
     "react-bem-helper": "^1.4.1",
     "react-collapse": "^4.0.3",
