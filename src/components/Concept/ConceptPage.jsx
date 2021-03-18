@@ -251,9 +251,9 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
         </NotionDialogWrapper>
       ) : (
         <>
+          <PostResizeMessage />
           <NotionHeaderWithoutExitButton title={concept.title} />
           {conceptBody}
-          <PostResizeMessage />
           <CreatedBy
             name={t('createdBy.concept.content')}
             description={t('createdBy.concept.text')}
