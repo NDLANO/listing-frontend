@@ -33,6 +33,7 @@ import {
   fetchSubjectIds,
 } from '../../containers/Subject/subjectApi';
 import VisualElement from './VisualElement';
+import PostResizeMessage from '../PostResizeMessage';
 
 const initialConcept = {
   articleIds: [],
@@ -241,7 +242,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   }
 
   return (
-    <OneColumn>
+    <OneColumn cssModifier={'iframe'}>
       {inModal ? (
         <NotionDialogWrapper
           title={concept.title}
@@ -252,6 +253,7 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
         <>
           <NotionHeaderWithoutExitButton title={concept.title} />
           {conceptBody}
+          <PostResizeMessage />
           <CreatedBy
             name={t('createdBy.concept.content')}
             description={t('createdBy.concept.text')}
