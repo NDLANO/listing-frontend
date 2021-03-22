@@ -16,7 +16,7 @@ const getOembedObject = (req, title, html) => {
   return {
     data: {
       type: 'rich',
-      provider: 'NDLA Liste',
+      providerName: 'NDLA Liste',
       version: '1.0', // oEmbed version
       height: req.query.height || 800,
       width: req.query.width || 800,
