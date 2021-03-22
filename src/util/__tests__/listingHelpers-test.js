@@ -6,7 +6,11 @@
  *
  */
 
-import { mapTagsToFilters, isListeParamUrl, isListePathUrl } from '../listingHelpers';
+import {
+  mapTagsToFilters,
+  isListeParamUrl,
+  isListePathUrl,
+} from '../listingHelpers';
 
 test('split list into filters', () => {
   expect(typeof mapTagsToFilters).toBe('function');
