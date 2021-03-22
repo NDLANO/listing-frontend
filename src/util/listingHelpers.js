@@ -54,7 +54,8 @@ export function mapConceptToListItem(concept) {
   };
 }
 
-export const isValidListeUrl = url =>
-  /^(https?:\/\/)?(www\.)?liste(\.?(test|staging))?\.ndla\.no\/\?concept=\d+$/.test(
-    url,
-  );
+export const isListeParamUrl = url =>
+  /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/\?concept=\d+$/.test(url);
+
+export const isListePathUrl = url =>
+  /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/concepts\/\d+$/.test(url);
