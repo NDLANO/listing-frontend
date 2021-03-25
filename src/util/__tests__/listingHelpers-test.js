@@ -76,6 +76,8 @@ test('isListeParamUrl correct behavior', () => {
   urls.set('https://liste.ndla.no/?concepts=603', false);
   urls.set('https://liste.ndla.no/', false);
   urls.set('https://liste..ndla.no/?concept=603', false);
+  urls.set('https://liste.ndla.no/nn/?concept=603', true);
+  urls.set('https://liste.ndla.no/nb/?concept=603', true);
 
   urls.forEach((value, key) => expect(isListeParamUrl(key)).toBe(value));
 });

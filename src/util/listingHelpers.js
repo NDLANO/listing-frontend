@@ -55,7 +55,7 @@ export function mapConceptToListItem(concept) {
 }
 
 export const isListeParamUrl = url =>
-  /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/\?concept=\d+$/.test(url);
+  /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/(nn\/|nb\/)?\?concept=\d+$/.test(url);
 
 export const isListePathUrl = url =>
-  /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/concepts\/\d+$/.test(url);
+  /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/(nn\/|nb\/)?concepts\/\d+$/.test(url);
