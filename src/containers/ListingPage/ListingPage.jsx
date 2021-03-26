@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Remarkable } from 'remarkable';
@@ -139,32 +139,27 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
   });
   const [md, setMd] = useState(null);
 
-  useEffect(() => {
-    if (md === null) {
-      const markdown = new Remarkable();
-      markdown.inline.ruler.enable(['sub', 'sup']);
-      setMd(markdown);
-    }
-  }, []);
+  if (md === null) {
+    const markdown = new Remarkable();
+    markdown.inline.ruler.enable(['sub', 'sup']);
+    setMd(markdown);
+  }
 
   useEffect(() => {
+    const getInitialData = async () => {
+      const subjectIds = await fetchSubjectIds();
+      setSubjectIds(subjectIds);
+      const subjects = await Promise.all(
+        subjectIds.map(id => fetchSubject(id)),
+      );
+      setSubjects(subjects);
+      const tags = await fetchTags(locale);
+      setTags(tags);
+      setFilters(mapTagsToFilters(tags));
+    };
     getInitialData();
     setSelectedListFilter(queryParams.filters?.[0]);
-  }, []);
-
-  useEffect(() => {
-    getConceptFromQuery();
-  }, [queryParams.concept]);
-
-  const getInitialData = async () => {
-    const subjectIds = await fetchSubjectIds();
-    setSubjectIds(subjectIds);
-    const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
-    setSubjects(subjects);
-    const tags = await fetchTags(locale);
-    setTags(tags);
-    setFilters(mapTagsToFilters(tags));
-  };
+  }, [locale, queryParams.filters]);
 
   const useDebounce = (val, delay) => {
     const [debouncedVal, setDebouncedVal] = useState(val);
@@ -179,56 +174,77 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
 
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
+  const getConcepts = useCallback(
+    async page => {
+      const handleSetConcepts = (newConcepts, totalCount, replace) => {
+        setShowButton(newConcepts.length === PAGE_SIZE);
+        if (replace) {
+          setConcepts(newConcepts);
+        } else {
+          setConcepts([...concepts, ...newConcepts]);
+        }
+        setTotalCount(totalCount);
+      };
+
+      const replace = page === 1;
+      setLoading(!replace);
+      const concepts = await fetchConcepts(
+        page,
+        PAGE_SIZE,
+        locale,
+        debouncedSearchVal,
+        queryParams.filters.length
+          ? tags.filter(tag =>
+              queryParams.filters.every(filter => tag.includes(filter)),
+            )
+          : [],
+        queryParams.subjects.length
+          ? queryParams.subjects.toString()
+          : undefined,
+      );
+      handleSetConcepts(concepts.results, concepts.totalCount, replace);
+      setLoading(false);
+    },
+    [
+      debouncedSearchVal,
+      locale,
+      queryParams.filters,
+      queryParams.subjects,
+      tags,
+    ],
+  );
+
+  useEffect(() => {
+    const getConceptFromQuery = async () => {
+      if (queryParams.concept) {
+        if (concepts.length) {
+          const selectedConcept = concepts.find(
+            concept => concept.id.toString() === queryParams.concept,
+          );
+          setSelectedConcept(selectedConcept);
+        } else {
+          const selectedConcept = await fetchConcept(queryParams.concept);
+          getConcepts(page);
+          setSelectedConcept(selectedConcept);
+          setPage(1);
+        }
+      }
+    };
+    getConceptFromQuery();
+  }, [queryParams.concept, page, concepts, getConcepts]);
+
   useEffect(() => {
     if (tags.length && subjectIds.length) {
       getConcepts(1);
     }
-  }, [queryParams.subjects, queryParams.filters, tags, debouncedSearchVal]);
-
-  const getConcepts = async page => {
-    const replace = page === 1;
-    setLoading(!replace);
-    const concepts = await fetchConcepts(
-      page,
-      PAGE_SIZE,
-      locale,
-      debouncedSearchVal,
-      queryParams.filters.length
-        ? tags.filter(tag =>
-            queryParams.filters.every(filter => tag.includes(filter)),
-          )
-        : [],
-      queryParams.subjects.length ? queryParams.subjects.toString() : undefined,
-    );
-    handleSetConcepts(concepts.results, concepts.totalCount, replace);
-    setLoading(false);
-  };
-
-  const getConceptFromQuery = async () => {
-    if (queryParams.concept) {
-      if (concepts.length) {
-        const selectedConcept = concepts.find(
-          concept => concept.id.toString() === queryParams.concept,
-        );
-        setSelectedConcept(selectedConcept);
-      } else {
-        const selectedConcept = await fetchConcept(queryParams.concept);
-        getConcepts(page);
-        setSelectedConcept(selectedConcept);
-        setPage(1);
-      }
-    }
-  };
-
-  const handleSetConcepts = (newConcepts, totalCount, replace) => {
-    setShowButton(newConcepts.length === PAGE_SIZE);
-    if (replace) {
-      setConcepts(newConcepts);
-    } else {
-      setConcepts([...concepts, ...newConcepts]);
-    }
-    setTotalCount(totalCount);
-  };
+  }, [
+    queryParams.subjects,
+    queryParams.filters,
+    tags,
+    subjectIds,
+    getConcepts,
+    debouncedSearchVal,
+  ]);
 
   const handleChangeSubject = values => {
     setQueryParams({

@@ -87,7 +87,7 @@ const VisualElement = visualElement => {
       }
     }
     getVisualElement();
-  }, []);
+  }, [visualElement.visualElement]);
 
   if (!element) return null;
   return element;

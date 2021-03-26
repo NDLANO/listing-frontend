@@ -8,7 +8,7 @@
     "test": "cross-env BABEL_ENV=test NODE_ENV=unittest jest",
     "tdd": "cross-env NODE_ENV=unittest jest --watch",
     "prebuild": "npm run clean",
-    "build": "cross-env NODE_ENV=production razzle build",
+    "build": "cross-env NODE_ENV=production razzle build --noninteractive",
     "start:tsc": "tsc -b -w --preserveWatchOutput",
     "start": "cross-env NODE_ENV=development concurrently \"yarn start:tsc\" \"razzle start --inspect --inspect-port 9230\"",
     "start-without-ssr": "cross-env DISABLE_SSR=true yarn start",
