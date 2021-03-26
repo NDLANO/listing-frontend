@@ -11,7 +11,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { IntlProvider } from '@ndla/i18n';
-import { setCookie, getCookie } from '@ndla/util';
 
 import { getLocaleObject, isValidLocale } from './i18n';
 import configureStore from './configureStore';
@@ -26,7 +25,7 @@ const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
 
 const store = configureStore({ ...initialState });
 
-const storedLanguage = getCookie('language', document.cookie);
+const storedLanguage = window.localStorage.getItem('language');
 if (
   basename === '' &&
   isValidLocale(storedLanguage) &&
@@ -35,7 +34,7 @@ if (
   const { pathname, search } = window.location;
   window.location.href = `/${storedLanguage}${pathname}${search}`;
 } else if (storedLanguage !== basename && isValidLocale(basename)) {
-  setCookie('language', basename);
+  window.localStorage.setItem('language', basename);
 }
 
 const renderApp = () =>
