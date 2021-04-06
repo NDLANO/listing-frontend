@@ -65,7 +65,61 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
   const [loading, setLoading] = useState(true);
   const [markdown, setMarkdown] = useState(null);
   const [subjects, setSubjects] = useState([]);
+
   useEffect(() => {
+    const getConcept = async () => {
+      const concept = await fetchConcept(conceptId, language);
+      setConcept({
+        articleIds: concept.articleIds,
+        authors: concept.copyright?.creators,
+        content: concept.content.content,
+        created: concept.created,
+        image: concept.metaImage?.url,
+        license: concept.copyright?.license?.license,
+        rightsholders: concept.copyright?.rightsholders?.map(
+          holder => holder.name,
+        ),
+        source: concept.source,
+        subjectIds: concept?.subjectIds,
+        title: concept.title?.title,
+        visualElement: concept.visualElement?.visualElement,
+      });
+      return concept;
+    };
+
+    const getImage = async concept => {
+      const imageId = concept.metaImage?.url?.split('/').pop();
+      if (imageId.length) {
+        const image = await fetchImage(imageId, language);
+        setImage({
+          title: image.title?.title,
+          image: {
+            url: image.imageUrl,
+            alt: image.alttext?.alttext,
+          },
+          license: image.copyright?.license?.license,
+          authors: image.copyright?.creators,
+          rightsholders: image.copyright?.rightsholders.map(
+            holder => holder.name,
+          ),
+          origin: image.copyright?.origin,
+        });
+      }
+    };
+
+    const getSubjects = async () => {
+      const subjectIds = await fetchSubjectIds();
+      const subjects = await Promise.all(
+        subjectIds.map(id => fetchSubject(id)),
+      );
+      setSubjects(subjects);
+    };
+
+    const init = async () => {
+      const listItem = await getConcept();
+      getImage(listItem);
+      getSubjects();
+    };
     init();
 
     if (markdown === null) {
@@ -74,77 +128,27 @@ const ConceptPage = ({ t, conceptId, handleClose, inModal, language }) => {
       setMarkdown(md);
     }
     setLoading(false);
-  }, []);
+  }, [markdown, conceptId, language]);
 
   useEffect(() => {
+    const getArticles = async () => {
+      if (concept.articleIds) {
+        const articles = await Promise.allSettled(
+          concept.articleIds.map(articleId =>
+            fetchArticle(articleId, language),
+          ),
+        );
+
+        const filteredArticles = articles
+          .filter(res => res.status === 'fulfilled')
+          .map(res => res.value);
+
+        setArticles(filteredArticles);
+      }
+    };
+
     getArticles();
-  }, [concept.articleIds]);
-
-  const init = async () => {
-    const listItem = await getConcept();
-    getImage(listItem);
-    getSubjects();
-  };
-
-  const getSubjects = async () => {
-    const subjectIds = await fetchSubjectIds();
-    const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
-    setSubjects(subjects);
-  };
-
-  const getConcept = async () => {
-    const concept = await fetchConcept(conceptId, language);
-    setConcept({
-      articleIds: concept.articleIds,
-      authors: concept.copyright?.creators,
-      content: concept.content.content,
-      created: concept.created,
-      image: concept.metaImage?.url,
-      license: concept.copyright?.license?.license,
-      rightsholders: concept.copyright?.rightsholders?.map(
-        holder => holder.name,
-      ),
-      source: concept.source,
-      subjectIds: concept?.subjectIds,
-      title: concept.title?.title,
-      visualElement: concept.visualElement?.visualElement,
-    });
-    return concept;
-  };
-
-  const getImage = async concept => {
-    const imageId = concept.metaImage?.url?.split('/').pop();
-    if (imageId.length) {
-      const image = await fetchImage(imageId, language);
-      setImage({
-        title: image.title?.title,
-        image: {
-          url: image.imageUrl,
-          alt: image.alttext?.alttext,
-        },
-        license: image.copyright?.license?.license,
-        authors: image.copyright?.creators,
-        rightsholders: image.copyright?.rightsholders.map(
-          holder => holder.name,
-        ),
-        origin: image.copyright?.origin,
-      });
-    }
-  };
-
-  const getArticles = async () => {
-    if (concept.articleIds) {
-      const articles = await Promise.allSettled(
-        concept.articleIds.map(articleId => fetchArticle(articleId, language)),
-      );
-
-      const filteredArticles = articles
-        .filter(res => res.status === 'fulfilled')
-        .map(res => res.value);
-
-      setArticles(filteredArticles);
-    }
-  };
+  }, [concept.articleIds, language]);
 
   const renderMarkdown = text => {
     const rendered = markdown?.render(text);

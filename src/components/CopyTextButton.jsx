@@ -25,7 +25,7 @@ const CopyTextButton = ({
 
   useEffect(() => {
     return () => clearTimeout(timer);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = () => {
     const success = copyTextToClipboard(stringToCopy, buttonContainer);

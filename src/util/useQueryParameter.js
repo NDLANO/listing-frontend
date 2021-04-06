@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import qs from 'query-string';
 
@@ -20,10 +20,10 @@ const useQueryParameter = initialValue => {
   const [value, setValue] = useState(
     getQueryParameter(initialValue, history.location) || initialValue,
   );
-  const onSetValue = useCallback(newValue => {
+  const onSetValue = newValue => {
     setValue(newValue);
     setQueryParameter(newValue, history);
-  });
+  };
   return [value, onSetValue];
 };
 
