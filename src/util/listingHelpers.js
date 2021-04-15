@@ -40,8 +40,8 @@ function mapTagsToList(tags) {
 export function mapConceptToListItem(concept) {
   return {
     id: concept.id.toString(),
-    name: concept.title.title,
-    description: concept.content.content,
+    name: concept.title,
+    description: concept.content,
     image: concept.metaImage?.url
       ? `${concept.metaImage.url}?width=200`
       : undefined,

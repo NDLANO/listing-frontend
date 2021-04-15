@@ -6,6 +6,11 @@
  *
  */
 
+export interface Location {
+  search: string;
+  pathname: string;
+}
+
 export interface Title {
   title: string;
   language: string;
