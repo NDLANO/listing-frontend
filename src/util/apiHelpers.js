@@ -82,6 +82,19 @@ const uri = (() => {
   return apiResourceUrl('/graphql-api/graphql');
 })();
 
+const typePolicies = {
+  Query: {
+    fields: {
+      conceptSearch: {
+        keyArgs: false,
+        merge(existing = [], incoming) {
+          return [...existing, ...incoming];
+        },
+      },
+    },
+  },
+};
+
 export const createApolloClient = (language = 'nb') => {
   const headersLink = setContext(async (_, { headers }) => ({
     headers: {
@@ -91,8 +104,8 @@ export const createApolloClient = (language = 'nb') => {
   }));
 
   const cache = __CLIENT__
-    ? new InMemoryCache().restore(window.DATA.apolloState)
-    : new InMemoryCache();
+    ? new InMemoryCache({ typePolicies }).restore(window.DATA.apolloState)
+    : new InMemoryCache({ typePolicies });
 
   const client = new ApolloClient({
     ssrMode: true,

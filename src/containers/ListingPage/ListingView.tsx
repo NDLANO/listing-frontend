@@ -268,7 +268,7 @@ const ListingView = ({
     return filteredItems;
   };
 
-  const listItems = !loading
+  const listItems = concepts
     ? filterItems(concepts.map(concept => mapConceptToListItem(concept)))
     : [];
 

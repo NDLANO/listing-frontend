@@ -14,7 +14,7 @@ import useQueryParameter from '../../util/useQueryParameter';
 import { conceptSearchQuery } from '../../queries';
 import { Location } from '../../interfaces';
 
-//const PAGE_SIZE = 100;
+const PAGE_SIZE = 100;
 
 interface Props {
   isOembed: boolean;
@@ -31,7 +31,6 @@ const ListingContainer = ({
   location,
   locale,
 }: Props) => {
-  const [page, setPage] = useState(1);
   const [selectedListFilter, setSelectedListFilter] = useState(null);
   //const [selectedConcept, setSelectedConcept] = useState(null);
   const [searchValue, setSearchValue] = useState('');
@@ -53,12 +52,14 @@ const ListingContainer = ({
   };
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
-  const { data, previousData, loading } = useQuery(conceptSearchQuery, {
+  const { data, loading, fetchMore } = useQuery(conceptSearchQuery, {
     variables: {
       query: debouncedSearchVal,
       subjects: queryParams.subjects.join(),
+      pageSize: PAGE_SIZE.toString(),
       language: locale,
     },
+    notifyOnNetworkStatusChange: true,
   });
 
   const handleSelectItem = (value: any) => {
@@ -75,7 +76,6 @@ const ListingContainer = ({
       filters: [],
     });
     setSelectedListFilter(null);
-    setPage(1);
   };
 
   const handleChangeListFilter = (value: any) => {
@@ -84,7 +84,6 @@ const ListingContainer = ({
       filters: [value],
     });
     setSelectedListFilter(value);
-    setPage(1);
   };
 
   const handleRemoveFilter = () => {
@@ -100,23 +99,22 @@ const ListingContainer = ({
       ...queryParams,
       filters: values,
     });
-    setPage(1);
   };
 
   const onLoadMoreClick = () => {
-    //getConcepts(page + 1);
-    setPage(page + 1);
+    fetchMore({
+      variables: {
+        page: `${data.conceptSearch.length / PAGE_SIZE + 1}`,
+      },
+    });
   };
-
-  console.log(loading);
-  console.log(data);
 
   return (
     <ListingView
       isOembed={isOembed}
       loading={loading}
       totalCount={123}
-      concepts={data?.conceptSearch || previousData?.conceptSearch}
+      concepts={data?.conceptSearch}
       subjects={subjects}
       filters={filters}
       selectedSubjects={queryParams.subjects}
