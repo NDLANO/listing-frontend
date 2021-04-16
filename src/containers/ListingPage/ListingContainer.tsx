@@ -52,15 +52,18 @@ const ListingContainer = ({
   };
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
-  const { data, loading, fetchMore } = useQuery(conceptSearchQuery, {
-    variables: {
-      query: debouncedSearchVal,
-      subjects: queryParams.subjects.join(),
-      pageSize: PAGE_SIZE.toString(),
-      language: locale,
+  const { data, previousData, loading, fetchMore } = useQuery(
+    conceptSearchQuery,
+    {
+      variables: {
+        query: debouncedSearchVal,
+        subjects: queryParams.subjects.join(),
+        pageSize: PAGE_SIZE.toString(),
+        language: locale,
+      },
+      notifyOnNetworkStatusChange: true,
     },
-    notifyOnNetworkStatusChange: true,
-  });
+  );
 
   const handleSelectItem = (value: any) => {
     //setSelectedConcept(value);
@@ -114,7 +117,7 @@ const ListingContainer = ({
       isOembed={isOembed}
       loading={loading}
       totalCount={123}
-      concepts={data?.conceptSearch}
+      concepts={data?.conceptSearch || previousData?.conceptSearch}
       subjects={subjects}
       filters={filters}
       selectedSubjects={queryParams.subjects}

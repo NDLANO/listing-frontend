@@ -86,7 +86,7 @@ const typePolicies = {
   Query: {
     fields: {
       conceptSearch: {
-        keyArgs: false,
+        keyArgs: ['query'],
         merge(existing = [], incoming) {
           return [...existing, ...incoming];
         },
