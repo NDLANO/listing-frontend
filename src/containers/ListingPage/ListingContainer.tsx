@@ -59,6 +59,7 @@ const ListingContainer = ({
         query: debouncedSearchVal,
         subjects: queryParams.subjects.join(),
         pageSize: PAGE_SIZE.toString(),
+        exactMatch: false,
         language: locale,
       },
       notifyOnNetworkStatusChange: true,
@@ -107,17 +108,26 @@ const ListingContainer = ({
   const onLoadMoreClick = () => {
     fetchMore({
       variables: {
-        page: `${data.conceptSearch.length / PAGE_SIZE + 1}`,
+        page: `${Math.floor(
+          data.conceptSearch.concepts.length / PAGE_SIZE + 1,
+        )}`,
       },
     });
   };
+
+  const totalCount =
+    data?.conceptSearch?.totalCount || previousData?.conceptSearch?.totalCount;
+  const concepts =
+    data?.conceptSearch?.concepts || previousData?.conceptSearch?.concepts;
+  const showLoadMore = concepts?.length < totalCount;
 
   return (
     <ListingView
       isOembed={isOembed}
       loading={loading}
-      totalCount={123}
-      concepts={data?.conceptSearch || previousData?.conceptSearch}
+      showLoadMore={showLoadMore}
+      totalCount={totalCount}
+      concepts={concepts}
       subjects={subjects}
       filters={filters}
       selectedSubjects={queryParams.subjects}

@@ -14,6 +14,7 @@ export const conceptSearchQuery = gql`
     $subjects: String
     $page: String
     $pageSize: String
+    $exactMatch: Boolean
     $language: String
   ) {
     conceptSearch(
@@ -21,14 +22,18 @@ export const conceptSearchQuery = gql`
       subjects: $subjects
       page: $page
       pageSize: $pageSize
+      exactMatch: $exactMatch
       language: $language
     ) {
-      id
-      title
-      content
-      metaImage {
-        url
-        alt
+      totalCount
+      concepts {
+        id
+        title
+        content
+        metaImage {
+          url
+          alt
+        }
       }
     }
   }

@@ -979,6 +979,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "exactMatch",
+                "description": "",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "language",
                 "description": "",
                 "type": {
@@ -992,13 +1004,9 @@
               }
             ],
             "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "Concept",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "ConceptResult",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -6739,6 +6747,18 @@
         "description": "",
         "specifiedByUrl": null,
         "fields": [
+          {
+            "name": "totalCount",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "concepts",
             "description": "",

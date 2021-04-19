@@ -134,6 +134,7 @@ const getEmbedCode = (domain: string, filter: string) => {
 interface Props {
   isOembed: boolean;
   loading: boolean;
+  showLoadMore: boolean;
   totalCount: number;
   concepts: any[];
   subjects: any[];
@@ -158,6 +159,7 @@ const ListingView = ({
   t,
   isOembed,
   loading,
+  showLoadMore,
   totalCount,
   concepts,
   subjects,
@@ -177,7 +179,6 @@ const ListingView = ({
   location,
   locale,
 }: Props & tType) => {
-  const [showButton, setShowButton] = useState(true);
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [currentListFilters, setCurrentListFilters] = useState<any[]>([]);
@@ -201,7 +202,6 @@ const ListingView = ({
 
   const onConceptSearch = async (value: string) => {
     setSearchValue(value);
-    setShowButton(!value);
   };
 
   const onFilterSearch = (e: any) => {
@@ -392,7 +392,7 @@ const ListingView = ({
           filters={isOembed ? [] : getFilters()}
           totalCount={totalCount}
         />
-        {showButton && (
+        {showLoadMore && (
           <ButtonWrapper>
             {loading ? (
               <Spinner />

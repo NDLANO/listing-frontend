@@ -82,13 +82,21 @@ const uri = (() => {
   return apiResourceUrl('/graphql-api/graphql');
 })();
 
+const initialConceptResult = {
+  totalCount: 0,
+  concepts: [],
+};
 const typePolicies = {
   Query: {
     fields: {
       conceptSearch: {
-        keyArgs: ['query'],
-        merge(existing = [], incoming) {
-          return [...existing, ...incoming];
+        keyArgs: ['query', 'subjects'],
+        merge(existing = initialConceptResult, incoming) {
+          console.log(incoming);
+          return {
+            totalCount: incoming.totalCount,
+            concepts: [...existing.concepts, ...incoming.concepts],
+          };
         },
       },
     },
