@@ -54,11 +54,11 @@ export function mapConceptToListItem(concept) {
 }
 
 export const getTagsParameter = (tags, filters) => {
-  return tags.filter(tag => {
+  return filters.length ? tags.filter(tag => {
     const splitTag = tag.split(':');
     return filters.every(filter => splitTag.includes(filter)) ||
     splitTag.every(st => filters.includes(st));
-  }).join();
+  }).join() : undefined;
 }
 
 export const isValidListeUrl = url =>
