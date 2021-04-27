@@ -12,6 +12,7 @@ export const conceptSearchQuery = gql`
   query ConceptSearch(
     $query: String
     $subjects: String
+    $tags: String
     $page: String
     $pageSize: String
     $exactMatch: Boolean
@@ -20,6 +21,7 @@ export const conceptSearchQuery = gql`
     conceptSearch(
       query: $query
       subjects: $subjects
+      tags: $tags
       page: $page
       pageSize: $pageSize
       exactMatch: $exactMatch
@@ -30,6 +32,7 @@ export const conceptSearchQuery = gql`
         id
         title
         content
+        tags
         metaImage {
           url
           alt

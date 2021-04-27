@@ -9,7 +9,6 @@
 export function mapTagsToFilters(tags) {
   const filters = new Map();
   tags
-    .filter(tag => tag.match(/.+:(.+)?:(.+)?/))
     .forEach(tag => {
       const [list, main, sub] = tag.split(':');
       if (!filters.has(list)) {
@@ -50,8 +49,16 @@ export function mapConceptToListItem(concept) {
       title: '',
       value: '',
     },
-    filters: concept.tags ? mapTagsToList(concept.tags.tags) : [],
+    filters: concept.tags ? mapTagsToList(concept.tags) : [],
   };
+}
+
+export const getTagsParameter = (tags, filters) => {
+  return tags.filter(tag => {
+    const splitTag = tag.split(':');
+    return filters.every(filter => splitTag.includes(filter)) ||
+    splitTag.every(st => filters.includes(st));
+  }).join();
 }
 
 export const isValidListeUrl = url =>

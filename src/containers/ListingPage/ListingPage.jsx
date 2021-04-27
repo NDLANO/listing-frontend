@@ -30,8 +30,9 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
     const subjects = await Promise.all(subjectIds.map(id => fetchSubject(id)));
     setSubjects(subjects);
     const tags = await fetchTags(locale);
-    setTags(tags);
-    setFilters(mapTagsToFilters(tags));
+    const filteredTags = tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
+    setTags(filteredTags);
+    setFilters(mapTagsToFilters(filteredTags));
   };
 
   /*
@@ -111,6 +112,7 @@ const ListingPage = ({ t, locale, location, isOembed }) => {
     <ListingContainer
       isOembed={isOembed}
       subjects={subjects}
+      tags={tags}
       filters={filters}
       location={location}
       locale={locale}

@@ -258,18 +258,8 @@ const ListingView = ({
       : [];
   };
 
-  const filterItems = (listItems: any[]) => {
-    let filteredItems = listItems;
-    if (selectedFilters.length) {
-      filteredItems = filteredItems.filter(item =>
-        selectedFilters.every(filter => item.filters.includes(filter)),
-      );
-    }
-    return filteredItems;
-  };
-
   const listItems = concepts
-    ? filterItems(concepts.map(concept => mapConceptToListItem(concept)))
+    ? concepts.map(concept => mapConceptToListItem(concept))
     : [];
 
   return (

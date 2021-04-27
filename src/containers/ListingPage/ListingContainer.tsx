@@ -11,6 +11,8 @@ import { useQuery } from '@apollo/client';
 import ListingView from './ListingView';
 // @ts-ignore
 import useQueryParameter from '../../util/useQueryParameter';
+// @ts-ignore
+import { getTagsParameter } from '../../util/listingHelpers';
 import { conceptSearchQuery } from '../../queries';
 import { Location } from '../../interfaces';
 
@@ -19,6 +21,7 @@ const PAGE_SIZE = 100;
 interface Props {
   isOembed: boolean;
   subjects: string[];
+  tags: string[];
   filters: any;
   location: Location;
   locale: string;
@@ -27,17 +30,17 @@ interface Props {
 const ListingContainer = ({
   isOembed,
   subjects,
+  tags,
   filters,
   location,
   locale,
 }: Props) => {
-  const [selectedListFilter, setSelectedListFilter] = useState(null);
   //const [selectedConcept, setSelectedConcept] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
     filters: [],
-    concept: null,
+    concept: undefined,
   });
 
   const useDebounce = (val: string, delay: number) => {
@@ -58,6 +61,7 @@ const ListingContainer = ({
       variables: {
         query: debouncedSearchVal,
         subjects: queryParams.subjects.join(),
+        tags: getTagsParameter(tags, queryParams.filters),
         pageSize: PAGE_SIZE.toString(),
         exactMatch: false,
         language: locale,
@@ -79,15 +83,13 @@ const ListingContainer = ({
       subjects: values,
       filters: [],
     });
-    setSelectedListFilter(null);
   };
 
-  const handleChangeListFilter = (value: any) => {
+  const handleChangeListFilter = (value: string) => {
     setQueryParams({
       subjects: [],
       filters: [value],
     });
-    setSelectedListFilter(value);
   };
 
   const handleRemoveFilter = () => {
@@ -95,7 +97,6 @@ const ListingContainer = ({
       ...queryParams,
       filters: [],
     });
-    setSelectedListFilter(null);
   };
 
   const handleChangeFilters = (_: any, values: string[]) => {
@@ -133,7 +134,7 @@ const ListingContainer = ({
       selectedSubjects={queryParams.subjects}
       selectedFilters={queryParams.filters}
       selectedConcept={queryParams.concept}
-      selectedListFilter={selectedListFilter}
+      selectedListFilter={queryParams.filters?.[0]}
       searchValue={searchValue}
       setSearchValue={setSearchValue}
       onLoadMoreClick={onLoadMoreClick}

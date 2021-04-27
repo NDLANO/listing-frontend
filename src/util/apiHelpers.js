@@ -90,9 +90,8 @@ const typePolicies = {
   Query: {
     fields: {
       conceptSearch: {
-        keyArgs: ['query', 'subjects'],
+        keyArgs: ['query', 'subjects', 'tags'],
         merge(existing = initialConceptResult, incoming) {
-          console.log(incoming);
           return {
             totalCount: incoming.totalCount,
             concepts: [...existing.concepts, ...incoming.concepts],
