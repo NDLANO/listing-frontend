@@ -8,6 +8,18 @@
 
 import { gql } from '@apollo/client';
 
+export const conceptPageQuery = gql`
+  query ConceptPage {
+    conceptPage {
+      subjects {
+        id
+        name
+      }
+      tags
+    }
+  }
+`
+
 export const conceptSearchQuery = gql`
   query ConceptSearch(
     $query: String
