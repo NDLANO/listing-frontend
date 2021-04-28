@@ -41,3 +41,15 @@ export interface Copyright {
   validFrom?: string;
   validTo?: string;
 }
+
+export interface Subject {
+  id: string;
+  name: string;
+}
+
+export interface ListingPage {
+  conceptPage: {
+    subjects: Subject[];
+    tags: string[];
+  }
+}

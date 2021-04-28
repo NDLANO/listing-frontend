@@ -6,20 +6,28 @@
  *
  */
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
 
+// @ts-ignore
 import { mapTagsToFilters } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';
+// @ts-ignore
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { conceptPageQuery } from '../../queries';
+import { Location, ListingPage } from '../../interfaces';
 
-const ListingPage = ({ locale, location, isOembed }) => {
+interface Props {
+  isOembed: boolean;
+  locale: string;
+  location: Location;
+}
 
-  const { data, loading } = useQuery(conceptPageQuery);
+const ListingPage = ({ locale, location, isOembed }: Props) => {
 
-  if (loading) {
-    return null;
-  }
+  const { data, loading } = useQuery<ListingPage>(conceptPageQuery);
+
+  if (loading) return null;
+  if (!data) return <NotFoundPage/>;
 
   const filteredTags = data.conceptPage.tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
   const filters = mapTagsToFilters(filteredTags);
@@ -34,15 +42,6 @@ const ListingPage = ({ locale, location, isOembed }) => {
       locale={locale}
     />
   );
-};
-
-ListingPage.propTypes = {
-  locale: PropTypes.string.isRequired,
-  isOembed: PropTypes.bool,
-  location: PropTypes.shape({
-    search: PropTypes.string,
-    pathname: PropTypes.string,
-  }),
 };
 
 export default ListingPage;

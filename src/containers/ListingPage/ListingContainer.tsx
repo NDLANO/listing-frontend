@@ -14,13 +14,13 @@ import useQueryParameter from '../../util/useQueryParameter';
 // @ts-ignore
 import { getTagsParameter } from '../../util/listingHelpers';
 import { conceptSearchQuery } from '../../queries';
-import { Location } from '../../interfaces';
+import { Location, Subject } from '../../interfaces';
 
 const PAGE_SIZE = 100;
 
 interface Props {
   isOembed: boolean;
-  subjects: string[];
+  subjects: Subject[];
   tags: string[];
   filters: any;
   location: Location;
