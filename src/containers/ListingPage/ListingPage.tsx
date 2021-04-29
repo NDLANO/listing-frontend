@@ -13,7 +13,7 @@ import { mapTagsToFilters } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';
 // @ts-ignore
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import { conceptPageQuery } from '../../queries';
+import { listingPageQuery } from '../../queries';
 import { Location, ListingPage } from '../../interfaces';
 
 interface Props {
@@ -24,18 +24,18 @@ interface Props {
 
 const ListingPage = ({ locale, location, isOembed }: Props) => {
 
-  const { data, loading } = useQuery<ListingPage>(conceptPageQuery);
+  const { data, loading } = useQuery<ListingPage>(listingPageQuery);
 
   if (loading) return null;
   if (!data) return <NotFoundPage/>;
 
-  const filteredTags = data.conceptPage.tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
+  const filteredTags = data.listingPage.tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
   const filters = mapTagsToFilters(filteredTags);
 
   return (
     <ListingContainer
       isOembed={isOembed}
-      subjects={data.conceptPage.subjects}
+      subjects={data.listingPage.subjects}
       tags={filteredTags}
       filters={filters}
       location={location}

@@ -8,9 +8,9 @@
 
 import { gql } from '@apollo/client';
 
-export const conceptPageQuery = gql`
-  query ConceptPage {
-    conceptPage {
+export const listingPageQuery = gql`
+  query ListingPage {
+    listingPage {
       subjects {
         id
         name

@@ -48,7 +48,7 @@ export interface Subject {
 }
 
 export interface ListingPage {
-  conceptPage: {
+  listingPage: {
     subjects: Subject[];
     tags: string[];
   }
