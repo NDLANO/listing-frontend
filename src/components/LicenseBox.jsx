@@ -35,17 +35,21 @@ const getLicenseItems = (entity, t) => {
       metaType: metaTypes.title,
     });
 
-  entity.authors?.length &&
+  entity.copyright?.authors?.length &&
     licenseItems.push({
       label: t('license.originator'),
-      description: entity.authors.map(author => author.name).toString(),
+      description: entity.copyright.authors
+        .map(author => author.name)
+        .toString(),
       metaType: metaTypes.author,
     });
 
-  entity.rightsholders?.length &&
+  entity.copyright?.rightsholders?.length &&
     licenseItems.push({
       label: t('license.rightsholder'),
-      description: entity.rightsholders.toString(),
+      description: entity.copyright.rightsholders
+        .map(holder => holder.name)
+        .toString(),
       metaType: metaTypes.copyrightHolder,
     });
 
