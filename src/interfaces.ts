@@ -51,5 +51,5 @@ export interface ListingPage {
   listingPage: {
     subjects: Subject[];
     tags: string[];
-  }
+  };
 }

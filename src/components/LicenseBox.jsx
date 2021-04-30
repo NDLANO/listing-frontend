@@ -140,7 +140,7 @@ export const ImageContent = ({ t, image }) => {
       <MediaList>
         <MediaListItem>
           <MediaListItemImage>
-            <img src={image.image.url} alt={image.image.alt} />
+            <img src={image.src} alt={image.altText} />
           </MediaListItemImage>
           <MediaListItemBody
             license={image.license}
@@ -154,10 +154,10 @@ export const ImageContent = ({ t, image }) => {
                 <CopyTextButton
                   hasCopiedTitle={t('license.hasCopiedTitle')}
                   copyTitle={t('license.copyTitle')}
-                  stringToCopy={getCopyrightCopyString(image, t)}
+                  stringToCopy={getCopyrightCopyString(image.copyright, t)}
                 />
                 <AnchorButton
-                  href={downloadUrl(image.image.url)}
+                  href={downloadUrl(image.src)}
                   appearance="outline"
                   download>
                   {t('license.download')}

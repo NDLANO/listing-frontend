@@ -8,23 +8,22 @@
 
 export function mapTagsToFilters(tags) {
   const filters = new Map();
-  tags
-    .forEach(tag => {
-      const [list, main, sub] = tag.split(':');
-      if (!filters.has(list)) {
-        filters.set(list, {
-          main: main ? [main] : [],
-          sub: sub ? [sub] : [],
-        });
-      } else {
-        main &&
-          !filters.get(list).main.includes(main) &&
-          filters.get(list).main.push(main);
-        sub &&
-          !filters.get(list).sub.includes(sub) &&
-          filters.get(list).sub.push(sub);
-      }
-    });
+  tags.forEach(tag => {
+    const [list, main, sub] = tag.split(':');
+    if (!filters.has(list)) {
+      filters.set(list, {
+        main: main ? [main] : [],
+        sub: sub ? [sub] : [],
+      });
+    } else {
+      main &&
+        !filters.get(list).main.includes(main) &&
+        filters.get(list).main.push(main);
+      sub &&
+        !filters.get(list).sub.includes(sub) &&
+        filters.get(list).sub.push(sub);
+    }
+  });
   return filters;
 }
 
@@ -54,12 +53,18 @@ export function mapConceptToListItem(concept) {
 }
 
 export const getTagsParameter = (tags, filters) => {
-  return filters.length ? tags.filter(tag => {
-    const splitTag = tag.split(':');
-    return filters.every(filter => splitTag.includes(filter)) ||
-    splitTag.every(st => filters.includes(st));
-  }).join() : undefined;
-}
+  return filters.length
+    ? tags
+        .filter(tag => {
+          const splitTag = tag.split(':');
+          return (
+            filters.every(filter => splitTag.includes(filter)) ||
+            splitTag.every(st => filters.includes(st))
+          );
+        })
+        .join()
+    : undefined;
+};
 
 export const isValidListeUrl = url =>
   /^(https?:\/\/)?(www\.)?liste(\.?(test|staging))?\.ndla\.no\/\?concept=\d+$/.test(

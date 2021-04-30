@@ -23,13 +23,14 @@ interface Props {
 }
 
 const ListingPage = ({ locale, location, isOembed }: Props) => {
-
   const { data, loading } = useQuery<ListingPage>(listingPageQuery);
 
   if (loading) return null;
-  if (!data) return <NotFoundPage/>;
+  if (!data) return <NotFoundPage />;
 
-  const filteredTags = data.listingPage.tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
+  const filteredTags = data.listingPage.tags.filter(tag =>
+    tag.match(/.+:(.+)?:(.+)?/),
+  );
   const filters = mapTagsToFilters(filteredTags);
 
   return (

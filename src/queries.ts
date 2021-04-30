@@ -18,7 +18,7 @@ export const listingPageQuery = gql`
       tags
     }
   }
-`
+`;
 
 export const conceptSearchQuery = gql`
   query ConceptSearch(
@@ -49,6 +49,58 @@ export const conceptSearchQuery = gql`
           url
           alt
         }
+      }
+    }
+  }
+`;
+
+export const detailedConceptQuery = gql`
+  query DetailedConcept($id: String) {
+    detailedConcept(id: $id) {
+      title
+      content
+      copyright {
+        license {
+          license
+        }
+        origin
+        creators {
+          name
+        }
+      }
+      image {
+        title
+        src
+        altText
+        copyright {
+          license {
+            license
+          }
+        }
+      }
+      articles {
+        title
+      }
+      visualElement {
+        resource
+        title
+        url
+        alt
+        image {
+          imageUrl
+          contentType
+        }
+        oembed {
+          title
+          html
+          fullscreen
+        }
+        lowerRightX
+        lowerRight
+        upperLeftX
+        upperLeftY
+        focalX
+        focalY
       }
     }
   }
