@@ -96,7 +96,7 @@ export const detailedConceptQuery = gql`
           fullscreen
         }
         lowerRightX
-        lowerRight
+        lowerRightY
         upperLeftX
         upperLeftY
         focalX

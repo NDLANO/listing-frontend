@@ -175,7 +175,13 @@ const ConceptPage = ({
 };
 
 ConceptPage.propTypes = {
-  conceptId: PropTypes.number.isRequired,
+  conceptId: PropTypes.string.isRequired,
+  subjects: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+    }),
+  ),
   handleClose: PropTypes.func,
   inModal: PropTypes.bool,
   language: PropTypes.string.isRequired,

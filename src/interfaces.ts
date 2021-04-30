@@ -53,3 +53,29 @@ export interface ListingPage {
     tags: string[];
   };
 }
+
+export interface VisualElement {
+  resource: string;
+  resourceId: string;
+  title: string;
+  url: string;
+  alt: string;
+  account: string;
+  player: string;
+  videoid: string;
+  lowerRightX: number;
+  lowerRightY: number;
+  upperLeftX: number;
+  upperLeftY: number;
+  focalX: number;
+  focalY: number;
+  image: {
+    imageUrl: string;
+    contentType: string;
+  };
+  oembed: {
+    title: string;
+    html: string;
+    fullscreen: boolean;
+  };
+}

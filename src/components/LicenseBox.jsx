@@ -122,13 +122,6 @@ TextContent.propTypes = {
 export const ImageContent = ({ t, image }) => {
   const licenseItems = getLicenseItems(image, t);
 
-  image.created &&
-    licenseItems.push({
-      label: t('license.source'),
-      description: image.origin,
-      metaType: metaTypes.other,
-    });
-
   const AnchorButton = StyledButton.withComponent('a');
 
   return (
@@ -143,7 +136,7 @@ export const ImageContent = ({ t, image }) => {
             <img src={image.src} alt={image.altText} />
           </MediaListItemImage>
           <MediaListItemBody
-            license={image.license}
+            license={image.copyright.license.license}
             title={t('license.images.rules')}
             resourceUrl=""
             locale="nb"
@@ -173,22 +166,15 @@ export const ImageContent = ({ t, image }) => {
 
 ImageContent.propTypes = {
   t: PropTypes.func.isRequired,
-  image: PropTypes.exact({
+  image: PropTypes.shape({
     title: PropTypes.string,
-    image: PropTypes.exact({
-      url: PropTypes.string,
-      alt: PropTypes.string,
-    }),
-    created: PropTypes.string,
-    license: PropTypes.string,
-    authors: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        type: PropTypes.string,
+    src: PropTypes.string,
+    altText: PropTypes.string,
+    copyright: PropTypes.shape({
+      license: PropTypes.shape({
+        license: PropTypes.string,
       }),
-    ),
-    rightsholders: PropTypes.arrayOf(PropTypes.string),
-    origin: PropTypes.string,
+    }),
   }),
 };
 

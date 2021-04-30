@@ -1,39 +1,44 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// @ts-ignore
 import Image from '@ndla/ui/lib/Image';
+import { VisualElement } from '../../interfaces';
 
-export const getIframeSrcFromHtmlString = html => {
+export const getIframeSrcFromHtmlString = (html: string) => {
   const el = document.createElement('html');
   el.innerHTML = html;
   const iframe = el.getElementsByTagName('iframe')[0];
-  return iframe.getAttribute('src');
+  return iframe?.getAttribute('src') || undefined;
 };
 
-const getFocalPoint = data => {
-  if (data.focalX && data.focalY) {
-    return { x: data.focalX, y: data.focalY };
+const getFocalPoint = (visualElement: VisualElement) => {
+  if (visualElement.focalX && visualElement.focalY) {
+    return { x: visualElement.focalX, y: visualElement.focalY };
   }
   return undefined;
 };
 
-const getCrop = data => {
+const getCrop = (visualElement: VisualElement) => {
   if (
-    (data.lowerRightX &&
-      data.lowerRightY &&
-      data.upperLeftX &&
-      data.upperLeftY) !== undefined
+    (visualElement.lowerRightX &&
+      visualElement.lowerRightY &&
+      visualElement.upperLeftX &&
+      visualElement.upperLeftY) !== null
   ) {
     return {
-      startX: data.lowerRightX,
-      startY: data.lowerRightY,
-      endX: data.upperLeftX,
-      endY: data.upperLeftY,
+      startX: visualElement.lowerRightX,
+      startY: visualElement.lowerRightY,
+      endX: visualElement.upperLeftX,
+      endY: visualElement.upperLeftY,
     };
   }
   return undefined;
 };
 
-const VisualElement = ({ visualElement }) => {
+interface Props {
+  visualElement: VisualElement;
+}
+
+const VisualElement = ({ visualElement }: Props) => {
   if (visualElement.resource === 'image') {
     return (
       <Image
@@ -71,10 +76,6 @@ const VisualElement = ({ visualElement }) => {
     );
   }
   return null;
-};
-
-VisualElement.propTypes = {
-  visualElement: PropTypes.string,
 };
 
 export default VisualElement;

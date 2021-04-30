@@ -381,7 +381,7 @@ const ListingView = ({
           onSelectItem={handleSelectItem}
           renderMarkdown={renderMarkdown}
           filters={isOembed ? [] : getFilters()}
-          totalCount={totalCount}
+          totalCount={totalCount || 0}
         />
         {showLoadMore && (
           <ButtonWrapper>
