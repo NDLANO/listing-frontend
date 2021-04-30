@@ -54,7 +54,7 @@ const App = ({ locale, t }) => {
             path="/concepts/:conceptId/:selectedLanguage?"
             component={routeProps => (
               <ConceptPage
-                conceptId={Number(routeProps.match.params.conceptId)}
+                conceptId={routeProps.match.params.conceptId}
                 inModal={false}
                 language={routeProps.match.params.selectedLanguage || locale}
               />

@@ -27,7 +27,7 @@ import { CreatedBy, OneColumn, Spinner } from '@ndla/ui';
 import config from '../../config';
 import { ImageContent, TextContent, OembedContent } from '../LicenseBox';
 import VisualElement from './VisualElement';
-import { detailedConceptQuery } from '../../queries';
+import { detailedConceptQuery, listingPageQuery } from '../../queries';
 
 const ConceptPage = ({
   t,
@@ -44,6 +44,10 @@ const ConceptPage = ({
       id: conceptId,
     },
   });
+  const { data: listingData } = useQuery(listingPageQuery, {
+    skip: inModal,
+  });
+  const conceptSubjects = subjects || listingData?.listingPage?.subjects;
 
   useEffect(() => {
     if (markdown === null) {
@@ -126,9 +130,9 @@ const ConceptPage = ({
       </NotionDialogContent>
       {concept.subjectIds?.length && (
         <NotionDialogTags
-          tags={subjects
-            .filter(subject => concept.subjectIds?.includes(subject.id))
-            .map(s => s.name)}
+          tags={conceptSubjects
+            ?.filter(subject => concept.subjectIds?.includes(subject.id))
+            ?.map(s => s.name)}
         />
       )}
       {concept.visualElement.articles?.length > 0 && (
