@@ -14,7 +14,7 @@ import useQueryParameter from '../../util/useQueryParameter';
 // @ts-ignore
 import { getTagsParameter } from '../../util/listingHelpers';
 import { conceptSearchQuery } from '../../queries';
-import { Location, Subject } from '../../interfaces';
+import { Location, Subject, Filter, ListItem, ConceptSearch } from '../../interfaces';
 
 const PAGE_SIZE = 100;
 
@@ -22,7 +22,7 @@ interface Props {
   isOembed: boolean;
   subjects: Subject[];
   tags: string[];
-  filters: any;
+  filters: Map<string, Filter>;
   location: Location;
   locale: string;
 }
@@ -35,7 +35,6 @@ const ListingContainer = ({
   location,
   locale,
 }: Props) => {
-  //const [selectedConcept, setSelectedConcept] = useState(null);
   const [searchValue, setSearchValue] = useState('');
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
@@ -55,7 +54,7 @@ const ListingContainer = ({
   };
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
-  const { data, previousData, loading, fetchMore } = useQuery(
+  const { data, previousData, loading, fetchMore } = useQuery<ConceptSearch>(
     conceptSearchQuery,
     {
       variables: {
@@ -70,8 +69,7 @@ const ListingContainer = ({
     },
   );
 
-  const handleSelectItem = (value: any) => {
-    //setSelectedConcept(value);
+  const handleSelectItem = (value: ListItem) => {
     setQueryParams({
       ...queryParams,
       concept: value?.id,
@@ -85,7 +83,7 @@ const ListingContainer = ({
     });
   };
 
-  const handleChangeListFilter = (value: string) => {
+  const handleChangeListFilter = (value: string | null) => {
     setQueryParams({
       subjects: [],
       filters: [value],
@@ -99,7 +97,7 @@ const ListingContainer = ({
     });
   };
 
-  const handleChangeFilters = (_: any, values: string[]) => {
+  const handleChangeFilters = (_: string, values: string[]) => {
     setQueryParams({
       ...queryParams,
       filters: values,
@@ -107,28 +105,30 @@ const ListingContainer = ({
   };
 
   const onLoadMoreClick = () => {
-    fetchMore({
-      variables: {
-        page: `${Math.floor(
-          data.conceptSearch.concepts.length / PAGE_SIZE + 1,
-        )}`,
-      },
-    });
+    if (data) {
+      fetchMore({
+        variables: {
+          page: `${Math.floor(
+            data.conceptSearch.concepts.length / PAGE_SIZE + 1,
+          )}`,
+        },
+      });
+    }
   };
 
   const totalCount =
     data?.conceptSearch?.totalCount || previousData?.conceptSearch?.totalCount;
   const concepts =
     data?.conceptSearch?.concepts || previousData?.conceptSearch?.concepts;
-  const showLoadMore = concepts?.length < totalCount;
+  const showLoadMore = concepts && totalCount && concepts.length < totalCount;
 
   return (
     <ListingView
       isOembed={isOembed}
       loading={loading}
-      showLoadMore={showLoadMore}
-      totalCount={totalCount}
-      concepts={concepts}
+      showLoadMore={!!showLoadMore}
+      totalCount={totalCount || 0}
+      concepts={concepts || []}
       subjects={subjects}
       filters={filters}
       selectedSubjects={queryParams.subjects}

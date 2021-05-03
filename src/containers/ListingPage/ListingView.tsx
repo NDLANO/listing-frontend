@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import Helmet from 'react-helmet';
 // @ts-ignore
 import { Remarkable } from 'remarkable';
-import Downshift from 'downshift';
+import Downshift, { StateChangeOptions, ControllerStateAndHelpers } from 'downshift';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
@@ -46,7 +46,7 @@ import Footer from '../../components/Footer';
 import CopyTextButton from '../../components/CopyTextButton';
 // @ts-ignore
 import config from '../../config';
-import { Location } from '../../interfaces';
+import { Location, Filter, Concept, ListItem, Subject } from '../../interfaces';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
@@ -88,7 +88,7 @@ const placeholderCSS = css`
   font-weight: initial;
   opacity: 0.5;
 `;
-const placeholderHasValuesCSS = (props: any) =>
+const placeholderHasValuesCSS = (props: { hasValues?: string }) =>
   !props.hasValues
     ? css`
         color: ${colors.brand.primary};
@@ -97,7 +97,7 @@ const placeholderHasValuesCSS = (props: any) =>
       `
     : placeholderCSS;
 
-const categoryFilterCSS = (props: any) => css`
+const categoryFilterCSS = (props: { hasValues?: string }) => css`
   border: 2px solid ${colors.brand.primary};
   min-height: auto;
   cursor: pointer;
@@ -131,26 +131,28 @@ const getEmbedCode = (domain: string, filter: string) => {
   return `<iframe aria-label="${filter}" src="${domain}/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
 };
 
+type ViewStyle = 'grid' | 'list';
+
 interface Props {
   isOembed: boolean;
   loading: boolean;
   showLoadMore: boolean;
   totalCount: number;
-  concepts: any[];
-  subjects: any[];
-  filters: any;
+  concepts: Concept[];
+  subjects: Subject[];
+  filters: Map<string, Filter>;
   selectedSubjects: string[];
   selectedFilters: string[];
-  selectedConcept: any;
-  selectedListFilter: any;
+  selectedConcept?: string;
+  selectedListFilter?: string;
   searchValue: string;
   setSearchValue: (value: string) => void;
   onLoadMoreClick: () => void;
-  handleSelectItem: (value: any) => void;
-  handleChangeListFilter: (value: any) => void;
+  handleSelectItem: (value: ListItem) => void;
+  handleChangeListFilter: (selectedItem: string | null, stateAndHelpers: ControllerStateAndHelpers<string>) => void;
   handleRemoveFilter: () => void;
   handleChangeSubject: (values: string[]) => void;
-  handleChangeFilters: (key: any, values: string[]) => void;
+  handleChangeFilters: (key: string, values: string[]) => void;
   location: Location;
   locale: string;
 }
@@ -181,15 +183,15 @@ const ListingView = ({
 }: Props & tType) => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [filterSearchValue, setFilterSearchValue] = useState('');
-  const [currentListFilters, setCurrentListFilters] = useState<any[]>([]);
+  const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
   const [detailedItem, setDetailedItem] = useState(null);
-  const [viewStyle, setViewStyle] = useState<'grid' | 'list'>('grid');
+  const [viewStyle, setViewStyle] = useState<ViewStyle>('grid');
 
-  const handleStateChangeListFilter = (changes: any) => {
+  const handleStateChangeListFilter = (changes: StateChangeOptions<string>) => {
     const { isOpen, type } = changes;
 
     if (type === Downshift.stateChangeTypes.mouseUp) {
-      setFilterListOpen(isOpen);
+      setFilterListOpen(!!isOpen);
       if (!isOpen) {
         setFilterSearchValue('');
       }
@@ -200,15 +202,11 @@ const ListingView = ({
     }
   };
 
-  const onConceptSearch = async (value: string) => {
-    setSearchValue(value);
-  };
-
-  const onFilterSearch = (e: any) => {
+  const onFilterSearch = (e: ChangeEvent<HTMLInputElement>) => {
     const {
       target: { value },
     } = e;
-    const filteredFilters = Array.from(filters.keys()).filter((item: any) =>
+    const filteredFilters = Array.from(filters.keys()).filter((item: string) =>
       item.toLowerCase().startsWith(value.toLowerCase()),
     );
     setFilterSearchValue(value);
@@ -229,36 +227,37 @@ const ListingView = ({
   };
 
   const getFilters = () => {
-    return filters.get(selectedListFilter)
-      ? [
-          {
-            filterValues: selectedFilters,
-            onChange: handleChangeFilters,
-            isGroupedOptions: true,
-            key: 'default',
-            label: 'Filter',
-            options: [
-              filters.get(selectedListFilter).main.map((filter: any) => ({
-                title: filter,
-                value: filter,
-                disabled: !listItems.some(item =>
-                  item.filters.includes(filter),
-                ),
-              })),
-              filters.get(selectedListFilter).sub.map((filter: any) => ({
-                title: filter,
-                value: filter,
-                disabled: !listItems.some(item =>
-                  item.filters.includes(filter),
-                ),
-              })),
-            ],
-          },
-        ]
-      : [];
+    if (selectedListFilter) {
+      return [
+        {
+          filterValues: selectedFilters,
+          onChange: handleChangeFilters,
+          isGroupedOptions: true,
+          key: 'default',
+          label: 'Filter',
+          options: [
+            filters.get(selectedListFilter)?.main.map((filter: string) => ({
+              title: filter,
+              value: filter,
+              disabled: !listItems.some(item =>
+                item.filters.includes(filter),
+              ),
+            })),
+            filters.get(selectedListFilter)?.sub.map((filter: string) => ({
+              title: filter,
+              value: filter,
+              disabled: !listItems.some(item =>
+                item.filters.includes(filter),
+              ),
+            })),
+          ],
+        },
+      ]
+    }
+    return [];
   };
 
-  const listItems = concepts
+  const listItems: ListItem[] = concepts
     ? concepts.map(concept => mapConceptToListItem(concept))
     : [];
 
@@ -364,9 +363,9 @@ const ListingView = ({
           detailedItem={detailedItem}
           selectCallback={setDetailedItem}
           viewStyle={viewStyle}
-          onChangedViewStyle={(e: any) => setViewStyle(e.viewStyle)}
+          onChangedViewStyle={(e: { viewStyle: ViewStyle}) => setViewStyle(e.viewStyle)}
           searchValue={searchValue}
-          onChangedSearchValue={(e: any) => onConceptSearch(e.target.value)}
+          onChangedSearchValue={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
           selectedItem={
             selectedConcept ? (
               <ConceptPage
@@ -381,7 +380,7 @@ const ListingView = ({
           onSelectItem={handleSelectItem}
           renderMarkdown={renderMarkdown}
           filters={isOembed ? [] : getFilters()}
-          totalCount={totalCount || 0}
+          totalCount={totalCount}
         />
         {showLoadMore && (
           <ButtonWrapper>

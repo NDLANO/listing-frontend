@@ -79,3 +79,39 @@ export interface VisualElement {
     fullscreen: boolean;
   };
 }
+
+export interface Filter {
+  main: string[];
+  sub: string[];
+}
+
+export interface ListItem {
+  id: string;
+  name: string;
+  description: string;
+  category: {
+    title: string;
+    value: string;
+  }
+  filters: string[];
+  image?: string;
+  subjectIds?: string[];
+}
+
+export interface Concept {
+  id: string;
+  title: string;
+  content: string;
+  tags: string[];
+  metaImage: {
+    url: string;
+    alt: string;
+  }
+}
+
+export interface ConceptSearch {
+  conceptSearch: {
+    totalCount: number;
+    concepts: Concept[];
+  }
+}
