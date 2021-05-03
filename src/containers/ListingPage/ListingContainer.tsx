@@ -63,7 +63,6 @@ const ListingContainer = ({
         tags: getTagsParameter(tags, queryParams.filters),
         pageSize: PAGE_SIZE.toString(),
         exactMatch: false,
-        language: locale,
       },
       notifyOnNetworkStatusChange: true,
     },

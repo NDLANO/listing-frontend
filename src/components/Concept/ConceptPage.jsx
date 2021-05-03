@@ -27,6 +27,7 @@ import { CreatedBy, OneColumn, Spinner } from '@ndla/ui';
 import config from '../../config';
 import { ImageContent, TextContent, OembedContent } from '../LicenseBox';
 import VisualElement from './VisualElement';
+import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
 import { detailedConceptQuery, listingPageQuery } from '../../queries';
 
 const ConceptPage = ({
@@ -47,7 +48,6 @@ const ConceptPage = ({
   const { data: listingData } = useQuery(listingPageQuery, {
     skip: inModal,
   });
-  const conceptSubjects = subjects || listingData?.listingPage?.subjects;
 
   useEffect(() => {
     if (markdown === null) {
@@ -56,6 +56,9 @@ const ConceptPage = ({
       setMarkdown(md);
     }
   }, []);
+
+  if (loading) return <Spinner/>
+  if (!data) return <NotFoundPage/>
 
   const renderMarkdown = text => {
     const rendered = markdown?.render(text);
@@ -71,6 +74,7 @@ const ConceptPage = ({
   }
 
   const concept = data.detailedConcept;
+  const conceptSubjects = subjects || listingData?.listingPage?.subjects;
 
   const getTabs = () => {
     const tabs = [];
