@@ -35,6 +35,7 @@ const ListingContainer = ({
   location,
   locale,
 }: Props) => {
+  const [filterListOpen, setFilterListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [queryParams, setQueryParams] = useQueryParameter({
     subjects: [],
@@ -83,6 +84,7 @@ const ListingContainer = ({
   };
 
   const handleChangeListFilter = (value: string | null) => {
+    setFilterListOpen(false);
     setQueryParams({
       subjects: [],
       filters: [value],
@@ -126,6 +128,8 @@ const ListingContainer = ({
       isOembed={isOembed}
       loading={loading}
       showLoadMore={!!showLoadMore}
+      filterListOpen={filterListOpen}
+      setFilterListOpen={setFilterListOpen}
       totalCount={totalCount || 0}
       concepts={concepts || []}
       subjects={subjects}

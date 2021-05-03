@@ -137,6 +137,8 @@ interface Props {
   isOembed: boolean;
   loading: boolean;
   showLoadMore: boolean;
+  filterListOpen: boolean;
+  setFilterListOpen: (value: boolean) => void;
   totalCount: number;
   concepts: Concept[];
   subjects: Subject[];
@@ -162,6 +164,8 @@ const ListingView = ({
   isOembed,
   loading,
   showLoadMore,
+  filterListOpen,
+  setFilterListOpen,
   totalCount,
   concepts,
   subjects,
@@ -181,7 +185,6 @@ const ListingView = ({
   location,
   locale,
 }: Props & tType) => {
-  const [filterListOpen, setFilterListOpen] = useState(false);
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
   const [detailedItem, setDetailedItem] = useState(null);
