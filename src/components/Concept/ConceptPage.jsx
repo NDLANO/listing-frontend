@@ -140,7 +140,7 @@ const ConceptPage = ({
             ?.map(s => s.name)}
         />
       )}
-      {concept.visualElement.articles?.length > 0 && (
+      {concept.visualElement?.articles.length > 0 && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}
           links={concept.visualElement.articles.map(article => ({
