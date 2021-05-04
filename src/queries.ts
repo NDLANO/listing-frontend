@@ -59,14 +59,16 @@ export const detailedConceptQuery = gql`
     detailedConcept(id: $id) {
       title
       content
+      created
       subjectIds
       copyright {
         license {
           license
         }
         origin
-        creators {
+        authors: creators {
           name
+          type
         }
       }
       image {
@@ -79,6 +81,7 @@ export const detailedConceptQuery = gql`
           }
           authors: creators {
             name
+            type
           }
           rightsholders {
             name

@@ -78,7 +78,7 @@ export const TextContent = ({ t, concept, locale }) => {
             <FileDocumentOutline className="c-medialist__icon" />
           </MediaListItemImage>
           <MediaListItemBody
-            license={concept.license}
+            license={concept.copyright.license.license}
             title={t('license.text.rules')}
             resourceUrl=""
             locale="nb"
@@ -89,7 +89,7 @@ export const TextContent = ({ t, concept, locale }) => {
                 <CopyTextButton
                   hasCopiedTitle={t('license.hasCopiedTitle')}
                   copyTitle={t('license.copyTitle')}
-                  stringToCopy={getCopyrightCopyString(concept, t)}
+                  stringToCopy={getCopyrightCopyString(concept.copyright, t)}
                 />
               </div>
             </MediaListItemActions>
@@ -103,23 +103,16 @@ export const TextContent = ({ t, concept, locale }) => {
 TextContent.propTypes = {
   t: PropTypes.func.isRequired,
   locale: PropTypes.string,
-  concept: PropTypes.exact({
-    articleId: PropTypes.number,
+  concept: PropTypes.shape({
     title: PropTypes.string,
-    source: PropTypes.string,
     created: PropTypes.string,
     content: PropTypes.string,
-    image: PropTypes.string,
     subjectIds: PropTypes.arrayOf(PropTypes.string),
-    license: PropTypes.string,
-    authors: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        type: PropTypes.string,
+    copyright: PropTypes.shape({
+      license: PropTypes.shape({
+        license: PropTypes.string,
       }),
-    ),
-    rightsholders: PropTypes.arrayOf(PropTypes.string),
-    visualElement: PropTypes.string,
+    }),
   }),
 };
 
