@@ -6,6 +6,7 @@
  *
  */
 
+import queryString from 'query-string';
 import {
   resolveJsonOrRejectWithError,
   apiResourceUrl,
@@ -25,31 +26,20 @@ export const fetchConcepts = (
   pageSize: number,
   language: string,
   query: string,
-): Promise<ConceptSearchResult[]> =>
-  fetch(
-    `${baseConceptUrl}?sort=title&page=${page}&page-size=${pageSize}&language=${language}&query=${query}&fallback=true`,
-  ).then(resolveJsonOrRejectWithError);
-
-export const fetchConceptsBySubject = (
-  subjectId: number,
-  page: number,
-  pageSize: number,
-  language: string,
-  query: string,
-): Promise<ConceptSearchResult[]> =>
-  fetch(
-    `${baseConceptUrl}?sort=title&subjects=${subjectId}&page=${page}&page-size=${pageSize}&language=${language}&query=${query}&fallback=true`,
-  ).then(resolveJsonOrRejectWithError);
-
-export const fetchConceptsByTags = (
   tags: CommaSeparatedList,
-  page: number,
-  pageSize: number,
-  language: string,
-  query: string,
+  subjects: string,
 ): Promise<ConceptSearchResult[]> =>
   fetch(
-    `${baseConceptUrl}?sort=title&tags=${tags}&page=${page}&page-size=${pageSize}&language=${language}&query=${query}&fallback=true`,
+    `${baseConceptUrl}?${queryString.stringify({
+      sort: 'title',
+      subjects,
+      tags,
+      page,
+      'page-size': pageSize,
+      language,
+      query,
+      fallback: true,
+    })}`,
   ).then(resolveJsonOrRejectWithError);
 
 export const fetchTags = (language: string): Promise<string[]> =>

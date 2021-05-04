@@ -1,4 +1,4 @@
-FROM node:10-alpine as builder
+FROM node:14-alpine as builder
 
 ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
@@ -11,7 +11,7 @@ WORKDIR $APP_PATH
 RUN mkdir -p $APP_PATH/build && yarn
 
 # Copy necessary source files for server and client build
-COPY .babelrc razzle-add-entry-plugin.js razzle.config.js postcss.config.js tsconfig.json $APP_PATH/
+COPY .babelrc razzle.config.js postcss.config.js tsconfig.json $APP_PATH/
 
 COPY src $APP_PATH/src
 COPY public $APP_PATH/public
@@ -20,7 +20,7 @@ COPY public $APP_PATH/public
 RUN yarn run build
 
 # Run stage
-FROM node:10-alpine
+FROM node:14-alpine
 
 ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend

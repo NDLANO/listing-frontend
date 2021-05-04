@@ -78,7 +78,7 @@ const connectSrc = (() => {
   return defaultConnectSrc;
 })();
 
-export default {
+const contentSecurityPolicy = {
   directives: {
     scriptSrc,
     connectSrc,
@@ -124,3 +124,4 @@ export default {
     mediaSrc: ["'self'", 'blob:', 'https://*.ndla.no'],
   },
 };
+export default contentSecurityPolicy;

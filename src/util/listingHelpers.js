@@ -66,7 +66,12 @@ export const getTagsParameter = (tags, filters) => {
     : undefined;
 };
 
-export const isValidListeUrl = url =>
-  /^(https?:\/\/)?(www\.)?liste(\.?(test|staging))?\.ndla\.no\/\?concept=\d+$/.test(
+export const isListeParamUrl = url =>
+  /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/(nn\/|nb\/)?\?concept=\d+$/.test(
+    url,
+  );
+
+export const isListePathUrl = url =>
+  /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/(nn\/|nb\/)?concepts\/\d+$/.test(
     url,
   );

@@ -12,7 +12,6 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import { IntlProvider } from '@ndla/i18n';
-import { setCookie, getCookie } from '@ndla/util';
 
 import { createApolloClient } from './util/apiHelpers';
 import { getLocaleObject, isValidLocale } from './i18n';
@@ -28,7 +27,7 @@ const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
 
 const store = configureStore({ ...initialState });
 
-const storedLanguage = getCookie('language', document.cookie);
+const storedLanguage = window.localStorage.getItem('language');
 if (
   basename === '' &&
   isValidLocale(storedLanguage) &&
@@ -37,7 +36,7 @@ if (
   const { pathname, search } = window.location;
   window.location.href = `/${storedLanguage}${pathname}${search}`;
 } else if (storedLanguage !== basename && isValidLocale(basename)) {
-  setCookie('language', basename);
+  window.localStorage.setItem('language', basename);
 }
 
 const client = createApolloClient(locale.abbreviation);

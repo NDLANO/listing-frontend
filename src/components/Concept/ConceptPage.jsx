@@ -27,6 +27,7 @@ import { CreatedBy, OneColumn, Spinner } from '@ndla/ui';
 import config from '../../config';
 import { ImageContent, TextContent, OembedContent } from '../LicenseBox';
 import VisualElement from './VisualElement';
+import PostResizeMessage from '../PostResizeMessage';
 import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
 import { detailedConceptQuery, listingPageQuery } from '../../queries';
 
@@ -160,7 +161,7 @@ const ConceptPage = ({
   );
 
   return (
-    <OneColumn>
+    <OneColumn cssModifier={'iframe'}>
       {inModal ? (
         <NotionDialogWrapper
           title={concept.title}
@@ -169,6 +170,7 @@ const ConceptPage = ({
         </NotionDialogWrapper>
       ) : (
         <>
+          <PostResizeMessage />
           <NotionHeaderWithoutExitButton title={concept.title} />
           {conceptBody}
           <CreatedBy

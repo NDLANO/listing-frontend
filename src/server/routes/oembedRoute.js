@@ -9,15 +9,16 @@
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status';
 import config from '../../config';
 import { fetchConcept } from '../../api/concept/conceptApi';
-import { isValidListeUrl } from '../../util/listingHelpers';
+import { isListeParamUrl, isListePathUrl } from '../../util/listingHelpers';
 import handleError from '../../util/handleError';
 
 const getOembedObject = (req, title, html) => {
   return {
     data: {
       type: 'rich',
+      providerName: 'NDLA Liste',
       version: '1.0', // oEmbed version
-      height: req.query.height || 800,
+      height: req.query.height || 600,
       width: req.query.width || 800,
       title,
       html,
@@ -36,7 +37,13 @@ const getConceptHTMLandTitle = async id => {
 
 const getConceptId = url => {
   const decodedUrl = decodeURIComponent(url);
-  return isValidListeUrl(decodedUrl) ? decodedUrl.split('=')[1] : undefined;
+  if (isListeParamUrl(decodedUrl)) {
+    return decodedUrl.split('=').pop();
+  }
+  if (isListePathUrl(decodedUrl)) {
+    return decodedUrl.split('/').pop();
+  }
+  return undefined;
 };
 
 const oembedConceptRoute = async (req, url) => {
