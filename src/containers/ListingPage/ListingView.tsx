@@ -14,7 +14,7 @@ import Downshift, {
   ControllerStateAndHelpers,
 } from 'downshift';
 import styled from '@emotion/styled';
-import { css } from '@emotion/core';
+import { css, SerializedStyles } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
 import { injectT, tType } from '@ndla/i18n';
 // @ts-ignore
@@ -91,7 +91,9 @@ const placeholderCSS = css`
   font-weight: initial;
   opacity: 0.5;
 `;
-const placeholderHasValuesCSS = (props: { hasValues?: string }) =>
+const placeholderHasValuesCSS = (props: {
+  hasValues?: string;
+}): SerializedStyles =>
   !props.hasValues
     ? css`
         color: ${colors.brand.primary};
@@ -100,7 +102,9 @@ const placeholderHasValuesCSS = (props: { hasValues?: string }) =>
       `
     : placeholderCSS;
 
-const categoryFilterCSS = (props: { hasValues?: string }) => css`
+const categoryFilterCSS = (props: {
+  hasValues?: string;
+}): SerializedStyles => css`
   border: 2px solid ${colors.brand.primary};
   min-height: auto;
   cursor: pointer;
@@ -121,7 +125,7 @@ const categoryFilterCSS = (props: { hasValues?: string }) => css`
 
 const markdown = new Remarkable();
 markdown.inline.ruler.enable(['sub', 'sup']);
-const renderMarkdown = (text: string) => {
+const renderMarkdown = (text: string): JSX.Element => {
   const rendered = markdown.render(text);
   return (
     <>
@@ -130,7 +134,7 @@ const renderMarkdown = (text: string) => {
   );
 };
 
-const getEmbedCode = (domain: string, filter: string) => {
+const getEmbedCode = (domain: string, filter: string): string => {
   return `<iframe aria-label="${filter}" src="${domain}/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
 };
 
@@ -190,13 +194,15 @@ const ListingView = ({
   handleChangeFilters,
   location,
   locale,
-}: Props & tType) => {
+}: Props & tType): JSX.Element => {
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
   const [detailedItem, setDetailedItem] = useState(null);
   const [viewStyle, setViewStyle] = useState<ViewStyle>('grid');
 
-  const handleStateChangeListFilter = (changes: StateChangeOptions<string>) => {
+  const handleStateChangeListFilter = (
+    changes: StateChangeOptions<string>,
+  ): void => {
     const { isOpen, type } = changes;
 
     if (type === Downshift.stateChangeTypes.mouseUp) {
@@ -211,7 +217,7 @@ const ListingView = ({
     }
   };
 
-  const onFilterSearch = (e: ChangeEvent<HTMLInputElement>) => {
+  const onFilterSearch = (e: ChangeEvent<HTMLInputElement>): void => {
     const {
       target: { value },
     } = e;
@@ -222,7 +228,7 @@ const ListingView = ({
     setCurrentListFilters(filteredFilters);
   };
 
-  const onFilterSearchFocus = () => {
+  const onFilterSearchFocus = (): void => {
     setFilterListOpen(true);
     setCurrentListFilters(Array.from(filters.keys()));
   };
@@ -235,7 +241,7 @@ const ListingView = ({
     placeholder: t(`listview.filters.category.openFilter`),
   };
 
-  const getFilters = () => {
+  const getFilters = (): object[] => {
     if (selectedListFilter) {
       return [
         {
@@ -269,149 +275,158 @@ const ListingView = ({
   return (
     <>
       <OneColumn>
-        <Helmet title={t(`themePage.heading`)} />
-        {!isOembed && (
-          <>
-            <HeaderWithLanguageWrapper>
-              <SubjectFilterWrapper>
-                <FilterListPhone
-                  preid="subject-list"
-                  label={t(`listview.filters.subject.openFilter`)}
-                  options={subjects.map(item => ({
-                    title: item.name,
-                    value: item.id,
-                  }))}
-                  alignedGroup
-                  showActiveFiltersOnSmallScreen
-                  values={selectedSubjects}
-                  messages={{
-                    useFilter: t(`listview.filters.subject.useFilter`),
-                    openFilter: t(`listview.filters.subject.openFilter`),
-                    closeFilter: t(`listview.filters.subject.closeFilter`),
+        <>
+          <Helmet title={t(`themePage.heading`)} />
+          {!isOembed && (
+            <>
+              <HeaderWithLanguageWrapper>
+                <SubjectFilterWrapper>
+                  <FilterListPhone
+                    preid="subject-list"
+                    label={t(`listview.filters.subject.openFilter`)}
+                    options={subjects.map(item => ({
+                      title: item.name,
+                      value: item.id,
+                    }))}
+                    alignedGroup
+                    showActiveFiltersOnSmallScreen
+                    values={selectedSubjects}
+                    messages={{
+                      useFilter: t(`listview.filters.subject.useFilter`),
+                      openFilter: t(`listview.filters.subject.openFilter`),
+                      closeFilter: t(`listview.filters.subject.closeFilter`),
+                    }}
+                    onChange={handleChangeSubject}
+                    viewMode="allModal"
+                  />
+                </SubjectFilterWrapper>
+                <StyledEmbedCopyButton>
+                  {selectedListFilter && (
+                    <CopyTextButton
+                      copyTitle={t('listview.embedlink.copyTitle')}
+                      hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
+                      stringToCopy={getEmbedCode(
+                        config.ndlaListingFrontendDomain,
+                        selectedListFilter,
+                      )}
+                      timeout={5000}
+                      ghostPill
+                    />
+                  )}
+                </StyledEmbedCopyButton>
+                <StyledLanguageSelector>
+                  <MastheadItem>
+                    <LanguageSelector
+                      options={getLocaleUrls(locale, location)}
+                      currentLanguage={locale}
+                      alwaysVisible
+                    />
+                  </MastheadItem>
+                </StyledLanguageSelector>
+              </HeaderWithLanguageWrapper>
+              <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
+              <CategoriesFilterWrapper>
+                <Downshift
+                  onSelect={handleChangeListFilter}
+                  onStateChange={handleStateChangeListFilter}
+                  isOpen={filterListOpen}>
+                  {({
+                    getInputProps,
+                    getMenuProps,
+                    getItemProps,
+                  }): JSX.Element => {
+                    return (
+                      <div>
+                        <DropdownInput
+                          multiSelect
+                          // eslint-disable-next-line react/jsx-props-no-spreading
+                          {...getInputProps(categoryFilterInputProps)}
+                          data-testid={'dropdownInput'}
+                          iconRight={
+                            filterListOpen ? (
+                              <Search />
+                            ) : (
+                              <span onClick={onFilterSearchFocus}>
+                                <ChevronDown />
+                              </span>
+                            )
+                          }
+                          values={
+                            selectedListFilter ? [selectedListFilter] : []
+                          }
+                          removeItem={handleRemoveFilter}
+                          customCSS={categoryFilterCSS({
+                            hasValues: selectedListFilter,
+                          })}
+                        />
+                        <DropdownMenu
+                          getMenuProps={getMenuProps}
+                          getItemProps={getItemProps}
+                          isOpen={filterListOpen}
+                          items={currentListFilters}
+                          maxRender={1000}
+                          hideTotalSearchCount
+                          positionAbsolute
+                        />
+                      </div>
+                    );
                   }}
-                  onChange={handleChangeSubject}
-                  viewMode="allModal"
+                </Downshift>
+              </CategoriesFilterWrapper>
+            </>
+          )}
+          <ListView
+            disableSearch={isOembed}
+            disableViewOption={isOembed}
+            items={listItems}
+            detailedItem={detailedItem}
+            selectCallback={setDetailedItem}
+            viewStyle={viewStyle}
+            onChangedViewStyle={(e: { viewStyle: ViewStyle }): void =>
+              setViewStyle(e.viewStyle)
+            }
+            searchValue={searchValue}
+            onChangedSearchValue={(e: ChangeEvent<HTMLInputElement>): void =>
+              setSearchValue(e.target.value)
+            }
+            selectedItem={
+              selectedConcept ? (
+                <ConceptPage
+                  conceptId={selectedConcept}
+                  subjects={subjects}
+                  language={locale}
+                  inModal={true}
+                  handleClose={handleSelectItem}
                 />
-              </SubjectFilterWrapper>
-              <StyledEmbedCopyButton>
-                {selectedListFilter && (
-                  <CopyTextButton
-                    copyTitle={t('listview.embedlink.copyTitle')}
-                    hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
-                    stringToCopy={getEmbedCode(
-                      config.ndlaListingFrontendDomain,
-                      selectedListFilter,
-                    )}
-                    timeout={5000}
-                    ghostPill
-                  />
-                )}
-              </StyledEmbedCopyButton>
-              <StyledLanguageSelector>
-                <MastheadItem>
-                  <LanguageSelector
-                    options={getLocaleUrls(locale, location)}
-                    currentLanguage={locale}
-                    alwaysVisible
-                  />
-                </MastheadItem>
-              </StyledLanguageSelector>
-            </HeaderWithLanguageWrapper>
-            <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
-            <CategoriesFilterWrapper>
-              <Downshift
-                onSelect={handleChangeListFilter}
-                onStateChange={handleStateChangeListFilter}
-                isOpen={filterListOpen}>
-                {({ getInputProps, getMenuProps, getItemProps }) => {
-                  return (
-                    <div>
-                      <DropdownInput
-                        multiSelect
-                        {...getInputProps(categoryFilterInputProps)}
-                        data-testid={'dropdownInput'}
-                        iconRight={
-                          filterListOpen ? (
-                            <Search />
-                          ) : (
-                            <span onClick={onFilterSearchFocus}>
-                              <ChevronDown />
-                            </span>
-                          )
-                        }
-                        values={selectedListFilter ? [selectedListFilter] : []}
-                        removeItem={handleRemoveFilter}
-                        customCSS={categoryFilterCSS({
-                          hasValues: selectedListFilter,
-                        })}
-                      />
-                      <DropdownMenu
-                        getMenuProps={getMenuProps}
-                        getItemProps={getItemProps}
-                        isOpen={filterListOpen}
-                        items={currentListFilters}
-                        maxRender={1000}
-                        hideTotalSearchCount
-                        positionAbsolute
-                      />
-                    </div>
-                  );
-                }}
-              </Downshift>
-            </CategoriesFilterWrapper>
-          </>
-        )}
-        <ListView
-          disableSearch={isOembed}
-          disableViewOption={isOembed}
-          items={listItems}
-          detailedItem={detailedItem}
-          selectCallback={setDetailedItem}
-          viewStyle={viewStyle}
-          onChangedViewStyle={(e: { viewStyle: ViewStyle }) =>
-            setViewStyle(e.viewStyle)
-          }
-          searchValue={searchValue}
-          onChangedSearchValue={(e: ChangeEvent<HTMLInputElement>) =>
-            setSearchValue(e.target.value)
-          }
-          selectedItem={
-            selectedConcept ? (
-              <ConceptPage
-                conceptId={selectedConcept}
-                subjects={subjects}
-                language={locale}
-                inModal={true}
-                handleClose={handleSelectItem}
-              />
-            ) : null
-          }
-          onSelectItem={handleSelectItem}
-          renderMarkdown={renderMarkdown}
-          filters={isOembed ? [] : getFilters()}
-          totalCount={totalCount}
-        />
-        {showLoadMore ||
-          (totalCount === 0 && (
-            <ButtonWrapper>
-              {loading ? (
-                <Spinner />
-              ) : (
-                <Button onClick={onLoadMoreClick}>
-                  {t('listingPage.loadMore')}
-                </Button>
-              )}
-            </ButtonWrapper>
-          ))}
-        {isOembed && (
-          <CreatedBy
-            name={t('createdBy.listing.content')}
-            description={t('createdBy.listing.text')}
-            url={`${config.ndlaListingFrontendDomain}/${decodeURIComponent(
-              location.search,
-            )}`}
+              ) : null
+            }
+            onSelectItem={handleSelectItem}
+            renderMarkdown={renderMarkdown}
+            filters={isOembed ? [] : getFilters()}
+            totalCount={totalCount}
           />
-        )}
+          {showLoadMore ||
+            (totalCount === 0 && (
+              <ButtonWrapper>
+                {loading ? (
+                  <Spinner />
+                ) : (
+                  <Button onClick={onLoadMoreClick}>
+                    {t('listingPage.loadMore')}
+                  </Button>
+                )}
+              </ButtonWrapper>
+            ))}
+          {isOembed && (
+            <CreatedBy
+              name={t('createdBy.listing.content')}
+              description={t('createdBy.listing.text')}
+              url={`${config.ndlaListingFrontendDomain}/${decodeURIComponent(
+                location.search,
+              )}`}
+            />
+          )}
+        </>
       </OneColumn>
       {!isOembed && <Footer t={t} />}
     </>

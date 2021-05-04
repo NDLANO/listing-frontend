@@ -8,7 +8,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 // @ts-ignore
-import { Spinner, OneColumn } from '@ndla/ui';
+import { Spinner } from '@ndla/ui';
 
 // @ts-ignore
 import { mapTagsToFilters } from '../../util/listingHelpers';
@@ -16,7 +16,7 @@ import ListingContainer from './ListingContainer';
 // @ts-ignore
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { listingPageQuery } from '../../queries';
-import { Location, ListingPage } from '../../interfaces';
+import { Location, ListingPageType } from '../../interfaces';
 
 interface Props {
   isOembed: boolean;
@@ -24,8 +24,8 @@ interface Props {
   location: Location;
 }
 
-const ListingPage = ({ locale, location, isOembed }: Props) => {
-  const { data, loading } = useQuery<ListingPage>(listingPageQuery);
+const ListingPage = ({ locale, location, isOembed }: Props): JSX.Element => {
+  const { data, loading } = useQuery<ListingPageType>(listingPageQuery);
 
   if (loading) return <Spinner />;
   if (!data) return <NotFoundPage />;

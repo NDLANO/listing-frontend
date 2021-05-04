@@ -1,23 +1,27 @@
 import React from 'react';
 // @ts-ignore
 import Image from '@ndla/ui/lib/Image';
-import { VisualElement } from '../../interfaces';
+import { VisualElementType } from '../../interfaces';
 
-export const getIframeSrcFromHtmlString = (html: string) => {
+export const getIframeSrcFromHtmlString = (
+  html: string,
+): string | undefined => {
   const el = document.createElement('html');
   el.innerHTML = html;
   const iframe = el.getElementsByTagName('iframe')[0];
   return iframe?.getAttribute('src') || undefined;
 };
 
-const getFocalPoint = (visualElement: VisualElement) => {
+const getFocalPoint = (
+  visualElement: VisualElementType,
+): object | undefined => {
   if (visualElement.focalX && visualElement.focalY) {
     return { x: visualElement.focalX, y: visualElement.focalY };
   }
   return undefined;
 };
 
-const getCrop = (visualElement: VisualElement) => {
+const getCrop = (visualElement: VisualElementType): object | undefined => {
   if (
     (visualElement.lowerRightX &&
       visualElement.lowerRightY &&
@@ -35,10 +39,10 @@ const getCrop = (visualElement: VisualElement) => {
 };
 
 interface Props {
-  visualElement: VisualElement;
+  visualElement: VisualElementType;
 }
 
-const VisualElement = ({ visualElement }: Props) => {
+const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
   if (visualElement.resource === 'image') {
     return (
       <Image

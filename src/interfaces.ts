@@ -47,14 +47,14 @@ export interface Subject {
   name: string;
 }
 
-export interface ListingPage {
+export interface ListingPageType {
   listingPage: {
     subjects: Subject[];
     tags: string[];
   };
 }
 
-export interface VisualElement {
+export interface VisualElementType {
   resource: string;
   resourceId: string;
   title: string;

@@ -40,7 +40,7 @@ const ListingContainer = ({
   filters,
   location,
   locale,
-}: Props) => {
+}: Props): JSX.Element => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [queryParams, setQueryParams] = useQueryParameter({
@@ -49,13 +49,13 @@ const ListingContainer = ({
     concept: undefined,
   });
 
-  const useDebounce = (val: string, delay: number) => {
+  const useDebounce = (val: string, delay: number): string => {
     const [debouncedVal, setDebouncedVal] = useState(val);
     useEffect(() => {
       const handler = setTimeout(() => {
         setDebouncedVal(val);
       }, delay);
-      return () => clearTimeout(handler);
+      return (): void => clearTimeout(handler);
     }, [val, delay]);
     return `${debouncedVal}*`;
   };
@@ -75,21 +75,21 @@ const ListingContainer = ({
     },
   );
 
-  const handleSelectItem = (value: ListItem) => {
+  const handleSelectItem = (value: ListItem): void => {
     setQueryParams({
       ...queryParams,
       concept: value?.id,
     });
   };
 
-  const handleChangeSubject = (values: string[]) => {
+  const handleChangeSubject = (values: string[]): void => {
     setQueryParams({
       subjects: values,
       filters: [],
     });
   };
 
-  const handleChangeListFilter = (value: string | null) => {
+  const handleChangeListFilter = (value: string | null): void => {
     setFilterListOpen(false);
     setQueryParams({
       subjects: [],
@@ -97,21 +97,21 @@ const ListingContainer = ({
     });
   };
 
-  const handleRemoveFilter = () => {
+  const handleRemoveFilter = (): void => {
     setQueryParams({
       ...queryParams,
       filters: [],
     });
   };
 
-  const handleChangeFilters = (_: string, values: string[]) => {
+  const handleChangeFilters = (_: string, values: string[]): void => {
     setQueryParams({
       ...queryParams,
       filters: values,
     });
   };
 
-  const onLoadMoreClick = () => {
+  const onLoadMoreClick = (): void => {
     if (data) {
       fetchMore({
         variables: {
