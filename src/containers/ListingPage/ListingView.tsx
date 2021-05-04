@@ -9,7 +9,10 @@ import React, { ChangeEvent, useState } from 'react';
 import Helmet from 'react-helmet';
 // @ts-ignore
 import { Remarkable } from 'remarkable';
-import Downshift, { StateChangeOptions, ControllerStateAndHelpers } from 'downshift';
+import Downshift, {
+  StateChangeOptions,
+  ControllerStateAndHelpers,
+} from 'downshift';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
@@ -151,7 +154,10 @@ interface Props {
   setSearchValue: (value: string) => void;
   onLoadMoreClick: () => void;
   handleSelectItem: (value: ListItem) => void;
-  handleChangeListFilter: (selectedItem: string | null, stateAndHelpers: ControllerStateAndHelpers<string>) => void;
+  handleChangeListFilter: (
+    selectedItem: string | null,
+    stateAndHelpers: ControllerStateAndHelpers<string>,
+  ) => void;
   handleRemoveFilter: () => void;
   handleChangeSubject: (values: string[]) => void;
   handleChangeFilters: (key: string, values: string[]) => void;
@@ -242,20 +248,16 @@ const ListingView = ({
             filters.get(selectedListFilter)?.main.map((filter: string) => ({
               title: filter,
               value: filter,
-              disabled: !listItems.some(item =>
-                item.filters.includes(filter),
-              ),
+              disabled: !listItems.some(item => item.filters.includes(filter)),
             })),
             filters.get(selectedListFilter)?.sub.map((filter: string) => ({
               title: filter,
               value: filter,
-              disabled: !listItems.some(item =>
-                item.filters.includes(filter),
-              ),
+              disabled: !listItems.some(item => item.filters.includes(filter)),
             })),
           ],
         },
-      ]
+      ];
     }
     return [];
   };
@@ -366,9 +368,13 @@ const ListingView = ({
           detailedItem={detailedItem}
           selectCallback={setDetailedItem}
           viewStyle={viewStyle}
-          onChangedViewStyle={(e: { viewStyle: ViewStyle}) => setViewStyle(e.viewStyle)}
+          onChangedViewStyle={(e: { viewStyle: ViewStyle }) =>
+            setViewStyle(e.viewStyle)
+          }
           searchValue={searchValue}
-          onChangedSearchValue={(e: ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+          onChangedSearchValue={(e: ChangeEvent<HTMLInputElement>) =>
+            setSearchValue(e.target.value)
+          }
           selectedItem={
             selectedConcept ? (
               <ConceptPage
@@ -385,17 +391,18 @@ const ListingView = ({
           filters={isOembed ? [] : getFilters()}
           totalCount={totalCount}
         />
-        {showLoadMore || totalCount === 0 && (
-          <ButtonWrapper>
-            {loading ? (
-              <Spinner />
-            ) : (
-              <Button onClick={onLoadMoreClick}>
-                {t('listingPage.loadMore')}
-              </Button>
-            )}
-          </ButtonWrapper>
-        )}
+        {showLoadMore ||
+          (totalCount === 0 && (
+            <ButtonWrapper>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Button onClick={onLoadMoreClick}>
+                  {t('listingPage.loadMore')}
+                </Button>
+              )}
+            </ButtonWrapper>
+          ))}
         {isOembed && (
           <CreatedBy
             name={t('createdBy.listing.content')}

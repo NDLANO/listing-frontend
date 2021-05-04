@@ -14,7 +14,13 @@ import useQueryParameter from '../../util/useQueryParameter';
 // @ts-ignore
 import { getTagsParameter } from '../../util/listingHelpers';
 import { conceptSearchQuery } from '../../queries';
-import { Location, Subject, Filter, ListItem, ConceptSearch } from '../../interfaces';
+import {
+  Location,
+  Subject,
+  Filter,
+  ListItem,
+  ConceptSearch,
+} from '../../interfaces';
 
 const PAGE_SIZE = 100;
 

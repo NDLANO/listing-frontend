@@ -92,7 +92,7 @@ export interface ListItem {
   category: {
     title: string;
     value: string;
-  }
+  };
   filters: string[];
   image?: string;
   subjectIds?: string[];
@@ -106,12 +106,12 @@ export interface Concept {
   metaImage: {
     url: string;
     alt: string;
-  }
+  };
 }
 
 export interface ConceptSearch {
   conceptSearch: {
     totalCount: number;
     concepts: Concept[];
-  }
+  };
 }

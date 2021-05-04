@@ -57,8 +57,8 @@ const ConceptPage = ({
     }
   }, []);
 
-  if (loading) return <Spinner/>
-  if (!data) return <NotFoundPage/>
+  if (loading) return <Spinner />;
+  if (!data) return <NotFoundPage />;
 
   const renderMarkdown = text => {
     const rendered = markdown?.render(text);

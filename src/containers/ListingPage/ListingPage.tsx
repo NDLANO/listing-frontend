@@ -27,7 +27,7 @@ interface Props {
 const ListingPage = ({ locale, location, isOembed }: Props) => {
   const { data, loading } = useQuery<ListingPage>(listingPageQuery);
 
-  if (loading) return <Spinner/>;
+  if (loading) return <Spinner />;
   if (!data) return <NotFoundPage />;
 
   const filteredTags = data.listingPage.tags.filter(tag =>
