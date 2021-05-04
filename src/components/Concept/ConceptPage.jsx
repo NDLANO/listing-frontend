@@ -56,7 +56,7 @@ const ConceptPage = ({
       md.inline.ruler.enable(['sub', 'sup']);
       setMarkdown(md);
     }
-  }, []);
+  }, [markdown]);
 
   if (loading) return <Spinner />;
   if (!data) return <NotFoundPage />;
