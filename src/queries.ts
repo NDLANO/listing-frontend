@@ -89,6 +89,7 @@ export const detailedConceptQuery = gql`
         }
       }
       articles {
+        id
         title
       }
       visualElement {

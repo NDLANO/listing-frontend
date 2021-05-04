@@ -140,11 +140,11 @@ const ConceptPage = ({
             ?.map(s => s.name)}
         />
       )}
-      {concept.visualElement?.articles.length > 0 && (
+      {concept.articles?.length > 0 && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}
-          links={concept.visualElement.articles.map(article => ({
-            label: article.title?.title,
+          links={concept.articles.map(article => ({
+            label: article.title,
             href: `${config.ndlaFrontendDomain}/article/${article.id}`,
           }))}
         />
