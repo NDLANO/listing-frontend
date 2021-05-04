@@ -385,7 +385,7 @@ const ListingView = ({
           filters={isOembed ? [] : getFilters()}
           totalCount={totalCount}
         />
-        {showLoadMore && (
+        {showLoadMore || totalCount === 0 && (
           <ButtonWrapper>
             {loading ? (
               <Spinner />

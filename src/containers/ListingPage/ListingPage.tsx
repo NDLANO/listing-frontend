@@ -7,6 +7,8 @@
  */
 import React from 'react';
 import { useQuery } from '@apollo/client';
+// @ts-ignore
+import { Spinner, OneColumn } from '@ndla/ui';
 
 // @ts-ignore
 import { mapTagsToFilters } from '../../util/listingHelpers';
@@ -25,7 +27,7 @@ interface Props {
 const ListingPage = ({ locale, location, isOembed }: Props) => {
   const { data, loading } = useQuery<ListingPage>(listingPageQuery);
 
-  if (loading) return null;
+  if (loading) return <Spinner/>;
   if (!data) return <NotFoundPage />;
 
   const filteredTags = data.listingPage.tags.filter(tag =>
