@@ -6,9 +6,14 @@
  *
  */
 
+export function filterTags(tags) {
+  return tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
+}
+
 export function mapTagsToFilters(tags) {
+  const fitleredTags = filterTags(tags);
   const filters = new Map();
-  tags.forEach(tag => {
+  fitleredTags.forEach(tag => {
     const [list, main, sub] = tag.split(':');
     if (!filters.has(list)) {
       filters.set(list, {

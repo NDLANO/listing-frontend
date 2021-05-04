@@ -11,7 +11,7 @@ import { useQuery } from '@apollo/client';
 import { Spinner } from '@ndla/ui';
 
 // @ts-ignore
-import { mapTagsToFilters } from '../../util/listingHelpers';
+import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';
 // @ts-ignore
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
@@ -30,10 +30,8 @@ const ListingPage = ({ locale, location, isOembed }: Props): JSX.Element => {
   if (loading) return <Spinner />;
   if (!data) return <NotFoundPage />;
 
-  const filteredTags = data.listingPage.tags.filter(tag =>
-    tag.match(/.+:(.+)?:(.+)?/),
-  );
-  const filters = mapTagsToFilters(filteredTags);
+  const filters = mapTagsToFilters(data.listingPage.tags);
+  const filteredTags = filterTags(data.listingPage.tags);
 
   return (
     <ListingContainer
