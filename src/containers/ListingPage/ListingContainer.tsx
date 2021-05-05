@@ -61,7 +61,7 @@ const ListingContainer = ({
   };
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
-  const { data, previousData, loading, fetchMore } = useQuery<ConceptSearch>(
+  const { data, loading, fetchMore } = useQuery<ConceptSearch>(
     conceptSearchQuery,
     {
       variables: {
@@ -71,7 +71,7 @@ const ListingContainer = ({
         pageSize: PAGE_SIZE.toString(),
         exactMatch: false,
       },
-      notifyOnNetworkStatusChange: true,
+      notifyOnNetworkStatusChange: true, // For spinner on load more
     },
   );
 
@@ -123,11 +123,12 @@ const ListingContainer = ({
     }
   };
 
-  const totalCount =
-    data?.conceptSearch?.totalCount || previousData?.conceptSearch?.totalCount;
-  const concepts =
-    data?.conceptSearch?.concepts || previousData?.conceptSearch?.concepts;
-  const showLoadMore = concepts && totalCount && concepts.length < totalCount;
+  const totalCount = data?.conceptSearch?.totalCount;
+  const concepts = data?.conceptSearch?.concepts;
+  const showLoadMore =
+    concepts !== undefined && totalCount !== undefined
+      ? concepts.length < totalCount
+      : true;
 
   return (
     <ListingView

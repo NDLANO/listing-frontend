@@ -405,18 +405,17 @@ const ListingView = ({
             filters={isOembed ? [] : getFilters()}
             totalCount={totalCount}
           />
-          {showLoadMore ||
-            (totalCount === 0 && (
-              <ButtonWrapper>
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  <Button onClick={onLoadMoreClick}>
-                    {t('listingPage.loadMore')}
-                  </Button>
-                )}
-              </ButtonWrapper>
-            ))}
+          {showLoadMore && (
+            <ButtonWrapper>
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Button onClick={onLoadMoreClick}>
+                  {t('listingPage.loadMore')}
+                </Button>
+              )}
+            </ButtonWrapper>
+          )}
           {isOembed && (
             <CreatedBy
               name={t('createdBy.listing.content')}
