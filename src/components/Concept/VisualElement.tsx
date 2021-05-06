@@ -54,12 +54,11 @@ const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
       />
     );
   } else if (visualElement.resource === 'brightcove') {
-    const src = `https://players.brightcove.net/${visualElement.account}/${visualElement.player}_default/index.html?videoId=${visualElement.videoid}`;
     return (
       <iframe
         frameBorder="0"
         height={400}
-        src={src}
+        src={visualElement.url}
         title={visualElement.title}
         width={600}
       />
