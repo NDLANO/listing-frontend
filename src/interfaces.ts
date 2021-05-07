@@ -60,9 +60,6 @@ export interface VisualElementType {
   title: string;
   url: string;
   alt: string;
-  account: string;
-  player: string;
-  videoid: string;
   lowerRightX: number;
   lowerRightY: number;
   upperLeftX: number;

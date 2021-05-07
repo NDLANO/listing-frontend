@@ -97,9 +97,6 @@ export const detailedConceptQuery = gql`
         title
         url
         alt
-        account
-        player
-        videoid
         image {
           imageUrl
           contentType
