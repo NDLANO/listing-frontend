@@ -75,6 +75,7 @@ export interface VisualElementType {
     html: string;
     fullscreen: boolean;
   };
+  copyright?: Copyright;
 }
 
 export interface Filter {

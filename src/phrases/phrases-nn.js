@@ -95,9 +95,16 @@ const phrases = {
         'Hugs å kopiere teksten som skal leggjast ved biletet der du bruker det.',
       rules: 'Reglar for bruk av biletet:',
     },
+    visualElement: {
+      heading: 'Slik bruker du visuelt element frå artikkelen',
+      description:
+        'Hugs å kopiere teksten som skal leggjast ved det visuele elementet der du bruker det.',
+      rules: 'Reglar for bruk av det visuele elementet:',
+    },
     tabs: {
       text: 'Tekst',
       images: 'Bilete',
+      visualElement: 'Visuelt element',
       embedlink: 'Innbyggingslenke',
     },
     copyTitle: 'Kopier referanse',

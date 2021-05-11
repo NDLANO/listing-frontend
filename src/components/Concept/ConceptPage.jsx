@@ -25,7 +25,12 @@ import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
 import { CreatedBy, OneColumn, Spinner } from '@ndla/ui';
 import config from '../../config';
-import { ImageContent, TextContent, OembedContent } from '../LicenseBox';
+import {
+  ImageContent,
+  VisualElementContent,
+  TextContent,
+  OembedContent,
+} from '../LicenseBox';
 import VisualElement from './VisualElement';
 import PostResizeMessage from '../PostResizeMessage';
 import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
@@ -90,6 +95,14 @@ const ConceptPage = ({
       tabs.push({
         title: t('license.tabs.images'),
         content: <ImageContent t={t} image={concept.image} />,
+      });
+
+    concept.visualElement?.copyright?.license?.license &&
+      tabs.push({
+        title: t('license.tabs.visualElement'),
+        content: (
+          <VisualElementContent t={t} visualElement={concept.visualElement} />
+        ),
       });
 
     tabs.push({

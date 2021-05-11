@@ -112,6 +112,15 @@ export const detailedConceptQuery = gql`
         upperLeftY
         focalX
         focalY
+        copyright {
+          license {
+            license
+          }
+          authors: creators {
+            name
+            type
+          }
+        }
       }
     }
   }

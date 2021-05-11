@@ -8,6 +8,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from '@emotion/styled';
+import { spacing } from '@ndla/core';
 
 import {
   MediaList,
@@ -21,9 +23,17 @@ import { FileDocumentOutline } from '@ndla/icons/common';
 import { metaTypes } from '@ndla/licenses';
 import { StyledButton } from '@ndla/button';
 import CopyTextButton from './CopyTextButton';
+import VisualElement from './Concept/VisualElement';
 import { getCopyrightCopyString } from '../util/getCopyrightCopyString';
 import { downloadUrl } from '../util/downloadHelpers';
 import formatDate from '../util/formatDate';
+
+const VisualElementWrapper = styled.div`
+  display: flex;
+  width: 25%;
+  margin-right: ${spacing.medium};
+  pointer-events: none;
+`;
 
 const getLicenseItems = (entity, t) => {
   const licenseItems = [];
@@ -167,6 +177,58 @@ ImageContent.propTypes = {
     title: PropTypes.string,
     src: PropTypes.string,
     altText: PropTypes.string,
+    copyright: PropTypes.shape({
+      license: PropTypes.shape({
+        license: PropTypes.string,
+      }),
+    }),
+  }),
+};
+
+export const VisualElementContent = ({ t, visualElement }) => {
+  const resourceType = visualElement.resource === 'h5p' ? 'h5p' : 'video';
+  const licenseItems = getLicenseItems(visualElement, t);
+  return (
+    <>
+      <div className="u-introduction">
+        <h2>{t('license.visualElement.heading')}</h2>
+        <p>{t('license.visualElement.description')}</p>
+      </div>
+      <MediaList>
+        <MediaListItem>
+          <VisualElementWrapper>
+            <VisualElement visualElement={visualElement} />
+          </VisualElementWrapper>
+          <MediaListItemBody
+            license={visualElement.copyright.license.license}
+            title={t('license.visualElement.rules')}
+            resourceUrl=""
+            locale="nb"
+            resourceType={resourceType}>
+            <MediaListItemActions>
+              <div className="c-medialist__ref">
+                <MediaListItemMeta items={licenseItems} />
+                <CopyTextButton
+                  hasCopiedTitle={t('license.hasCopiedTitle')}
+                  copyTitle={t('license.copyTitle')}
+                  stringToCopy={getCopyrightCopyString(
+                    visualElement.copyright,
+                    t,
+                  )}
+                />
+              </div>
+            </MediaListItemActions>
+          </MediaListItemBody>
+        </MediaListItem>
+      </MediaList>
+    </>
+  );
+};
+
+VisualElementContent.propTypes = {
+  t: PropTypes.func.isRequired,
+  visualElement: PropTypes.shape({
+    resource: PropTypes.string,
     copyright: PropTypes.shape({
       license: PropTypes.shape({
         license: PropTypes.string,
