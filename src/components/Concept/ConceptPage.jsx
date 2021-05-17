@@ -99,7 +99,11 @@ const ConceptPage = ({
 
     concept.visualElement?.copyright?.license?.license &&
       tabs.push({
-        title: t('license.tabs.visualElement'),
+        title: t(
+          `license.tabs.${
+            concept.visualElement.resource === 'h5p' ? 'h5p' : 'video'
+          }`,
+        ),
         content: (
           <VisualElementContent t={t} visualElement={concept.visualElement} />
         ),

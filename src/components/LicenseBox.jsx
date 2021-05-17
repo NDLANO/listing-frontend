@@ -191,8 +191,8 @@ export const VisualElementContent = ({ t, visualElement }) => {
   return (
     <>
       <div className="u-introduction">
-        <h2>{t('license.visualElement.heading')}</h2>
-        <p>{t('license.visualElement.description')}</p>
+        <h2>{t(`license.${resourceType}.heading`)}</h2>
+        <p>{t(`license.${resourceType}.description`)}</p>
       </div>
       <MediaList>
         <MediaListItem>
@@ -201,7 +201,7 @@ export const VisualElementContent = ({ t, visualElement }) => {
           </VisualElementWrapper>
           <MediaListItemBody
             license={visualElement.copyright.license.license}
-            title={t('license.visualElement.rules')}
+            title={t(`license.${resourceType}.rules`)}
             resourceUrl=""
             locale="nb"
             resourceType={resourceType}>

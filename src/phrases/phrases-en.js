@@ -92,16 +92,23 @@ const phrases = {
         'Remember to copy the text to be attached to the image where you use it.',
       rules: 'Rules for use of image:',
     },
-    visualElement: {
-      heading: 'How to use the visual element from the article',
+    video: {
+      heading: 'How to use the video from the article',
       description:
-        'Remember to copy the text to be attached to the visual element where you use it.',
-      rules: 'Rules for use of the visual element:',
+        'Remember to copy the text to be attached to the video where you use it.',
+      rules: 'Rules for use of the video:',
+    },
+    h5p: {
+      heading: 'How to use the H5P from the article',
+      description:
+        'Remember to copy the text to be attached to the H5P where you use it.',
+      rules: 'Rules for use of the H5P:',
     },
     tabs: {
       text: 'Text',
       images: 'Images',
-      visualElement: 'Visual element',
+      video: 'Video',
+      h5p: 'H5P',
       embedlink: 'Embedded link',
     },
     copyTitle: 'Copy reference',
