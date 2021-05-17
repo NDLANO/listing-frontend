@@ -120,6 +120,10 @@ export const detailedConceptQuery = gql`
             name
             type
           }
+          rightsholders {
+            name
+            type
+          }
         }
       }
     }
