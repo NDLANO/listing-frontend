@@ -97,6 +97,7 @@ export const detailedConceptQuery = gql`
         title
         url
         alt
+        thumbnail
         image {
           imageUrl
           contentType

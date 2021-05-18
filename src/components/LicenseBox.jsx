@@ -187,7 +187,7 @@ export const VisualElementContent = ({ t, visualElement }) => {
       <MediaList>
         <MediaListItem>
           <MediaListItemImage>
-            <img src={visualElement.image.imageUrl} alt={visualElement.alt} />
+            <img src={visualElement.thumbnail} alt={visualElement.alt} />
           </MediaListItemImage>
           <MediaListItemBody
             license={visualElement.copyright.license.license}
@@ -219,9 +219,7 @@ VisualElementContent.propTypes = {
   t: PropTypes.func.isRequired,
   visualElement: PropTypes.shape({
     resource: PropTypes.string,
-    image: PropTypes.shape({
-      imageUrl: PropTypes.string,
-    }),
+    thumbnail: PropTypes.string,
     alt: PropTypes.string,
     copyright: PropTypes.shape({
       license: PropTypes.shape({
