@@ -8,8 +8,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from '@emotion/styled';
-import { spacing } from '@ndla/core';
 
 import {
   MediaList,
@@ -23,17 +21,9 @@ import { FileDocumentOutline } from '@ndla/icons/common';
 import { metaTypes } from '@ndla/licenses';
 import { StyledButton } from '@ndla/button';
 import CopyTextButton from './CopyTextButton';
-import VisualElement from './Concept/VisualElement';
 import { getCopyrightCopyString } from '../util/getCopyrightCopyString';
 import { downloadUrl } from '../util/downloadHelpers';
 import formatDate from '../util/formatDate';
-
-const VisualElementWrapper = styled.div`
-  display: flex;
-  width: 25%;
-  margin-right: ${spacing.medium};
-  pointer-events: none;
-`;
 
 const getLicenseItems = (entity, t) => {
   const licenseItems = [];
@@ -196,9 +186,9 @@ export const VisualElementContent = ({ t, visualElement }) => {
       </div>
       <MediaList>
         <MediaListItem>
-          <VisualElementWrapper>
-            <VisualElement visualElement={visualElement} />
-          </VisualElementWrapper>
+          <MediaListItemImage>
+            <img src={visualElement.image.imageUrl} alt={visualElement.alt} />
+          </MediaListItemImage>
           <MediaListItemBody
             license={visualElement.copyright.license.license}
             title={t(`license.${resourceType}.rules`)}
@@ -229,6 +219,10 @@ VisualElementContent.propTypes = {
   t: PropTypes.func.isRequired,
   visualElement: PropTypes.shape({
     resource: PropTypes.string,
+    image: PropTypes.shape({
+      imageUrl: PropTypes.string,
+    }),
+    alt: PropTypes.string,
     copyright: PropTypes.shape({
       license: PropTypes.shape({
         license: PropTypes.string,
