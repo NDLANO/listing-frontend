@@ -105,6 +105,7 @@ export const detailedConceptQuery = gql`
         alt
         thumbnail
         image {
+          contentType
           ...ImageLicenseInfo
         }
         oembed {
