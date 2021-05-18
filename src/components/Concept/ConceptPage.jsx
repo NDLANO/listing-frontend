@@ -36,6 +36,20 @@ import PostResizeMessage from '../PostResizeMessage';
 import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
 import { detailedConceptQuery, listingPageQuery } from '../../queries';
 
+const getTabImages = concept => {
+  const images = [];
+  if (concept.image?.src?.length) {
+    images.push(concept.image);
+  }
+  if (
+    concept.visualElement?.image?.src?.length &&
+    concept.visualElement?.image?.src !== concept.image?.src
+  ) {
+    images.push(concept.visualElement.image);
+  }
+  return images;
+};
+
 const ConceptPage = ({
   t,
   conceptId,
@@ -84,6 +98,7 @@ const ConceptPage = ({
 
   const getTabs = () => {
     const tabs = [];
+    const images = getTabImages(concept);
     concept.copyright?.license?.license &&
       concept.copyright.license.license !== 'unknown' &&
       tabs.push({
@@ -91,10 +106,10 @@ const ConceptPage = ({
         content: <TextContent t={t} concept={concept} locale={language} />,
       });
 
-    concept?.image?.src?.length &&
+    images.length &&
       tabs.push({
         title: t('license.tabs.images'),
-        content: <ImageContent t={t} image={concept.image} />,
+        content: <ImageContent t={t} images={images} />,
       });
 
     concept.visualElement?.copyright?.license?.license &&

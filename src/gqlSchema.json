@@ -2737,6 +2737,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "contentType",
+            "description": "",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -7185,18 +7197,6 @@
             "deprecationReason": null
           },
           {
-            "name": "metaImage",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "OBJECT",
-              "name": "MetaImage",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "image",
             "description": "",
             "args": [],
@@ -7406,7 +7406,7 @@
             "args": [],
             "type": {
               "kind": "OBJECT",
-              "name": "VisualElementImage",
+              "name": "ImageLicense",
               "ofType": null
             },
             "isDeprecated": false,
@@ -7503,42 +7503,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "Copyright",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
-        "inputFields": null,
-        "interfaces": [],
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "OBJECT",
-        "name": "VisualElementImage",
-        "description": "",
-        "specifiedByUrl": null,
-        "fields": [
-          {
-            "name": "imageUrl",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "contentType",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,

@@ -67,8 +67,10 @@ export interface VisualElementType {
   focalX: number;
   focalY: number;
   image: {
-    imageUrl: string;
+    src: string;
+    altText: string;
     contentType: string;
+    copyright: Copyright;
   };
   oembed: {
     title: string;

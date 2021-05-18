@@ -50,7 +50,7 @@ const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
         contentType={visualElement.image.contentType}
         crop={getCrop(visualElement)}
         focalPoint={getFocalPoint(visualElement)}
-        src={visualElement.image.imageUrl}
+        src={visualElement.image.src}
       />
     );
   } else if (visualElement.resource === 'brightcove') {

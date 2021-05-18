@@ -116,9 +116,7 @@ TextContent.propTypes = {
   }),
 };
 
-export const ImageContent = ({ t, image }) => {
-  const licenseItems = getLicenseItems(image, t);
-
+export const ImageContent = ({ t, images }) => {
   const AnchorButton = StyledButton.withComponent('a');
 
   return (
@@ -128,34 +126,36 @@ export const ImageContent = ({ t, image }) => {
         <p>{t('license.images.description')}</p>
       </div>
       <MediaList>
-        <MediaListItem>
-          <MediaListItemImage>
-            <img src={image.src} alt={image.altText} />
-          </MediaListItemImage>
-          <MediaListItemBody
-            license={image.copyright.license.license}
-            title={t('license.images.rules')}
-            resourceUrl=""
-            locale="nb"
-            resourceType="image">
-            <MediaListItemActions>
-              <div className="c-medialist__ref">
-                <MediaListItemMeta items={licenseItems} />
-                <CopyTextButton
-                  hasCopiedTitle={t('license.hasCopiedTitle')}
-                  copyTitle={t('license.copyTitle')}
-                  stringToCopy={getCopyrightCopyString(image.copyright, t)}
-                />
-                <AnchorButton
-                  href={downloadUrl(image.src)}
-                  appearance="outline"
-                  download>
-                  {t('license.download')}
-                </AnchorButton>
-              </div>
-            </MediaListItemActions>
-          </MediaListItemBody>
-        </MediaListItem>
+        {images.map(image => (
+          <MediaListItem key={image.src}>
+            <MediaListItemImage>
+              <img src={image.src} alt={image.altText} />
+            </MediaListItemImage>
+            <MediaListItemBody
+              license={image.copyright.license.license}
+              title={t('license.images.rules')}
+              resourceUrl=""
+              locale="nb"
+              resourceType="image">
+              <MediaListItemActions>
+                <div className="c-medialist__ref">
+                  <MediaListItemMeta items={getLicenseItems(image, t)} />
+                  <CopyTextButton
+                    hasCopiedTitle={t('license.hasCopiedTitle')}
+                    copyTitle={t('license.copyTitle')}
+                    stringToCopy={getCopyrightCopyString(image.copyright, t)}
+                  />
+                  <AnchorButton
+                    href={downloadUrl(image.src)}
+                    appearance="outline"
+                    download>
+                    {t('license.download')}
+                  </AnchorButton>
+                </div>
+              </MediaListItemActions>
+            </MediaListItemBody>
+          </MediaListItem>
+        ))}
       </MediaList>
     </>
   );
@@ -163,16 +163,18 @@ export const ImageContent = ({ t, image }) => {
 
 ImageContent.propTypes = {
   t: PropTypes.func.isRequired,
-  image: PropTypes.shape({
-    title: PropTypes.string,
-    src: PropTypes.string,
-    altText: PropTypes.string,
-    copyright: PropTypes.shape({
-      license: PropTypes.shape({
-        license: PropTypes.string,
+  images: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      src: PropTypes.string,
+      altText: PropTypes.string,
+      copyright: PropTypes.shape({
+        license: PropTypes.shape({
+          license: PropTypes.string,
+        }),
       }),
     }),
-  }),
+  ),
 };
 
 export const VisualElementContent = ({ t, visualElement }) => {

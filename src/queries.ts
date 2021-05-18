@@ -8,6 +8,26 @@
 
 import { gql } from '@apollo/client';
 
+const imageLicenseFragment = gql`
+  fragment ImageLicenseInfo on ImageLicense {
+    title
+    src
+    altText
+    copyright {
+      license {
+        license
+      }
+      authors: creators {
+        name
+        type
+      }
+      rightsholders {
+        name
+      }
+    }
+  }
+`;
+
 export const listingPageQuery = gql`
   query ListingPage {
     listingPage {
@@ -72,21 +92,7 @@ export const detailedConceptQuery = gql`
         }
       }
       image {
-        title
-        src
-        altText
-        copyright {
-          license {
-            license
-          }
-          authors: creators {
-            name
-            type
-          }
-          rightsholders {
-            name
-          }
-        }
+        ...ImageLicenseInfo
       }
       articles {
         id
@@ -99,8 +105,7 @@ export const detailedConceptQuery = gql`
         alt
         thumbnail
         image {
-          imageUrl
-          contentType
+          ...ImageLicenseInfo
         }
         oembed {
           title
@@ -129,4 +134,5 @@ export const detailedConceptQuery = gql`
       }
     }
   }
+  ${imageLicenseFragment}
 `;
