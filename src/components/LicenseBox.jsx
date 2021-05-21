@@ -35,17 +35,21 @@ const getLicenseItems = (entity, t) => {
       metaType: metaTypes.title,
     });
 
-  entity.authors?.length &&
+  entity.copyright?.authors?.length &&
     licenseItems.push({
       label: t('license.originator'),
-      description: entity.authors.map(author => author.name).toString(),
+      description: entity.copyright.authors
+        .map(author => author.name)
+        .toString(),
       metaType: metaTypes.author,
     });
 
-  entity.rightsholders?.length &&
+  entity.copyright?.rightsholders?.length &&
     licenseItems.push({
       label: t('license.rightsholder'),
-      description: entity.rightsholders.toString(),
+      description: entity.copyright.rightsholders
+        .map(holder => holder.name)
+        .toString(),
       metaType: metaTypes.copyrightHolder,
     });
 
@@ -74,7 +78,7 @@ export const TextContent = ({ t, concept, locale }) => {
             <FileDocumentOutline className="c-medialist__icon" />
           </MediaListItemImage>
           <MediaListItemBody
-            license={concept.license}
+            license={concept.copyright.license.license}
             title={t('license.text.rules')}
             resourceUrl=""
             locale="nb"
@@ -85,7 +89,7 @@ export const TextContent = ({ t, concept, locale }) => {
                 <CopyTextButton
                   hasCopiedTitle={t('license.hasCopiedTitle')}
                   copyTitle={t('license.copyTitle')}
-                  stringToCopy={getCopyrightCopyString(concept, t)}
+                  stringToCopy={getCopyrightCopyString(concept.copyright, t)}
                 />
               </div>
             </MediaListItemActions>
@@ -99,35 +103,21 @@ export const TextContent = ({ t, concept, locale }) => {
 TextContent.propTypes = {
   t: PropTypes.func.isRequired,
   locale: PropTypes.string,
-  concept: PropTypes.exact({
-    articleId: PropTypes.number,
+  concept: PropTypes.shape({
     title: PropTypes.string,
-    source: PropTypes.string,
     created: PropTypes.string,
     content: PropTypes.string,
-    image: PropTypes.string,
     subjectIds: PropTypes.arrayOf(PropTypes.string),
-    license: PropTypes.string,
-    authors: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        type: PropTypes.string,
+    copyright: PropTypes.shape({
+      license: PropTypes.shape({
+        license: PropTypes.string,
       }),
-    ),
-    rightsholders: PropTypes.arrayOf(PropTypes.string),
-    visualElement: PropTypes.string,
+    }),
   }),
 };
 
 export const ImageContent = ({ t, image }) => {
   const licenseItems = getLicenseItems(image, t);
-
-  image.created &&
-    licenseItems.push({
-      label: t('license.source'),
-      description: image.origin,
-      metaType: metaTypes.other,
-    });
 
   const AnchorButton = StyledButton.withComponent('a');
 
@@ -140,10 +130,10 @@ export const ImageContent = ({ t, image }) => {
       <MediaList>
         <MediaListItem>
           <MediaListItemImage>
-            <img src={image.image.url} alt={image.image.alt} />
+            <img src={image.src} alt={image.altText} />
           </MediaListItemImage>
           <MediaListItemBody
-            license={image.license}
+            license={image.copyright.license.license}
             title={t('license.images.rules')}
             resourceUrl=""
             locale="nb"
@@ -154,10 +144,10 @@ export const ImageContent = ({ t, image }) => {
                 <CopyTextButton
                   hasCopiedTitle={t('license.hasCopiedTitle')}
                   copyTitle={t('license.copyTitle')}
-                  stringToCopy={getCopyrightCopyString(image, t)}
+                  stringToCopy={getCopyrightCopyString(image.copyright, t)}
                 />
                 <AnchorButton
-                  href={downloadUrl(image.image.url)}
+                  href={downloadUrl(image.src)}
                   appearance="outline"
                   download>
                   {t('license.download')}
@@ -173,22 +163,15 @@ export const ImageContent = ({ t, image }) => {
 
 ImageContent.propTypes = {
   t: PropTypes.func.isRequired,
-  image: PropTypes.exact({
+  image: PropTypes.shape({
     title: PropTypes.string,
-    image: PropTypes.exact({
-      url: PropTypes.string,
-      alt: PropTypes.string,
-    }),
-    created: PropTypes.string,
-    license: PropTypes.string,
-    authors: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        type: PropTypes.string,
+    src: PropTypes.string,
+    altText: PropTypes.string,
+    copyright: PropTypes.shape({
+      license: PropTypes.shape({
+        license: PropTypes.string,
       }),
-    ),
-    rightsholders: PropTypes.arrayOf(PropTypes.string),
-    origin: PropTypes.string,
+    }),
   }),
 };
 

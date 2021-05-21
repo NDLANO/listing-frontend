@@ -6,6 +6,11 @@
  *
  */
 
+export interface Location {
+  search: string;
+  pathname: string;
+}
+
 export interface Title {
   title: string;
   language: string;
@@ -35,4 +40,75 @@ export interface Copyright {
   agreementId?: number;
   validFrom?: string;
   validTo?: string;
+}
+
+export interface Subject {
+  id: string;
+  name: string;
+}
+
+export interface ListingPageType {
+  listingPage: {
+    subjects: Subject[];
+    tags: string[];
+  };
+}
+
+export interface VisualElementType {
+  resource: string;
+  resourceId: string;
+  title: string;
+  url: string;
+  alt: string;
+  lowerRightX: number;
+  lowerRightY: number;
+  upperLeftX: number;
+  upperLeftY: number;
+  focalX: number;
+  focalY: number;
+  image: {
+    imageUrl: string;
+    contentType: string;
+  };
+  oembed: {
+    title: string;
+    html: string;
+    fullscreen: boolean;
+  };
+}
+
+export interface Filter {
+  main: string[];
+  sub: string[];
+}
+
+export interface ListItem {
+  id: string;
+  name: string;
+  description: string;
+  category: {
+    title: string;
+    value: string;
+  };
+  filters: string[];
+  image?: string;
+  subjectIds?: string[];
+}
+
+export interface Concept {
+  id: string;
+  title: string;
+  content: string;
+  tags: string[];
+  metaImage: {
+    url: string;
+    alt: string;
+  };
+}
+
+export interface ConceptSearch {
+  conceptSearch: {
+    totalCount: number;
+    concepts: Concept[];
+  };
 }
