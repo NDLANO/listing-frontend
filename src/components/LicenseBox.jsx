@@ -203,10 +203,7 @@ export const VisualElementContent = ({ t, visualElement }) => {
                 <CopyTextButton
                   hasCopiedTitle={t('license.hasCopiedTitle')}
                   copyTitle={t('license.copyTitle')}
-                  stringToCopy={getCopyrightCopyString(
-                    visualElement.copyright,
-                    t,
-                  )}
+                  stringToCopy={visualElement.copyText}
                 />
               </div>
             </MediaListItemActions>
@@ -223,6 +220,7 @@ VisualElementContent.propTypes = {
     resource: PropTypes.string,
     thumbnail: PropTypes.string,
     alt: PropTypes.string,
+    copyText: PropTypes.string,
     copyright: PropTypes.shape({
       license: PropTypes.shape({
         license: PropTypes.string,

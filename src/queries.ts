@@ -119,6 +119,7 @@ export const detailedConceptQuery = gql`
         upperLeftY
         focalX
         focalY
+        copyText
         copyright {
           license {
             license
