@@ -36,7 +36,7 @@ const ListingPage = ({ locale, location, isOembed }: Props): JSX.Element => {
   return (
     <ListingContainer
       isOembed={isOembed}
-      subjects={data.listingPage.subjects}
+      subjects={data.listingPage.subjects.filter(s => s.name)}
       tags={filteredTags}
       filters={filters}
       location={location}
