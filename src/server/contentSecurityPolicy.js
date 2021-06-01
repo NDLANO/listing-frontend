@@ -119,6 +119,7 @@ const contentSecurityPolicy = {
       'https://httpsak-a.akamaihd.net',
       'https://www.nrk.no/',
       'https://*.hotjar.com',
+      'https://*.boltdns.net',
       ' data:',
     ],
     mediaSrc: ["'self'", 'blob:', 'https://*.ndla.no'],

@@ -95,9 +95,23 @@ const phrases = {
         'Hugs å kopiere teksten som skal leggjast ved biletet der du bruker det.',
       rules: 'Reglar for bruk av biletet:',
     },
+    video: {
+      heading: 'Slik bruker du video frå artikkelen',
+      description:
+        'Hugs å kopiere teksten som skal leggjast ved videoen der du bruker den.',
+      rules: 'Reglar for bruk av videoen:',
+    },
+    h5p: {
+      heading: 'Slik bruker du H5P frå artikkelen',
+      description:
+        'Hugs å kopiere teksten som skal leggjast ved H5P-en der du bruker den.',
+      rules: 'Reglar for bruk av H5P-en:',
+    },
     tabs: {
       text: 'Tekst',
       images: 'Bilete',
+      video: 'Video',
+      h5p: 'H5P',
       embedlink: 'Innbyggingslenke',
     },
     copyTitle: 'Kopier referanse',
