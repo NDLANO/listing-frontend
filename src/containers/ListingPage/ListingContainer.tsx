@@ -70,7 +70,7 @@ const ListingContainer = ({
         tags: getTagsParameter(tags, queryParams.filters),
         pageSize: PAGE_SIZE.toString(),
         language: locale,
-        fallback: true,
+        fallback: 'true',
         exactMatch: false,
       },
       notifyOnNetworkStatusChange: true, // For spinner on load more
