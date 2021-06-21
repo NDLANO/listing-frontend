@@ -9,8 +9,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
-import { injectT } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
 
 import { getLocale } from '../containers/Locale/localeSelectors';
@@ -19,7 +19,8 @@ const StyledFooterWrapper = styled.div`
   margin-top: 52px;
 `;
 
-const FooterWrapper = ({ t, locale }) => {
+const FooterWrapper = ({ locale }) => {
+  const { t } = useTranslation();
   return (
     <StyledFooterWrapper>
       <Footer lang={locale}>
@@ -28,7 +29,7 @@ const FooterWrapper = ({ t, locale }) => {
             title={t('footer.footerEditiorInChief')}
             name="Sigurd Trageton"
           />
-          {t('footer.footerInfo')}
+          {t('logo.altText')}
         </FooterText>
       </Footer>
     </StyledFooterWrapper>
@@ -36,7 +37,6 @@ const FooterWrapper = ({ t, locale }) => {
 };
 
 FooterWrapper.propTypes = {
-  t: PropTypes.func.isRequired,
   locale: PropTypes.string.isRequired,
 };
 
@@ -44,4 +44,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default connect(mapStateToProps)(injectT(FooterWrapper));
+export default connect(mapStateToProps)(FooterWrapper);

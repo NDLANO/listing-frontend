@@ -60,15 +60,15 @@ export const preferdLocales = [NB, NN, EN];
 
 // As of now only NB and NN is required, use one of the above if the requirement changes in the future
 export const languageSelectorLocales = [NB, NN];
+const lng = ['nn', 'nb', 'en'];
 
 export const getLocaleObject = localeAbbreviation => {
-  const locale = appLocales.find(l => l.abbreviation === localeAbbreviation);
+  const locale = lng.find(l => l === localeAbbreviation);
 
-  return locale || NB; // defaults to NB
+  return locale || 'nb'; // defaults to NB
 };
-
 export const isValidLocale = localeAbbreviation =>
-  appLocales.find(l => l.abbreviation === localeAbbreviation) !== undefined;
+  lng.find(l => l === localeAbbreviation) !== undefined;
 
 export const getHtmlLang = localeAbbreviation => {
   const locale = appLocales.find(l => l.abbreviation === localeAbbreviation);

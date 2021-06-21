@@ -16,8 +16,7 @@ import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import { PageContainer } from '@ndla/ui';
-import { injectT } from '@ndla/i18n';
-
+import { useTranslation } from 'react-i18next';
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
@@ -30,7 +29,9 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const App = ({ locale, t }) => {
+const App = ({ locale }) => {
+  const { t } = useTranslation();
+
   return (
     <PageContainer>
       <StyledPageWrapper>
@@ -38,6 +39,7 @@ const App = ({ locale, t }) => {
           title="NDLA"
           meta={[{ name: 'description', content: t('meta.description') }]}
         />
+
         <Switch>
           <Route
             path="/"
@@ -85,4 +87,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default connect(mapStateToProps)(injectT(App));
+export default connect(mapStateToProps)(App);

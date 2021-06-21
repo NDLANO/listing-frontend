@@ -19,7 +19,7 @@ import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
-import { injectT } from '@ndla/i18n';
+import { useTranslation } from 'react-i18next';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
@@ -51,7 +51,6 @@ const getTabImages = concept => {
 };
 
 const ConceptPage = ({
-  t,
   conceptId,
   subjects,
   handleClose,
@@ -59,6 +58,7 @@ const ConceptPage = ({
   language,
 }) => {
   const [markdown, setMarkdown] = useState(null);
+  const { t } = useTranslation();
 
   const { data, loading } = useQuery(detailedConceptQuery, {
     variables: {
@@ -128,7 +128,6 @@ const ConceptPage = ({
       title: t('license.tabs.embedlink'),
       content: (
         <OembedContent
-          t={t}
           oembed={`${config.ndlaListingFrontendDomain}/concepts/${conceptId}`}
         />
       ),
@@ -229,4 +228,4 @@ ConceptPage.propTypes = {
   language: PropTypes.string.isRequired,
 };
 
-export default injectT(ConceptPage);
+export default ConceptPage;
