@@ -12,14 +12,12 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import defined from 'defined';
 import { ApolloProvider } from '@apollo/client';
-
-import { IntlProvider } from '@ndla/i18n';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
 import { createApolloClient } from '../../util/apiHelpers';
 import configureStore from '../../configureStore';
-import { getLocaleObject, isValidLocale } from '../../i18n';
 import App from '../../containers/App/App';
+import i18n, { isValidLanguage } from '../../i18n';
 
 const renderHtmlString = (
   locale,
@@ -40,7 +38,7 @@ const renderHtmlString = (
 
 export function defaultRoute(req, res) {
   const paths = req.url.split('/');
-  const { abbreviation: locale, messages } = getLocaleObject(paths[1]);
+  const locale = i18n.language;
   const userAgentString = req.headers['user-agent'];
   // Oembed-hack
   if (paths.find(p => p.includes('listing')) || paths.includes('concepts')) {
@@ -53,7 +51,6 @@ export function defaultRoute(req, res) {
     // eslint-disable-line no-underscore-dangle
     const apolloState = client.extract();
     const htmlString = renderHtmlString(
-      locale,
       userAgentString,
       {
         locale,
@@ -67,21 +64,15 @@ export function defaultRoute(req, res) {
   }
 
   const store = configureStore({ locale });
-
-  const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
+  const basename = isValidLanguage(paths[1]) ? `${paths[1]}` : '';
 
   const context = {};
   const component = (
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <IntlProvider locale={locale} messages={messages}>
-          <StaticRouter
-            basename={basename}
-            location={req.url}
-            context={context}>
-            <App />
-          </StaticRouter>
-        </IntlProvider>
+        <StaticRouter basename={basename} location={req.url} context={context}>
+          <App />
+        </StaticRouter>
       </Provider>
     </ApolloProvider>
   );

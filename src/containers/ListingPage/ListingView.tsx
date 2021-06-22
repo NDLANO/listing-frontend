@@ -38,8 +38,6 @@ import Button from '@ndla/button';
 // @ts-ignore
 import { Spinner } from '@ndla/ui';
 // @ts-ignore
-import { getLocaleUrls } from '../../util/localeHelpers';
-// @ts-ignore
 import { mapConceptToListItem } from '../../util/listingHelpers';
 // @ts-ignore
 import ConceptPage from '../../components/Concept/ConceptPage';
@@ -166,7 +164,6 @@ interface Props {
   handleChangeSubject: (values: string[]) => void;
   handleChangeFilters: (key: string, values: string[]) => void;
   location: Location;
-  locale: string;
 }
 
 const ListingView = ({
@@ -192,7 +189,6 @@ const ListingView = ({
   handleChangeSubject,
   handleChangeFilters,
   location,
-  locale,
 }: Props): JSX.Element => {
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
@@ -315,11 +311,7 @@ const ListingView = ({
                 </StyledEmbedCopyButton>
                 <StyledLanguageSelector>
                   <MastheadItem>
-                    <LanguageSelector
-                      options={getLocaleUrls(locale, location)}
-                      currentLanguage={locale}
-                      alwaysVisible
-                    />
+                    <LanguageSelector alwaysVisible />
                   </MastheadItem>
                 </StyledLanguageSelector>
               </HeaderWithLanguageWrapper>
@@ -393,7 +385,6 @@ const ListingView = ({
                 <ConceptPage
                   conceptId={selectedConcept}
                   subjects={subjects}
-                  language={locale}
                   inModal={true}
                   handleClose={handleSelectItem}
                 />

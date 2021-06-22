@@ -50,15 +50,9 @@ const getTabImages = concept => {
   return images;
 };
 
-const ConceptPage = ({
-  conceptId,
-  subjects,
-  handleClose,
-  inModal,
-  language,
-}) => {
+const ConceptPage = ({ conceptId, subjects, handleClose, inModal }) => {
   const [markdown, setMarkdown] = useState(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { data, loading } = useQuery(detailedConceptQuery, {
     variables: {
@@ -103,7 +97,7 @@ const ConceptPage = ({
       concept.copyright.license.license !== 'unknown' &&
       tabs.push({
         title: t('license.tabs.text'),
-        content: <TextContent t={t} concept={concept} locale={language} />,
+        content: <TextContent t={t} concept={concept} locale={i18n.language} />,
       });
 
     images.length &&

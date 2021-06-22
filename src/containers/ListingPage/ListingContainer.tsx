@@ -30,7 +30,6 @@ interface Props {
   tags: string[];
   filters: Map<string, Filter>;
   location: Location;
-  locale: string;
 }
 
 const ListingContainer = ({
@@ -39,7 +38,6 @@ const ListingContainer = ({
   tags,
   filters,
   location,
-  locale,
 }: Props): JSX.Element => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -154,7 +152,6 @@ const ListingContainer = ({
       handleChangeSubject={handleChangeSubject}
       handleChangeFilters={handleChangeFilters}
       location={location}
-      locale={locale}
     />
   );
 };

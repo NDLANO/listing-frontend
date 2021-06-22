@@ -72,7 +72,7 @@ const phrases = {
     relatedLinks: {
       label: 'Tilknytta artiklar',
     },
-    hits: '{count} treff',
+    hits: '{{count}} treff',
   },
   license: {
     heading: 'Slik gjenbruker du innhald',

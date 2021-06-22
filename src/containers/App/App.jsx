@@ -11,16 +11,14 @@ import '../../style/index.css';
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import { PageContainer } from '@ndla/ui';
 import { useTranslation } from 'react-i18next';
-import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import { i18n } from '@ndla/i18n';
 
 const StyledPageWrapper = styled.div`
   min-height: 100vh;
@@ -29,7 +27,7 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const App = ({ locale }) => {
+const App = () => {
   const { t } = useTranslation();
 
   return (
@@ -45,11 +43,7 @@ const App = ({ locale }) => {
             path="/"
             exact
             component={routeProps => (
-              <ListingPage
-                locale={locale}
-                location={routeProps.location}
-                isOembed={false}
-              />
+              <ListingPage location={routeProps.location} isOembed={false} />
             )}
           />
           <Route
@@ -58,18 +52,16 @@ const App = ({ locale }) => {
               <ConceptPage
                 conceptId={routeProps.match.params.conceptId}
                 inModal={false}
-                language={routeProps.match.params.selectedLanguage || locale}
+                language={
+                  routeProps.match.params.selectedLanguage || i18n.language
+                }
               />
             )}
           />
           <Route
             path="/listing"
             component={routeProps => (
-              <ListingPage
-                isOembed={true}
-                locale={locale}
-                location={routeProps.location}
-              />
+              <ListingPage isOembed={true} location={routeProps.location} />
             )}
           />
           <Route component={NotFoundPage} />
@@ -79,12 +71,4 @@ const App = ({ locale }) => {
   );
 };
 
-App.propTypes = {
-  locale: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = state => ({
-  locale: getLocale(state),
-});
-
-export default connect(mapStateToProps)(App);
+export default App;

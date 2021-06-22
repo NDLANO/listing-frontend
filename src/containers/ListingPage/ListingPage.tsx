@@ -9,7 +9,6 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 // @ts-ignore
 import { Spinner } from '@ndla/ui';
-
 // @ts-ignore
 import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';
@@ -20,11 +19,10 @@ import { Location, ListingPageType } from '../../interfaces';
 
 interface Props {
   isOembed: boolean;
-  locale: string;
   location: Location;
 }
 
-const ListingPage = ({ locale, location, isOembed }: Props): JSX.Element => {
+const ListingPage = ({ location, isOembed }: Props): JSX.Element => {
   const { data, loading } = useQuery<ListingPageType>(listingPageQuery);
 
   if (loading) return <Spinner />;
@@ -40,7 +38,6 @@ const ListingPage = ({ locale, location, isOembed }: Props): JSX.Element => {
       tags={filteredTags}
       filters={filters}
       location={location}
-      locale={locale}
     />
   );
 };
