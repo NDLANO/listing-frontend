@@ -69,6 +69,8 @@ const ListingContainer = ({
         subjects: queryParams.subjects.join(),
         tags: getTagsParameter(tags, queryParams.filters),
         pageSize: PAGE_SIZE.toString(),
+        language: locale,
+        fallback: true,
         exactMatch: false,
       },
       notifyOnNetworkStatusChange: true, // For spinner on load more

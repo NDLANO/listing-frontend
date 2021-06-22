@@ -48,6 +48,7 @@ export const conceptSearchQuery = gql`
     $page: String
     $pageSize: String
     $exactMatch: Boolean
+    $fallback: Boolean
     $language: String
   ) {
     conceptSearch(
@@ -57,6 +58,7 @@ export const conceptSearchQuery = gql`
       page: $page
       pageSize: $pageSize
       exactMatch: $exactMatch
+      fallback: $fallback
       language: $language
     ) {
       totalCount
