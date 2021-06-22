@@ -219,7 +219,6 @@ ConceptPage.propTypes = {
   ),
   handleClose: PropTypes.func,
   inModal: PropTypes.bool,
-  language: PropTypes.string.isRequired,
 };
 
 export default ConceptPage;
