@@ -13,12 +13,12 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
+import { i18n } from '@ndla/i18n';
 import { PageContainer } from '@ndla/ui';
 import { useTranslation } from 'react-i18next';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import { i18n } from '@ndla/i18n';
 
 const StyledPageWrapper = styled.div`
   min-height: 100vh;
