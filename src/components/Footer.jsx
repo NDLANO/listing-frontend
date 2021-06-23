@@ -10,14 +10,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
-import { i18n } from '@ndla/i18n';
 
 const StyledFooterWrapper = styled.div`
   margin-top: 52px;
 `;
 
 const FooterWrapper = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <StyledFooterWrapper>
       <Footer lang={i18n.language}>
