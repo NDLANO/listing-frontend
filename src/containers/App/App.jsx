@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import { PageContainer } from '@ndla/ui';
-import { injectT } from '@ndla/i18n';
+import { withTranslation } from '@ndla/i18n';
 
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
@@ -30,9 +30,27 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const App = ({ locale, t }) => {
+const App = ({ locale, t, i18n}) => {
+  const languages = i18n.options.supportedLngs
+
   return (
     <PageContainer>
+        {languages.map(key => (
+    <li key={key}>
+      {key === i18n.language ? (
+        <span>{t(`languages.${key}`)}</span>
+      ) : (
+        <button
+         
+          onClick={() => {
+            i18n.changeLanguage(key);
+          }}
+          aria-label={t(`changeLanguage.${key}`)}>
+          {t(`languages.${key}`)}
+        </button>
+      )}
+    </li>
+  ))}
       <StyledPageWrapper>
         <Helmet
           title="NDLA"
@@ -85,4 +103,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default connect(mapStateToProps)(injectT(App));
+export default withTranslation()(connect(mapStateToProps)(App));

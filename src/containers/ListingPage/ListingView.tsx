@@ -16,7 +16,7 @@ import Downshift, {
 import styled from '@emotion/styled';
 import { css, SerializedStyles } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
-import { injectT, tType } from '@ndla/i18n';
+import { withTranslation, tType } from '@ndla/i18n';
 // @ts-ignore
 import ListView from '@ndla/listview';
 import {
@@ -167,10 +167,10 @@ interface Props {
   handleChangeFilters: (key: string, values: string[]) => void;
   location: Location;
   locale: string;
+  i18n: any,
 }
 
 const ListingView = ({
-  t,
   isOembed,
   loading,
   showLoadMore,
@@ -194,11 +194,14 @@ const ListingView = ({
   handleChangeFilters,
   location,
   locale,
+  t,
+  i18n
 }: Props & tType): JSX.Element => {
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
   const [detailedItem, setDetailedItem] = useState(null);
   const [viewStyle, setViewStyle] = useState<ViewStyle>('grid');
+  console.log("i18n språk:", i18n.options.supportedLngs)
 
   const handleStateChangeListFilter = (
     changes: StateChangeOptions<string>,
@@ -432,4 +435,4 @@ const ListingView = ({
   );
 };
 
-export default injectT(ListingView);
+export default withTranslation()(ListingView);

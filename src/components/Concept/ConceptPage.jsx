@@ -19,7 +19,7 @@ import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
-import { injectT } from '@ndla/i18n';
+import { withTranslation } from '@ndla/i18n';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
@@ -229,4 +229,4 @@ ConceptPage.propTypes = {
   language: PropTypes.string.isRequired,
 };
 
-export default injectT(ConceptPage);
+export default withTranslation()(ConceptPage);

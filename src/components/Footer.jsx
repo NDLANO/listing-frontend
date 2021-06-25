@@ -10,7 +10,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from '@emotion/styled';
-import { injectT } from '@ndla/i18n';
+import { withTranslation } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
 
 import { getLocale } from '../containers/Locale/localeSelectors';
@@ -44,4 +44,4 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export default connect(mapStateToProps)(injectT(FooterWrapper));
+export default withTranslation()(connect(mapStateToProps)(FooterWrapper));

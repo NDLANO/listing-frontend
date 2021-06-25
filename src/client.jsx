@@ -11,12 +11,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
-import { IntlProvider } from '@ndla/i18n';
-
+import { IntlProvider, I18nextProvider} from '@ndla/i18n';
+import i18n from './i18n2'
 import { createApolloClient } from './util/apiHelpers';
 import { getLocaleObject, isValidLocale } from './i18n';
 import configureStore from './configureStore';
 import App from './containers/App/App';
+
 
 const initialState = window.initialState;
 const localeString = initialState.locale;
@@ -43,6 +44,8 @@ const client = createApolloClient(locale.abbreviation);
 
 const renderApp = () =>
   ReactDOM.render(
+    <I18nextProvider i18n={i18n}>
+
     <ApolloProvider client={client}>
       <Provider store={store}>
         <IntlProvider locale={locale.abbreviation} messages={locale.messages}>
@@ -51,7 +54,8 @@ const renderApp = () =>
           </BrowserRouter>
         </IntlProvider>
       </Provider>
-    </ApolloProvider>,
+    </ApolloProvider>
+    </I18nextProvider>,
     document.getElementById('root'),
   );
 
