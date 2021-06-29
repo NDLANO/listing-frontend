@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@apollo/client';
 
 import ListingView from './ListingView';
@@ -131,6 +131,17 @@ const ListingContainer = ({
     concepts !== undefined && totalCount !== undefined
       ? concepts.length < totalCount
       : true;
+
+  const handleFilterLanguageChange = (selectedFilter: string): void => {
+    const filterList = Array.from(filters.keys());
+    if (!filterList.includes(selectedFilter)) {
+      handleRemoveFilter();
+    }
+  };
+
+  if (!data && queryParams.filters[0]) {
+    handleFilterLanguageChange(queryParams.filters[0]);
+  }
 
   return (
     <ListingView
