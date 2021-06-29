@@ -125,13 +125,6 @@ const ListingContainer = ({
     }
   };
 
-  const totalCount = data?.conceptSearch?.totalCount;
-  const concepts = data?.conceptSearch?.concepts;
-  const showLoadMore =
-    concepts !== undefined && totalCount !== undefined
-      ? concepts.length < totalCount
-      : true;
-
   useEffect(() => {
     const handleFilterLanguageChange = (selectedFilter: string): void => {
       const filterList = Array.from(filters.keys());
@@ -147,6 +140,13 @@ const ListingContainer = ({
   if (!data) {
     return <></>;
   }
+
+  const totalCount = data?.conceptSearch?.totalCount;
+  const concepts = data?.conceptSearch?.concepts;
+  const showLoadMore =
+    concepts !== undefined && totalCount !== undefined
+      ? concepts.length < totalCount
+      : true;
 
   return (
     <ListingView
