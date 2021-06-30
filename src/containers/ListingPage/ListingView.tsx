@@ -16,7 +16,7 @@
  import styled from '@emotion/styled';
  import { css, SerializedStyles } from '@emotion/core';
  import { colors, fonts, spacing } from '@ndla/core';
- import { injectT, tType } from '@ndla/i18n';
+ import { useTranslation } from 'react-i18next';
  // @ts-ignore
  import ListView from '@ndla/listview';
  import {
@@ -170,7 +170,6 @@
  }
  
  const ListingView = ({
-   t,
    isOembed,
    loading,
    showLoadMore,
@@ -194,11 +193,12 @@
    handleChangeFilters,
    location,
    locale,
- }: Props & tType): JSX.Element => {
+ }: Props): JSX.Element => {
    const [filterSearchValue, setFilterSearchValue] = useState('');
    const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
    const [detailedItem, setDetailedItem] = useState(null);
    const [viewStyle, setViewStyle] = useState<ViewStyle>('grid');
+   const {t} = useTranslation()
  
    const handleStateChangeListFilter = (
      changes: StateChangeOptions<string>,
@@ -432,4 +432,4 @@
    );
  };
  
- export default injectT(ListingView);
+ export default ListingView;

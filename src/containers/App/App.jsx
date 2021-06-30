@@ -11,11 +11,14 @@ import '../../style/index.css';
 
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import { PageContainer } from '@ndla/ui';
 import { useTranslation } from 'react-i18next';
 
+import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
@@ -27,7 +30,7 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const App = () => {
+const App = ({ locale }) => {
   const {t} = useTranslation()
   return (
     <PageContainer>
@@ -42,6 +45,7 @@ const App = () => {
             exact
             component={routeProps => (
               <ListingPage
+                locale={locale}
                 location={routeProps.location}
                 isOembed={false}
               />
@@ -53,6 +57,7 @@ const App = () => {
               <ConceptPage
                 conceptId={routeProps.match.params.conceptId}
                 inModal={false}
+                language={routeProps.match.params.selectedLanguage || locale}
               />
             )}
           />
@@ -61,6 +66,7 @@ const App = () => {
             component={routeProps => (
               <ListingPage
                 isOembed={true}
+                locale={locale}
                 location={routeProps.location}
               />
             )}
@@ -72,5 +78,13 @@ const App = () => {
   );
 };
 
+App.propTypes = {
+  locale: PropTypes.string.isRequired,
+};
 
-export default App;
+const mapStateToProps = state => ({
+  locale: getLocale(state),
+});
+
+export default  connect(mapStateToProps)(App);
+
