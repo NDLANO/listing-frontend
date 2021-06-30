@@ -156,7 +156,6 @@ const ListingContainer = ({
       handleChangeSubject={handleChangeSubject}
       handleChangeFilters={handleChangeFilters}
       location={location}
-      locale={locale}
     />
   );
 };
