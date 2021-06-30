@@ -7,7 +7,8 @@
  */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@apollo/client';
-
+// @ts-ignore
+import { Spinner } from '@ndla/ui';
 import ListingView from './ListingView';
 // @ts-ignore
 import useQueryParameter from '../../util/useQueryParameter';
@@ -137,8 +138,8 @@ const ListingContainer = ({
     }
   }, [data, filters, handleRemoveFilter, queryParams.filters]);
 
-  if (!data) {
-    return <></>;
+  if (loading) {
+    return <Spinner />;
   }
 
   const totalCount = data?.conceptSearch?.totalCount;
