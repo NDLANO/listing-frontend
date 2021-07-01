@@ -7,8 +7,6 @@
  */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@apollo/client';
-// @ts-ignore
-import { Spinner } from '@ndla/ui';
 import ListingView from './ListingView';
 // @ts-ignore
 import useQueryParameter from '../../util/useQueryParameter';
@@ -127,20 +125,18 @@ const ListingContainer = ({
   };
 
   useEffect(() => {
-    const handleFilterLanguageChange = (selectedFilter: string): void => {
-      const filterList = Array.from(filters.keys());
-      if (!filterList.includes(selectedFilter)) {
+    const filterNameExistsInFilters = (filter: string): boolean => {
+      const filterKeys: Array<string> = Array.from(filters.keys());
+      return filterKeys.includes(filter);
+    };
+
+    const selectedFilter: string = queryParams.filters[0];
+    if (selectedFilter) {
+      if (!filterNameExistsInFilters(selectedFilter)) {
         handleRemoveFilter();
       }
-    };
-    if (!data && queryParams.filters[0]) {
-      handleFilterLanguageChange(queryParams.filters[0]);
     }
-  }, [data, filters, handleRemoveFilter, queryParams.filters]);
-
-  if (loading) {
-    return <Spinner />;
-  }
+  }, [filters, handleRemoveFilter, queryParams.filters]);
 
   const totalCount = data?.conceptSearch?.totalCount;
   const concepts = data?.conceptSearch?.concepts;
