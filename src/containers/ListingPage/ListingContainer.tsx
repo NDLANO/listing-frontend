@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@apollo/client';
-
 import ListingView from './ListingView';
 // @ts-ignore
 import useQueryParameter from '../../util/useQueryParameter';
@@ -99,12 +98,12 @@ const ListingContainer = ({
     });
   };
 
-  const handleRemoveFilter = (): void => {
+  const handleRemoveFilter = useCallback((): void => {
     setQueryParams({
       ...queryParams,
       filters: [],
     });
-  };
+  }, [queryParams, setQueryParams]);
 
   const handleChangeFilters = (_: string, values: string[]): void => {
     setQueryParams({
@@ -124,6 +123,20 @@ const ListingContainer = ({
       });
     }
   };
+
+  useEffect(() => {
+    const filterNameExistsInFilters = (filter: string): boolean => {
+      const filterKeys: Array<string> = Array.from(filters.keys());
+      return filterKeys.includes(filter);
+    };
+
+    const selectedFilter: string = queryParams.filters[0];
+    if (selectedFilter) {
+      if (!filterNameExistsInFilters(selectedFilter)) {
+        handleRemoveFilter();
+      }
+    }
+  }, [filters, handleRemoveFilter, queryParams.filters]);
 
   const totalCount = data?.conceptSearch?.totalCount;
   const concepts = data?.conceptSearch?.concepts;

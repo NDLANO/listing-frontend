@@ -243,6 +243,21 @@ const ListingView = ({
 
   const getFilters = (): object[] => {
     if (selectedListFilter) {
+      const mainOptions = filters
+        .get(selectedListFilter)
+        ?.main.map((filter: string) => ({
+          title: filter,
+          value: filter,
+          disabled: !listItems.some(item => item.filters.includes(filter)),
+        }));
+      const subOptions = filters
+        .get(selectedListFilter)
+        ?.sub.map((filter: string) => ({
+          title: filter,
+          value: filter,
+          disabled: !listItems.some(item => item.filters.includes(filter)),
+        }));
+
       return [
         {
           filterValues: selectedFilters,
@@ -250,18 +265,7 @@ const ListingView = ({
           isGroupedOptions: true,
           key: 'default',
           label: 'Filter',
-          options: [
-            filters.get(selectedListFilter)?.main.map((filter: string) => ({
-              title: filter,
-              value: filter,
-              disabled: !listItems.some(item => item.filters.includes(filter)),
-            })),
-            filters.get(selectedListFilter)?.sub.map((filter: string) => ({
-              title: filter,
-              value: filter,
-              disabled: !listItems.some(item => item.filters.includes(filter)),
-            })),
-          ],
+          options: [mainOptions || [], subOptions || []],
         },
       ];
     }
