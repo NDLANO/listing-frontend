@@ -134,8 +134,21 @@ const renderMarkdown = (text: string): JSX.Element => {
   );
 };
 
-const getEmbedCode = (domain: string, filter: string): string => {
-  return `<iframe aria-label="${filter}" src="${domain}/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
+const getEmbedCode = (
+  domain: string,
+  listFilter: string = '',
+  subjectsFilter: string[] = [],
+): string => {
+  let src = `src="${domain}/listing`;
+  let usedFilters = 'all concepts';
+  if (listFilter) {
+    usedFilters = `?filters[]=${listFilter}`;
+    src += usedFilters;
+  } else if (subjectsFilter.length > 0) {
+    usedFilters = `?subjects[]=${subjectsFilter.join('&subjects[]=')}`;
+    src += usedFilters;
+  }
+  return `<iframe aria-label="${usedFilters}" src="${src}" frameborder="0" allowFullscreen="" />`;
 };
 
 type ViewStyle = 'grid' | 'list';
@@ -305,18 +318,17 @@ const ListingView = ({
                   />
                 </SubjectFilterWrapper>
                 <StyledEmbedCopyButton>
-                  {selectedListFilter && (
-                    <CopyTextButton
-                      copyTitle={t('listview.embedlink.copyTitle')}
-                      hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
-                      stringToCopy={getEmbedCode(
-                        config.ndlaListingFrontendDomain,
-                        selectedListFilter,
-                      )}
-                      timeout={5000}
-                      ghostPill
-                    />
-                  )}
+                  <CopyTextButton
+                    copyTitle={t('listview.embedlink.copyTitle')}
+                    hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
+                    stringToCopy={getEmbedCode(
+                      config.ndlaListingFrontendDomain,
+                      selectedListFilter,
+                      selectedSubjects,
+                    )}
+                    timeout={5000}
+                    ghostPill
+                  />
                 </StyledEmbedCopyButton>
                 <StyledLanguageSelector>
                   <MastheadItem>
