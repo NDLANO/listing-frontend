@@ -134,21 +134,12 @@ const renderMarkdown = (text: string): JSX.Element => {
   );
 };
 
-const getEmbedCode = (
-  domain: string,
-  listFilter: string = '',
-  subjectsFilter: string[] = [],
-): string => {
-  let src = `src="${domain}/listing`;
-  let usedFilters = 'all concepts';
-  if (listFilter) {
-    usedFilters = `?filters[]=${listFilter}`;
-    src += usedFilters;
-  } else if (subjectsFilter.length > 0) {
-    usedFilters = `?subjects[]=${subjectsFilter.join('&subjects[]=')}`;
-    src += usedFilters;
-  }
-  return `<iframe aria-label="${usedFilters}" src="${src}" frameborder="0" allowFullscreen="" />`;
+const formatToListFilterQuery = (listFilter: string): string => {
+  return `?filters[]=${listFilter}`;
+};
+
+const formatToSubjectFiltersQuery = (subjectFilters: string[]): string => {
+  return `?subjects[]=${subjectFilters.join('&subjects[]=')}`;
 };
 
 type ViewStyle = 'grid' | 'list';
@@ -289,6 +280,19 @@ const ListingView = ({
     ? concepts.map(concept => mapConceptToListItem(concept))
     : [];
 
+  const getEmbedCode = (
+    domain: string,
+    listFilter: string = '',
+    subjectFilters: string[],
+  ): string => {
+    const filterQuery = listFilter
+      ? formatToListFilterQuery(listFilter)
+      : formatToSubjectFiltersQuery(subjectFilters);
+    const ariaLabel =
+      listFilter || t('listview.filters.subject.filteredBySubjects');
+    return `<iframe aria-label="${ariaLabel}" src="${domain}/listing${filterQuery}" frameborder="0" allowFullscreen="" />`;
+  };
+
   return (
     <>
       <OneColumn>
@@ -318,17 +322,19 @@ const ListingView = ({
                   />
                 </SubjectFilterWrapper>
                 <StyledEmbedCopyButton>
-                  <CopyTextButton
-                    copyTitle={t('listview.embedlink.copyTitle')}
-                    hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
-                    stringToCopy={getEmbedCode(
-                      config.ndlaListingFrontendDomain,
-                      selectedListFilter,
-                      selectedSubjects,
-                    )}
-                    timeout={5000}
-                    ghostPill
-                  />
+                  {(selectedListFilter || selectedSubjects.length > 0) && (
+                    <CopyTextButton
+                      copyTitle={t('listview.embedlink.copyTitle')}
+                      hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
+                      stringToCopy={getEmbedCode(
+                        config.ndlaListingFrontendDomain,
+                        selectedListFilter,
+                        selectedSubjects,
+                      )}
+                      timeout={5000}
+                      ghostPill
+                    />
+                  )}
                 </StyledEmbedCopyButton>
                 <StyledLanguageSelector>
                   <MastheadItem>
