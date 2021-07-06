@@ -56,6 +56,7 @@ const phrases = {
         useFilter: 'Bruk filter',
         openFilter: 'Vel fag',
         closeFilter: 'Lukk filter',
+        filteredBySubjects: 'Filtrert på fag',
       },
       category: {
         useFilter: 'Bruk filter',
