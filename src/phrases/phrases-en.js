@@ -54,7 +54,6 @@ const phrases = {
         useFilter: 'Use filter',
         openFilter: 'Choose subject',
         closeFilter: 'Close filter',
-        filteredBySubjects: 'Filtered by subjects',
       },
       category: {
         useFilter: 'Use filter',
@@ -66,6 +65,7 @@ const phrases = {
         openFilter: 'Filter',
         closeFilter: 'Close filter',
         heading: 'Filter',
+        filteredBy: 'Filtered by',
       },
     },
     relatedLinks: {

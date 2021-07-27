@@ -280,17 +280,25 @@ const ListingView = ({
     ? concepts.map(concept => mapConceptToListItem(concept))
     : [];
 
-  const getEmbedCode = (
-    domain: string,
-    listFilter: string = '',
-    subjectFilters: string[],
-  ): string => {
-    const filterQuery = listFilter
-      ? formatToListFilterQuery(listFilter)
-      : formatToSubjectFiltersQuery(subjectFilters);
-    const ariaLabel =
-      listFilter || t('listview.filters.subject.filteredBySubjects');
-    return `<iframe aria-label="${ariaLabel}" src="${domain}/listing${filterQuery}" frameborder="0" allowFullscreen="" />`;
+  function getSubjectNamesByIds(subjectId: string[]): string {
+    return subjects
+      .filter(sub => subjectId.includes(sub.id))
+      .map(sub => sub.name)
+      .join(', ');
+  }
+
+  const getEmbedCode = (): string => {
+    const filterQuery = selectedListFilter
+      ? formatToListFilterQuery(selectedListFilter)
+      : formatToSubjectFiltersQuery(selectedSubjects);
+
+    const ariaLabel = `${t('listview.filters.default.filteredBy')} ${
+      selectedListFilter
+        ? selectedListFilter
+        : getSubjectNamesByIds(selectedSubjects)
+    }`;
+
+    return `<iframe aria-label="${ariaLabel}" src="${config.ndlaListingFrontendDomain}/listing${filterQuery}" frameborder="0" allowFullscreen="" />`;
   };
 
   return (
@@ -326,11 +334,7 @@ const ListingView = ({
                     <CopyTextButton
                       copyTitle={t('listview.embedlink.copyTitle')}
                       hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
-                      stringToCopy={getEmbedCode(
-                        config.ndlaListingFrontendDomain,
-                        selectedListFilter,
-                        selectedSubjects,
-                      )}
+                      stringToCopy={getEmbedCode()}
                       timeout={5000}
                       ghostPill
                     />
