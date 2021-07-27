@@ -7,7 +7,6 @@
  */
 import React, { ChangeEvent, useState } from 'react';
 import Helmet from 'react-helmet';
-// @ts-ignore
 import { Remarkable } from 'remarkable';
 import Downshift, {
   StateChangeOptions,
@@ -17,7 +16,6 @@ import styled from '@emotion/styled';
 import { css, SerializedStyles } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
 import { injectT, tType } from '@ndla/i18n';
-// @ts-ignore
 import ListView from '@ndla/listview';
 import {
   // @ts-ignore
@@ -28,26 +26,17 @@ import {
   // @ts-ignore
   MastheadItem,
   CreatedBy,
+  // @ts-ignore
+  Spinner,
 } from '@ndla/ui';
-// @ts-ignore
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
-// @ts-ignore
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
-// @ts-ignore
 import Button from '@ndla/button';
-// @ts-ignore
-import { Spinner } from '@ndla/ui';
-// @ts-ignore
 import { getLocaleUrls } from '../../util/localeHelpers';
-// @ts-ignore
 import { mapConceptToListItem } from '../../util/listingHelpers';
-// @ts-ignore
 import ConceptPage from '../../components/Concept/ConceptPage';
-// @ts-ignore
 import Footer from '../../components/Footer';
-// @ts-ignore
 import CopyTextButton from '../../components/CopyTextButton';
-// @ts-ignore
 import config from '../../config';
 import { Location, Filter, Concept, ListItem, Subject } from '../../interfaces';
 

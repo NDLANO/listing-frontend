@@ -9,11 +9,8 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 // @ts-ignore
 import { Spinner } from '@ndla/ui';
-
-// @ts-ignore
 import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';
-// @ts-ignore
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { listingPageQuery } from '../../queries';
 import { Location, ListingPageType } from '../../interfaces';

@@ -10,7 +10,6 @@ import {
   resolveJsonOrRejectWithError,
   apiResourceUrl,
   fetch,
-  // @ts-ignore
 } from '../../util/apiHelpers';
 import { OembedProxyApiType } from './oembedProxyApiInterfaces';
 

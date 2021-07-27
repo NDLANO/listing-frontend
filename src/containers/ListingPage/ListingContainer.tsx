@@ -8,9 +8,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@apollo/client';
 import ListingView from './ListingView';
-// @ts-ignore
 import useQueryParameter from '../../util/useQueryParameter';
-// @ts-ignore
 import { getTagsParameter } from '../../util/listingHelpers';
 import { conceptSearchQuery } from '../../queries';
 import {
