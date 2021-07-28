@@ -16,8 +16,7 @@ import { connect } from 'react-redux';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import { PageContainer } from '@ndla/ui';
-import { useTranslation } from 'react-i18next';
-
+import {useTranslation} from '@ndla/ui'
 import { getLocale } from '../Locale/localeSelectors';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
@@ -31,10 +30,12 @@ const StyledPageWrapper = styled.div`
 `;
 
 const App = ({ locale }) => {
-  const {t} = useTranslation()
+  const {t, i18n} = useTranslation()
+  console.log(i18n.supportedLngs)
   return (
     <PageContainer>
-      <StyledPageWrapper>
+    <button onClick={(()=>{i18n.changeLanguage('nb')})}>klikk for nb</button>
+      <StyledPageWrapper> 
         <Helmet
           title="NDLA"
           meta={[{ name: 'description', content: t('meta.description') }]}

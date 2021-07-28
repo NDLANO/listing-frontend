@@ -10,8 +10,8 @@
  import { Provider } from 'react-redux';
  import { BrowserRouter } from 'react-router-dom';
  import { ApolloProvider } from '@apollo/client';
- import { IntlProvider } from '@ndla/i18n';
- import { I18nextProvider } from 'react-i18next';
+ import { I18nextProvider } from '@ndla/ui';
+ import {IntlProvider} from '@ndla/i18n'
  import { createApolloClient } from './util/apiHelpers';
  import { getLocaleObject, isValidLocale } from './i18n';
  import configureStore from './configureStore';

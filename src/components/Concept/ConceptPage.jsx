@@ -19,7 +19,7 @@ import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '@ndla/ui';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
