@@ -67,6 +67,7 @@ const phrases = {
         openFilter: 'Filtrer',
         closeFilter: 'Lukk filter',
         heading: 'Filter',
+        filteredBy: 'Filtrert på',
       },
     },
     relatedLinks: {

@@ -134,8 +134,12 @@ const renderMarkdown = (text: string): JSX.Element => {
   );
 };
 
-const getEmbedCode = (domain: string, filter: string): string => {
-  return `<iframe aria-label="${filter}" src="${domain}/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
+const formatToListFilterQuery = (listFilter: string): string => {
+  return `?filters[]=${listFilter}`;
+};
+
+const formatToSubjectFiltersQuery = (subjectFilters: string[]): string => {
+  return `?subjects[]=${subjectFilters.join('&subjects[]=')}`;
 };
 
 type ViewStyle = 'grid' | 'list';
@@ -276,6 +280,27 @@ const ListingView = ({
     ? concepts.map(concept => mapConceptToListItem(concept))
     : [];
 
+  function getSubjectNamesByIds(subjectIds: string[]): string {
+    return subjects
+      .filter(sub => subjectIds.includes(sub.id))
+      .map(sub => sub.name)
+      .join(', ');
+  }
+
+  const getEmbedCode = (): string => {
+    const filterQuery = selectedListFilter
+      ? formatToListFilterQuery(selectedListFilter)
+      : formatToSubjectFiltersQuery(selectedSubjects);
+
+    const ariaLabel = `${t('listview.filters.default.filteredBy')} ${
+      selectedListFilter
+        ? selectedListFilter
+        : getSubjectNamesByIds(selectedSubjects)
+    }`;
+
+    return `<iframe aria-label="${ariaLabel}" src="${config.ndlaListingFrontendDomain}/listing${filterQuery}" frameborder="0" allowFullscreen="" />`;
+  };
+
   return (
     <>
       <OneColumn>
@@ -305,14 +330,11 @@ const ListingView = ({
                   />
                 </SubjectFilterWrapper>
                 <StyledEmbedCopyButton>
-                  {selectedListFilter && (
+                  {(selectedListFilter || selectedSubjects.length > 0) && (
                     <CopyTextButton
                       copyTitle={t('listview.embedlink.copyTitle')}
                       hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
-                      stringToCopy={getEmbedCode(
-                        config.ndlaListingFrontendDomain,
-                        selectedListFilter,
-                      )}
+                      stringToCopy={getEmbedCode()}
                       timeout={5000}
                       ghostPill
                     />
