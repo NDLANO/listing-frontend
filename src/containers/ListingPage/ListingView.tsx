@@ -280,9 +280,9 @@ const ListingView = ({
     ? concepts.map(concept => mapConceptToListItem(concept))
     : [];
 
-  function getSubjectNamesByIds(subjectId: string[]): string {
+  function getSubjectNamesByIds(subjectIds: string[]): string {
     return subjects
-      .filter(sub => subjectId.includes(sub.id))
+      .filter(sub => subjectIds.includes(sub.id))
       .map(sub => sub.name)
       .join(', ');
   }
