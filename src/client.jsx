@@ -11,15 +11,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 
-import {I18nextProvider} from 'react-i18next';
+import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
 import { createApolloClient } from './util/apiHelpers';
-import {  isValidLocale } from './i18n';
+import { isValidLocale } from './i18n';
 import App from './containers/App/App';
 
 const paths = window.location.pathname.split('/');
 const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
-
 
 const storedLanguage = window.localStorage.getItem('language');
 if (
@@ -37,11 +36,11 @@ const client = createApolloClient(i18nInstance.language);
 
 const renderApp = () =>
   ReactDOM.render(
-  <I18nextProvider i18n={i18nInstance}>
-    <ApolloProvider client={client}>
-            <BrowserRouter >
-              <App />
-            </BrowserRouter>
+    <I18nextProvider i18n={i18nInstance}>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ApolloProvider>
     </I18nextProvider>,
     document.getElementById('root'),

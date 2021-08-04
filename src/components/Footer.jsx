@@ -9,7 +9,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import {injectT} from '@ndla/i18n';
+import { injectT } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
 
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ const StyledFooterWrapper = styled.div`
 `;
 
 const FooterWrapper = () => {
-  const {t, i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
   return (
     <StyledFooterWrapper>
       <Footer lang={i18n.language}>

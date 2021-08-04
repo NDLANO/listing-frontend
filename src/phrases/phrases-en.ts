@@ -66,6 +66,7 @@ const phrases = {
         openFilter: 'Filter',
         closeFilter: 'Close filter',
         heading: 'Filter',
+        filteredBy: 'Filtered by',
       },
     },
     relatedLinks: {

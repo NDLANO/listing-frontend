@@ -57,7 +57,7 @@ const ConceptPage = ({
   inModal,
   language,
 }) => {
-  const {t, i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
   const [markdown, setMarkdown] = useState(null);
 
   const { data, loading } = useQuery(detailedConceptQuery, {

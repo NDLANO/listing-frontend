@@ -7,7 +7,6 @@
  */
 import React, { ChangeEvent, useState } from 'react';
 import Helmet from 'react-helmet';
-// @ts-ignore
 import { Remarkable } from 'remarkable';
 import Downshift, {
   StateChangeOptions,
@@ -28,27 +27,19 @@ import {
   // @ts-ignore
   MastheadItem,
   CreatedBy,
+  // @ts-ignore
+  Spinner,
 } from '@ndla/ui';
-// @ts-ignore
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
-// @ts-ignore
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
-// @ts-ignore
 import Button from '@ndla/button';
-// @ts-ignore
-import { Spinner } from '@ndla/ui';
 import { useTranslation } from 'react-i18next';
 // @ts-ignore
 import { getLocaleUrls } from '../../util/localeHelpers';
-// @ts-ignore
 import { mapConceptToListItem } from '../../util/listingHelpers';
-// @ts-ignore
 import ConceptPage from '../../components/Concept/ConceptPage';
-// @ts-ignore
 import Footer from '../../components/Footer';
-// @ts-ignore
 import CopyTextButton from '../../components/CopyTextButton';
-// @ts-ignore
 import config from '../../config';
 import { Location, Filter, Concept, ListItem, Subject } from '../../interfaces';
 
@@ -135,8 +126,12 @@ const renderMarkdown = (text: string): JSX.Element => {
   );
 };
 
-const getEmbedCode = (domain: string, filter: string): string => {
-  return `<iframe aria-label="${filter}" src="${domain}/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
+const formatToListFilterQuery = (listFilter: string): string => {
+  return `?filters[]=${listFilter}`;
+};
+
+const formatToSubjectFiltersQuery = (subjectFilters: string[]): string => {
+  return `?subjects[]=${subjectFilters.join('&subjects[]=')}`;
 };
 
 type ViewStyle = 'grid' | 'list';
@@ -243,6 +238,21 @@ const ListingView = ({
 
   const getFilters = (): object[] => {
     if (selectedListFilter) {
+      const mainOptions = filters
+        .get(selectedListFilter)
+        ?.main.map((filter: string) => ({
+          title: filter,
+          value: filter,
+          disabled: !listItems.some(item => item.filters.includes(filter)),
+        }));
+      const subOptions = filters
+        .get(selectedListFilter)
+        ?.sub.map((filter: string) => ({
+          title: filter,
+          value: filter,
+          disabled: !listItems.some(item => item.filters.includes(filter)),
+        }));
+
       return [
         {
           filterValues: selectedFilters,
@@ -250,18 +260,7 @@ const ListingView = ({
           isGroupedOptions: true,
           key: 'default',
           label: 'Filter',
-          options: [
-            filters.get(selectedListFilter)?.main.map((filter: string) => ({
-              title: filter,
-              value: filter,
-              disabled: !listItems.some(item => item.filters.includes(filter)),
-            })),
-            filters.get(selectedListFilter)?.sub.map((filter: string) => ({
-              title: filter,
-              value: filter,
-              disabled: !listItems.some(item => item.filters.includes(filter)),
-            })),
-          ],
+          options: [mainOptions || [], subOptions || []],
         },
       ];
     }
@@ -271,6 +270,27 @@ const ListingView = ({
   const listItems: ListItem[] = concepts
     ? concepts.map(concept => mapConceptToListItem(concept))
     : [];
+
+  function getSubjectNamesByIds(subjectIds: string[]): string {
+    return subjects
+      .filter(sub => subjectIds.includes(sub.id))
+      .map(sub => sub.name)
+      .join(', ');
+  }
+
+  const getEmbedCode = (): string => {
+    const filterQuery = selectedListFilter
+      ? formatToListFilterQuery(selectedListFilter)
+      : formatToSubjectFiltersQuery(selectedSubjects);
+
+    const ariaLabel = `${t('listview.filters.default.filteredBy')} ${
+      selectedListFilter
+        ? selectedListFilter
+        : getSubjectNamesByIds(selectedSubjects)
+    }`;
+
+    return `<iframe aria-label="${ariaLabel}" src="${config.ndlaListingFrontendDomain}/listing${filterQuery}" frameborder="0" allowFullscreen="" />`;
+  };
 
   return (
     <>
@@ -301,14 +321,11 @@ const ListingView = ({
                   />
                 </SubjectFilterWrapper>
                 <StyledEmbedCopyButton>
-                  {selectedListFilter && (
+                  {(selectedListFilter || selectedSubjects.length > 0) && (
                     <CopyTextButton
                       copyTitle={t('listview.embedlink.copyTitle')}
                       hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
-                      stringToCopy={getEmbedCode(
-                        config.ndlaListingFrontendDomain,
-                        selectedListFilter,
-                      )}
+                      stringToCopy={getEmbedCode()}
                       timeout={5000}
                       ghostPill
                     />
