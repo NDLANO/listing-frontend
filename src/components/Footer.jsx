@@ -9,7 +9,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { injectT } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
 
 import { useTranslation } from 'react-i18next';
@@ -39,4 +38,4 @@ FooterWrapper.propTypes = {
   t: PropTypes.func.isRequired,
 };
 
-export default injectT(FooterWrapper);
+export default FooterWrapper;

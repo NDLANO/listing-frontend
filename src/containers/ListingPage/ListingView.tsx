@@ -15,7 +15,6 @@ import Downshift, {
 import styled from '@emotion/styled';
 import { css, SerializedStyles } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
-import { injectT } from '@ndla/i18n';
 // @ts-ignore
 import ListView from '@ndla/listview';
 import {
@@ -449,4 +448,4 @@ const ListingView = ({
   );
 };
 
-export default injectT(ListingView);
+export default ListingView;
