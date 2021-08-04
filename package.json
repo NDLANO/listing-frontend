@@ -38,7 +38,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "@ndla/scripts": "0.7.6",
+    "@ndla/scripts": "0.7.8",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.10",
     "@types/react": "^17.0.0",
