@@ -57,20 +57,17 @@ const ConceptPage = ({
   inModal,
   language,
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [markdown, setMarkdown] = useState(null);
 
   const { data, loading } = useQuery(detailedConceptQuery, {
     variables: {
       id: conceptId,
-      language: i18n.language,
     },
   });
   const { data: listingData } = useQuery(listingPageQuery, {
     skip: inModal,
   });
-  // console.log('data', data);
-  // console.log('listing data', listingData);
 
   useEffect(() => {
     if (markdown === null) {

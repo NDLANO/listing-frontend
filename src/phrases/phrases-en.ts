@@ -7,7 +7,6 @@
  */
 
 const phrases = {
-  kjapp: 'fast one',
   meta: {
     description: 'Norwegian Digital Learning Arena, Open Educational Resources',
   },

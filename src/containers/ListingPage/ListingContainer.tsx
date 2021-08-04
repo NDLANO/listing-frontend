@@ -59,7 +59,7 @@ const ListingContainer = ({
   };
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
-  const { data, loading, fetchMore, refetch } = useQuery<ConceptSearch>(
+  const { data, loading, fetchMore } = useQuery<ConceptSearch>(
     conceptSearchQuery,
     {
       variables: {
@@ -74,10 +74,6 @@ const ListingContainer = ({
       notifyOnNetworkStatusChange: true, // For spinner on load more
     },
   );
-
-  useEffect(() => {
-    refetch();
-  }, [i18n.language, refetch]);
 
   const handleSelectItem = (value: ListItem): void => {
     setQueryParams({

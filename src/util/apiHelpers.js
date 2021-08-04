@@ -97,10 +97,6 @@ const typePolicies = {
             language: args.language,
             totalCount: incoming.totalCount,
             concepts: [...existing.concepts, ...incoming.concepts],
-            // concepts:
-            //   existing.language === args.language
-            //     ? [...existing.concepts, ...incoming.concepts]
-            //     : [...incoming.concepts],
           };
         },
       },

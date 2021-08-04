@@ -7,7 +7,6 @@
  */
 
 const phrases = {
-  kjapp: 'rask ein',
   meta: {
     description:
       'Kvalitetssikra fritt tilgjengelege nettbaserte læremiddel for vidaregåande opplæring',
