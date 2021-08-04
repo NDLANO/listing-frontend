@@ -7,6 +7,7 @@
  */
 
 const phrases = {
+  kjapp: 'kjapp en',
   meta: {
     description:
       'Kvalitetssikrede fritt tilgjengelige nettbaserte læremidler for videregående opplæring',

@@ -50,7 +50,7 @@ const GoogleTagMangerScript = () => {
 };
 
 const Html = props => {
-  const { lang, className, component, state, data } = props;
+  const { lang, className, component, data } = props;
   const content = component ? renderToString(component) : '';
   const head = Helmet.rewind();
 
@@ -82,11 +82,6 @@ const Html = props => {
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.initialState = ${serialize(state)}`,
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
             __html: `window.config = ${serialize(config)}`,
           }}
         />
@@ -106,7 +101,6 @@ const Html = props => {
 Html.propTypes = {
   lang: PropTypes.string.isRequired,
   component: PropTypes.node,
-  state: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   data: PropTypes.object,
   className: PropTypes.string.isRequired,
 };

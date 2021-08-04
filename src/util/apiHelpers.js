@@ -85,16 +85,22 @@ const uri = (() => {
 const initialConceptResult = {
   totalCount: 0,
   concepts: [],
+  language: '',
 };
 const typePolicies = {
   Query: {
     fields: {
       conceptSearch: {
         keyArgs: ['query', 'subjects', 'tags'],
-        merge(existing = initialConceptResult, incoming) {
+        merge(existing = initialConceptResult, incoming, { args }) {
           return {
+            language: args.language,
             totalCount: incoming.totalCount,
             concepts: [...existing.concepts, ...incoming.concepts],
+            // concepts:
+            //   existing.language === args.language
+            //     ? [...existing.concepts, ...incoming.concepts]
+            //     : [...incoming.concepts],
           };
         },
       },
@@ -103,42 +109,45 @@ const typePolicies = {
 };
 
 export const createApolloClient = (language = 'nb') => {
-  const headersLink = setContext(async (_, { headers }) => ({
-    headers: {
-      ...headers,
-      'Accept-Language': language,
-    },
-  }));
-
   const cache = __CLIENT__
     ? new InMemoryCache({ typePolicies }).restore(window.DATA.apolloState)
     : new InMemoryCache({ typePolicies });
 
   const client = new ApolloClient({
     ssrMode: true,
-    link: ApolloLink.from([
-      onError(({ graphQLErrors, networkError }) => {
-        if (graphQLErrors) {
-          graphQLErrors.map(({ message, locations, path }) =>
-            handleError(
-              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-            ),
-          );
-        }
-        if (networkError) {
-          handleError(`[Network error]: ${networkError}`, {
-            clientTime: new Date().getTime(),
-          });
-        }
-      }),
-      headersLink,
-      new BatchHttpLink({
-        uri,
-        fetch: createFetch,
-      }),
-    ]),
+    link: createApolloLinks(language),
     cache,
   });
 
   return client;
+};
+
+export const createApolloLinks = lang => {
+  const headersLink = setContext(async (_, { headers }) => ({
+    headers: {
+      ...headers,
+      'Accept-Language': lang,
+    },
+  }));
+  return ApolloLink.from([
+    onError(({ graphQLErrors, networkError }) => {
+      if (graphQLErrors) {
+        graphQLErrors.map(({ message, locations, path }) =>
+          handleError(
+            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+          ),
+        );
+      }
+      if (networkError) {
+        handleError(`[Network error]: ${networkError}`, {
+          clientTime: new Date().getTime(),
+        });
+      }
+    }),
+    headersLink,
+    new BatchHttpLink({
+      uri,
+      fetch: createFetch,
+    }),
+  ]);
 };

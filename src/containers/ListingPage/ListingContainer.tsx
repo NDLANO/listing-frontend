@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
+import { useTranslation } from 'react-i18next';
 import ListingView from './ListingView';
 // @ts-ignore
 import useQueryParameter from '../../util/useQueryParameter';
@@ -30,7 +31,6 @@ interface Props {
   tags: string[];
   filters: Map<string, Filter>;
   location: Location;
-  locale: string;
 }
 
 const ListingContainer = ({
@@ -39,7 +39,6 @@ const ListingContainer = ({
   tags,
   filters,
   location,
-  locale,
 }: Props): JSX.Element => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -48,6 +47,7 @@ const ListingContainer = ({
     filters: [],
     concept: undefined,
   });
+  const { i18n } = useTranslation();
 
   const useDebounce = (val: string, delay: number): string => {
     const [debouncedVal, setDebouncedVal] = useState(val);
@@ -61,7 +61,7 @@ const ListingContainer = ({
   };
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
-  const { data, loading, fetchMore } = useQuery<ConceptSearch>(
+  const { data, loading, fetchMore, refetch } = useQuery<ConceptSearch>(
     conceptSearchQuery,
     {
       variables: {
@@ -70,10 +70,15 @@ const ListingContainer = ({
         tags: getTagsParameter(tags, queryParams.filters),
         pageSize: PAGE_SIZE.toString(),
         exactMatch: false,
+        language: i18n.language,
       },
       notifyOnNetworkStatusChange: true, // For spinner on load more
     },
   );
+
+  useEffect(() => {
+    refetch();
+  }, [i18n.language, refetch]);
 
   const handleSelectItem = (value: ListItem): void => {
     setQueryParams({
@@ -154,7 +159,6 @@ const ListingContainer = ({
       handleChangeSubject={handleChangeSubject}
       handleChangeFilters={handleChangeFilters}
       location={location}
-      locale={locale}
     />
   );
 };

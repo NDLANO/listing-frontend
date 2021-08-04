@@ -19,11 +19,11 @@ import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
-import { injectT } from '@ndla/i18n';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
 import { CreatedBy, OneColumn, Spinner } from '@ndla/ui';
+import { useTranslation } from 'react-i18next';
 import config from '../../config';
 import {
   ImageContent,
@@ -51,23 +51,26 @@ const getTabImages = concept => {
 };
 
 const ConceptPage = ({
-  t,
   conceptId,
   subjects,
   handleClose,
   inModal,
   language,
 }) => {
+  const {t, i18n} = useTranslation();
   const [markdown, setMarkdown] = useState(null);
 
   const { data, loading } = useQuery(detailedConceptQuery, {
     variables: {
       id: conceptId,
+      language: i18n.language,
     },
   });
   const { data: listingData } = useQuery(listingPageQuery, {
     skip: inModal,
   });
+  // console.log('data', data);
+  // console.log('listing data', listingData);
 
   useEffect(() => {
     if (markdown === null) {
@@ -229,4 +232,4 @@ ConceptPage.propTypes = {
   language: PropTypes.string.isRequired,
 };
 
-export default injectT(ConceptPage);
+export default ConceptPage;
