@@ -53,6 +53,7 @@ const Html = props => {
   const { lang, className, component, data } = props;
   const content = component ? renderToString(component) : '';
   const head = Helmet.rewind();
+  console.log(serialize(data));
 
   return (
     <html lang={lang} className={className}>
@@ -85,12 +86,12 @@ const Html = props => {
             __html: `window.config = ${serialize(config)}`,
           }}
         />
-        <script
+        {/* <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `window.DATA = ${serialize(data)}; `,
           }}
-        />
+        /> */}
         <script src={razzleAssets.client.js} />
         {/* <script type="text/javascript" async src={`https://cdn.mathjax.org/mathjax/2.7-latest/MathJax.js?config=/assets/${assets['mathjaxConfig.js']}`} /> */}
       </body>
