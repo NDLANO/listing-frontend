@@ -49,7 +49,7 @@
     "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
-    "@types/remarkable":"^2.0.3",
+    "@types/remarkable": "^2.0.3",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
     "babel-preset-razzle": "4.0.2",
