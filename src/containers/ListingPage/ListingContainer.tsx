@@ -7,6 +7,8 @@
  */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery } from '@apollo/client';
+
+import { useTranslation } from 'react-i18next';
 import ListingView from './ListingView';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getTagsParameter } from '../../util/listingHelpers';
@@ -27,7 +29,6 @@ interface Props {
   tags: string[];
   filters: Map<string, Filter>;
   location: Location;
-  locale: string;
 }
 
 const ListingContainer = ({
@@ -36,7 +37,6 @@ const ListingContainer = ({
   tags,
   filters,
   location,
-  locale,
 }: Props): JSX.Element => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -45,6 +45,7 @@ const ListingContainer = ({
     filters: [],
     concept: undefined,
   });
+  const { i18n } = useTranslation();
 
   const useDebounce = (val: string, delay: number): string => {
     const [debouncedVal, setDebouncedVal] = useState(val);
@@ -66,9 +67,9 @@ const ListingContainer = ({
         subjects: queryParams.subjects.join(),
         tags: getTagsParameter(tags, queryParams.filters),
         pageSize: PAGE_SIZE.toString(),
-        language: locale,
         fallback: true,
         exactMatch: false,
+        language: i18n.language,
       },
       notifyOnNetworkStatusChange: true, // For spinner on load more
     },
@@ -167,7 +168,6 @@ const ListingContainer = ({
       handleChangeSubject={handleChangeSubject}
       handleChangeFilters={handleChangeFilters}
       location={location}
-      locale={locale}
     />
   );
 };

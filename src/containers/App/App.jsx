@@ -10,18 +10,20 @@
 import '../../style/index.css';
 
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
-import { PageContainer } from '@ndla/ui';
-import { injectT } from '@ndla/i18n';
+import { PageContainer, Spinner } from '@ndla/ui';
 
-import { getLocale } from '../Locale/localeSelectors';
+import { useTranslation } from 'react-i18next';
+
+import { IntlProvider } from '@ndla/i18n';
+import { useApolloClient } from '@apollo/client';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import { getLocaleObject } from '../../i18n';
+import { initializeI18n } from '../../i18n2';
 
 const StyledPageWrapper = styled.div`
   min-height: 100vh;
@@ -30,59 +32,65 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const App = ({ locale, t }) => {
+const App = () => {
+  const { t, i18n } = useTranslation();
+  const client = useApolloClient();
+  const history = useHistory();
+  initializeI18n(i18n, client, history);
+
+  if (!i18n.isInitialized) {
+    return <Spinner />;
+  }
+
   return (
-    <PageContainer>
-      <StyledPageWrapper>
-        <Helmet
-          title="NDLA"
-          meta={[{ name: 'description', content: t('meta.description') }]}
-        />
-        <Switch>
-          <Route
-            path="/"
-            exact
-            component={routeProps => (
-              <ListingPage
-                locale={locale}
-                location={routeProps.location}
-                isOembed={false}
-              />
-            )}
+    <IntlProvider
+      locale={i18n.language}
+      messages={getLocaleObject(i18n.language).messages}>
+      <PageContainer>
+        <StyledPageWrapper>
+          <Helmet
+            title="NDLA"
+            meta={[{ name: 'description', content: t('meta.description') }]}
           />
-          <Route
-            path="/concepts/:conceptId/:selectedLanguage?"
-            component={routeProps => (
-              <ConceptPage
-                conceptId={routeProps.match.params.conceptId}
-                inModal={false}
-                language={routeProps.match.params.selectedLanguage || locale}
-              />
-            )}
-          />
-          <Route
-            path="/listing"
-            component={routeProps => (
-              <ListingPage
-                isOembed={true}
-                locale={locale}
-                location={routeProps.location}
-              />
-            )}
-          />
-          <Route component={NotFoundPage} />
-        </Switch>
-      </StyledPageWrapper>
-    </PageContainer>
+          <Switch>
+            <Route
+              path="/"
+              component={routeProps => (
+                <ListingPage
+                  locale={i18n.language}
+                  location={routeProps.location}
+                  isOembed={false}
+                />
+              )}
+            />
+            <Route
+              path="/concepts/:conceptId/:selectedLanguage?"
+              component={routeProps => (
+                <ConceptPage
+                  conceptId={routeProps.match.params.conceptId}
+                  inModal={false}
+                  language={
+                    routeProps.match.params.selectedLanguage || i18n.language
+                  }
+                />
+              )}
+            />
+            <Route
+              path="/listing"
+              component={routeProps => (
+                <ListingPage
+                  isOembed={true}
+                  locale={i18n.language}
+                  location={routeProps.location}
+                />
+              )}
+            />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </StyledPageWrapper>
+      </PageContainer>
+    </IntlProvider>
   );
 };
 
-App.propTypes = {
-  locale: PropTypes.string.isRequired,
-};
-
-const mapStateToProps = state => ({
-  locale: getLocale(state),
-});
-
-export default connect(mapStateToProps)(injectT(App));
+export default App;

@@ -8,21 +8,20 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import styled from '@emotion/styled';
-import { injectT } from '@ndla/i18n';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
 
-import { getLocale } from '../containers/Locale/localeSelectors';
+import { useTranslation } from 'react-i18next';
 
 const StyledFooterWrapper = styled.div`
   margin-top: 52px;
 `;
 
-const FooterWrapper = ({ t, locale }) => {
+const FooterWrapper = () => {
+  const { t, i18n } = useTranslation();
   return (
     <StyledFooterWrapper>
-      <Footer lang={locale}>
+      <Footer lang={i18n.language}>
         <FooterText>
           <EditorName
             title={t('footer.footerEditiorInChief')}
@@ -37,11 +36,6 @@ const FooterWrapper = ({ t, locale }) => {
 
 FooterWrapper.propTypes = {
   t: PropTypes.func.isRequired,
-  locale: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
-  locale: getLocale(state),
-});
-
-export default connect(mapStateToProps)(injectT(FooterWrapper));
+export default FooterWrapper;

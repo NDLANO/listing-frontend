@@ -8,16 +8,14 @@
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import defined from 'defined';
 import { ApolloProvider } from '@apollo/client';
-
-import { IntlProvider } from '@ndla/i18n';
+import { I18nextProvider } from 'react-i18next';
+import { i18nInstance } from '@ndla/ui';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
 import { createApolloClient } from '../../util/apiHelpers';
-import configureStore from '../../configureStore';
 import { getLocaleObject, isValidLocale } from '../../i18n';
 import App from '../../containers/App/App';
 
@@ -40,7 +38,7 @@ const renderHtmlString = (
 
 export function defaultRoute(req, res) {
   const paths = req.url.split('/');
-  const { abbreviation: locale, messages } = getLocaleObject(paths[1]);
+  const { abbreviation: locale } = getLocaleObject(paths[1]);
   const userAgentString = req.headers['user-agent'];
   // Oembed-hack
   if (paths.find(p => p.includes('listing')) || paths.includes('concepts')) {
@@ -66,24 +64,17 @@ export function defaultRoute(req, res) {
     return;
   }
 
-  const store = configureStore({ locale });
-
   const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
 
   const context = {};
   const component = (
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <IntlProvider locale={locale} messages={messages}>
-          <StaticRouter
-            basename={basename}
-            location={req.url}
-            context={context}>
-            <App />
-          </StaticRouter>
-        </IntlProvider>
-      </Provider>
-    </ApolloProvider>
+    <I18nextProvider i18n={i18nInstance}>
+      <ApolloProvider client={client}>
+        <StaticRouter basename={basename} location={req.url} context={context}>
+          <App />
+        </StaticRouter>
+      </ApolloProvider>
+    </I18nextProvider>
   );
 
   if (context.url) {
@@ -93,12 +84,11 @@ export function defaultRoute(req, res) {
     res.end();
   } else {
     try {
-      const state = store.getState();
       const apolloState = client.extract();
       const htmlString = renderHtmlString(
         locale,
         userAgentString,
-        state,
+        { locale },
         { apolloState },
         component,
       );
@@ -112,7 +102,4 @@ export function defaultRoute(req, res) {
   // Trigger sagas for components by rendering them
   // https://github.com/yelouafi/redux-saga/issues/255#issuecomment-210275959
   renderToString(component);
-
-  // Dispatch a close event so sagas stop listening after they have resolved
-  store.close();
 }

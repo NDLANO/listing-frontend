@@ -15,7 +15,7 @@ import Downshift, {
 import styled from '@emotion/styled';
 import { css, SerializedStyles } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
-import { injectT, tType } from '@ndla/i18n';
+// @ts-ignore
 import ListView from '@ndla/listview';
 import {
   // @ts-ignore
@@ -32,6 +32,8 @@ import {
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
 import Button from '@ndla/button';
+import { useTranslation } from 'react-i18next';
+// @ts-ignore
 import { getLocaleUrls } from '../../util/localeHelpers';
 import { mapConceptToListItem } from '../../util/listingHelpers';
 import ConceptPage from '../../components/Concept/ConceptPage';
@@ -159,11 +161,9 @@ interface Props {
   handleChangeSubject: (values: string[]) => void;
   handleChangeFilters: (key: string, values: string[]) => void;
   location: Location;
-  locale: string;
 }
 
 const ListingView = ({
-  t,
   isOembed,
   loading,
   showLoadMore,
@@ -186,12 +186,13 @@ const ListingView = ({
   handleChangeSubject,
   handleChangeFilters,
   location,
-  locale,
-}: Props & tType): JSX.Element => {
+}: Props): JSX.Element => {
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
   const [detailedItem, setDetailedItem] = useState(null);
   const [viewStyle, setViewStyle] = useState<ViewStyle>('grid');
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language;
 
   const handleStateChangeListFilter = (
     changes: StateChangeOptions<string>,
@@ -447,4 +448,4 @@ const ListingView = ({
   );
 };
 
-export default injectT(ListingView);
+export default ListingView;
