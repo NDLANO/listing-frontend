@@ -22,12 +22,14 @@ import App from '../../containers/App/App';
 const renderHtmlString = (
   locale,
   userAgentString,
+  state = {},
   data = {},
   component = undefined,
 ) =>
   renderToString(
     <Html
       lang={locale}
+      state={state}
       component={component}
       className={getConditionalClassnames(userAgentString)}
       data={data}
@@ -86,6 +88,7 @@ export function defaultRoute(req, res) {
       const htmlString = renderHtmlString(
         locale,
         userAgentString,
+        { locale },
         { apolloState },
         component,
       );

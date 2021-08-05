@@ -106,7 +106,7 @@ const typePolicies = {
 
 export const createApolloClient = (language = 'nb') => {
   const cache = __CLIENT__
-    ? new InMemoryCache({ typePolicies }) //.restore(window.DATA.apolloState)
+    ? new InMemoryCache({ typePolicies }).restore(window.DATA.apolloState)
     : new InMemoryCache({ typePolicies });
 
   const client = new ApolloClient({

@@ -50,10 +50,9 @@ const GoogleTagMangerScript = () => {
 };
 
 const Html = props => {
-  const { lang, className, component, data } = props;
+  const { lang, className, component, state, data } = props;
   const content = component ? renderToString(component) : '';
   const head = Helmet.rewind();
-  console.log(serialize(data));
 
   return (
     <html lang={lang} className={className}>
@@ -83,15 +82,20 @@ const Html = props => {
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
         <script
           dangerouslySetInnerHTML={{
+            __html: `window.initialState = ${serialize(state)}`,
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
             __html: `window.config = ${serialize(config)}`,
           }}
         />
-        {/* <script
+        <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
             __html: `window.DATA = ${serialize(data)}; `,
           }}
-        /> */}
+        />
         <script src={razzleAssets.client.js} />
         {/* <script type="text/javascript" async src={`https://cdn.mathjax.org/mathjax/2.7-latest/MathJax.js?config=/assets/${assets['mathjaxConfig.js']}`} /> */}
       </body>
@@ -102,6 +106,7 @@ const Html = props => {
 Html.propTypes = {
   lang: PropTypes.string.isRequired,
   component: PropTypes.node,
+  state: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   data: PropTypes.object,
   className: PropTypes.string.isRequired,
 };
