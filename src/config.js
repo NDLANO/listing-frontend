@@ -57,8 +57,9 @@ const config = Object.assign(
     googleTagMangerId: process.env.GOOGLE_TAG_MANGER_ID || undefined,
     disableSSR: process.env.DISABLE_SSR || false,
     ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
-    ndlaListingFrontendDomain: ndlaListingFrontendDomain(),
-    ndlaFrontendDomain: ndlaFrontendDomain(),
+    ndlaListingFrontendDomain:
+      process.env.NDLA_LISTING_URL || ndlaListingFrontendDomain(),
+    ndlaFrontendDomain: process.env.NDLA_FRONTEND_URL || ndlaFrontendDomain(),
     localGraphQLApi: process.env.LOCAL_GRAPHQL_API || false,
   },
   environment,
