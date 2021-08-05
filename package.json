@@ -50,7 +50,6 @@
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "@types/remarkable": "^2.0.3",
-    "apollo": "2.32.8",
     "babel-jest": "^25.1.0",
     "babel-loader": "^8.0.6",
     "babel-preset-razzle": "4.0.2",
