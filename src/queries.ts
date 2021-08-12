@@ -154,7 +154,6 @@ export const detailedConceptQuery = gql`
           copyText
         }
         h5p {
-          path
           src
           thumbnail
           copyText
@@ -166,7 +165,6 @@ export const detailedConceptQuery = gql`
         }
         image {
           resourceid
-          fullbredde
           alt
           caption
           lowerRightX
