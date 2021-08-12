@@ -112,7 +112,7 @@ const ConceptPage = ({
         content: <ImageContent t={t} images={images} />,
       });
 
-    concept.visualElement?.copyright?.license?.license &&
+    concept.visualElement?.h5p &&
       tabs.push({
         title: t(
           `license.tabs.${
