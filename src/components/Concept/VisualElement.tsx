@@ -54,10 +54,10 @@ const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
     return (
       <iframe
         frameBorder="0"
-        height={visualElement.brightcove.iframe?.height}
+        height={400}
         src={visualElement.brightcove.iframe?.src}
         title={visualElement.title}
-        width={visualElement.brightcove.iframe?.width}
+        width={600}
       />
     );
   } else if (visualElement.h5p) {
@@ -66,7 +66,7 @@ const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
         allowFullScreen={true}
         frameBorder="0"
         height={400}
-        src={getIframeSrcFromHtmlString(visualElement.h5p.src!)}
+        src={visualElement.url!}
         title={visualElement.h5p.title}
         width={600}
       />
