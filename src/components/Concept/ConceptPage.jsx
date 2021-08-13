@@ -113,6 +113,7 @@ const ConceptPage = ({
       });
 
     (concept.visualElement?.h5p || concept.visualElement?.brightcove) &&
+      concept.visualElement?.copyright &&
       tabs.push({
         title: t(
           `license.tabs.${

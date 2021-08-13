@@ -189,10 +189,16 @@ export const VisualElementContent = ({ t, visualElement }) => {
       <MediaList>
         <MediaListItem>
           <MediaListItemImage>
-            <img src={visualElement.thumbnail} alt={visualElement.alt} />
+            <img
+              src={
+                visualElement?.brightcove?.cover ||
+                visualElement?.h5p?.thumbnail
+              }
+              alt={visualElement.brightcove.caption ?? ''}
+            />
           </MediaListItemImage>
           <MediaListItemBody
-            license={visualElement.copyright.license.license}
+            license={visualElement?.copyright?.license?.license ?? ''}
             title={t(`license.${resourceType}.rules`)}
             resourceUrl=""
             locale="nb"
@@ -203,7 +209,10 @@ export const VisualElementContent = ({ t, visualElement }) => {
                 <CopyTextButton
                   hasCopiedTitle={t('license.hasCopiedTitle')}
                   copyTitle={t('license.copyTitle')}
-                  stringToCopy={visualElement.copyText}
+                  stringToCopy={
+                    visualElement?.h5p?.copyText ||
+                    visualElement?.brightcove?.copyText
+                  }
                 />
               </div>
             </MediaListItemActions>
@@ -218,13 +227,19 @@ VisualElementContent.propTypes = {
   t: PropTypes.func.isRequired,
   visualElement: PropTypes.shape({
     resource: PropTypes.string,
-    thumbnail: PropTypes.string,
-    alt: PropTypes.string,
-    copyText: PropTypes.string,
     copyright: PropTypes.shape({
       license: PropTypes.shape({
         license: PropTypes.string,
       }),
+    }),
+    brightcove: PropTypes.shape({
+      cover: PropTypes.string,
+      copyText: PropTypes.string,
+      caption: PropTypes.string,
+    }),
+    h5p: PropTypes.shape({
+      thumbnail: PropTypes.string,
+      copyText: PropTypes.string,
     }),
   }),
 };
