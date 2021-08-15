@@ -118,7 +118,6 @@ TextContent.propTypes = {
 
 export const ImageContent = ({ t, images }) => {
   const AnchorButton = StyledButton.withComponent('a');
-
   return (
     <>
       <div className="u-introduction">

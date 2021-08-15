@@ -45,7 +45,11 @@ const getTabImages = concept => {
     concept.visualElement?.image?.src?.length &&
     concept.visualElement?.image?.src !== concept.image?.src
   ) {
-    images.push(concept.visualElement.image);
+    images.push({
+      ...concept.visualElement.image,
+      title: concept.visualElement.title,
+      copyright: concept.visualElement.copyright,
+    });
   }
   return images;
 };
