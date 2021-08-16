@@ -54,6 +54,7 @@ const App = () => {
           />
           <Switch>
             <Route
+              exact
               path="/"
               component={routeProps => (
                 <ListingPage

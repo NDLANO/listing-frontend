@@ -30,8 +30,6 @@ export const initializeI18n = (
         ? `${paths[1]}`
         : '';
       if (!(basename === '' && language === 'nb')) {
-        const { search } = window.location;
-        history.replace(`/${language}/${search}`);
         window.localStorage.setItem('language', language);
       }
     }
