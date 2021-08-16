@@ -6,20 +6,22 @@
  *
  */
 
+const creatorCopyString = (creator, t) => {
+  const type = t(creator?.type?.toLowerCase());
+  return `${type}: ${creator?.name}`;
+};
+
 export const getCopyrightCopyString = (copyright, t) => {
   const license = copyright.license.license;
   let creatorsCopyString;
 
   if (copyright?.authors?.length) {
     creatorsCopyString = copyright.authors
-      .map(author => `${author?.type}: ${author?.name}`)
+      ?.map(author => creatorCopyString(author, t))
       .join('\n');
   } else {
-    creatorsCopyString = copyright?.creators
-      ?.map(creator => {
-        const type = t(`creditType.${creator?.type?.toLowerCase()}`);
-        return `${type}: ${creator?.name}`;
-      })
+    creatorsCopyString = copyright.creators
+      ?.map(creator => creatorCopyString(creator, t))
       .join('\n');
   }
 
