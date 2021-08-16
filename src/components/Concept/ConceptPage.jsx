@@ -45,7 +45,11 @@ const getTabImages = concept => {
     concept.visualElement?.image?.src?.length &&
     concept.visualElement?.image?.src !== concept.image?.src
   ) {
-    images.push(concept.visualElement.image);
+    images.push({
+      ...concept.visualElement.image,
+      title: concept.visualElement.title,
+      copyright: concept.visualElement.copyright,
+    });
   }
   return images;
 };
@@ -112,7 +116,8 @@ const ConceptPage = ({
         content: <ImageContent t={t} images={images} />,
       });
 
-    concept.visualElement?.copyright?.license?.license &&
+    (concept.visualElement?.h5p || concept.visualElement?.brightcove) &&
+      concept.visualElement?.copyright &&
       tabs.push({
         title: t(
           `license.tabs.${

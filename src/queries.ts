@@ -76,6 +76,33 @@ export const conceptSearchQuery = gql`
   }
 `;
 
+const contributorInfoFragment = gql`
+  fragment ContributorInfo on Contributor {
+    name
+    type
+  }
+`;
+
+const copyrightInfoFragment = gql`
+  ${contributorInfoFragment}
+  fragment CopyrightInfo on Copyright {
+    license {
+      license
+      url
+    }
+    creators {
+      ...ContributorInfo
+    }
+    processors {
+      ...ContributorInfo
+    }
+    rightsholders {
+      ...ContributorInfo
+    }
+    origin
+  }
+`;
+
 export const detailedConceptQuery = gql`
   query DetailedConcept($id: String) {
     detailedConcept(id: $id) {
@@ -101,42 +128,59 @@ export const detailedConceptQuery = gql`
         title
       }
       visualElement {
-        resource
         title
+        resource
         url
-        alt
-        thumbnail
-        image {
-          contentType
-          ...ImageLicenseInfo
+        copyright {
+          ...CopyrightInfo
+        }
+        language
+        embed
+        brightcove {
+          videoid
+          player
+          account
+          caption
+          description
+          cover
+          src
+          download
+          iframe {
+            src
+            height
+            width
+          }
+          uploadDate
+          copyText
+        }
+        h5p {
+          src
+          thumbnail
+          copyText
         }
         oembed {
           title
           html
           fullscreen
         }
-        lowerRightX
-        lowerRightY
-        upperLeftX
-        upperLeftY
-        focalX
-        focalY
-        copyText
-        copyright {
-          license {
-            license
-          }
-          authors: creators {
-            name
-            type
-          }
-          rightsholders {
-            name
-            type
-          }
+        image {
+          resourceid
+          alt
+          caption
+          lowerRightX
+          lowerRightY
+          upperLeftX
+          upperLeftY
+          focalX
+          focalY
+          src
+          altText
+          contentType
+          copyText
         }
       }
     }
   }
   ${imageLicenseFragment}
+  ${copyrightInfoFragment}
 `;

@@ -55,31 +55,73 @@ export interface ListingPageType {
 }
 
 export interface VisualElementType {
-  resource: string;
-  resourceId: string;
-  title: string;
-  url: string;
-  alt: string;
-  lowerRightX: number;
-  lowerRightY: number;
-  upperLeftX: number;
-  upperLeftY: number;
-  focalX: number;
-  focalY: number;
-  image: {
-    src: string;
-    altText: string;
-    contentType: string;
-    copyright: Copyright;
-  };
-  oembed: {
-    title: string;
-    html: string;
-    fullscreen: boolean;
-  };
+  resource?: string;
+  url?: string;
   copyright?: Copyright;
+  language?: string;
+  embed?: string;
+  title: string;
+  brightcove?: BrightcoveType;
+  h5p?: H5pType;
+  oembed?: VisualElementOembed;
+  image?: ImageType;
 }
 
+export interface BrightcoveType {
+  videoid?: string;
+  player?: string;
+  account?: string;
+  caption?: string;
+  title: string;
+  description?: string;
+  cover?: string;
+  src?: string;
+  download?: string;
+  iframe?: BrightcoveIframe;
+  copyright: Copyright;
+  uploadDate?: string;
+  copyText?: string;
+}
+
+export interface H5pType {
+  path?: string;
+  title: string;
+  src?: string;
+  thumbnail?: string;
+  copyright: Copyright;
+  copyText?: string;
+}
+
+export interface VisualElementOembed {
+  title?: string;
+  html?: string;
+  fullscreen?: boolean;
+}
+
+export interface ImageType {
+  resourceid?: string;
+  fullbredde?: string;
+  alt?: string;
+  caption?: string;
+  lowerRightX?: number;
+  lowerRightY?: number;
+  upperLeftX?: number;
+  upperLeftY?: number;
+  focalX?: number;
+  focalY?: number;
+  title: string;
+  src: string;
+  altText: string;
+  copyright: Copyright;
+  contentType?: string;
+  copyText?: string;
+}
+
+export interface BrightcoveIframe {
+  src: string;
+  height: number;
+  width: number;
+}
 export interface Filter {
   main: string[];
   sub: string[];
