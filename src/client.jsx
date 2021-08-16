@@ -6,7 +6,7 @@
  *
  */
 
-import React, {useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
@@ -60,9 +60,11 @@ const LanguageWrapper = () => {
     setLang(i18n.language); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
 
-  return <BrowserRouter basename={lang} key={lang}>
-    <App />
-  </BrowserRouter> 
+  return (
+    <BrowserRouter basename={lang} key={lang}>
+      <App />
+    </BrowserRouter>
+  );
 };
 
 const renderApp = () =>
