@@ -6,13 +6,16 @@
  *
  */
 
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { useHistory } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { ApolloProvider } from '@apollo/client';
-
+import { ApolloProvider, useApolloClient } from '@apollo/client';
 import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
+
+import { initializeI18n } from './i18n2';
 import { createApolloClient } from './util/apiHelpers';
 import { isValidLocale } from './i18n';
 import App from './containers/App/App';
@@ -34,12 +37,42 @@ if (
 
 const client = createApolloClient(i18nInstance.language);
 
+const LanguageWrapper = () => {
+  const { i18n } = useTranslation();
+  const history = useHistory();
+  const client = useApolloClient();
+  const [lang, setLang] = useState(basename);
+  const firstRender = useRef(true);
+  initializeI18n(i18n, client, history);
+
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    const supportedLanguages = i18n.options.supportedLngs;
+    const regex = new RegExp(supportedLanguages.map(l => `/${l}/`).join('|'));
+    const paths = window.location.pathname.replace(regex, '').split('/');
+    const { search } = window.location;
+    const p = paths.slice().join('/');
+    const test = p.startsWith('/') ? p : `/${p}`;
+    history.replace(`/${i18n.language}${test}${search}`);
+    setLang(i18n.language); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n.language]);
+
+  return (
+    <BrowserRouter basename={lang} key={lang}>
+      <App />
+    </BrowserRouter>
+  );
+};
+
 const renderApp = () =>
   ReactDOM.render(
     <I18nextProvider i18n={i18nInstance}>
       <ApolloProvider client={client}>
         <BrowserRouter>
-          <App />
+          <LanguageWrapper />
         </BrowserRouter>
       </ApolloProvider>
     </I18nextProvider>,
