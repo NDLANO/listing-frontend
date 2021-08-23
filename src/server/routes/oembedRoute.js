@@ -79,6 +79,17 @@ const oembedListingRoute = (req, url) => {
   return getOembedObject(req, filter, html);
 };
 
+const oembedSubjectsRoute = (req, url) => {
+  const decodedUrl = decodeURIComponent(url);
+  // This currently only supports one subject
+  const subjects = decodedUrl.split('subjects[]=')[1];
+  const html = `<iframe aria-label="${'decodedTitle'}" src="${
+    config.ndlaListingFrontendDomain
+  }/listing?subjects[]=${subjects}" frameborder="0" allowFullscreen="" />`;
+
+  return getOembedObject(req, subjects, html);
+};
+
 export async function oembedRoute(req) {
   const { url } = req.query;
 
@@ -93,6 +104,8 @@ export async function oembedRoute(req) {
     return await oembedConceptRoute(req, url);
   } else if (url.includes('filters')) {
     return oembedListingRoute(req, url);
+  } else if (url.includes('subjects')) {
+    return oembedSubjectsRoute(req, url);
   } else {
     return {
       status: BAD_REQUEST,
