@@ -7,6 +7,7 @@
  */
 
 import React, { Fragment, useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
 import { Remarkable } from 'remarkable';
@@ -162,11 +163,17 @@ const ConceptPage = ({
     </Modal>
   );
 
+  const StyledVisualElementContainer = styled.div`
+    flex-grow: 1;
+  `;
+
   const conceptBody = (
     <>
       <NotionDialogContent>
         {concept.visualElement ? (
-          <VisualElement visualElement={concept.visualElement} />
+          <StyledVisualElementContainer>
+            <VisualElement visualElement={concept.visualElement} />
+          </StyledVisualElementContainer>
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
