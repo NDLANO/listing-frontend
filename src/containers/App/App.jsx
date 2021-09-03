@@ -17,12 +17,10 @@ import { PageContainer, Spinner } from '@ndla/ui';
 
 import { useTranslation } from 'react-i18next';
 
-import { IntlProvider } from '@ndla/i18n';
 import { useApolloClient } from '@apollo/client';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import { getLocaleObject } from '../../i18n';
 import { initializeI18n } from '../../i18n2';
 
 const StyledPageWrapper = styled.div`
@@ -43,54 +41,50 @@ const App = () => {
   }
 
   return (
-    <IntlProvider
-      locale={i18n.language}
-      messages={getLocaleObject(i18n.language).messages}>
-      <PageContainer>
-        <StyledPageWrapper>
-          <Helmet
-            title="NDLA"
-            meta={[{ name: 'description', content: t('meta.description') }]}
+    <PageContainer>
+      <StyledPageWrapper>
+        <Helmet
+          title="NDLA"
+          meta={[{ name: 'description', content: t('meta.description') }]}
+        />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            component={routeProps => (
+              <ListingPage
+                locale={i18n.language}
+                location={routeProps.location}
+                isOembed={false}
+              />
+            )}
           />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              component={routeProps => (
-                <ListingPage
-                  locale={i18n.language}
-                  location={routeProps.location}
-                  isOembed={false}
-                />
-              )}
-            />
-            <Route
-              path="/concepts/:conceptId/:selectedLanguage?"
-              component={routeProps => (
-                <ConceptPage
-                  conceptId={routeProps.match.params.conceptId}
-                  inModal={false}
-                  language={
-                    routeProps.match.params.selectedLanguage || i18n.language
-                  }
-                />
-              )}
-            />
-            <Route
-              path="/listing"
-              component={routeProps => (
-                <ListingPage
-                  isOembed={true}
-                  locale={i18n.language}
-                  location={routeProps.location}
-                />
-              )}
-            />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </StyledPageWrapper>
-      </PageContainer>
-    </IntlProvider>
+          <Route
+            path="/concepts/:conceptId/:selectedLanguage?"
+            component={routeProps => (
+              <ConceptPage
+                conceptId={routeProps.match.params.conceptId}
+                inModal={false}
+                language={
+                  routeProps.match.params.selectedLanguage || i18n.language
+                }
+              />
+            )}
+          />
+          <Route
+            path="/listing"
+            component={routeProps => (
+              <ListingPage
+                isOembed={true}
+                locale={i18n.language}
+                location={routeProps.location}
+              />
+            )}
+          />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </StyledPageWrapper>
+    </PageContainer>
   );
 };
 
