@@ -73,7 +73,7 @@ const phrases = {
     relatedLinks: {
       label: 'Tilknyttede artikler',
     },
-    hits: '{count} treff',
+    hits: '{{count}} treff',
   },
   license: {
     heading: 'Slik gjenbruker du innhold',
@@ -126,7 +126,7 @@ const phrases = {
   },
   searchPage: {
     searchFilterMessages: {
-      removeFilter: 'Fjern filter {filterName}',
+      removeFilter: 'Fjern filter {{filterName}}',
     },
   },
   footer: {

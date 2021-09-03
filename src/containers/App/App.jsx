@@ -17,12 +17,10 @@ import { PageContainer, Spinner } from '@ndla/ui';
 
 import { useTranslation } from 'react-i18next';
 
-import { IntlProvider } from '@ndla/i18n';
 import { useApolloClient } from '@apollo/client';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import { getLocaleObject } from '../../i18n';
 import { initializeI18n } from '../../i18n2';
 
 const StyledPageWrapper = styled.div`
@@ -43,9 +41,6 @@ const App = () => {
   }
 
   return (
-    <IntlProvider
-      locale={i18n.language}
-      messages={getLocaleObject(i18n.language).messages}>
       <PageContainer>
         <StyledPageWrapper>
           <Helmet
@@ -90,7 +85,6 @@ const App = () => {
           </Switch>
         </StyledPageWrapper>
       </PageContainer>
-    </IntlProvider>
   );
 };
 
