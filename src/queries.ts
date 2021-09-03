@@ -110,6 +110,7 @@ export const detailedConceptQuery = gql`
       content
       created
       subjectIds
+      subjectNames
       copyright {
         license {
           license

@@ -35,7 +35,7 @@ import {
 import VisualElement from './VisualElement';
 import PostResizeMessage from '../PostResizeMessage';
 import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
-import { detailedConceptQuery, listingPageQuery } from '../../queries';
+import { detailedConceptQuery } from '../../queries';
 
 const getTabImages = concept => {
   const images = [];
@@ -55,13 +55,7 @@ const getTabImages = concept => {
   return images;
 };
 
-const ConceptPage = ({
-  conceptId,
-  subjects,
-  handleClose,
-  inModal,
-  language,
-}) => {
+const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
   const { t } = useTranslation();
   const [markdown, setMarkdown] = useState(null);
 
@@ -69,9 +63,6 @@ const ConceptPage = ({
     variables: {
       id: conceptId,
     },
-  });
-  const { data: listingData } = useQuery(listingPageQuery, {
-    skip: inModal,
   });
 
   useEffect(() => {
@@ -99,7 +90,6 @@ const ConceptPage = ({
   }
 
   const concept = data.detailedConcept;
-  const conceptSubjects = subjects || listingData?.listingPage?.subjects;
 
   const getTabs = () => {
     const tabs = [];
@@ -177,12 +167,8 @@ const ConceptPage = ({
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
-      {concept.subjectIds?.length && (
-        <NotionDialogTags
-          tags={conceptSubjects
-            ?.filter(subject => concept.subjectIds?.includes(subject.id))
-            ?.map(s => s.name)}
-        />
+      {concept.subjectNames?.length && (
+        <NotionDialogTags tags={concept.subjectNames} />
       )}
       {concept.articles?.length > 0 && (
         <NotionDialogRelatedLinks
@@ -230,12 +216,6 @@ const ConceptPage = ({
 
 ConceptPage.propTypes = {
   conceptId: PropTypes.string.isRequired,
-  subjects: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-    }),
-  ),
   handleClose: PropTypes.func,
   inModal: PropTypes.bool,
   language: PropTypes.string.isRequired,
