@@ -41,50 +41,50 @@ const App = () => {
   }
 
   return (
-      <PageContainer>
-        <StyledPageWrapper>
-          <Helmet
-            title="NDLA"
-            meta={[{ name: 'description', content: t('meta.description') }]}
+    <PageContainer>
+      <StyledPageWrapper>
+        <Helmet
+          title="NDLA"
+          meta={[{ name: 'description', content: t('meta.description') }]}
+        />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            component={routeProps => (
+              <ListingPage
+                locale={i18n.language}
+                location={routeProps.location}
+                isOembed={false}
+              />
+            )}
           />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              component={routeProps => (
-                <ListingPage
-                  locale={i18n.language}
-                  location={routeProps.location}
-                  isOembed={false}
-                />
-              )}
-            />
-            <Route
-              path="/concepts/:conceptId/:selectedLanguage?"
-              component={routeProps => (
-                <ConceptPage
-                  conceptId={routeProps.match.params.conceptId}
-                  inModal={false}
-                  language={
-                    routeProps.match.params.selectedLanguage || i18n.language
-                  }
-                />
-              )}
-            />
-            <Route
-              path="/listing"
-              component={routeProps => (
-                <ListingPage
-                  isOembed={true}
-                  locale={i18n.language}
-                  location={routeProps.location}
-                />
-              )}
-            />
-            <Route component={NotFoundPage} />
-          </Switch>
-        </StyledPageWrapper>
-      </PageContainer>
+          <Route
+            path="/concepts/:conceptId/:selectedLanguage?"
+            component={routeProps => (
+              <ConceptPage
+                conceptId={routeProps.match.params.conceptId}
+                inModal={false}
+                language={
+                  routeProps.match.params.selectedLanguage || i18n.language
+                }
+              />
+            )}
+          />
+          <Route
+            path="/listing"
+            component={routeProps => (
+              <ListingPage
+                isOembed={true}
+                locale={i18n.language}
+                location={routeProps.location}
+              />
+            )}
+          />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </StyledPageWrapper>
+    </PageContainer>
   );
 };
 
