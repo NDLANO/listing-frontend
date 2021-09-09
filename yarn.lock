@@ -1472,12 +1472,12 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@ndla/article-scripts@^0.6.5":
-  version "0.6.5"
-  resolved "https://registry.yarnpkg.com/@ndla/article-scripts/-/article-scripts-0.6.5.tgz#54c3fbb19bc6c7887a07cb7466f2577a5816b802"
-  integrity sha512-9nksKeBK1ZJ3pw1Vnu0MwMPtjRf3NDZOGEx0yB91SZTDg3selomp7MbVLMA+gck1gHW6vzvgmkMfAaORyeG6Zg==
+"@ndla/article-scripts@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ndla/article-scripts/-/article-scripts-1.0.0.tgz#30a4270b80c0efa2ddfcc966c1741fb710646d87"
+  integrity sha512-XrKGwjwVjYjQfSh/kxtJQOUS5KiC0lXzKiRhhA+ilZklfMbPRNTyIfN765CTdR9j9XKfpvaDTJ8XZ2S7ehCGNQ==
   dependencies:
-    "@ndla/util" "^0.4.8"
+    "@ndla/util" "^1.0.0"
     focus-trap "^4.0.2"
     jump.js "^1.0.2"
     lodash "^4.17.20"
@@ -1498,17 +1498,6 @@
     "@ndla/core" "^0.7.0"
     "@ndla/icons" "^1.0.0"
     react-swipeable "^5.0.1"
-
-"@ndla/core@^0.6.40":
-  version "0.6.40"
-  resolved "https://registry.yarnpkg.com/@ndla/core/-/core-0.6.40.tgz#2f5f441f215472f66b55155384363055eec4c0bb"
-  integrity sha512-bx4a3maQsqjOArUM4sgKaT9txYEgCc2SQinaWhGw/JnnxMTJdRRrQrxZAO3YdBrQKDUpq3jkWrbcOScwqkDG/A==
-  dependencies:
-    "@types/facepaint" "^1.2.1"
-    facepaint "^1.2.1"
-    inuitcss "6.0.0-beta.4"
-    polished "^2.3.3"
-    sass-mq "^5.0.0"
 
 "@ndla/core@^0.7.0":
   version "0.7.0"
@@ -1680,13 +1669,6 @@
     react-syntax-highlighter "15.1.0"
     react-transition-group "^2.5.3"
     shave "^2.5.10"
-
-"@ndla/util@^0.4.8":
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/@ndla/util/-/util-0.4.8.tgz#64c172458c3274afede144e8a43de80d5b8a5710"
-  integrity sha512-euDPfv31tbqgDoQWHMcJYgHRd3PmvoXTHL/5lzkT8gEQ+mR1UzqUAmivs1B8vgd0fVHmD0ne5ijNajGoMPzeTg==
-  dependencies:
-    defined "1.0.0"
 
 "@ndla/util@^1.0.0":
   version "1.0.0"

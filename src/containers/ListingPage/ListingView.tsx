@@ -409,7 +409,6 @@ const ListingView = ({
               selectedConcept ? (
                 <ConceptPage
                   conceptId={selectedConcept}
-                  subjects={subjects}
                   language={locale}
                   inModal={true}
                   handleClose={handleSelectItem}
