@@ -154,7 +154,7 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
   );
 
   const StyledVisualElementContainer = styled.div`
-    flex-grow: 1;
+    width: 100%;
   `;
 
   const conceptBody = (
