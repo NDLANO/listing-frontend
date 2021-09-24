@@ -153,17 +153,11 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
     </Modal>
   );
 
-  const StyledVisualElementContainer = styled.div`
-    width: 100%;
-  `;
-
   const conceptBody = (
     <>
       <NotionDialogContent>
         {concept.visualElement ? (
-          <StyledVisualElementContainer>
-            <VisualElement visualElement={concept.visualElement} />
-          </StyledVisualElementContainer>
+          <VisualElement visualElement={concept.visualElement} />
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
