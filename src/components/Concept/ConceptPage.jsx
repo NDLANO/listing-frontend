@@ -7,7 +7,6 @@
  */
 
 import React, { Fragment, useEffect, useState } from 'react';
-import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
 import { Remarkable } from 'remarkable';
