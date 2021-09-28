@@ -19,6 +19,7 @@ import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
+import styled from '@emotion/styled';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
@@ -53,6 +54,11 @@ const getTabImages = concept => {
   }
   return images;
 };
+
+const VisualElementWrapper = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+`;
 
 const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
   const { t } = useTranslation();
@@ -156,7 +162,9 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
     <>
       <NotionDialogContent>
         {concept.visualElement ? (
-          <VisualElement visualElement={concept.visualElement} />
+          <VisualElementWrapper>
+            <VisualElement visualElement={concept.visualElement} />
+          </VisualElementWrapper>
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
