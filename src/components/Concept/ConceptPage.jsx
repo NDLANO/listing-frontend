@@ -56,8 +56,10 @@ const getTabImages = concept => {
 };
 
 const VisualElementWrapper = styled.div`
-  margin-left: auto;
-  margin-right: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
