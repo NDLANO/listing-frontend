@@ -1072,33 +1072,32 @@ export type GQLImageLicenseInfoFragment = {
   altText: string;
   copyright: {
     __typename?: 'Copyright';
-    license?: { __typename?: 'License'; license: string } | null | undefined;
-    authors?:
-      | Array<{ __typename?: 'Contributor'; name: string; type: string }>
-      | null
-      | undefined;
-    rightsholders?:
-      | Array<{ __typename?: 'Contributor'; name: string }>
-      | null
-      | undefined;
+    license?: Maybe<{ __typename?: 'License'; license: string }>;
+    authors?: Maybe<
+      Array<{ __typename?: 'Contributor'; name: string; type: string }>
+    >;
+    rightsholders?: Maybe<Array<{ __typename?: 'Contributor'; name: string }>>;
   };
+};
+
+export type GQLSubjectInfoFragment = {
+  __typename?: 'Subject';
+  id: string;
+  name: string;
+  path: string;
 };
 
 export type GQLListingPageQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GQLListingPageQuery = {
   __typename?: 'Query';
-  listingPage?:
-    | {
-        __typename?: 'ListingPage';
-        tags?: Array<string> | null | undefined;
-        subjects?:
-          | Array<{ __typename?: 'Subject'; id: string; name: string }>
-          | null
-          | undefined;
-      }
-    | null
-    | undefined;
+  listingPage?: Maybe<{
+    __typename?: 'ListingPage';
+    tags?: Maybe<Array<string>>;
+    subjects?: Maybe<
+      Array<{ __typename?: 'Subject' } & GQLSubjectInfoFragment>
+    >;
+  }>;
 };
 
 export type GQLConceptSearchQueryVariables = Exact<{
@@ -1114,31 +1113,24 @@ export type GQLConceptSearchQueryVariables = Exact<{
 
 export type GQLConceptSearchQuery = {
   __typename?: 'Query';
-  conceptSearch?:
-    | {
-        __typename?: 'ConceptResult';
-        totalCount?: number | null | undefined;
-        concepts?:
-          | Array<{
-              __typename?: 'Concept';
-              id?: number | null | undefined;
-              title?: string | null | undefined;
-              content?: string | null | undefined;
-              tags?: Array<string> | null | undefined;
-              metaImage?:
-                | {
-                    __typename?: 'MetaImage';
-                    url?: string | null | undefined;
-                    alt?: string | null | undefined;
-                  }
-                | null
-                | undefined;
-            }>
-          | null
-          | undefined;
-      }
-    | null
-    | undefined;
+  conceptSearch?: Maybe<{
+    __typename?: 'ConceptResult';
+    totalCount?: Maybe<number>;
+    concepts?: Maybe<
+      Array<{
+        __typename?: 'Concept';
+        id?: Maybe<number>;
+        title?: Maybe<string>;
+        content?: Maybe<string>;
+        tags?: Maybe<Array<string>>;
+        metaImage?: Maybe<{
+          __typename?: 'MetaImage';
+          url?: Maybe<string>;
+          alt?: Maybe<string>;
+        }>;
+      }>
+    >;
+  }>;
 };
 
 export type GQLContributorInfoFragment = {
@@ -1149,27 +1141,21 @@ export type GQLContributorInfoFragment = {
 
 export type GQLCopyrightInfoFragment = {
   __typename?: 'Copyright';
-  origin?: string | null | undefined;
-  license?:
-    | {
-        __typename?: 'License';
-        license: string;
-        url?: string | null | undefined;
-      }
-    | null
-    | undefined;
-  creators?:
-    | Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
-    | null
-    | undefined;
-  processors?:
-    | Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
-    | null
-    | undefined;
-  rightsholders?:
-    | Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
-    | null
-    | undefined;
+  origin?: Maybe<string>;
+  license?: Maybe<{
+    __typename?: 'License';
+    license: string;
+    url?: Maybe<string>;
+  }>;
+  creators?: Maybe<
+    Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
+  >;
+  processors?: Maybe<
+    Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
+  >;
+  rightsholders?: Maybe<
+    Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
+  >;
 };
 
 export type GQLDetailedConceptQueryVariables = Exact<{
@@ -1178,119 +1164,82 @@ export type GQLDetailedConceptQueryVariables = Exact<{
 
 export type GQLDetailedConceptQuery = {
   __typename?: 'Query';
-  detailedConcept?:
-    | {
-        __typename?: 'DetailedConcept';
-        title?: string | null | undefined;
-        content?: string | null | undefined;
-        created?: string | null | undefined;
-        subjectIds?: Array<string> | null | undefined;
-        subjectNames?: Array<string> | null | undefined;
-        copyright?:
-          | {
-              __typename?: 'Copyright';
-              origin?: string | null | undefined;
-              license?:
-                | { __typename?: 'License'; license: string }
-                | null
-                | undefined;
-              authors?:
-                | Array<{
-                    __typename?: 'Contributor';
-                    name: string;
-                    type: string;
-                  }>
-                | null
-                | undefined;
-            }
-          | null
-          | undefined;
-        image?:
-          | ({ __typename?: 'ImageLicense' } & GQLImageLicenseInfoFragment)
-          | null
-          | undefined;
-        articles?:
-          | Array<{ __typename?: 'Meta'; id: number; title: string }>
-          | null
-          | undefined;
-        visualElement?:
-          | {
-              __typename?: 'VisualElement';
-              title?: string | null | undefined;
-              resource?: string | null | undefined;
-              url?: string | null | undefined;
-              language?: string | null | undefined;
-              embed?: string | null | undefined;
-              copyright?:
-                | ({ __typename?: 'Copyright' } & GQLCopyrightInfoFragment)
-                | null
-                | undefined;
-              brightcove?:
-                | {
-                    __typename?: 'BrightcoveElement';
-                    videoid?: string | null | undefined;
-                    player?: string | null | undefined;
-                    account?: string | null | undefined;
-                    caption?: string | null | undefined;
-                    description?: string | null | undefined;
-                    cover?: string | null | undefined;
-                    src?: string | null | undefined;
-                    download?: string | null | undefined;
-                    uploadDate?: string | null | undefined;
-                    copyText?: string | null | undefined;
-                    iframe?:
-                      | {
-                          __typename?: 'BrightcoveIframe';
-                          src: string;
-                          height: number;
-                          width: number;
-                        }
-                      | null
-                      | undefined;
-                  }
-                | null
-                | undefined;
-              h5p?:
-                | {
-                    __typename?: 'H5pElement';
-                    src?: string | null | undefined;
-                    thumbnail?: string | null | undefined;
-                    copyText?: string | null | undefined;
-                  }
-                | null
-                | undefined;
-              oembed?:
-                | {
-                    __typename?: 'VisualElementOembed';
-                    title?: string | null | undefined;
-                    html?: string | null | undefined;
-                    fullscreen?: boolean | null | undefined;
-                  }
-                | null
-                | undefined;
-              image?:
-                | {
-                    __typename?: 'ImageElement';
-                    resourceid?: string | null | undefined;
-                    alt?: string | null | undefined;
-                    caption?: string | null | undefined;
-                    lowerRightX?: number | null | undefined;
-                    lowerRightY?: number | null | undefined;
-                    upperLeftX?: number | null | undefined;
-                    upperLeftY?: number | null | undefined;
-                    focalX?: number | null | undefined;
-                    focalY?: number | null | undefined;
-                    src: string;
-                    altText: string;
-                    contentType?: string | null | undefined;
-                    copyText?: string | null | undefined;
-                  }
-                | null
-                | undefined;
-            }
-          | null
-          | undefined;
-      }
-    | null
-    | undefined;
+  detailedConcept?: Maybe<{
+    __typename?: 'DetailedConcept';
+    title?: Maybe<string>;
+    content?: Maybe<string>;
+    created?: Maybe<string>;
+    subjectIds?: Maybe<Array<string>>;
+    subjectNames?: Maybe<Array<string>>;
+    copyright?: Maybe<{
+      __typename?: 'Copyright';
+      origin?: Maybe<string>;
+      license?: Maybe<{ __typename?: 'License'; license: string }>;
+      authors?: Maybe<
+        Array<{ __typename?: 'Contributor'; name: string; type: string }>
+      >;
+    }>;
+    image?: Maybe<
+      { __typename?: 'ImageLicense' } & GQLImageLicenseInfoFragment
+    >;
+    articles?: Maybe<Array<{ __typename?: 'Meta'; id: number; title: string }>>;
+    visualElement?: Maybe<{
+      __typename?: 'VisualElement';
+      title?: Maybe<string>;
+      resource?: Maybe<string>;
+      url?: Maybe<string>;
+      language?: Maybe<string>;
+      embed?: Maybe<string>;
+      copyright?: Maybe<
+        { __typename?: 'Copyright' } & GQLCopyrightInfoFragment
+      >;
+      brightcove?: Maybe<{
+        __typename?: 'BrightcoveElement';
+        videoid?: Maybe<string>;
+        player?: Maybe<string>;
+        account?: Maybe<string>;
+        caption?: Maybe<string>;
+        description?: Maybe<string>;
+        cover?: Maybe<string>;
+        src?: Maybe<string>;
+        download?: Maybe<string>;
+        uploadDate?: Maybe<string>;
+        copyText?: Maybe<string>;
+        iframe?: Maybe<{
+          __typename?: 'BrightcoveIframe';
+          src: string;
+          height: number;
+          width: number;
+        }>;
+      }>;
+      h5p?: Maybe<{
+        __typename?: 'H5pElement';
+        src?: Maybe<string>;
+        thumbnail?: Maybe<string>;
+        copyText?: Maybe<string>;
+      }>;
+      oembed?: Maybe<{
+        __typename?: 'VisualElementOembed';
+        title?: Maybe<string>;
+        html?: Maybe<string>;
+        fullscreen?: Maybe<boolean>;
+      }>;
+      image?: Maybe<{
+        __typename?: 'ImageElement';
+        resourceid?: Maybe<string>;
+        alt?: Maybe<string>;
+        caption?: Maybe<string>;
+        lowerRightX?: Maybe<number>;
+        lowerRightY?: Maybe<number>;
+        upperLeftX?: Maybe<number>;
+        upperLeftY?: Maybe<number>;
+        focalX?: Maybe<number>;
+        focalY?: Maybe<number>;
+        src: string;
+        altText: string;
+        contentType?: Maybe<string>;
+        copyText?: Maybe<string>;
+      }>;
+    }>;
+  }>;
 };

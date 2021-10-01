@@ -28,16 +28,24 @@ const imageLicenseFragment = gql`
   }
 `;
 
+export const subjectInfoFragment = gql`
+  fragment SubjectInfo on Subject {
+    id
+    name
+    path
+  }
+`;
+
 export const listingPageQuery = gql`
   query ListingPage {
     listingPage {
       subjects {
-        id
-        name
+        ...SubjectInfo
       }
       tags
     }
   }
+  ${subjectInfoFragment}
 `;
 
 export const conceptSearchQuery = gql`

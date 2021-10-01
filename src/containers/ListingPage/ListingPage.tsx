@@ -13,7 +13,8 @@ import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { listingPageQuery } from '../../queries';
-import { Location, ListingPageType } from '../../interfaces';
+import { Location } from '../../interfaces';
+import { GQLListingPageQuery } from '../../graphqlTypes';
 
 interface Props {
   isOembed: boolean;
@@ -21,10 +22,12 @@ interface Props {
 }
 
 const ListingPage = ({ location, isOembed }: Props): JSX.Element => {
-  const { data, loading } = useQuery<ListingPageType>(listingPageQuery);
+  const { data, loading } = useQuery<GQLListingPageQuery>(listingPageQuery);
 
   if (loading) return <Spinner />;
-  if (!data) return <NotFoundPage />;
+  if (!data?.listingPage?.subjects || !data?.listingPage?.tags) {
+    return <NotFoundPage />;
+  }
 
   const filters = mapTagsToFilters(data.listingPage.tags);
   const filteredTags = filterTags(data.listingPage.tags);
