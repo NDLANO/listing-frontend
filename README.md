@@ -58,6 +58,22 @@ $ yarn run lint
 
 Rules are configured in `./.eslintrc.js` and extends [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb). If feeling brave, try `eslint --fix`.
 
+### Gql schema
+The [eslint-plugin-graphql](https://github.com/apollographql/eslint-plugin-graphql) is used to check the queries against the GraphQL schema.
+Make sure you have an running instance of the GraphQL enpoint with your latest changes
+```yarn
+yarn get-gql-schema-local
+```
+
+### TypeScript
+
+[GraphQL code generator](https://www.graphql-code-generator.com/) is used to generate TypeScript types from the local GraphQL schema and queries.
+
+```yarn
+yarn generate-gql-types
+```
+
+The configuration is found in `codegen.yml`.
 
 ## Other scripts
 
