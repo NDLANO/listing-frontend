@@ -13,19 +13,18 @@ import ListingView from './ListingView';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getTagsParameter } from '../../util/listingHelpers';
 import { conceptSearchQuery } from '../../queries';
+import { Location, Filter, ListItem } from '../../interfaces';
 import {
-  Location,
-  Subject,
-  Filter,
-  ListItem,
-  ConceptSearch,
-} from '../../interfaces';
+  GQLSubject,
+  GQLConceptSearchQuery,
+  GQLConceptSearchQueryVariables,
+} from '../../graphqlTypes';
 
 const PAGE_SIZE = 100;
 
 interface Props {
   isOembed: boolean;
-  subjects: Subject[];
+  subjects: GQLSubject[];
   tags: string[];
   filters: Map<string, Filter>;
   location: Location;
@@ -59,21 +58,21 @@ const ListingContainer = ({
   };
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
-  const { data, loading, fetchMore } = useQuery<ConceptSearch>(
-    conceptSearchQuery,
-    {
-      variables: {
-        query: debouncedSearchVal,
-        subjects: queryParams.subjects.join(),
-        tags: getTagsParameter(tags, queryParams.filters),
-        pageSize: PAGE_SIZE.toString(),
-        fallback: true,
-        exactMatch: false,
-        language: i18n.language,
-      },
-      notifyOnNetworkStatusChange: true, // For spinner on load more
+  const { data, loading, fetchMore } = useQuery<
+    GQLConceptSearchQuery,
+    GQLConceptSearchQueryVariables
+  >(conceptSearchQuery, {
+    variables: {
+      query: debouncedSearchVal,
+      subjects: queryParams.subjects.join(),
+      tags: getTagsParameter(tags, queryParams.filters),
+      pageSize: PAGE_SIZE.toString(),
+      fallback: true,
+      exactMatch: false,
+      language: i18n.language,
     },
-  );
+    notifyOnNetworkStatusChange: true, // For spinner on load more
+  });
 
   const handleSelectItem = (value: ListItem): void => {
     setQueryParams({
@@ -112,7 +111,7 @@ const ListingContainer = ({
   };
 
   const onLoadMoreClick = (): void => {
-    if (data) {
+    if (data?.conceptSearch?.concepts) {
       fetchMore({
         variables: {
           page: `${Math.floor(

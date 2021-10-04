@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from '@ndla/ui/lib/Image';
-import { ImageType, VisualElementType } from '../../interfaces';
+import { GQLVisualElement, GQLImageElement } from '../../graphqlTypes';
 
 export const getIframeSrcFromHtmlString = (
   html: string,
@@ -11,14 +11,14 @@ export const getIframeSrcFromHtmlString = (
   return iframe?.getAttribute('src') || undefined;
 };
 
-const getFocalPoint = (visualElement: ImageType): object | undefined => {
+const getFocalPoint = (visualElement: GQLImageElement): object | undefined => {
   if (visualElement.focalX && visualElement.focalY) {
     return { x: visualElement.focalX, y: visualElement.focalY };
   }
   return undefined;
 };
 
-const getCrop = (visualElement: ImageType): object | undefined => {
+const getCrop = (visualElement: GQLImageElement): object | undefined => {
   if (
     (visualElement.lowerRightX &&
       visualElement.lowerRightY &&
@@ -36,7 +36,7 @@ const getCrop = (visualElement: ImageType): object | undefined => {
 };
 
 interface Props {
-  visualElement: VisualElementType;
+  visualElement: GQLVisualElement;
 }
 
 const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
@@ -66,8 +66,8 @@ const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
         allowFullScreen={true}
         frameBorder="0"
         height={400}
-        src={visualElement.url!}
-        title={visualElement.h5p.title}
+        src={visualElement.url}
+        title={visualElement.title}
         width={600}
       />
     );
