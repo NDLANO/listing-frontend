@@ -7,7 +7,6 @@
  */
 
 import React, { Fragment, useEffect, useState } from 'react';
-import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
 import { Remarkable } from 'remarkable';
@@ -20,6 +19,7 @@ import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
+import styled from '@emotion/styled';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Button from '@ndla/button';
 import Tabs from '@ndla/tabs';
@@ -54,6 +54,13 @@ const getTabImages = concept => {
   }
   return images;
 };
+
+const VisualElementWrapper = styled.div`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
   const { t } = useTranslation();
@@ -153,17 +160,13 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
     </Modal>
   );
 
-  const StyledVisualElementContainer = styled.div`
-    flex-grow: 1;
-  `;
-
   const conceptBody = (
     <>
       <NotionDialogContent>
         {concept.visualElement ? (
-          <StyledVisualElementContainer>
+          <VisualElementWrapper>
             <VisualElement visualElement={concept.visualElement} />
-          </StyledVisualElementContainer>
+          </VisualElementWrapper>
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
