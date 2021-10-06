@@ -19,7 +19,8 @@
     "format": "node prettier.js write",
     "format-check": "node prettier.js lint",
     "check-all": "yarn format-check && yarn lint && yarn test",
-    "get-gql-schema-local": "apollo schema:download --endpoint=http://localhost:4000/graphql-api/graphql src/gqlSchema.json"
+    "get-gql-schema-local": "apollo schema:download --endpoint=http://localhost:4000/graphql-api/graphql src/gqlSchema.json",
+    "generate-gql-types": "graphql-codegen --config codegen.yml"
   },
   "jest": {
     "testRegex": "/__tests__/.*-test.(js|jsx)$",
@@ -38,6 +39,9 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
+    "@graphql-codegen/cli": "2.2.0",
+    "@graphql-codegen/typescript": "2.2.2",
+    "@graphql-codegen/typescript-operations": "2.1.4",
     "@ndla/scripts": "0.7.8",
     "@types/jest": "^26.0.15",
     "@types/node": "^14.14.10",

@@ -40,7 +40,8 @@ import ConceptPage from '../../components/Concept/ConceptPage';
 import Footer from '../../components/Footer';
 import CopyTextButton from '../../components/CopyTextButton';
 import config from '../../config';
-import { Location, Filter, Concept, ListItem, Subject } from '../../interfaces';
+import { Location, Filter, ListItem } from '../../interfaces';
+import { GQLConcept, GQLSubject } from '../../graphqlTypes';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
@@ -142,8 +143,8 @@ interface Props {
   filterListOpen: boolean;
   setFilterListOpen: (value: boolean) => void;
   totalCount: number;
-  concepts: Concept[];
-  subjects: Subject[];
+  concepts: GQLConcept[];
+  subjects: GQLSubject[];
   filters: Map<string, Filter>;
   selectedSubjects: string[];
   selectedFilters: string[];
