@@ -150,6 +150,34 @@ const phrases = {
       sharing: 'Sharing arena',
     },
   },
+  languages: {
+    nb: 'Norwegian bokmål',
+    nn: 'Norwegian nynorsk',
+    en: 'English',
+    fr: 'French',
+    de: 'German',
+    se: 'Sami',
+    es: 'Spanish',
+    zh: 'Chinese',
+    unknown: 'Unknown',
+    prefixChangeLanguage: 'Choose language',
+  },
+  changeLanguage: {
+    nb: 'Endre språk til bokmål',
+    nn: 'Endre språk til nynorsk',
+    en: 'Change language to English',
+  },
+  currentLanguageText: {
+    nb: 'Sidene vises på bokmål',
+    nn: 'Sidene vises på nynorsk',
+    en:
+      'Not all pages are available in English. These will be shown in Norwegian',
+  },
+  masthead: {
+    menu: {
+      close: 'Close',
+    },
+  },
   createdBy: {
     concept: {
       content: 'The concept',
