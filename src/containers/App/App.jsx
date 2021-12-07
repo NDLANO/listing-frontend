@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { useApolloClient } from '@apollo/client';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
+import { Matomo } from '../../components/Matomo';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { initializeI18n } from '../../i18n2';
 
@@ -84,6 +85,7 @@ const App = () => {
           <Route component={NotFoundPage} />
         </Switch>
       </StyledPageWrapper>
+      <Matomo />
     </PageContainer>
   );
 };
