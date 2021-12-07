@@ -49,6 +49,17 @@ const ndlaFrontendDomain = () => {
   }
 };
 
+export const matomoDomain = () => {
+  switch (ndlaEnvironment) {
+    case 'dev':
+      return 'https://analytics.test.ndla.no/';
+    case 'prod':
+      return 'https://analytics.ndla.no/';
+    default:
+      return `https://analytics.${ndlaEnvironment}.ndla.no/`;
+  }
+};
+
 const config = Object.assign(
   {
     host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
@@ -61,6 +72,8 @@ const config = Object.assign(
       process.env.NDLA_LISTING_URL || ndlaListingFrontendDomain(),
     ndlaFrontendDomain: process.env.NDLA_FRONTEND_URL || ndlaFrontendDomain(),
     localGraphQLApi: process.env.LOCAL_GRAPHQL_API || false,
+    matomoUrl: process.env.MATOMO_URL || matomoDomain(),
+    matomoSiteId: process.env.MATOMO_SITE_ID || undefined,
   },
   environment,
 );
