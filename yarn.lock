@@ -2148,14 +2148,14 @@
     "@ndla/util" "^2.0.0"
     raven-js "^3.22.3"
 
-"@ndla/forms@^1.0.30":
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/@ndla/forms/-/forms-1.0.30.tgz#758e6595e1f1f70ad64b3f2fcb6b448eacc4569f"
-  integrity sha512-SA2/8IYcbQipsG1VZLoR/iuxWavVlpmMzwrXcK0z6gEu8LXttKGtFOlqhr+Na084Atx52aQmMpymTAoi2MKOWw==
+"@ndla/forms@^1.0.31":
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/@ndla/forms/-/forms-1.0.31.tgz#92451e0c8d3dad0bf900afa47cf73de03c904cf7"
+  integrity sha512-I0DD2cJfWz2KaPUjS5GXtm/qquFCq6+pZFhgLNB+Sv/xj12EV5dqW9bLkZKF9AXA5e+XnpVhXelxwtqytJbeyA==
   dependencies:
     "@ndla/core" "^0.7.2"
     "@ndla/icons" "^1.3.1"
-    "@ndla/ui" "^3.0.12"
+    "@ndla/ui" "^3.0.13"
 
 "@ndla/hooks@^1.0.6":
   version "1.0.6"
@@ -2180,14 +2180,14 @@
     defined "1.0.0"
     react-bem-helper "1.4.1"
 
-"@ndla/listview@^1.0.30":
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/@ndla/listview/-/listview-1.0.30.tgz#f7e25e208aa6612effd513a8be733987c0aacb8c"
-  integrity sha512-0sShsS5HmarYPYVRkIXrVLJr3E3Ho7CDblmcCu8k6pyymyyWc0/YuGmhGUSNuTYC3s6jHWtMMpTT3h/3iDht1w==
+"@ndla/listview@^1.0.31":
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/@ndla/listview/-/listview-1.0.31.tgz#1097be4519aa6039c79a899970c0924009c0baa5"
+  integrity sha512-47JAuF09JPyqtq9FsONubUxSz5yX/sOV2ZUNc2qMgytcfmRSAY1FCZwyckiG/5PkbHAfrzphaGd0jR8N6B4u9Q==
   dependencies:
     "@ndla/core" "^0.7.2"
     "@ndla/icons" "^1.3.1"
-    "@ndla/ui" "^3.0.12"
+    "@ndla/ui" "^3.0.13"
 
 "@ndla/modal@^1.1.11":
   version "1.1.11"
@@ -2258,10 +2258,17 @@
   dependencies:
     "@ndla/core" "^0.7.2"
 
-"@ndla/ui@^3.0.12":
-  version "3.0.12"
-  resolved "https://registry.yarnpkg.com/@ndla/ui/-/ui-3.0.12.tgz#390c847b732744ca58ea2d83cdfe493227949254"
-  integrity sha512-8aXt0syMD2SUYoWg//ZFYSuHVKbsRFd2mgbFJ+WM/7Xu5P+vqJ8hg7DROYVwm70Oz6wMknQ0ZhDqcXS2ptuHOA==
+"@ndla/tracker@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@ndla/tracker/-/tracker-0.5.0.tgz#0b7d0453108f649bcb40f517e1c18f6c96e569e5"
+  integrity sha512-I8Q5U6DipL8+EHj7j1rZwPTTNh59oT92fLnp1DtYG1Dh4BcWQNUiD8WuIzQgVuhD/K+47ybgL3paQQTL1uvvjQ==
+  dependencies:
+    warning "^4.0.3"
+
+"@ndla/ui@^3.0.13":
+  version "3.0.13"
+  resolved "https://registry.yarnpkg.com/@ndla/ui/-/ui-3.0.13.tgz#c2bb7ad3909fba196117ec74f80ebacf16b37bc4"
+  integrity sha512-9LKLf+63WMg0PolVfUZLoV0f2aZy6x7I8oPrUQaTh/1nMUQqPnige2UNwFqzOAa/zhrOa2SeviKDHM6fTZw5bQ==
   dependencies:
     "@ndla/button" "^1.0.6"
     "@ndla/carousel" "^1.0.6"
