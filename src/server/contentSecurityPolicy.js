@@ -5,6 +5,7 @@ const scriptSrc = (() => {
     "'self'",
     "'unsafe-inline'",
     " 'unsafe-eval'",
+    'http://api-gateway.ndla-local',
     'https://*.ndla.no',
     'https://players.brightcove.net',
     'http://players.brightcove.net',
@@ -56,6 +57,7 @@ const connectSrc = (() => {
   const defaultConnectSrc = [
     " 'self' ",
     'https://*.ndla.no',
+    'http://api-gateway.ndla-local',
     'https://logs-01.loggly.com',
     'https://edge.api.brightcove.com',
     'https://secure.brightcove.com',
