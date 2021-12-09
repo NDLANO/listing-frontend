@@ -53,6 +53,7 @@ const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
   } else if (visualElement.brightcove) {
     return (
       <iframe
+        allowFullScreen={true}
         frameBorder="0"
         height={400}
         src={visualElement.brightcove.iframe?.src}
