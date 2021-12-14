@@ -124,7 +124,7 @@ export const detailedConceptQuery = gql`
           license
         }
         origin
-        authors: creators {
+        creators {
           name
           type
         }
