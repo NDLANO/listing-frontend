@@ -1,5 +1,12 @@
 import React from 'react';
+import styled from '@emotion/styled';
+import {
+  colors,
+  spacing,
+  fonts,
+} from '@ndla/core';
 import Image from '@ndla/ui/lib/Image';
+import { getLicenseByAbbreviation, LicenseByline } from '@ndla/licenses';
 import { GQLVisualElement, GQLImageElement } from '../../graphqlTypes';
 
 export const getIframeSrcFromHtmlString = (
@@ -35,20 +42,66 @@ const getCrop = (visualElement: GQLImageElement): object | undefined => {
   return undefined;
 };
 
+const LicensesWrapper = styled.div`
+  border-top: 1px solid ${colors.brand.tertiary};
+  padding-top: ${spacing.small};
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: aboslute;
+  left: ${spacing.xsmall};
+  width: 100%;
+  > span {
+    margin-right: ${spacing.xsmall};
+    color: ${colors.text.light};
+    ${fonts.sizes('14px', 1.1)};
+    padding-bottom: ${spacing.xsmall};
+    font-family: ${fonts.serif};
+    padding-bottom: 3px;
+    padding-top: 3px;
+    margin-top: -4px;
+    &:not(:last-child) {
+      padding-right: ${spacing.xsmall};
+      border-right: 1px solid ${colors.brand.greyLight};
+    }
+  }
+`;
+
 interface Props {
   visualElement: GQLVisualElement;
+  language: string;
 }
 
-const VisualElement = ({ visualElement }: Props): JSX.Element | null => {
+const VisualElement = ({
+  visualElement,
+  language,
+}: Props): JSX.Element | null => {
   if (visualElement.image) {
+    const { rights } = getLicenseByAbbreviation(
+      visualElement.copyright?.license?.license || '',
+      'nb',
+    );
+    const authors = visualElement.copyright?.rightsholders || [];
     return (
-      <Image
-        alt={visualElement.image.altText}
-        contentType={visualElement.image.contentType}
-        crop={getCrop(visualElement.image)}
-        focalPoint={getFocalPoint(visualElement.image)}
-        src={visualElement.image.src}
-      />
+      <>
+        <Image
+          alt={visualElement.image.altText}
+          contentType={visualElement.image.contentType}
+          crop={getCrop(visualElement.image)}
+          focalPoint={getFocalPoint(visualElement.image)}
+          src={visualElement.image.src}
+        />
+        <LicensesWrapper>
+          <LicenseByline
+            locale={language}
+            color="#fff"
+            licenseRights={rights}
+          />
+          {authors.map(author => (
+            <span>{author.name}</span>
+          ))}
+        </LicensesWrapper>
+      </>
     );
   } else if (visualElement.brightcove) {
     return (

@@ -165,7 +165,10 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
       <NotionDialogContent>
         {concept.visualElement ? (
           <VisualElementWrapper>
-            <VisualElement visualElement={concept.visualElement} />
+            <VisualElement
+              visualElement={concept.visualElement}
+              language={language}
+            />
           </VisualElementWrapper>
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
