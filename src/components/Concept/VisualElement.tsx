@@ -1,10 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import {
-  colors,
-  spacing,
-  fonts,
-} from '@ndla/core';
+import { colors, spacing, fonts } from '@ndla/core';
 import Image from '@ndla/ui/lib/Image';
 import { getLicenseByAbbreviation, LicenseByline } from '@ndla/licenses';
 import { GQLVisualElement, GQLImageElement } from '../../graphqlTypes';
