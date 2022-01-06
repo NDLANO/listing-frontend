@@ -77,7 +77,10 @@ const VisualElement = ({
       visualElement.copyright?.license?.license || '',
       'nb',
     );
-    const authors = visualElement.copyright?.rightsholders || [];
+    const authors =
+      visualElement.copyright?.creators ||
+      visualElement.copyright?.rightsholders ||
+      [];
     return (
       <>
         <Image
