@@ -17,7 +17,7 @@ const imageLicenseFragment = gql`
       license {
         license
       }
-      authors: creators {
+      creators {
         name
         type
       }

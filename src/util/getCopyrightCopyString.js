@@ -15,12 +15,12 @@ export const getCopyrightCopyString = (copyright, t) => {
   const license = copyright.license.license;
   let creatorsCopyString;
 
-  if (copyright?.authors?.length) {
-    creatorsCopyString = copyright.authors
+  if (copyright?.creators?.length) {
+    creatorsCopyString = copyright.creators
       ?.map(author => creatorCopyString(author, t))
       .join('\n');
   } else {
-    creatorsCopyString = copyright.creators
+    creatorsCopyString = copyright.rightsholders
       ?.map(creator => creatorCopyString(creator, t))
       .join('\n');
   }
