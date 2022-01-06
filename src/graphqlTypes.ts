@@ -1073,7 +1073,7 @@ export type GQLImageLicenseInfoFragment = {
   copyright: {
     __typename?: 'Copyright';
     license?: Maybe<{ __typename?: 'License'; license: string }>;
-    authors?: Maybe<
+    creators?: Maybe<
       Array<{ __typename?: 'Contributor'; name: string; type: string }>
     >;
     rightsholders?: Maybe<Array<{ __typename?: 'Contributor'; name: string }>>;
@@ -1175,7 +1175,7 @@ export type GQLDetailedConceptQuery = {
       __typename?: 'Copyright';
       origin?: Maybe<string>;
       license?: Maybe<{ __typename?: 'License'; license: string }>;
-      authors?: Maybe<
+      creators?: Maybe<
         Array<{ __typename?: 'Contributor'; name: string; type: string }>
       >;
     }>;

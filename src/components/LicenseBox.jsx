@@ -35,10 +35,10 @@ const getLicenseItems = (entity, t) => {
       metaType: metaTypes.title,
     });
 
-  entity.copyright?.authors?.length &&
+  entity.copyright?.creators?.length &&
     licenseItems.push({
       label: t('license.originator'),
-      description: entity.copyright.authors
+      description: entity.copyright.creators
         .map(author => author.name)
         .toString(),
       metaType: metaTypes.author,
