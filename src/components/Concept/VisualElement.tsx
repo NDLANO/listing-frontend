@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { colors, spacing, fonts } from '@ndla/core';
-import Image from '@ndla/ui/lib/Image';
+//@ts-ignore
+import { Image, ImageLink } from '@ndla/ui';
 import { getLicenseByAbbreviation, LicenseByline } from '@ndla/licenses';
 import { GQLVisualElement, GQLImageElement } from '../../graphqlTypes';
 
@@ -81,15 +82,18 @@ const VisualElement = ({
       visualElement.copyright?.creators ||
       visualElement.copyright?.rightsholders ||
       [];
+    const crop = getCrop(visualElement.image);
     return (
       <>
-        <Image
-          alt={visualElement.image.altText}
-          contentType={visualElement.image.contentType}
-          crop={getCrop(visualElement.image)}
-          focalPoint={getFocalPoint(visualElement.image)}
-          src={visualElement.image.src}
-        />
+        <ImageLink src={visualElement.image.src} crop={crop}>
+          <Image
+            alt={visualElement.image.altText}
+            contentType={visualElement.image.contentType}
+            crop={crop}
+            focalPoint={getFocalPoint(visualElement.image)}
+            src={visualElement.image.src}
+          />
+        </ImageLink>
         <LicensesWrapper>
           <LicenseByline
             locale={language}
