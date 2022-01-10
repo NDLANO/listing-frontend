@@ -7,7 +7,6 @@
  */
 import React from 'react';
 import { useQuery } from '@apollo/client';
-// @ts-ignore
 import { Spinner } from '@ndla/ui';
 import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';

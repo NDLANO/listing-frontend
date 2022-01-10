@@ -15,18 +15,14 @@ import Downshift, {
 import styled from '@emotion/styled';
 import { css, SerializedStyles } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
-// @ts-ignore
 import ListView from '@ndla/listview';
 import {
-  // @ts-ignore
   OneColumn,
   // @ts-ignore
   FilterListPhone,
   LanguageSelector,
-  // @ts-ignore
   MastheadItem,
   CreatedBy,
-  // @ts-ignore
   Spinner,
 } from '@ndla/ui';
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
