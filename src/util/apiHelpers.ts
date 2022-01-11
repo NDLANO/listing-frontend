@@ -59,7 +59,7 @@ export function apiResourceUrl(path: string) {
 export function createErrorPayload(
   status: number,
   message: string,
-  json: object,
+  json: Record<string, any>,
 ) {
   return Object.assign(new Error(message), { status, json });
 }

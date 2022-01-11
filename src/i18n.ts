@@ -27,7 +27,7 @@ const EN: LocaleObject = {
 };
 
 export const appLocales = [NB, NN, EN];
-export const preferdLocales = [NB, NN, EN];
+export const preferredLocales = [NB, NN, EN];
 
 // As of now only NB and NN is required, use one of the above if the requirement changes in the future
 export const languageSelectorLocales = [NB, NN];
