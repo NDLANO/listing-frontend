@@ -8,6 +8,7 @@
 import React, { ChangeEvent, useState } from 'react';
 import Helmet from 'react-helmet';
 import { Remarkable } from 'remarkable';
+import { Location } from 'history';
 import Downshift, {
   StateChangeOptions,
   ControllerStateAndHelpers,
@@ -36,7 +37,7 @@ import ConceptPage from '../../components/Concept/ConceptPage';
 import Footer from '../../components/Footer';
 import CopyTextButton from '../../components/CopyTextButton';
 import config from '../../config';
-import { Location, Filter, ListItem } from '../../interfaces';
+import { Filter, ListItem } from '../../interfaces';
 import { GQLConcept, GQLSubject } from '../../graphqlTypes';
 
 const SubjectFilterWrapper = styled.div`

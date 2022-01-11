@@ -15,17 +15,17 @@ import { ApolloProvider, useApolloClient } from '@apollo/client';
 import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
 
-import { initializeI18n } from './i18n2';
+import { initializeI18n, isValidLocale, supportedLanguages } from './i18n';
 import { createApolloClient } from './util/apiHelpers';
-import { isValidLocale } from './i18n';
 import App from './containers/App/App';
 
 const paths = window.location.pathname.split('/');
-const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
+const basename = paths[1] && isValidLocale(paths[1]) ? `${paths[1]}` : '';
 
 const storedLanguage = window.localStorage.getItem('language');
 if (
   basename === '' &&
+  storedLanguage &&
   isValidLocale(storedLanguage) &&
   storedLanguage !== 'nb'
 ) {
@@ -50,7 +50,6 @@ const LanguageWrapper = () => {
       firstRender.current = false;
       return;
     }
-    const supportedLanguages = i18n.options.supportedLngs;
     const regex = new RegExp(supportedLanguages.map(l => `/${l}/`).join('|'));
     const paths = window.location.pathname.replace(regex, '').split('/');
     const { search } = window.location;

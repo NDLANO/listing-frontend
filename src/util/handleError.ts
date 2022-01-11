@@ -11,7 +11,10 @@ import ErrorReporter from '@ndla/error-reporter';
 const log =
   process.env.BUILD_TARGET === 'server' ? require('./logger') : undefined;
 
-const handleError = (error, info) => {
+const handleError = (
+  error: string | object,
+  info?: string | object | string[] | object[],
+) => {
   if (
     process.env.NODE_ENV === 'production' &&
     process.env.BUILD_TARGET === 'client'

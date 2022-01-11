@@ -6,6 +6,7 @@
  *
  */
 
+export type LocaleType = 'nb' | 'nn' | 'en';
 export interface Location {
   search: string;
   pathname: string;
@@ -47,14 +48,16 @@ export interface Filter {
   sub: string[];
 }
 
+interface Category {
+  title?: string;
+  value?: string;
+}
+
 export interface ListItem {
-  id: string;
+  id?: string;
   name: string;
   description: string;
-  category: {
-    title: string;
-    value: string;
-  };
+  category?: Category | Category[];
   filters: string[];
   image?: string;
   subjectIds?: string[];

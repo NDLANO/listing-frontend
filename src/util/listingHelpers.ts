@@ -6,11 +6,13 @@
  *
  */
 
-export function filterTags(tags) {
+import { GQLConcept } from '../graphqlTypes';
+
+export function filterTags(tags: string[]) {
   return tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
 }
 
-export function mapTagsToFilters(tags) {
+export function mapTagsToFilters(tags: string[]) {
   const fitleredTags = filterTags(tags);
   const filters = new Map();
   fitleredTags.forEach(tag => {
@@ -32,33 +34,24 @@ export function mapTagsToFilters(tags) {
   return filters;
 }
 
-function mapTagsToList(tags) {
-  const list = [];
-  tags.forEach(tag => {
-    tag.split(':').forEach(filter => list.push(filter));
-  });
-  return list;
-}
-
-export function mapConceptToListItem(concept) {
+export function mapConceptToListItem(concept: GQLConcept) {
   return {
-    id: concept.id.toString(),
-    name: concept.title,
-    description: concept.content,
+    id: concept?.id?.toString(),
+    name: concept.title ?? '',
+    description: concept.content ?? '',
     image: concept.metaImage?.url
       ? `${concept.metaImage.url}?width=200`
       : undefined,
-    subjectIds: concept.subjectIds,
     category: {
       title: '',
       value: '',
     },
-    filters: concept.tags ? mapTagsToList(concept.tags) : [],
+    filters: concept.tags?.flatMap(tag => tag.split(':')) ?? [],
   };
 }
 
-export const getTagsParameter = (tags, filters) => {
-  return filters.length
+export const getTagsParameter = (tags: string[], filters?: string[]) => {
+  return filters?.length
     ? tags
         .filter(tag => {
           const splitTag = tag.split(':');
@@ -71,12 +64,12 @@ export const getTagsParameter = (tags, filters) => {
     : undefined;
 };
 
-export const isListeParamUrl = url =>
+export const isListeParamUrl = (url: string) =>
   /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/(nn\/|nb\/)?\?concept=\d+$/.test(
     url,
   );
 
-export const isListePathUrl = url =>
+export const isListePathUrl = (url: string) =>
   /^(https:\/\/)?liste(\.test|\.staging)?\.ndla\.no\/(nn\/|nb\/)?concepts\/\d+$/.test(
     url,
   );

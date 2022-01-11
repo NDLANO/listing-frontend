@@ -6,6 +6,42 @@ import { createApolloLinks } from './util/apiHelpers';
 import nb from './phrases/phrases-nb';
 import nn from './phrases/phrases-nn';
 import en from './phrases/phrases-en';
+import { LocaleType } from './interfaces';
+
+type LocaleObject = {
+  name: string;
+  abbreviation: LocaleType;
+};
+
+const NB: LocaleObject = {
+  name: 'Bokmål',
+  abbreviation: 'nb',
+};
+const NN: LocaleObject = {
+  name: 'Nynorsk',
+  abbreviation: 'nn',
+};
+const EN: LocaleObject = {
+  name: 'English',
+  abbreviation: 'en',
+};
+
+export const appLocales = [NB, NN, EN];
+export const preferdLocales = [NB, NN, EN];
+
+// As of now only NB and NN is required, use one of the above if the requirement changes in the future
+export const languageSelectorLocales = [NB, NN];
+
+export const getLocaleObject = (localeAbbreviation: string) => {
+  const locale = appLocales.find(l => l.abbreviation === localeAbbreviation);
+
+  return locale || NB; // defaults to NB
+};
+
+export const isValidLocale = (localeAbbreviation: string) =>
+  appLocales.find(l => l.abbreviation === localeAbbreviation) !== undefined;
+
+export const supportedLanguages = ['nb', 'nn'];
 
 export const initializeI18n = (
   i18n: i18n,
