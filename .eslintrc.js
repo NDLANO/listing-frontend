@@ -19,7 +19,6 @@ module.exports = {
             explicitSpread: 'enforce',
           },
         ],
-        '@typescript-eslint/explicit-function-return-type': 2,
         '@typescript-eslint/no-angle-bracket-type-assertion': 0,
       },
     },

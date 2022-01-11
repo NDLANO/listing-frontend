@@ -10,7 +10,12 @@
 import '../../style/index.css';
 
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import {
+  Route,
+  RouteComponentProps,
+  Switch,
+  useHistory,
+} from 'react-router-dom';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import { PageContainer, Spinner } from '@ndla/ui';
@@ -52,17 +57,18 @@ const App = () => {
           <Route
             exact
             path="/"
-            component={routeProps => (
-              <ListingPage
-                locale={i18n.language}
-                location={routeProps.location}
-                isOembed={false}
-              />
+            component={(routeProps: RouteComponentProps) => (
+              <ListingPage location={routeProps.location} isOembed={false} />
             )}
           />
           <Route
             path="/concepts/:conceptId/:selectedLanguage?"
-            component={routeProps => (
+            component={(
+              routeProps: RouteComponentProps<{
+                conceptId: string;
+                selectedLanguage: string;
+              }>,
+            ) => (
               <ConceptPage
                 conceptId={routeProps.match.params.conceptId}
                 inModal={false}
@@ -74,12 +80,8 @@ const App = () => {
           />
           <Route
             path="/listing"
-            component={routeProps => (
-              <ListingPage
-                isOembed={true}
-                locale={i18n.language}
-                location={routeProps.location}
-              />
+            component={(routeProps: RouteComponentProps) => (
+              <ListingPage isOembed={true} location={routeProps.location} />
             )}
           />
           <Route component={NotFoundPage} />
