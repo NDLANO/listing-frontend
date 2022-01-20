@@ -1,7 +1,11 @@
 export type Maybe<T> = T;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -51,7 +55,6 @@ export type GQLArticle = {
   updated: Scalars['String'];
   visualElement?: Maybe<GQLVisualElement>;
 };
-
 
 export type GQLArticleCrossSubjectTopicsArgs = {
   filterIds?: Maybe<Scalars['String']>;
@@ -597,7 +600,6 @@ export type GQLQuery = {
   topics?: Maybe<Array<GQLTopic>>;
 };
 
-
 export type GQLQueryArticleArgs = {
   filterIds?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -607,19 +609,16 @@ export type GQLQueryArticleArgs = {
   subjectId?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQueryCompetenceGoalArgs = {
   code: Scalars['String'];
   language?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLQueryCompetenceGoalsArgs = {
   codes?: Maybe<Array<Maybe<Scalars['String']>>>;
   language?: Maybe<Scalars['String']>;
   nodeId?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLQueryConceptSearchArgs = {
   exactMatch?: Maybe<Scalars['Boolean']>;
@@ -632,33 +631,27 @@ export type GQLQueryConceptSearchArgs = {
   tags?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQueryConceptsArgs = {
   ids?: Maybe<Array<Scalars['String']>>;
 };
-
 
 export type GQLQueryCoreElementArgs = {
   code: Scalars['String'];
   language?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQueryCoreElementsArgs = {
   codes?: Maybe<Array<Maybe<Scalars['String']>>>;
   language?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQueryDetailedConceptArgs = {
   id?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQueryFrontpageSearchArgs = {
   query?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLQueryGroupSearchArgs = {
   aggregatePaths?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -674,35 +667,29 @@ export type GQLQueryGroupSearchArgs = {
   subjects?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQueryLearningpathArgs = {
   pathId: Scalars['String'];
 };
-
 
 export type GQLQueryLearningpathStepArgs = {
   pathId: Scalars['String'];
   stepId: Scalars['String'];
 };
 
-
 export type GQLQueryPodcastArgs = {
   id?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLQueryPodcastSearchArgs = {
   page?: Maybe<Scalars['String']>;
   pageSize?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQueryResourceArgs = {
   id: Scalars['String'];
   subjectId?: Maybe<Scalars['String']>;
   topicId?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLQuerySearchArgs = {
   aggregatePaths?: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -723,7 +710,6 @@ export type GQLQuerySearchArgs = {
   subjects?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQuerySearchWithoutPaginationArgs = {
   contextFilters?: Maybe<Scalars['String']>;
   contextTypes?: Maybe<Scalars['String']>;
@@ -739,22 +725,18 @@ export type GQLQuerySearchWithoutPaginationArgs = {
   subjects?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLQuerySubjectArgs = {
   id: Scalars['String'];
 };
-
 
 export type GQLQuerySubjectpageArgs = {
   id: Scalars['String'];
 };
 
-
 export type GQLQueryTopicArgs = {
   id: Scalars['String'];
   subjectId?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLQueryTopicsArgs = {
   contentUri?: Maybe<Scalars['String']>;
@@ -794,7 +776,6 @@ export type GQLResource = GQLTaxonomyEntity & {
   resourceTypes?: Maybe<Array<GQLResourceType>>;
 };
 
-
 export type GQLResourceArticleArgs = {
   filterIds?: Maybe<Scalars['String']>;
   isOembed?: Maybe<Scalars['String']>;
@@ -807,7 +788,6 @@ export type GQLResourceType = {
   name: Scalars['String'];
   resources?: Maybe<Array<GQLResource>>;
 };
-
 
 export type GQLResourceTypeResourcesArgs = {
   topicId: Scalars['String'];
@@ -894,7 +874,6 @@ export type GQLSubject = {
   topics?: Maybe<Array<GQLTopic>>;
 };
 
-
 export type GQLSubjectTopicsArgs = {
   all?: Maybe<Scalars['Boolean']>;
   filterIds?: Maybe<Scalars['String']>;
@@ -927,21 +906,17 @@ export type GQLSubjectPage = {
   twitter?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLSubjectPageEditorsChoicesArgs = {
   subjectId?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLSubjectPageLatestContentArgs = {
   subjectId?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLSubjectPageMostReadArgs = {
   subjectId?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLSubjectPageTopicalArgs = {
   subjectId?: Maybe<Scalars['String']>;
@@ -1002,7 +977,6 @@ export type GQLTaxonomyEntity = {
   relevanceId?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLTaxonomyEntityArticleArgs = {
   filterIds?: Maybe<Scalars['String']>;
   subjectId?: Maybe<Scalars['String']>;
@@ -1045,24 +1019,20 @@ export type GQLTopic = GQLTaxonomyEntity & {
   supplementaryResources?: Maybe<Array<GQLResource>>;
 };
 
-
 export type GQLTopicArticleArgs = {
   filterIds?: Maybe<Scalars['String']>;
   showVisualElement?: Maybe<Scalars['String']>;
   subjectId?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLTopicCoreResourcesArgs = {
   filterIds?: Maybe<Scalars['String']>;
   subjectId?: Maybe<Scalars['String']>;
 };
 
-
 export type GQLTopicSubtopicsArgs = {
   filterIds?: Maybe<Scalars['String']>;
 };
-
 
 export type GQLTopicSupplementaryResourcesArgs = {
   filterIds?: Maybe<Scalars['String']>;
@@ -1095,17 +1065,42 @@ export type GQLEmbedVisualelement = {
   visualElement?: Maybe<GQLVisualElement>;
 };
 
-export type GQLImageLicenseInfoFragment = { __typename?: 'ImageLicense', title: string, src: string, altText: string, copyright: { __typename?: 'Copyright', license?: Maybe<{ __typename?: 'License', license: string }>, creators?: Maybe<Array<{ __typename?: 'Contributor', name: string, type: string }>>, rightsholders?: Maybe<Array<{ __typename?: 'Contributor', name: string, type: string }>> } };
+export type GQLImageLicenseInfoFragment = {
+  __typename?: 'ImageLicense';
+  title: string;
+  src: string;
+  altText: string;
+  copyright: {
+    __typename?: 'Copyright';
+    license?: Maybe<{ __typename?: 'License'; license: string }>;
+    creators?: Maybe<
+      Array<{ __typename?: 'Contributor'; name: string; type: string }>
+    >;
+    rightsholders?: Maybe<
+      Array<{ __typename?: 'Contributor'; name: string; type: string }>
+    >;
+  };
+};
 
-export type GQLSubjectInfoFragment = { __typename?: 'Subject', id: string, name: string, path: string };
+export type GQLSubjectInfoFragment = {
+  __typename?: 'Subject';
+  id: string;
+  name: string;
+  path: string;
+};
 
-export type GQLListingPageQueryVariables = Exact<{ [key: string]: never; }>;
+export type GQLListingPageQueryVariables = Exact<{ [key: string]: never }>;
 
-
-export type GQLListingPageQuery = { __typename?: 'Query', listingPage?: Maybe<{ __typename?: 'ListingPage', tags?: Maybe<Array<string>>, subjects?: Maybe<Array<(
-      { __typename?: 'Subject' }
-      & GQLSubjectInfoFragment
-    )>> }> };
+export type GQLListingPageQuery = {
+  __typename?: 'Query';
+  listingPage?: Maybe<{
+    __typename?: 'ListingPage';
+    tags?: Maybe<Array<string>>;
+    subjects?: Maybe<
+      Array<{ __typename?: 'Subject' } & GQLSubjectInfoFragment>
+    >;
+  }>;
+};
 
 export type GQLConceptSearchQueryVariables = Exact<{
   query?: Maybe<Scalars['String']>;
@@ -1118,31 +1113,135 @@ export type GQLConceptSearchQueryVariables = Exact<{
   language?: Maybe<Scalars['String']>;
 }>;
 
+export type GQLConceptSearchQuery = {
+  __typename?: 'Query';
+  conceptSearch?: Maybe<{
+    __typename?: 'ConceptResult';
+    totalCount?: Maybe<number>;
+    concepts?: Maybe<
+      Array<{
+        __typename?: 'Concept';
+        id?: Maybe<number>;
+        title?: Maybe<string>;
+        content?: Maybe<string>;
+        tags?: Maybe<Array<string>>;
+        metaImage?: Maybe<{
+          __typename?: 'MetaImage';
+          url?: Maybe<string>;
+          alt?: Maybe<string>;
+        }>;
+      }>
+    >;
+  }>;
+};
 
-export type GQLConceptSearchQuery = { __typename?: 'Query', conceptSearch?: Maybe<{ __typename?: 'ConceptResult', totalCount?: Maybe<number>, concepts?: Maybe<Array<{ __typename?: 'Concept', id?: Maybe<number>, title?: Maybe<string>, content?: Maybe<string>, tags?: Maybe<Array<string>>, metaImage?: Maybe<{ __typename?: 'MetaImage', url?: Maybe<string>, alt?: Maybe<string> }> }>> }> };
+export type GQLContributorInfoFragment = {
+  __typename?: 'Contributor';
+  name: string;
+  type: string;
+};
 
-export type GQLContributorInfoFragment = { __typename?: 'Contributor', name: string, type: string };
-
-export type GQLCopyrightInfoFragment = { __typename?: 'Copyright', origin?: Maybe<string>, license?: Maybe<{ __typename?: 'License', license: string, url?: Maybe<string> }>, creators?: Maybe<Array<(
-    { __typename?: 'Contributor' }
-    & GQLContributorInfoFragment
-  )>>, processors?: Maybe<Array<(
-    { __typename?: 'Contributor' }
-    & GQLContributorInfoFragment
-  )>>, rightsholders?: Maybe<Array<(
-    { __typename?: 'Contributor' }
-    & GQLContributorInfoFragment
-  )>> };
+export type GQLCopyrightInfoFragment = {
+  __typename?: 'Copyright';
+  origin?: Maybe<string>;
+  license?: Maybe<{
+    __typename?: 'License';
+    license: string;
+    url?: Maybe<string>;
+  }>;
+  creators?: Maybe<
+    Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
+  >;
+  processors?: Maybe<
+    Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
+  >;
+  rightsholders?: Maybe<
+    Array<{ __typename?: 'Contributor' } & GQLContributorInfoFragment>
+  >;
+};
 
 export type GQLDetailedConceptQueryVariables = Exact<{
   id?: Maybe<Scalars['String']>;
 }>;
 
-
-export type GQLDetailedConceptQuery = { __typename?: 'Query', detailedConcept?: Maybe<{ __typename?: 'DetailedConcept', title?: Maybe<string>, content?: Maybe<string>, created?: Maybe<string>, subjectIds?: Maybe<Array<string>>, subjectNames?: Maybe<Array<string>>, copyright?: Maybe<{ __typename?: 'Copyright', origin?: Maybe<string>, license?: Maybe<{ __typename?: 'License', license: string }>, creators?: Maybe<Array<{ __typename?: 'Contributor', name: string, type: string }>> }>, image?: Maybe<(
-      { __typename?: 'ImageLicense' }
-      & GQLImageLicenseInfoFragment
-    )>, articles?: Maybe<Array<{ __typename?: 'Meta', id: number, title: string }>>, visualElement?: Maybe<{ __typename?: 'VisualElement', title?: Maybe<string>, resource?: Maybe<string>, url?: Maybe<string>, language?: Maybe<string>, embed?: Maybe<string>, copyright?: Maybe<(
-        { __typename?: 'Copyright' }
-        & GQLCopyrightInfoFragment
-      )>, brightcove?: Maybe<{ __typename?: 'BrightcoveElement', videoid?: Maybe<string>, player?: Maybe<string>, account?: Maybe<string>, caption?: Maybe<string>, description?: Maybe<string>, cover?: Maybe<string>, src?: Maybe<string>, download?: Maybe<string>, uploadDate?: Maybe<string>, copyText?: Maybe<string>, iframe?: Maybe<{ __typename?: 'BrightcoveIframe', src: string, height: number, width: number }> }>, h5p?: Maybe<{ __typename?: 'H5pElement', src?: Maybe<string>, thumbnail?: Maybe<string>, copyText?: Maybe<string> }>, oembed?: Maybe<{ __typename?: 'VisualElementOembed', title?: Maybe<string>, html?: Maybe<string>, fullscreen?: Maybe<boolean> }>, image?: Maybe<{ __typename?: 'ImageElement', resourceid?: Maybe<string>, alt?: Maybe<string>, caption?: Maybe<string>, lowerRightX?: Maybe<number>, lowerRightY?: Maybe<number>, upperLeftX?: Maybe<number>, upperLeftY?: Maybe<number>, focalX?: Maybe<number>, focalY?: Maybe<number>, src: string, altText: string, contentType?: Maybe<string>, copyText?: Maybe<string> }> }> }> };
+export type GQLDetailedConceptQuery = {
+  __typename?: 'Query';
+  detailedConcept?: Maybe<{
+    __typename?: 'DetailedConcept';
+    title?: Maybe<string>;
+    content?: Maybe<string>;
+    created?: Maybe<string>;
+    subjectIds?: Maybe<Array<string>>;
+    subjectNames?: Maybe<Array<string>>;
+    copyright?: Maybe<{
+      __typename?: 'Copyright';
+      origin?: Maybe<string>;
+      license?: Maybe<{ __typename?: 'License'; license: string }>;
+      creators?: Maybe<
+        Array<{ __typename?: 'Contributor'; name: string; type: string }>
+      >;
+    }>;
+    image?: Maybe<
+      { __typename?: 'ImageLicense' } & GQLImageLicenseInfoFragment
+    >;
+    articles?: Maybe<Array<{ __typename?: 'Meta'; id: number; title: string }>>;
+    visualElement?: Maybe<{
+      __typename?: 'VisualElement';
+      title?: Maybe<string>;
+      resource?: Maybe<string>;
+      url?: Maybe<string>;
+      language?: Maybe<string>;
+      embed?: Maybe<string>;
+      copyright?: Maybe<
+        { __typename?: 'Copyright' } & GQLCopyrightInfoFragment
+      >;
+      brightcove?: Maybe<{
+        __typename?: 'BrightcoveElement';
+        videoid?: Maybe<string>;
+        player?: Maybe<string>;
+        account?: Maybe<string>;
+        caption?: Maybe<string>;
+        description?: Maybe<string>;
+        cover?: Maybe<string>;
+        src?: Maybe<string>;
+        download?: Maybe<string>;
+        uploadDate?: Maybe<string>;
+        copyText?: Maybe<string>;
+        iframe?: Maybe<{
+          __typename?: 'BrightcoveIframe';
+          src: string;
+          height: number;
+          width: number;
+        }>;
+      }>;
+      h5p?: Maybe<{
+        __typename?: 'H5pElement';
+        src?: Maybe<string>;
+        thumbnail?: Maybe<string>;
+        copyText?: Maybe<string>;
+      }>;
+      oembed?: Maybe<{
+        __typename?: 'VisualElementOembed';
+        title?: Maybe<string>;
+        html?: Maybe<string>;
+        fullscreen?: Maybe<boolean>;
+      }>;
+      image?: Maybe<{
+        __typename?: 'ImageElement';
+        resourceid?: Maybe<string>;
+        alt?: Maybe<string>;
+        caption?: Maybe<string>;
+        lowerRightX?: Maybe<number>;
+        lowerRightY?: Maybe<number>;
+        upperLeftX?: Maybe<number>;
+        upperLeftY?: Maybe<number>;
+        focalX?: Maybe<number>;
+        focalY?: Maybe<number>;
+        src: string;
+        altText: string;
+        contentType?: Maybe<string>;
+        copyText?: Maybe<string>;
+      }>;
+    }>;
+  }>;
+};
