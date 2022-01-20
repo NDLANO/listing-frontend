@@ -9,7 +9,6 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
-import defined from 'defined';
 import { ApolloProvider } from '@apollo/client';
 import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
@@ -92,7 +91,7 @@ export function defaultRoute(req, res) {
         { apolloState },
         component,
       );
-      const status = defined(context.status, 200);
+      const status = context.status ?? 200;
       res.status(status).send(`<!doctype html>\n${htmlString}`);
     } catch (error) {
       res.status(500).send(error.message);

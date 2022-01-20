@@ -6,12 +6,12 @@
  *
  */
 
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status';
 import config from '../../config';
 import { isListeParamUrl, isListePathUrl } from '../../util/listingHelpers';
 import handleError from '../../util/handleError';
 import { createApolloClient } from '../../util/apiHelpers';
 import { detailedConceptQuery } from '../../queries';
+import { httpStatus } from '../../constants';
 
 const getOembedObject = (req, title, html) => {
   return {
@@ -68,7 +68,7 @@ const oembedConceptRoute = async (req, url) => {
   const id = await getConceptId(url);
   if (!id) {
     return {
-      status: BAD_REQUEST,
+      status: httpStatus.badRequest,
       data: 'Bad request. Invalid url.',
     };
   }
@@ -78,7 +78,7 @@ const oembedConceptRoute = async (req, url) => {
     return getOembedObject(req, title, html);
   } catch (error) {
     handleError(error);
-    const status = error.status || INTERNAL_SERVER_ERROR;
+    const status = error.status || httpStatus.internalServerError;
     return {
       status,
       data: 'Internal server error',
@@ -113,7 +113,7 @@ export async function oembedRoute(req) {
 
   if (!url) {
     return {
-      status: BAD_REQUEST,
+      status: httpStatus.badRequest,
       data: 'Bad request. Missing url param.',
     };
   }
@@ -126,7 +126,7 @@ export async function oembedRoute(req) {
     return oembedSubjectsRoute(req, url);
   } else {
     return {
-      status: BAD_REQUEST,
+      status: httpStatus.badRequest,
       data: 'Bad request.',
     };
   }
