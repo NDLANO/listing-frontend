@@ -8,7 +8,7 @@
 
 import queryString from 'query-string';
 
-export const downloadUrl = imageSrc => {
+export const downloadUrl = (imageSrc: string) => {
   const urlObject = queryString.parseUrl(imageSrc);
   return `${urlObject.url}?${queryString.stringify({
     ...urlObject.query,

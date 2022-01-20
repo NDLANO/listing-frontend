@@ -8,9 +8,10 @@
 
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status';
 import config from '../../config';
-import { fetchConcept } from '../../api/concept/conceptApi';
 import { isListeParamUrl, isListePathUrl } from '../../util/listingHelpers';
 import handleError from '../../util/handleError';
+import { createApolloClient } from '../../util/apiHelpers';
+import { detailedConceptQuery } from '../../queries';
 
 const getOembedObject = (req, title, html) => {
   return {
@@ -26,8 +27,25 @@ const getOembedObject = (req, title, html) => {
   };
 };
 
+let apolloClient;
+
+const getApolloClient = () => {
+  if (apolloClient) {
+    return apolloClient;
+  } else {
+    apolloClient = createApolloClient();
+    return apolloClient;
+  }
+};
+
 const getConceptHTMLandTitle = async id => {
-  const concept = await fetchConcept(id);
+  const client = getApolloClient();
+  const concept = await client.query({
+    query: detailedConceptQuery,
+    variables: {
+      id,
+    },
+  });
   const title = concept.title?.title;
   return {
     title: title,

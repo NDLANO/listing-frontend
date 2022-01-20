@@ -6,9 +6,16 @@
  *
  */
 
+import { Location } from 'history';
 import { languageSelectorLocales } from '../i18n';
 
-const getLocaleURL = (newLocale, locale, location) => {
+type LocaleUrlsType = Record<string, { name: string; url: string }>;
+
+const getLocaleURL = (
+  newLocale: string,
+  locale: string,
+  location: Location,
+) => {
   const { pathname, search } = location;
   const basePath = pathname.startsWith(`/${locale}/`)
     ? pathname.replace(`/${locale}/`, '/')
@@ -18,8 +25,8 @@ const getLocaleURL = (newLocale, locale, location) => {
     : `/${newLocale}${basePath}${search}`;
 };
 
-export const getLocaleUrls = (locale, location) => {
-  const localeUrls = {};
+export const getLocaleUrls = (locale: string, location: Location) => {
+  const localeUrls: LocaleUrlsType = {};
   languageSelectorLocales.forEach(appLocale => {
     localeUrls[appLocale.abbreviation] = {
       name: appLocale.name,

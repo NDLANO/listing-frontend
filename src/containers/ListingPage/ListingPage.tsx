@@ -7,12 +7,12 @@
  */
 import React from 'react';
 import { useQuery } from '@apollo/client';
+import { Location } from 'history';
 import { Spinner } from '@ndla/ui';
 import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { listingPageQuery } from '../../queries';
-import { Location } from '../../interfaces';
 import { GQLListingPageQuery } from '../../graphqlTypes';
 
 interface Props {
