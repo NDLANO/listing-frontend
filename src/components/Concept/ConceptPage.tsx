@@ -7,7 +7,6 @@
  */
 
 import React, { Fragment, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
 import { Remarkable } from 'remarkable';
 import {
@@ -36,8 +35,11 @@ import VisualElement from './VisualElement';
 import PostResizeMessage from '../PostResizeMessage';
 import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
 import { detailedConceptQuery } from '../../queries';
+import { GQLDetailedConceptQuery } from '../../graphqlTypes';
+import { ListItem } from '../../interfaces';
 
-const getTabImages = concept => {
+const getTabImages = (concept: GQLDetailedConceptQuery['detailedConcept']) => {
+  if (!concept) return;
   const images = [];
   if (concept.image?.src?.length) {
     images.push(concept.image);
@@ -62,15 +64,25 @@ const VisualElementWrapper = styled.div`
   align-items: center;
 `;
 
-const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
-  const { t } = useTranslation();
-  const [markdown, setMarkdown] = useState(null);
+interface Props {
+  conceptId: string;
+  handleClose?: (item: ListItem | null) => void;
+  inModal?: boolean;
+  language: string;
+}
 
-  const { data, loading } = useQuery(detailedConceptQuery, {
-    variables: {
-      id: conceptId,
+const ConceptPage = ({ conceptId, handleClose, inModal, language }: Props) => {
+  const { t } = useTranslation();
+  const [markdown, setMarkdown] = useState<Remarkable | null>(null);
+
+  const { data, loading } = useQuery<GQLDetailedConceptQuery>(
+    detailedConceptQuery,
+    {
+      variables: {
+        id: conceptId,
+      },
     },
-  });
+  );
 
   useEffect(() => {
     if (markdown === null) {
@@ -81,14 +93,14 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
   }, [markdown]);
 
   if (loading) return <Spinner />;
-  if (!data) return <NotFoundPage />;
+  if (!data || !data.detailedConcept) return <NotFoundPage />;
 
-  const renderMarkdown = text => {
-    const rendered = markdown?.render(text);
+  const renderMarkdown = (text: string | undefined) => {
+    const rendered = markdown?.render(text ?? '') ?? '';
     return (
-      <Fragment>
+      <>
         <span dangerouslySetInnerHTML={{ __html: rendered }} />
-      </Fragment>
+      </>
     );
   };
 
@@ -105,13 +117,13 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
       concept.copyright.license.license !== 'unknown' &&
       tabs.push({
         title: t('license.tabs.text'),
-        content: <TextContent t={t} concept={concept} locale={language} />,
+        content: <TextContent concept={concept} locale={language} />,
       });
 
-    images.length &&
+    images?.length &&
       tabs.push({
         title: t('license.tabs.images'),
-        content: <ImageContent t={t} images={images} />,
+        content: <ImageContent images={images} />,
       });
 
     (concept.visualElement?.h5p || concept.visualElement?.brightcove) &&
@@ -122,16 +134,13 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
             concept.visualElement.resource === 'h5p' ? 'h5p' : 'video'
           }`,
         ),
-        content: (
-          <VisualElementContent t={t} visualElement={concept.visualElement} />
-        ),
+        content: <VisualElementContent visualElement={concept.visualElement} />,
       });
 
     tabs.push({
       title: t('license.tabs.embedlink'),
       content: (
         <OembedContent
-          t={t}
           oembed={`${config.ndlaListingFrontendDomain}/concepts/${conceptId}`}
         />
       ),
@@ -176,7 +185,7 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
       {concept.subjectNames?.length && (
         <NotionDialogTags tags={concept.subjectNames} />
       )}
-      {concept.articles?.length > 0 && (
+      {concept?.articles && concept.articles.length > 0 && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}
           links={concept.articles.map(article => ({
@@ -200,14 +209,14 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
     <OneColumn cssModifier={'iframe'}>
       {inModal ? (
         <NotionDialogWrapper
-          title={concept.title}
-          closeCallback={() => handleClose(null)}>
+          title={concept.title ?? ''}
+          closeCallback={() => handleClose?.(null)}>
           {conceptBody}
         </NotionDialogWrapper>
       ) : (
         <>
           <PostResizeMessage />
-          <NotionHeaderWithoutExitButton title={concept.title} />
+          <NotionHeaderWithoutExitButton title={concept.title ?? ''} />
           {conceptBody}
           <CreatedBy
             name={t('createdBy.concept.content')}
@@ -218,13 +227,6 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }) => {
       )}
     </OneColumn>
   );
-};
-
-ConceptPage.propTypes = {
-  conceptId: PropTypes.string.isRequired,
-  handleClose: PropTypes.func,
-  inModal: PropTypes.bool,
-  language: PropTypes.string.isRequired,
 };
 
 export default ConceptPage;
