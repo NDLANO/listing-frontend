@@ -265,12 +265,12 @@ export type GQLDetailedConcept = {
   content?: Maybe<Scalars['String']>;
   copyright?: Maybe<GQLCopyright>;
   created?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
   image?: Maybe<GQLImageLicense>;
   subjectIds?: Maybe<Array<Scalars['String']>>;
   subjectNames?: Maybe<Array<Scalars['String']>>;
   tags?: Maybe<Array<Scalars['String']>>;
-  title?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
   visualElement?: Maybe<GQLVisualElement>;
 };
 
@@ -674,6 +674,10 @@ export type GQLQueryLearningpathArgs = {
 export type GQLQueryLearningpathStepArgs = {
   pathId: Scalars['String'];
   stepId: Scalars['String'];
+};
+
+export type GQLQueryListingPageArgs = {
+  subjects?: Maybe<Scalars['String']>;
 };
 
 export type GQLQueryPodcastArgs = {
@@ -1087,7 +1091,9 @@ export type GQLSubjectInfoFragment = {
   path: string;
 };
 
-export type GQLListingPageQueryVariables = Exact<{ [key: string]: never }>;
+export type GQLListingPageQueryVariables = Exact<{
+  listingPageSubjects?: Maybe<Scalars['String']>;
+}>;
 
 export type GQLListingPageQuery = {
   __typename?: 'Query';
@@ -1166,7 +1172,7 @@ export type GQLDetailedConceptQuery = {
   __typename?: 'Query';
   detailedConcept?: Maybe<{
     __typename?: 'DetailedConcept';
-    title?: Maybe<string>;
+    title: string;
     content?: Maybe<string>;
     created?: Maybe<string>;
     subjectIds?: Maybe<Array<string>>;
