@@ -10,10 +10,10 @@ import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
 import bodyParser from 'body-parser';
-import { OK, MOVED_PERMANENTLY, TEMPORARY_REDIRECT } from 'http-status';
 import config from '../config';
 import contentSecurityPolicy from './contentSecurityPolicy';
 import handleError from '../util/handleError';
+import { httpStatus } from '../constants';
 
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
@@ -46,8 +46,11 @@ const ndlaMiddleware = [
   }),
 ];
 
-function sendResponse(res, data, status = OK) {
-  if (status === MOVED_PERMANENTLY || status === TEMPORARY_REDIRECT) {
+function sendResponse(res, data, status = httpStatus.ok) {
+  if (
+    status === httpStatus.movedPermanently ||
+    status === httpStatus.temporaryRedirect
+  ) {
     res.writeHead(status, data);
     res.end();
   } else if (res.getHeader('Content-Type') === 'application/json') {
@@ -78,7 +81,9 @@ app.get('/robots.txt', (req, res) => {
 });
 
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 200, text: 'Health check ok' });
+  res
+    .status(httpStatus.ok)
+    .json({ status: httpStatus.ok, text: 'Health check ok' });
 });
 
 app.get('/oembed', ndlaMiddleware, async (req, res) => {

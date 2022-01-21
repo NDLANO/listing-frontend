@@ -6,6 +6,32 @@
  *
  */
 
+declare global {
+  interface Window extends NDLAWindow {}
+}
+
+interface NDLAWindow {
+  config: ConfigType;
+  DATA: {
+    apolloState: {};
+  };
+}
+
+interface ConfigType {
+  host: string;
+  port: string;
+  redirectPort: string;
+  googleTagMangerId?: string;
+  disableSSR: string | boolean;
+  ndlaApiUrl: string;
+  ndlaApiKey?: string;
+  ndlaListingFrontendDomain: string;
+  ndlaFrontendDomain: string;
+  localGraphQLApi: string | boolean;
+  matomoUrl: string;
+  matomoSiteId?: string;
+}
+
 const environment = {
   development: {
     isProduction: false,
@@ -60,7 +86,7 @@ export const matomoDomain = () => {
   }
 };
 
-const config = Object.assign(
+const config: ConfigType = Object.assign(
   {
     host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
     port: process.env.NDLA_FRONTENTD_PORT || '3000',

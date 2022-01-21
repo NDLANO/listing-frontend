@@ -27,7 +27,7 @@ import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import { Matomo } from '../../components/Matomo';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import { initializeI18n } from '../../i18n2';
+import { initializeI18n } from '../../i18n';
 
 const StyledPageWrapper = styled.div`
   min-height: 100vh;

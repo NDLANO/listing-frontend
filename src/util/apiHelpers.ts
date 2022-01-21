@@ -6,19 +6,24 @@
  *
  */
 
-import defined from 'defined';
-import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import {
+  ApolloClient,
+  ApolloLink,
+  FieldFunctionOptions,
+  InMemoryCache,
+} from '@apollo/client';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
+import fetch from 'isomorphic-fetch';
 import handleError from './handleError';
 import config from '../config';
-import { default as createFetch } from './fetch';
-
-export const fetch = createFetch;
 
 const __CLIENT__ = process.env.BUILD_TARGET === 'client'; //eslint-disable-line
 
+declare global {
+  let __SERVER__: boolean;
+}
 const NDLA_API_URL = global.__SERVER__
   ? config.ndlaApiUrl
   : window.config.ndlaApiUrl;
@@ -47,28 +52,28 @@ const apiBaseUrl = (() => {
 
 export { apiBaseUrl };
 
-export function apiResourceUrl(path) {
+export function apiResourceUrl(path: string) {
   return apiBaseUrl + path;
 }
 
-export function createErrorPayload(status, message, json) {
+export function createErrorPayload(
+  status: number,
+  message: string,
+  json: Record<string, any>,
+) {
   return Object.assign(new Error(message), { status, json });
 }
 
-export function resolveJsonOrRejectWithError(res) {
+export function resolveJsonOrRejectWithError(res: Response) {
   return new Promise((resolve, reject) => {
     if (res.ok) {
-      return res.status === 204 ? resolve() : resolve(res.json());
+      return res.status === 204 ? resolve({}) : resolve(res.json());
     }
     res
       .json()
       .then(json => {
         reject(
-          createErrorPayload(
-            res.status,
-            defined(json.message, res.statusText),
-            json,
-          ),
+          createErrorPayload(res.status, json.message ?? res.statusText, json),
         );
       })
       .catch(reject);
@@ -82,19 +87,30 @@ const uri = (() => {
   return apiResourceUrl('/graphql-api/graphql');
 })();
 
-const initialConceptResult = {
+interface ConceptResult {
+  totalCount: number;
+  concepts: any[];
+  language: string;
+}
+
+const initialConceptResult: ConceptResult = {
   totalCount: 0,
   concepts: [],
   language: '',
 };
+
 const typePolicies = {
   Query: {
     fields: {
       conceptSearch: {
         keyArgs: ['query', 'subjects', 'tags'],
-        merge(existing = initialConceptResult, incoming, { args }) {
+        merge(
+          existing = initialConceptResult,
+          incoming: ConceptResult,
+          { args }: FieldFunctionOptions,
+        ) {
           return {
-            language: args.language,
+            language: args?.language,
             totalCount: incoming.totalCount,
             concepts: [...existing.concepts, ...incoming.concepts],
           };
@@ -118,7 +134,7 @@ export const createApolloClient = (language = 'nb') => {
   return client;
 };
 
-export const createApolloLinks = lang => {
+export const createApolloLinks = (lang: string) => {
   const headersLink = setContext(async (_, { headers }) => ({
     headers: {
       ...headers,
@@ -143,7 +159,7 @@ export const createApolloLinks = lang => {
     headersLink,
     new BatchHttpLink({
       uri,
-      fetch: createFetch,
+      fetch,
     }),
   ]);
 };

@@ -6,6 +6,7 @@
  *
  */
 import React, { useState, useEffect, useCallback } from 'react';
+import { Location } from 'history';
 import { useQuery } from '@apollo/client';
 
 import { useTranslation } from 'react-i18next';
@@ -13,11 +14,12 @@ import ListingView from './ListingView';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getTagsParameter } from '../../util/listingHelpers';
 import { conceptSearchQuery } from '../../queries';
-import { Location, Filter, ListItem } from '../../interfaces';
+import { Filter, ListItem } from '../../interfaces';
 import {
   GQLSubject,
   GQLConceptSearchQuery,
   GQLConceptSearchQueryVariables,
+  GQLConcept,
 } from '../../graphqlTypes';
 
 const PAGE_SIZE = 100;
@@ -30,6 +32,12 @@ interface Props {
   location: Location;
 }
 
+interface QueryParams {
+  subjects: string[];
+  filters: string[];
+  concept?: string;
+}
+
 const ListingContainer = ({
   isOembed,
   subjects,
@@ -39,7 +47,7 @@ const ListingContainer = ({
 }: Props): JSX.Element => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  const [queryParams, setQueryParams] = useQueryParameter({
+  const [queryParams, setQueryParams] = useQueryParameter<QueryParams>({
     subjects: [],
     filters: [],
     concept: undefined,
@@ -92,7 +100,7 @@ const ListingContainer = ({
     setFilterListOpen(false);
     setQueryParams({
       ...queryParams,
-      filters: [value],
+      filters: value ? [value] : [],
     });
   };
 
@@ -128,7 +136,7 @@ const ListingContainer = ({
       return filterKeys.includes(filter);
     };
 
-    const selectedFilter: string = queryParams.filters[0];
+    const selectedFilter = queryParams.filters[0];
     if (selectedFilter) {
       if (!filterNameExistsInFilters(selectedFilter)) {
         handleRemoveFilter();
@@ -137,7 +145,7 @@ const ListingContainer = ({
   }, [filters, handleRemoveFilter, queryParams.filters]);
 
   const totalCount = data?.conceptSearch?.totalCount;
-  const concepts = data?.conceptSearch?.concepts;
+  const concepts: GQLConcept[] | undefined = data?.conceptSearch?.concepts;
   const showLoadMore =
     concepts !== undefined && totalCount !== undefined
       ? concepts.length < totalCount
