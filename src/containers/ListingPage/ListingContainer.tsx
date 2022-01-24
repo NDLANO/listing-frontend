@@ -82,7 +82,7 @@ const ListingContainer = ({
     notifyOnNetworkStatusChange: true, // For spinner on load more
   });
 
-  const handleSelectItem = (value: ListItem): void => {
+  const handleSelectItem = (value: ListItem | null): void => {
     setQueryParams({
       ...queryParams,
       concept: value?.id,

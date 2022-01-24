@@ -145,7 +145,7 @@ interface Props {
   searchValue: string;
   setSearchValue: (value: string) => void;
   onLoadMoreClick: () => void;
-  handleSelectItem: (value: ListItem) => void;
+  handleSelectItem: (value: ListItem | null) => void;
   handleChangeListFilter: (
     selectedItem: string | null,
     stateAndHelpers: ControllerStateAndHelpers<string>,
@@ -430,7 +430,7 @@ const ListingView = ({
           )}
         </>
       </OneColumn>
-      {!isOembed && <Footer t={t} />}
+      {!isOembed && <Footer />}
     </>
   );
 };
