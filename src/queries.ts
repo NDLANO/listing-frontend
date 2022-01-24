@@ -23,6 +23,7 @@ const imageLicenseFragment = gql`
       }
       rightsholders {
         name
+        type
       }
     }
   }

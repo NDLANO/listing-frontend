@@ -7,28 +7,37 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { copyTextToClipboard } from '@ndla/util';
 import { Code } from '@ndla/icons/editor';
 import Button from '@ndla/button';
 
+interface Props {
+  stringToCopy: string;
+  copyTitle: string;
+  hasCopiedTitle: string;
+  timeout?: number;
+  ghostPill?: boolean;
+}
 const CopyTextButton = ({
   copyTitle,
   hasCopiedTitle,
   stringToCopy,
   timeout,
   ghostPill,
-}) => {
+}: Props) => {
   const [hasCopied, setHasCopied] = useState(false);
-  let buttonContainer = useRef(null);
-  let timer;
+  const buttonContainer = useRef<HTMLSpanElement | null>(null);
+  let timer: ReturnType<typeof setTimeout>;
 
   useEffect(() => {
     return () => clearTimeout(timer);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = () => {
-    const success = copyTextToClipboard(stringToCopy, buttonContainer);
+    const success = copyTextToClipboard(
+      stringToCopy,
+      buttonContainer.current ?? undefined,
+    );
 
     if (success) {
       setHasCopied(true);
@@ -41,10 +50,7 @@ const CopyTextButton = ({
   };
 
   return (
-    <span
-      ref={r => {
-        buttonContainer = r;
-      }}>
+    <span ref={buttonContainer}>
       <Button
         outline={!ghostPill}
         className={ghostPill ? '' : 'c-licenseToggle__button'}
@@ -55,14 +61,6 @@ const CopyTextButton = ({
       </Button>
     </span>
   );
-};
-
-CopyTextButton.propTypes = {
-  stringToCopy: PropTypes.string.isRequired,
-  copyTitle: PropTypes.string.isRequired,
-  hasCopiedTitle: PropTypes.string.isRequired,
-  timeout: PropTypes.number,
-  ghostPill: PropTypes.bool,
 };
 
 export default CopyTextButton;

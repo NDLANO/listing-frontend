@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
 
@@ -32,10 +31,6 @@ const FooterWrapper = () => {
       </Footer>
     </StyledFooterWrapper>
   );
-};
-
-FooterWrapper.propTypes = {
-  t: PropTypes.func.isRequired,
 };
 
 export default FooterWrapper;

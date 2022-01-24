@@ -7,14 +7,20 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-
+import { TFunction } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import {
+  //@ts-ignore
   MediaList,
+  //@ts-ignore
   MediaListItem,
+  //@ts-ignore
   MediaListItemBody,
+  //@ts-ignore
   MediaListItemActions,
+  //@ts-ignore
   MediaListItemImage,
+  //@ts-ignore
   MediaListItemMeta,
 } from '@ndla/ui';
 import { FileDocumentOutline } from '@ndla/icons/common';
@@ -24,8 +30,17 @@ import CopyTextButton from './CopyTextButton';
 import { getCopyrightCopyString } from '../util/getCopyrightCopyString';
 import { downloadUrl } from '../util/downloadHelpers';
 import formatDate from '../util/formatDate';
+import {
+  GQLCopyright,
+  GQLDetailedConcept,
+  GQLVisualElement,
+} from '../graphqlTypes';
 
-const getLicenseItems = (entity, t) => {
+interface LicenseItemEntity {
+  title?: string;
+  copyright?: GQLCopyright;
+}
+const getLicenseItems = (entity: LicenseItemEntity, t: TFunction) => {
   const licenseItems = [];
 
   entity.title &&
@@ -56,7 +71,13 @@ const getLicenseItems = (entity, t) => {
   return licenseItems;
 };
 
-export const TextContent = ({ t, concept, locale }) => {
+interface TextContentProps {
+  locale: string;
+  concept: GQLDetailedConcept;
+}
+
+export const TextContent = ({ concept, locale }: TextContentProps) => {
+  const { t } = useTranslation();
   const licenseItems = getLicenseItems(concept, t);
 
   concept.created &&
@@ -78,7 +99,7 @@ export const TextContent = ({ t, concept, locale }) => {
             <FileDocumentOutline className="c-medialist__icon" />
           </MediaListItemImage>
           <MediaListItemBody
-            license={concept.copyright.license.license}
+            license={concept.copyright?.license?.license}
             title={t('license.text.rules')}
             resourceUrl=""
             locale="nb"
@@ -100,23 +121,17 @@ export const TextContent = ({ t, concept, locale }) => {
   );
 };
 
-TextContent.propTypes = {
-  t: PropTypes.func.isRequired,
-  locale: PropTypes.string,
-  concept: PropTypes.shape({
-    title: PropTypes.string,
-    created: PropTypes.string,
-    content: PropTypes.string,
-    subjectIds: PropTypes.arrayOf(PropTypes.string),
-    copyright: PropTypes.shape({
-      license: PropTypes.shape({
-        license: PropTypes.string,
-      }),
-    }),
-  }),
-};
+interface ImageContentItem {
+  src: string;
+  altText?: string;
+  copyright?: GQLCopyright;
+}
+interface ImageContentProps {
+  images: ImageContentItem[];
+}
 
-export const ImageContent = ({ t, images }) => {
+export const ImageContent = ({ images }: ImageContentProps) => {
+  const { t } = useTranslation();
   const AnchorButton = StyledButton.withComponent('a');
   return (
     <>
@@ -131,7 +146,7 @@ export const ImageContent = ({ t, images }) => {
               <img src={image.src} alt={image.altText} />
             </MediaListItemImage>
             <MediaListItemBody
-              license={image.copyright.license.license}
+              license={image.copyright?.license?.license}
               title={t('license.images.rules')}
               resourceUrl=""
               locale="nb"
@@ -160,23 +175,13 @@ export const ImageContent = ({ t, images }) => {
   );
 };
 
-ImageContent.propTypes = {
-  t: PropTypes.func.isRequired,
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      title: PropTypes.string,
-      src: PropTypes.string,
-      altText: PropTypes.string,
-      copyright: PropTypes.shape({
-        license: PropTypes.shape({
-          license: PropTypes.string,
-        }),
-      }),
-    }),
-  ),
-};
-
-export const VisualElementContent = ({ t, visualElement }) => {
+interface VisualElementContentProps {
+  visualElement: GQLVisualElement;
+}
+export const VisualElementContent = ({
+  visualElement,
+}: VisualElementContentProps) => {
+  const { t } = useTranslation();
   const resourceType = visualElement.resource === 'h5p' ? 'h5p' : 'video';
   const licenseItems = getLicenseItems(visualElement, t);
   return (
@@ -193,7 +198,7 @@ export const VisualElementContent = ({ t, visualElement }) => {
                 visualElement?.brightcove?.cover ||
                 visualElement?.h5p?.thumbnail
               }
-              alt={visualElement.brightcove.caption ?? ''}
+              alt={visualElement.brightcove?.caption ?? ''}
             />
           </MediaListItemImage>
           <MediaListItemBody
@@ -210,7 +215,8 @@ export const VisualElementContent = ({ t, visualElement }) => {
                   copyTitle={t('license.copyTitle')}
                   stringToCopy={
                     visualElement?.h5p?.copyText ||
-                    visualElement?.brightcove?.copyText
+                    visualElement?.brightcove?.copyText ||
+                    ''
                   }
                 />
               </div>
@@ -222,39 +228,21 @@ export const VisualElementContent = ({ t, visualElement }) => {
   );
 };
 
-VisualElementContent.propTypes = {
-  t: PropTypes.func.isRequired,
-  visualElement: PropTypes.shape({
-    resource: PropTypes.string,
-    copyright: PropTypes.shape({
-      license: PropTypes.shape({
-        license: PropTypes.string,
-      }),
-    }),
-    brightcove: PropTypes.shape({
-      cover: PropTypes.string,
-      copyText: PropTypes.string,
-      caption: PropTypes.string,
-    }),
-    h5p: PropTypes.shape({
-      thumbnail: PropTypes.string,
-      copyText: PropTypes.string,
-    }),
-  }),
-};
+interface OembedContentProps {
+  oembed: string;
+}
 
-export const OembedContent = ({ oembed, t }) => (
-  <>
-    <h2>{t('license.embedlink.heading')}</h2>
-    <p>{t('license.embedlink.description')}</p>
-    <CopyTextButton
-      copyTitle={t('license.embedlink.copyTitle')}
-      hasCopiedTitle={t('license.embedlink.hasCopiedTitle')}
-      stringToCopy={oembed}
-    />
-  </>
-);
-
-OembedContent.propTypes = {
-  oembed: PropTypes.string.isRequired,
+export const OembedContent = ({ oembed }: OembedContentProps) => {
+  const { t } = useTranslation();
+  return (
+    <>
+      <h2>{t('license.embedlink.heading')}</h2>
+      <p>{t('license.embedlink.description')}</p>
+      <CopyTextButton
+        copyTitle={t('license.embedlink.copyTitle')}
+        hasCopiedTitle={t('license.embedlink.hasCopiedTitle')}
+        stringToCopy={oembed}
+      />
+    </>
+  );
 };
