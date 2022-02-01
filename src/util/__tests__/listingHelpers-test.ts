@@ -15,19 +15,16 @@ import {
 test('split list into filters', () => {
   expect(typeof mapTagsToFilters).toBe('function');
 
-  const result = new Map();
-  result.set('Liste', { main: ['filter1'], sub: ['filter2'] });
+  const result = { Liste: { main: ['filter1'], sub: ['filter2'] } };
   expect(mapTagsToFilters(['Liste:filter1:filter2'])).toEqual(result);
 });
 
 test('split list into filters with whitespaces', () => {
   expect(typeof mapTagsToFilters).toBe('function');
 
-  const result = new Map();
-  result.set('Liste nummer 1', {
-    main: ['filter nummer 1'],
-    sub: ['filter nummer 2'],
-  });
+  const result = {
+    'Liste nummer 1': { main: ['filter nummer 1'], sub: ['filter nummer 2'] },
+  };
   expect(
     mapTagsToFilters(['Liste nummer 1:filter nummer 1:filter nummer 2']),
   ).toEqual(result);
@@ -36,23 +33,21 @@ test('split list into filters with whitespaces', () => {
 test('split list into filters without sub', () => {
   expect(typeof mapTagsToFilters).toBe('function');
 
-  const result = new Map();
-  result.set('Liste', { main: ['filter1'], sub: [] });
+  const result = { Liste: { main: ['filter1'], sub: [] } };
   expect(mapTagsToFilters(['Liste:filter1:'])).toEqual(result);
 });
 
 test('split list into filters without main and sub', () => {
   expect(typeof mapTagsToFilters).toBe('function');
 
-  const result = new Map();
-  result.set('Liste', { main: [], sub: [] });
+  const result = { Liste: { main: [], sub: [] } };
   expect(mapTagsToFilters(['Liste::'])).toEqual(result);
 });
 
 test('do not split into lists if not two columns', () => {
   expect(typeof mapTagsToFilters).toBe('function');
 
-  const result = new Map();
+  const result = {};
   expect(mapTagsToFilters(['Teststring'])).toEqual(result);
 });
 

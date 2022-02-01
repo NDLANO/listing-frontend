@@ -58,11 +58,6 @@ const StyledEmbedCopyButton = styled.div`
   margin-left: auto;
 `;
 
-const SeparatorWrapper = styled.div`
-  margin-bottom: ${spacing.small};
-  padding-left: ${spacing.small};
-`;
-
 const CategoriesFilterWrapper = styled.div`
   margin-bottom: ${spacing.small};
   position: relative;
@@ -142,7 +137,7 @@ interface Props {
   totalCount: number;
   concepts: GQLConcept[];
   subjects: GQLSubject[];
-  filters: Map<string, Filter>;
+  filters: Record<string, Filter>;
   selectedSubjects: string[];
   selectedFilters: string[];
   selectedConcept?: string;
@@ -213,7 +208,7 @@ const ListingView = ({
     const {
       target: { value },
     } = e;
-    const filteredFilters = Array.from(filters.keys()).filter((item: string) =>
+    const filteredFilters = Object.keys(filters).filter(item =>
       item.toLowerCase().startsWith(value.toLowerCase()),
     );
     setFilterSearchValue(value);
@@ -222,7 +217,7 @@ const ListingView = ({
 
   const onFilterSearchFocus = (): void => {
     setFilterListOpen(true);
-    setCurrentListFilters(Array.from(filters.keys()));
+    setCurrentListFilters(Object.keys(filters));
   };
 
   const categoryFilterInputProps = {
@@ -235,20 +230,16 @@ const ListingView = ({
 
   const getFilters = (): object[] => {
     if (selectedListFilter) {
-      const mainOptions = filters
-        .get(selectedListFilter)
-        ?.main.map((filter: string) => ({
-          title: filter,
-          value: filter,
-          disabled: !listItems.some(item => item.filters.includes(filter)),
-        }));
-      const subOptions = filters
-        .get(selectedListFilter)
-        ?.sub.map((filter: string) => ({
-          title: filter,
-          value: filter,
-          disabled: !listItems.some(item => item.filters.includes(filter)),
-        }));
+      const mainOptions = filters[selectedListFilter]?.main.map(filter => ({
+        title: filter,
+        value: filter,
+        disabled: !listItems.some(item => item.filters.includes(filter)),
+      }));
+      const subOptions = filters[selectedListFilter]?.sub.map(filter => ({
+        title: filter,
+        value: filter,
+        disabled: !listItems.some(item => item.filters.includes(filter)),
+      }));
 
       return [
         {
@@ -338,7 +329,6 @@ const ListingView = ({
                   </MastheadItem>
                 </StyledLanguageSelector>
               </HeaderWithLanguageWrapper>
-              <SeparatorWrapper>{t(`listingPage.or`)}</SeparatorWrapper>
               <CategoriesFilterWrapper>
                 <Downshift
                   onSelect={handleChangeListFilter}

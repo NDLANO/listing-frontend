@@ -38,8 +38,8 @@ export const subjectInfoFragment = gql`
 `;
 
 export const listingPageQuery = gql`
-  query ListingPage {
-    listingPage {
+  query ListingPage($listingPageSubjects: String) {
+    listingPage(subjects: $listingPageSubjects) {
       subjects {
         ...SubjectInfo
       }

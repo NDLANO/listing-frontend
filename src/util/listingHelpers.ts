@@ -12,25 +12,28 @@ export function filterTags(tags: string[]) {
   return tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
 }
 
-export function mapTagsToFilters(tags: string[]) {
-  const fitleredTags = filterTags(tags);
-  const filters = new Map();
-  fitleredTags.forEach(tag => {
-    const [list, main, sub] = tag.split(':');
-    if (!filters.has(list)) {
-      filters.set(list, {
-        main: main ? [main] : [],
-        sub: sub ? [sub] : [],
-      });
-    } else {
-      main &&
-        !filters.get(list).main.includes(main) &&
-        filters.get(list).main.push(main);
-      sub &&
-        !filters.get(list).sub.includes(sub) &&
-        filters.get(list).sub.push(sub);
+export function mapTagsToFilters(tags?: string[]) {
+  const filteredTags = tags?.filter(tag => tag.match(/.+:(.+)?:(.+)?/)) ?? [];
+
+  const filters = filteredTags.reduce<
+    Record<string, { main: string[]; sub: string[] }>
+  >((acc, curr) => {
+    const [list, main, sub] = curr.split(':');
+    if (!list) return acc;
+
+    if (!acc[list]) {
+      acc[list] = { main: main ? [main] : [], sub: sub ? [sub] : [] };
+      return acc;
     }
-  });
+
+    if (main && acc[list] && !acc[list]?.main.includes(main)) {
+      acc[list]?.main.concat(main);
+    }
+    if (sub && acc[list] && !acc[list]?.sub.includes(sub)) {
+      acc[list]?.sub.concat(sub);
+    }
+    return acc;
+  }, {});
   return filters;
 }
 

@@ -28,7 +28,7 @@ interface Props {
   isOembed: boolean;
   subjects: GQLSubject[];
   tags: string[];
-  filters: Map<string, Filter>;
+  filters: Record<string, Filter>;
   location: Location;
 }
 
@@ -91,15 +91,15 @@ const ListingContainer = ({
 
   const handleChangeSubject = (values: string[]): void => {
     setQueryParams({
+      ...queryParams,
       subjects: values,
-      filters: [],
     });
   };
 
   const handleChangeListFilter = (value: string | null): void => {
     setFilterListOpen(false);
     setQueryParams({
-      subjects: [],
+      ...queryParams,
       filters: value ? [value] : [],
     });
   };
@@ -132,7 +132,7 @@ const ListingContainer = ({
 
   useEffect(() => {
     const filterNameExistsInFilters = (filter: string): boolean => {
-      const filterKeys: Array<string> = Array.from(filters.keys());
+      const filterKeys = Object.keys(filters);
       return filterKeys.includes(filter);
     };
 
