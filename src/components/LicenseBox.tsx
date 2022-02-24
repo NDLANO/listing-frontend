@@ -24,11 +24,7 @@ import {
   MediaListItemMeta,
 } from '@ndla/ui';
 import { FileDocumentOutline } from '@ndla/icons/common';
-import {
-  figureApa7CopyString,
-  metaTypes,
-  webpageReferenceApa7CopyString,
-} from '@ndla/licenses';
+import { figureApa7CopyString, metaTypes } from '@ndla/licenses';
 import { StyledButton } from '@ndla/button';
 import CopyTextButton from './CopyTextButton';
 import { downloadUrl } from '../util/downloadHelpers';
@@ -114,20 +110,6 @@ export const TextContent = ({ concept, locale }: TextContentProps) => {
             <MediaListItemActions>
               <div className="c-medialist__ref">
                 <MediaListItemMeta items={licenseItems} />
-                <CopyTextButton
-                  hasCopiedTitle={t('license.hasCopiedTitle')}
-                  copyTitle={t('license.copyTitle')}
-                  stringToCopy={webpageReferenceApa7CopyString(
-                    concept.title,
-                    undefined,
-                    undefined,
-                    `/concepts/${concept.id}`,
-                    concept.copyright,
-                    locale,
-                    config.ndlaFrontendDomain,
-                    t,
-                  )}
-                />
               </div>
             </MediaListItemActions>
           </MediaListItemBody>
