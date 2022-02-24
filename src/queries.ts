@@ -116,6 +116,7 @@ export const detailedConceptQuery = gql`
   query DetailedConcept($id: String) {
     detailedConcept(id: $id) {
       title
+      id
       content
       created
       subjectIds
