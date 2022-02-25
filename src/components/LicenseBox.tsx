@@ -221,15 +221,6 @@ export const VisualElementContent = ({
             <MediaListItemActions>
               <div className="c-medialist__ref">
                 <MediaListItemMeta items={licenseItems} />
-                <CopyTextButton
-                  hasCopiedTitle={t('license.hasCopiedTitle')}
-                  copyTitle={t('license.copyTitle')}
-                  stringToCopy={
-                    visualElement?.h5p?.copyText ||
-                    visualElement?.brightcove?.copyText ||
-                    ''
-                  }
-                />
               </div>
             </MediaListItemActions>
           </MediaListItemBody>
