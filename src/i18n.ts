@@ -1,5 +1,4 @@
 import { i18n } from 'i18next';
-import { messagesNB, messagesEN, messagesNN } from '@ndla/ui';
 import { ApolloClient } from '@apollo/client';
 import { History } from 'history';
 //@ts-ignore
@@ -51,12 +50,6 @@ export const initializeI18n = (
 ): void => {
   i18n.options.supportedLngs = ['nb', 'nn'];
 
-  // @ndla/ui
-  i18n.addResourceBundle('en', 'translation', messagesEN, true, true);
-  i18n.addResourceBundle('nb', 'translation', messagesNB, true, true);
-  i18n.addResourceBundle('nn', 'translation', messagesNN, true, true);
-
-  // Local. Will override ndla-ui if identical keys are found.
   i18n.addResourceBundle('en', 'translation', en, true, true);
   i18n.addResourceBundle('nb', 'translation', nb, true, true);
   i18n.addResourceBundle('nn', 'translation', nn, true, true);
