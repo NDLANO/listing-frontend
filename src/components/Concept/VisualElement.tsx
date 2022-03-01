@@ -114,7 +114,7 @@ const VisualElement = ({
         allowFullScreen={true}
         frameBorder="0"
         height={400}
-        src={visualElement.brightcove.iframe?.src}
+        src={visualElement.brightcove.iframe?.src || visualElement.url}
         title={visualElement.title}
         width={600}
       />
