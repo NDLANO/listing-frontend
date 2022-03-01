@@ -49,6 +49,7 @@ export const initializeI18n = (
   history: History,
 ): void => {
   i18n.options.supportedLngs = ['nb', 'nn'];
+
   i18n.addResourceBundle('en', 'translation', en, true, true);
   i18n.addResourceBundle('nb', 'translation', nb, true, true);
   i18n.addResourceBundle('nn', 'translation', nn, true, true);

@@ -38,7 +38,7 @@ import Footer from '../../components/Footer';
 import CopyTextButton from '../../components/CopyTextButton';
 import config from '../../config';
 import { Filter, ListItem } from '../../interfaces';
-import { GQLConcept, GQLSubject } from '../../graphqlTypes';
+import { GQLConcept, GQLSubjectInfoFragment } from '../../graphqlTypes';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
@@ -136,7 +136,7 @@ interface Props {
   setFilterListOpen: (value: boolean) => void;
   totalCount: number;
   concepts: GQLConcept[];
-  subjects: GQLSubject[];
+  subjects: GQLSubjectInfoFragment[];
   filters: Record<string, Filter>;
   selectedSubjects: string[];
   selectedFilters: string[];

@@ -123,7 +123,7 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }: Props) => {
     images?.length &&
       tabs.push({
         title: t('license.tabs.images'),
-        content: <ImageContent images={images} />,
+        content: <ImageContent images={images} conceptId={concept.id} />,
       });
 
     (concept.visualElement?.h5p || concept.visualElement?.brightcove) &&

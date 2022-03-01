@@ -24,21 +24,24 @@ import {
   MediaListItemMeta,
 } from '@ndla/ui';
 import { FileDocumentOutline } from '@ndla/icons/common';
-import { metaTypes } from '@ndla/licenses';
+import { figureApa7CopyString, metaTypes } from '@ndla/licenses';
 import { StyledButton } from '@ndla/button';
 import CopyTextButton from './CopyTextButton';
-import { getCopyrightCopyString } from '../util/getCopyrightCopyString';
 import { downloadUrl } from '../util/downloadHelpers';
 import formatDate from '../util/formatDate';
 import {
+  GQLConceptCopyright,
   GQLCopyright,
-  GQLDetailedConcept,
+  GQLCopyrightInfoFragment,
+  GQLDetailedConceptQuery,
+  GQLImageLicenseInfoFragment,
   GQLVisualElement,
 } from '../graphqlTypes';
+import config from '../config';
 
 interface LicenseItemEntity {
   title?: string;
-  copyright?: GQLCopyright;
+  copyright?: Partial<GQLCopyright> | Partial<GQLConceptCopyright>;
 }
 const getLicenseItems = (entity: LicenseItemEntity, t: TFunction) => {
   const licenseItems = [];
@@ -73,14 +76,14 @@ const getLicenseItems = (entity: LicenseItemEntity, t: TFunction) => {
 
 interface TextContentProps {
   locale: string;
-  concept: GQLDetailedConcept;
+  concept: Required<GQLDetailedConceptQuery>['detailedConcept'];
 }
 
 export const TextContent = ({ concept, locale }: TextContentProps) => {
   const { t } = useTranslation();
   const licenseItems = getLicenseItems(concept, t);
 
-  concept.created &&
+  concept?.created &&
     licenseItems.push({
       label: t('license.published'),
       description: formatDate(concept.created, locale),
@@ -99,7 +102,7 @@ export const TextContent = ({ concept, locale }: TextContentProps) => {
             <FileDocumentOutline className="c-medialist__icon" />
           </MediaListItemImage>
           <MediaListItemBody
-            license={concept.copyright?.license?.license}
+            license={concept.copyright?.license?.license ?? ''}
             title={t('license.text.rules')}
             resourceUrl=""
             locale="nb"
@@ -107,11 +110,6 @@ export const TextContent = ({ concept, locale }: TextContentProps) => {
             <MediaListItemActions>
               <div className="c-medialist__ref">
                 <MediaListItemMeta items={licenseItems} />
-                <CopyTextButton
-                  hasCopiedTitle={t('license.hasCopiedTitle')}
-                  copyTitle={t('license.copyTitle')}
-                  stringToCopy={getCopyrightCopyString(concept.copyright, t)}
-                />
               </div>
             </MediaListItemActions>
           </MediaListItemBody>
@@ -124,13 +122,17 @@ export const TextContent = ({ concept, locale }: TextContentProps) => {
 interface ImageContentItem {
   src: string;
   altText?: string;
-  copyright?: GQLCopyright;
+  copyright?:
+    | GQLImageLicenseInfoFragment['copyright']
+    | GQLCopyrightInfoFragment;
+  title?: string;
 }
 interface ImageContentProps {
   images: ImageContentItem[];
+  conceptId: number;
 }
 
-export const ImageContent = ({ images }: ImageContentProps) => {
+export const ImageContent = ({ images, conceptId }: ImageContentProps) => {
   const { t } = useTranslation();
   const AnchorButton = StyledButton.withComponent('a');
   return (
@@ -146,7 +148,7 @@ export const ImageContent = ({ images }: ImageContentProps) => {
               <img src={image.src} alt={image.altText} />
             </MediaListItemImage>
             <MediaListItemBody
-              license={image.copyright?.license?.license}
+              license={image.copyright?.license?.license ?? ''}
               title={t('license.images.rules')}
               resourceUrl=""
               locale="nb"
@@ -157,7 +159,16 @@ export const ImageContent = ({ images }: ImageContentProps) => {
                   <CopyTextButton
                     hasCopiedTitle={t('license.hasCopiedTitle')}
                     copyTitle={t('license.copyTitle')}
-                    stringToCopy={getCopyrightCopyString(image.copyright, t)}
+                    stringToCopy={figureApa7CopyString(
+                      image.title,
+                      undefined,
+                      undefined,
+                      `/concepts/${conceptId}`,
+                      image.copyright,
+                      image.copyright?.license?.license,
+                      config.ndlaFrontendDomain,
+                      t,
+                    )}
                   />
                   <AnchorButton
                     href={downloadUrl(image.src)}
@@ -210,15 +221,6 @@ export const VisualElementContent = ({
             <MediaListItemActions>
               <div className="c-medialist__ref">
                 <MediaListItemMeta items={licenseItems} />
-                <CopyTextButton
-                  hasCopiedTitle={t('license.hasCopiedTitle')}
-                  copyTitle={t('license.copyTitle')}
-                  stringToCopy={
-                    visualElement?.h5p?.copyText ||
-                    visualElement?.brightcove?.copyText ||
-                    ''
-                  }
-                />
               </div>
             </MediaListItemActions>
           </MediaListItemBody>

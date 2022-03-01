@@ -16,17 +16,17 @@ import { getTagsParameter } from '../../util/listingHelpers';
 import { conceptSearchQuery } from '../../queries';
 import { Filter, ListItem } from '../../interfaces';
 import {
-  GQLSubject,
   GQLConceptSearchQuery,
   GQLConceptSearchQueryVariables,
   GQLConcept,
+  GQLSubjectInfoFragment,
 } from '../../graphqlTypes';
 
 const PAGE_SIZE = 100;
 
 interface Props {
   isOembed: boolean;
-  subjects: GQLSubject[];
+  subjects: GQLSubjectInfoFragment[];
   tags: string[];
   filters: Record<string, Filter>;
   location: Location;
