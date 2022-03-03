@@ -8,7 +8,8 @@
 
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
+// will not build correctly if .js is not added. See https://github.com/remix-run/react-router/issues/8353
+import { StaticRouter } from 'react-router-dom/server.js';
 import { ApolloProvider } from '@apollo/client';
 import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
