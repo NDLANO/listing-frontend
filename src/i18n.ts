@@ -1,12 +1,12 @@
 import { i18n } from 'i18next';
 import { ApolloClient } from '@apollo/client';
-import { History } from 'history';
 //@ts-ignore
 import { createApolloLinks } from './util/apiHelpers';
 import nb from './phrases/phrases-nb';
 import nn from './phrases/phrases-nn';
 import en from './phrases/phrases-en';
 import { LocaleType } from './interfaces';
+import { STORED_LANGUAGE_KEY } from './constants';
 
 type LocaleObject = {
   name: string;
@@ -46,7 +46,6 @@ export const supportedLanguages = ['nb', 'nn'];
 export const initializeI18n = (
   i18n: i18n,
   client: ApolloClient<object>,
-  history: History,
 ): void => {
   i18n.options.supportedLngs = ['nb', 'nn'];
 
@@ -61,14 +60,7 @@ export const initializeI18n = (
     if (typeof window != 'undefined') {
       client.resetStore();
       client.setLink(createApolloLinks(language));
-      const supportedLngs = i18n.options.supportedLngs as string[];
-      const paths = window.location.pathname.split('/');
-      const basename = supportedLngs.includes(paths[1] ?? '')
-        ? `${paths[1]}`
-        : '';
-      if (!(basename === '' && language === 'nb')) {
-        window.localStorage.setItem('language', language);
-      }
+      window.localStorage.setItem(STORED_LANGUAGE_KEY, language);
     }
   });
 };

@@ -7,7 +7,6 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -18,50 +17,81 @@ import { i18nInstance } from '@ndla/ui';
 import { initializeI18n, isValidLocale, supportedLanguages } from './i18n';
 import { createApolloClient } from './util/apiHelpers';
 import App from './containers/App/App';
+import { LocaleType } from './interfaces';
+import { getDefaultLanguage } from './config';
+import { STORED_LANGUAGE_KEY } from './constants';
 
 const paths = window.location.pathname.split('/');
-const basename = paths[1] && isValidLocale(paths[1]) ? `${paths[1]}` : '';
+const basename = isValidLocale(paths[1] ?? '') ? `${paths[1]}` : undefined;
 
-const storedLanguage = window.localStorage.getItem('language');
-if (
-  basename === '' &&
-  storedLanguage &&
-  isValidLocale(storedLanguage) &&
-  storedLanguage !== 'nb'
-) {
-  const { pathname, search } = window.location;
-  window.location.href = `/${storedLanguage}${pathname}${search}`;
-} else if (storedLanguage !== basename && isValidLocale(basename)) {
-  window.localStorage.setItem('language', basename);
-}
+const client = createApolloClient(basename);
 
-const client = createApolloClient(i18nInstance.language);
+const constructNewPath = (newLocale?: LocaleType) => {
+  const regex = new RegExp(supportedLanguages.map(l => `/${l}/`).join('|'));
+  const path = window.location.pathname.replace(regex, '');
+  const fullPath = path.startsWith('/') ? path : `/${path}`;
+  const localePrefix = newLocale ? `/${newLocale}` : '';
+  return `${localePrefix}${fullPath}${window.location.search}`;
+};
 
-const LanguageWrapper = () => {
+const LanguageWrapper = ({ basename }: { basename?: string }) => {
   const { i18n } = useTranslation();
-  const history = useHistory();
-  const client = useApolloClient();
-  const [lang, setLang] = useState(basename);
+  const [base, setBase] = useState('');
   const firstRender = useRef(true);
-  initializeI18n(i18n, client, history);
+  const client = useApolloClient();
 
+  useEffect(() => {
+    initializeI18n(i18n, client);
+    const storedLanguage = window.localStorage.getItem(
+      STORED_LANGUAGE_KEY,
+    ) as LocaleType;
+    const defaultLanguage = getDefaultLanguage();
+    if (
+      (!basename && !storedLanguage) ||
+      (!basename && storedLanguage === defaultLanguage)
+    ) {
+      i18n.changeLanguage(defaultLanguage);
+    } else if (storedLanguage && isValidLocale(storedLanguage)) {
+      i18n.changeLanguage(storedLanguage);
+    }
+  }, [basename, i18n, client]);
+
+  // handle path changes when the language is changed
   useEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
-      return;
+    } else {
+      window.history.replaceState('', '', constructNewPath(i18n.language));
+      setBase(i18n.language);
     }
-    const regex = new RegExp(supportedLanguages.map(l => `/${l}/`).join('|'));
-    const paths = window.location.pathname.replace(regex, '').split('/');
-    const { search } = window.location;
-    const p = paths.slice().join('/');
-    const test = p.startsWith('/') ? p : `/${p}`;
-    history.replace(`/${i18n.language}${test}${search}`);
-    setLang(i18n.language); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
 
+  // handle initial redirect if URL has wrong or missing locale prefix.
+  useEffect(() => {
+    const storedLanguage = window.localStorage.getItem(
+      STORED_LANGUAGE_KEY,
+    ) as LocaleType;
+    if (
+      (!storedLanguage || storedLanguage === getDefaultLanguage()) &&
+      !basename
+    )
+      return;
+    if (isValidLocale(storedLanguage) && storedLanguage === basename) {
+      setBase(storedLanguage);
+      return;
+    }
+    if (window.location.pathname.includes('/login/success')) return;
+    setBase(storedLanguage);
+    window.history.replaceState('', '', constructNewPath(storedLanguage));
+  }, [basename]);
+
+  return <RouterComponent base={base} />;
+};
+
+const RouterComponent = ({ base }: { base: string }) => {
   return (
-    <BrowserRouter basename={lang} key={lang}>
-      <App />
+    <BrowserRouter key={base} basename={base}>
+      <App key={base} />
     </BrowserRouter>
   );
 };
@@ -70,9 +100,7 @@ const renderApp = () =>
   ReactDOM.render(
     <I18nextProvider i18n={i18nInstance}>
       <ApolloProvider client={client}>
-        <BrowserRouter>
-          <LanguageWrapper />
-        </BrowserRouter>
+        <LanguageWrapper basename={basename} />
       </ApolloProvider>
     </I18nextProvider>,
     document.getElementById('root'),

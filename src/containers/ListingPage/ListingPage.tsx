@@ -7,7 +7,7 @@
  */
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { Location } from 'history';
+import { useLocation } from 'react-router';
 import { Spinner } from '@ndla/ui';
 import qs from 'query-string';
 import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
@@ -18,7 +18,6 @@ import { GQLListingPageQuery } from '../../graphqlTypes';
 
 interface Props {
   isOembed: boolean;
-  location: Location;
 }
 
 const getSubjectsString = (
@@ -35,7 +34,8 @@ const getSubjectsString = (
   return typeof subjects === 'string' ? subjects : subjects.join(',');
 };
 
-const ListingPage = ({ location, isOembed }: Props): JSX.Element => {
+const ListingPage = ({ isOembed }: Props): JSX.Element => {
+  const location = useLocation();
   const searchParams = qs.parse(location.search, { arrayFormat: 'bracket' });
   const querySubjects = getSubjectsString(searchParams['subjects']);
   const { data, loading, previousData } = useQuery<GQLListingPageQuery>(

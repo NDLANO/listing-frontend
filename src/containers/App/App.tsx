@@ -10,12 +10,7 @@
 import '../../style/index.css';
 
 import React from 'react';
-import {
-  Route,
-  RouteComponentProps,
-  Switch,
-  useHistory,
-} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Helmet from 'react-helmet';
 import { PageContainer, Spinner } from '@ndla/ui';
@@ -24,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useApolloClient } from '@apollo/client';
 import ListingPage from '../ListingPage/ListingPage';
-import ConceptPage from '../../components/Concept';
+import { ConceptPageWrapper } from '../../components/Concept/ConceptPage';
 import { Matomo } from '../../components/Matomo';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { initializeI18n } from '../../i18n';
@@ -39,8 +34,7 @@ const StyledPageWrapper = styled.div`
 const App = () => {
   const { t, i18n } = useTranslation();
   const client = useApolloClient();
-  const history = useHistory();
-  initializeI18n(i18n, client, history);
+  initializeI18n(i18n, client);
 
   if (!i18n.isInitialized) {
     return <Spinner />;
@@ -53,39 +47,16 @@ const App = () => {
           title="NDLA"
           meta={[{ name: 'description', content: t('meta.description') }]}
         />
-        <Switch>
-          <Route
-            exact
-            path="/"
-            component={(routeProps: RouteComponentProps) => (
-              <ListingPage location={routeProps.location} isOembed={false} />
-            )}
-          />
-          <Route
-            path="/concepts/:conceptId/:selectedLanguage?"
-            component={(
-              routeProps: RouteComponentProps<{
-                conceptId: string;
-                selectedLanguage: string;
-              }>,
-            ) => (
-              <ConceptPage
-                conceptId={routeProps.match.params.conceptId}
-                inModal={false}
-                language={
-                  routeProps.match.params.selectedLanguage || i18n.language
-                }
-              />
-            )}
-          />
-          <Route
-            path="/listing"
-            component={(routeProps: RouteComponentProps) => (
-              <ListingPage isOembed={true} location={routeProps.location} />
-            )}
-          />
-          <Route component={NotFoundPage} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<ListingPage isOembed={false} />}>
+            <Route
+              path="concepts/:conceptId/:selectedLanguage?"
+              element={<ConceptPageWrapper inModal={false} />}
+            />
+            <Route path="listing" element={<ListingPage isOembed={true} />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </StyledPageWrapper>
       <Matomo />
     </PageContainer>

@@ -6,6 +6,8 @@
  *
  */
 
+import { LocaleType } from './interfaces';
+
 declare global {
   interface Window extends NDLAWindow {}
 }
@@ -85,6 +87,9 @@ export const matomoDomain = () => {
       return `https://analytics.${ndlaEnvironment}.ndla.no/`;
   }
 };
+
+export const getDefaultLanguage = (): LocaleType =>
+  (process.env.NDLA_DEFAULT_LANGUAGE as LocaleType | undefined) ?? 'nb';
 
 const config: ConfigType = Object.assign(
   {

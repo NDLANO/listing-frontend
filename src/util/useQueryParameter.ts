@@ -1,12 +1,19 @@
-import { History, Location } from 'history';
 import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import {
+  useNavigate,
+  NavigateFunction,
+  useLocation,
+  Location,
+} from 'react-router-dom';
 import qs from 'query-string';
 
-const setQueryParameter = <T extends object>(state: T, history: History) => {
+const setQueryParameter = <T extends object>(
+  state: T,
+  navigate: NavigateFunction,
+) => {
   const params = qs.stringify(state, { arrayFormat: 'bracket' });
   const search = `${params.length > 0 ? `?${params}` : ''}`;
-  history.push({ search });
+  navigate({ search });
 };
 
 const getQueryParameter = <T extends object>(
@@ -21,14 +28,15 @@ const getQueryParameter = <T extends object>(
 const useQueryParameter = <T extends object>(
   initialValue: T,
 ): [T, (newValue: T) => void] => {
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [value, setValue] = useState<T>(
-    getQueryParameter(initialValue, history.location) || initialValue,
+    getQueryParameter(initialValue, location) || initialValue,
   );
   const onSetValue = (newValue: T) => {
     setValue(newValue);
-    setQueryParameter(newValue, history);
+    setQueryParameter(newValue, navigate);
   };
   return [value, onSetValue];
 };

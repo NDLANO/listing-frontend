@@ -6,7 +6,8 @@
  *
  */
 
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { useQuery } from '@apollo/client';
 import { Remarkable } from 'remarkable';
 import {
@@ -70,6 +71,26 @@ interface Props {
   inModal?: boolean;
   language: string;
 }
+
+interface ConceptPageWrapperProps {
+  inModal?: boolean;
+}
+
+export const ConceptPageWrapper = ({ inModal }: ConceptPageWrapperProps) => {
+  const { conceptId, selectedLanguage } = useParams();
+  const { i18n } = useTranslation();
+
+  if (!conceptId) {
+    return <NotFoundPage />;
+  }
+  return (
+    <ConceptPage
+      conceptId={conceptId}
+      language={selectedLanguage ?? i18n.language}
+      inModal={inModal}
+    />
+  );
+};
 
 const ConceptPage = ({ conceptId, handleClose, inModal, language }: Props) => {
   const { t } = useTranslation();

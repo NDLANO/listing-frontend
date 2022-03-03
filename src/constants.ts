@@ -5,3 +5,5 @@ export const httpStatus = {
   movedPermanently: 301,
   temporaryRedirect: 307,
 };
+
+export const STORED_LANGUAGE_KEY = 'language';
