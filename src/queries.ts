@@ -125,12 +125,12 @@ export const detailedConceptQuery = gql`
         license {
           license
         }
-        origin
         creators {
           name
           type
         }
       }
+      source
       image {
         ...ImageLicenseInfo
       }

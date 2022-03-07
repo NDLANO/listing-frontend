@@ -196,7 +196,7 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }: Props) => {
       )}
       <NotionDialogLicenses
         license={concept.copyright?.license?.license}
-        source={concept.copyright?.origin}
+        source={renderMarkdown(concept.source)}
         authors={
           concept.copyright?.creators?.map(creator => creator?.name) || []
         }
