@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Helmet from 'react-helmet';
 import { Remarkable } from 'remarkable';
 import { Location } from 'history';

@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { colors, spacing, fonts } from '@ndla/core';
 import { ImageCrop, ImageFocalPoint } from '@ndla/ui/lib/Image';
