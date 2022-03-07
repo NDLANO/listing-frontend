@@ -6,7 +6,7 @@
  *
  */
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';

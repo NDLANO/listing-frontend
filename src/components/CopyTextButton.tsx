@@ -6,7 +6,7 @@
  *
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { copyTextToClipboard } from '@ndla/util';
 import { Code } from '@ndla/icons/editor';
 import Button from '@ndla/button';

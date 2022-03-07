@@ -6,14 +6,14 @@
  *
  */
 
-import React from 'react';
+import { Component } from 'react';
 
 interface Props {}
 interface State {
   width?: number;
   height: number;
 }
-class PostResizeMessage extends React.Component<Props, State> {
+class PostResizeMessage extends Component<Props, State> {
   intervalId: ReturnType<typeof setInterval> | undefined;
   constructor(props: Props) {
     super(props);
