@@ -132,7 +132,10 @@ interface ImageContentProps {
 }
 
 export const ImageContent = ({ images, conceptId }: ImageContentProps) => {
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation();
   const AnchorButton = StyledButton.withComponent('a');
   return (
     <>
@@ -167,6 +170,7 @@ export const ImageContent = ({ images, conceptId }: ImageContentProps) => {
                       image.copyright?.license?.license,
                       config.ndlaFrontendDomain,
                       t,
+                      language,
                     )}
                   />
                   <AnchorButton

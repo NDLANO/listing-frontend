@@ -91,7 +91,7 @@
     "@ndla/error-reporter": "^1.0.8",
     "@ndla/forms": "^1.1.0",
     "@ndla/icons": "^1.6.0",
-    "@ndla/licenses": "^2.2.0",
+    "@ndla/licenses": "^3.0.0",
     "@ndla/listview": "^1.1.0",
     "@ndla/modal": "^1.2.0",
     "@ndla/notion": "^1.2.0",
