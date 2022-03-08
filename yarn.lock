@@ -2146,6 +2146,14 @@
     "@ndla/core" "^1.0.0"
     "@ndla/icons" "^1.6.0"
 
+"@ndla/licenses@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@ndla/licenses/-/licenses-3.0.0.tgz#8156fcfc73328a142ebd3dc6399894a12d9043a8"
+  integrity sha512-eOdo6i62oNxbBnFzlNDJu26jtIF50sHcCE1Z7qPxawPHR2Y0eDv7HRl+dFDjL80sXcwXsRKWIZ+FD0zFMjENvQ==
+  dependencies:
+    "@ndla/core" "^1.0.0"
+    "@ndla/icons" "^1.6.0"
+
 "@ndla/listview@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@ndla/listview/-/listview-1.1.0.tgz#33e75637eafa0f1e440f97a3938673971b1c46cc"
