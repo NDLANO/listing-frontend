@@ -32,7 +32,7 @@ interface Props {
 
 const conceptPageQuery = gql`
   query ConceptPage($id: Int!) {
-    detailedConcept(id: $id) {
+    concept(id: $id) {
       title
       ...ConceptBodyConcept
       ...LicenseBoxConcept
@@ -61,7 +61,7 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }: Props) => {
   }, [markdown]);
 
   if (loading) return <Spinner />;
-  if (!data || !data.detailedConcept) return <NotFoundPage />;
+  if (!data || !data.concept) return <NotFoundPage />;
 
   const renderMarkdown = (text: string | undefined) => {
     const rendered = markdown?.render(text ?? '') ?? '';
@@ -76,7 +76,7 @@ const ConceptPage = ({ conceptId, handleClose, inModal, language }: Props) => {
     return <Spinner />;
   }
 
-  const concept = data.detailedConcept;
+  const concept = data.concept;
 
   const conceptBody = (
     <ConceptBody

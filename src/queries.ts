@@ -37,7 +37,7 @@ export const copyrightInfoFragment = gql`
 
 export const conceptTitleQuery = gql`
   query ConceptTitle($id: Int!) {
-    detailedConcept(id: $id) {
+    concept(id: $id) {
       title
     }
   }
