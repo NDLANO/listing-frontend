@@ -6,25 +6,23 @@
  *
  */
 
+import { ReactNode } from 'react';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
+import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
+import Tabs from '@ndla/tabs';
+import { gql } from '@apollo/client';
 import {
-  //@ts-ignore
   MediaList,
-  //@ts-ignore
   MediaListItem,
-  //@ts-ignore
   MediaListItemBody,
-  //@ts-ignore
   MediaListItemActions,
-  //@ts-ignore
   MediaListItemImage,
-  //@ts-ignore
   MediaListItemMeta,
 } from '@ndla/ui';
 import { FileDocumentOutline } from '@ndla/icons/common';
 import { figureApa7CopyString, metaTypes } from '@ndla/licenses';
-import { StyledButton } from '@ndla/button';
+import Button, { StyledButton } from '@ndla/button';
 import CopyTextButton from './CopyTextButton';
 import { downloadUrl } from '../util/downloadHelpers';
 import formatDate from '../util/formatDate';
@@ -32,11 +30,12 @@ import {
   GQLConceptCopyright,
   GQLCopyright,
   GQLCopyrightInfoFragment,
-  GQLDetailedConceptQuery,
   GQLImageLicenseInfoFragment,
+  GQLLicenseBoxConceptFragment,
   GQLVisualElement,
 } from '../graphqlTypes';
 import config from '../config';
+import { copyrightInfoFragment } from '../queries';
 
 interface LicenseItemEntity {
   title?: string;
@@ -75,7 +74,7 @@ const getLicenseItems = (entity: LicenseItemEntity, t: TFunction) => {
 
 interface TextContentProps {
   locale: string;
-  concept: Required<GQLDetailedConceptQuery>['detailedConcept'];
+  concept: GQLLicenseBoxConceptFragment;
 }
 
 export const TextContent = ({ concept, locale }: TextContentProps) => {
@@ -246,4 +245,138 @@ export const OembedContent = ({ oembed }: OembedContentProps) => {
       />
     </>
   );
+};
+
+const getTabImages = (concept: GQLLicenseBoxConceptFragment) => {
+  if (!concept) return;
+  const images = [];
+  if (concept.image?.src?.length) {
+    images.push(concept.image);
+  }
+  if (
+    concept.visualElement?.image?.src?.length &&
+    concept.visualElement?.image?.src !== concept.image?.src
+  ) {
+    images.push({
+      ...concept.visualElement.image,
+      title: concept.visualElement.title,
+      copyright: concept.visualElement.copyright,
+    });
+  }
+  return images;
+};
+
+interface LicenseBoxProps {
+  concept: GQLLicenseBoxConceptFragment;
+  language: string;
+}
+
+export const LicenseBox = ({ concept, language }: LicenseBoxProps) => {
+  const { t } = useTranslation();
+
+  const tabs: { title: string; content: ReactNode }[] = [];
+  const images = getTabImages(concept);
+  concept.copyright?.license?.license &&
+    concept.copyright.license.license !== 'unknown' &&
+    tabs.push({
+      title: t('license.tabs.text'),
+      content: <TextContent concept={concept} locale={language} />,
+    });
+
+  images?.length &&
+    tabs.push({
+      title: t('license.tabs.images'),
+      content: <ImageContent images={images} conceptId={concept.id} />,
+    });
+
+  (concept.visualElement?.h5p || concept.visualElement?.brightcove) &&
+    concept.visualElement?.copyright &&
+    tabs.push({
+      title: t(
+        `license.tabs.${
+          concept.visualElement.resource === 'h5p' ? 'h5p' : 'video'
+        }`,
+      ),
+      content: <VisualElementContent visualElement={concept.visualElement} />,
+    });
+
+  tabs.push({
+    title: t('license.tabs.embedlink'),
+    content: (
+      <OembedContent
+        oembed={`${config.ndlaListingFrontendDomain}/concepts/${concept.id}`}
+      />
+    ),
+  });
+  return (
+    <Modal
+      activateButton={<Button link>{t('article.useContent')}</Button>}
+      size="medium">
+      {onClose => (
+        <>
+          <ModalHeader modifier="no-bottom-padding">
+            <ModalCloseButton onClick={onClose} title={t('modal.closeModal')} />
+          </ModalHeader>
+          <ModalBody>
+            <>
+              <h1>{t('license.heading')}</h1>
+              <Tabs singleLine tabs={tabs} />
+            </>
+          </ModalBody>
+        </>
+      )}
+    </Modal>
+  );
+};
+
+LicenseBox.fragments = {
+  concept: gql`
+    fragment LicenseBoxConcept on Concept {
+      id
+      created
+      title
+      image {
+        src
+        altText
+      }
+      copyright {
+        license {
+          license
+          url
+        }
+        creators {
+          name
+          type
+        }
+        processors {
+          name
+          type
+        }
+        rightsholders {
+          name
+          type
+        }
+        origin
+      }
+      visualElement {
+        resource
+        title
+        copyright {
+          ...CopyrightInfo
+        }
+        image {
+          src
+          altText
+        }
+        brightcove {
+          cover
+          caption
+        }
+        h5p {
+          thumbnail
+        }
+      }
+    }
+    ${copyrightInfoFragment}
+  `,
 };

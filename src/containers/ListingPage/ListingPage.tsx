@@ -5,15 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { Location } from 'history';
 import { Spinner } from '@ndla/ui';
 import qs from 'query-string';
 import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import { listingPageQuery } from '../../queries';
-import { GQLListingPageQuery } from '../../graphqlTypes';
+import {
+  GQLListingPageQuery,
+  GQLListingPageQueryVariables,
+} from '../../graphqlTypes';
 
 interface Props {
   isOembed: boolean;
@@ -37,14 +39,14 @@ const getSubjectsString = (
 const ListingPage = ({ location, isOembed }: Props): JSX.Element => {
   const searchParams = qs.parse(location.search, { arrayFormat: 'bracket' });
   const querySubjects = getSubjectsString(searchParams['subjects']);
-  const { data, loading, previousData } = useQuery<GQLListingPageQuery>(
-    listingPageQuery,
-    {
-      variables: {
-        listingPageSubjects: querySubjects,
-      },
+  const { data, loading, previousData } = useQuery<
+    GQLListingPageQuery,
+    GQLListingPageQueryVariables
+  >(listingPageQuery, {
+    variables: {
+      listingPageSubjects: querySubjects,
     },
-  );
+  });
 
   if (loading && !data && !previousData) return <Spinner />;
 
@@ -71,5 +73,25 @@ const ListingPage = ({ location, isOembed }: Props): JSX.Element => {
     />
   );
 };
+
+ListingPage.fragments = {
+  subjects: gql`
+    fragment ListingPageSubject on Subject {
+      ...ListingContainerSubject
+    }
+  `,
+};
+
+export const listingPageQuery = gql`
+  query ListingPage($listingPageSubjects: String) {
+    listingPage(subjects: $listingPageSubjects) {
+      subjects {
+        ...ListingContainerSubject
+      }
+      tags
+    }
+  }
+  ${ListingContainer.fragments.subjects}
+`;
 
 export default ListingPage;

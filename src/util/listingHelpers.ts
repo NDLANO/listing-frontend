@@ -6,7 +6,7 @@
  *
  */
 
-import { GQLConcept } from '../graphqlTypes';
+import { GQLListingViewConceptFragment } from '../graphqlTypes';
 
 export function filterTags(tags: string[]) {
   return tags.filter(tag => tag.match(/.+:(.+)?:(.+)?/));
@@ -37,7 +37,7 @@ export function mapTagsToFilters(tags?: string[]) {
   return filters;
 }
 
-export function mapConceptToListItem(concept: GQLConcept) {
+export function mapConceptToListItem(concept: GQLListingViewConceptFragment) {
   return {
     id: concept?.id?.toString(),
     name: concept.title ?? '',

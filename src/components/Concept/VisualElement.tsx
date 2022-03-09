@@ -1,9 +1,21 @@
+/*
+ * Copyright (c) 2020-present, NDLA.
+ *
+ * This source code is licensed under the GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+import { gql } from '@apollo/client';
 import styled from '@emotion/styled';
 import { colors, spacing, fonts } from '@ndla/core';
 import { ImageCrop, ImageFocalPoint } from '@ndla/ui/lib/Image';
 import { Image, ImageLink } from '@ndla/ui';
 import { getLicenseByAbbreviation, LicenseByline } from '@ndla/licenses';
-import { GQLVisualElement, GQLImageElement } from '../../graphqlTypes';
+import {
+  GQLImageElement,
+  GQLListingVisualElementFragment,
+} from '../../graphqlTypes';
 
 export const getIframeSrcFromHtmlString = (
   html: string,
@@ -66,8 +78,8 @@ const LicensesWrapper = styled.div`
 `;
 
 interface Props {
-  visualElement: GQLVisualElement;
   language: string;
+  visualElement: GQLListingVisualElementFragment;
 }
 
 const VisualElement = ({
@@ -101,8 +113,8 @@ const VisualElement = ({
             color="#fff"
             licenseRights={rights}
           />
-          {authors.map(author => (
-            <span>{author.name}</span>
+          {authors.map((author, i) => (
+            <span key={`author-${i}`}>{author.name}</span>
           ))}
         </LicensesWrapper>
       </>
@@ -142,6 +154,51 @@ const VisualElement = ({
     );
   }
   return null;
+};
+
+VisualElement.fragments = {
+  visualElement: gql`
+    fragment ListingVisualElement on VisualElement {
+      url
+      title
+      oembed {
+        fullscreen
+        html
+        title
+      }
+      brightcove {
+        iframe {
+          src
+        }
+      }
+      image {
+        contentType
+        src
+        altText
+        focalX
+        focalY
+        lowerRightX
+        lowerRightY
+        upperLeftX
+        upperLeftY
+      }
+      # h5p src is only included so we receive a h5p property from GQL
+      h5p {
+        src
+      }
+      copyright {
+        license {
+          license
+        }
+        creators {
+          name
+        }
+        rightsholders {
+          name
+        }
+      }
+    }
+  `,
 };
 
 export default VisualElement;
