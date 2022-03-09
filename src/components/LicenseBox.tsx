@@ -30,7 +30,7 @@ import {
   GQLConceptCopyright,
   GQLCopyright,
   GQLCopyrightInfoFragment,
-  GQLImageLicenseInfoFragment,
+  GQLLicenseBoxConceptCopyrightFragment,
   GQLLicenseBoxConceptFragment,
   GQLVisualElement,
 } from '../graphqlTypes';
@@ -120,9 +120,7 @@ export const TextContent = ({ concept, locale }: TextContentProps) => {
 interface ImageContentItem {
   src: string;
   altText?: string;
-  copyright?:
-    | GQLImageLicenseInfoFragment['copyright']
-    | GQLCopyrightInfoFragment;
+  copyright?: GQLLicenseBoxConceptCopyrightFragment | GQLCopyrightInfoFragment;
   title?: string;
 }
 interface ImageContentProps {
@@ -249,7 +247,7 @@ export const OembedContent = ({ oembed }: OembedContentProps) => {
 
 const getTabImages = (concept: GQLLicenseBoxConceptFragment) => {
   if (!concept) return;
-  const images = [];
+  const images: ImageContentItem[] = [];
   if (concept.image?.src?.length) {
     images.push(concept.image);
   }
@@ -329,6 +327,28 @@ export const LicenseBox = ({ concept, language }: LicenseBoxProps) => {
   );
 };
 
+const conceptCopyright = gql`
+  fragment LicenseBoxConceptCopyright on ConceptCopyright {
+    license {
+      license
+      url
+    }
+    creators {
+      name
+      type
+    }
+    processors {
+      name
+      type
+    }
+    rightsholders {
+      name
+      type
+    }
+    origin
+  }
+`;
+
 LicenseBox.fragments = {
   concept: gql`
     fragment LicenseBoxConcept on Concept {
@@ -340,23 +360,7 @@ LicenseBox.fragments = {
         altText
       }
       copyright {
-        license {
-          license
-          url
-        }
-        creators {
-          name
-          type
-        }
-        processors {
-          name
-          type
-        }
-        rightsholders {
-          name
-          type
-        }
-        origin
+        ...LicenseBoxConceptCopyright
       }
       visualElement {
         resource
@@ -377,6 +381,7 @@ LicenseBox.fragments = {
         }
       }
     }
+    ${conceptCopyright}
     ${copyrightInfoFragment}
   `,
 };
