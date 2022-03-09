@@ -34,3 +34,11 @@ export const copyrightInfoFragment = gql`
     origin
   }
 `;
+
+export const conceptTitleQuery = gql`
+  query ConceptTitle($id: Int!) {
+    detailedConcept(id: $id) {
+      title
+    }
+  }
+`;

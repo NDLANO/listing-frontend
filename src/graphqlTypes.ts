@@ -1305,3 +1305,12 @@ export type GQLCopyrightInfoFragment = {
     { __typename?: 'Contributor' } & GQLContributorInfoFragment
   >;
 };
+
+export type GQLConceptTitleQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+export type GQLConceptTitleQuery = {
+  __typename?: 'Query';
+  detailedConcept?: Maybe<{ __typename?: 'Concept'; title: string }>;
+};
