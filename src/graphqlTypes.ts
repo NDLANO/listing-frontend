@@ -215,6 +215,7 @@ export type GQLCompetenceGoal = {
 export type GQLConcept = {
   __typename?: 'Concept';
   content: Scalars['String'];
+  copyright?: Maybe<GQLConceptCopyright>;
   id: Scalars['Int'];
   metaImage: GQLMetaImage;
   subjectIds?: Maybe<Array<Scalars['String']>>;
@@ -304,6 +305,7 @@ export type GQLDetailedConcept = {
   created?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   image?: Maybe<GQLImageLicense>;
+  source?: Maybe<Scalars['String']>;
   subjectIds?: Maybe<Array<Scalars['String']>>;
   subjectNames?: Maybe<Array<Scalars['String']>>;
   tags?: Maybe<Array<Scalars['String']>>;
@@ -633,6 +635,7 @@ export type GQLPodcastSeriesSummary = {
 
 export type GQLQuery = {
   __typename?: 'Query';
+  alerts?: Maybe<Array<Maybe<GQLUptimeAlert>>>;
   article?: Maybe<GQLArticle>;
   competenceGoal?: Maybe<GQLCompetenceGoal>;
   competenceGoals?: Maybe<Array<GQLCompetenceGoal>>;
@@ -1087,6 +1090,12 @@ export type GQLTopicSupplementaryResourcesArgs = {
   subjectId?: Maybe<Scalars['String']>;
 };
 
+export type GQLUptimeAlert = {
+  __typename?: 'UptimeAlert';
+  body?: Maybe<Scalars['String']>;
+  title: Scalars['String'];
+};
+
 export type GQLVisualElement = {
   __typename?: 'VisualElement';
   brightcove?: Maybe<GQLBrightcoveElement>;
@@ -1217,9 +1226,9 @@ export type GQLDetailedConceptQuery = {
     created?: Maybe<string>;
     subjectIds?: Maybe<Array<string>>;
     subjectNames?: Maybe<Array<string>>;
+    source?: Maybe<string>;
     copyright?: Maybe<{
       __typename?: 'ConceptCopyright';
-      origin?: Maybe<string>;
       license?: Maybe<{ __typename?: 'License'; license: string }>;
       creators: Array<{
         __typename?: 'Contributor';
