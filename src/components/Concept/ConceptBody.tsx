@@ -61,7 +61,7 @@ const ConceptBody = ({
       )}
       <NotionDialogLicenses
         license={concept.copyright?.license?.license}
-        source={concept.copyright?.origin}
+        source={renderMarkdown(concept.source)}
         authors={
           concept.copyright?.creators?.map(creator => creator?.name) || []
         }
@@ -76,6 +76,7 @@ ConceptBody.fragments = {
     fragment ConceptBodyConcept on Concept {
       content
       subjectNames
+      source
       articles {
         title
         id

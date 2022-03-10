@@ -1171,6 +1171,7 @@ export type GQLConceptBodyConceptFragment = {
   __typename?: 'Concept';
   content: string;
   subjectNames?: Maybe<Array<string>>;
+  source?: Maybe<string>;
   articles?: Maybe<Array<{ __typename?: 'Meta'; title: string; id: number }>>;
   copyright?: Maybe<{
     __typename?: 'ConceptCopyright';
