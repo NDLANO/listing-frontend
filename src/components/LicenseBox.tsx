@@ -158,27 +158,31 @@ export const ImageContent = ({ images, conceptId }: ImageContentProps) => {
               <MediaListItemActions>
                 <div className="c-medialist__ref">
                   <MediaListItemMeta items={getLicenseItems(image, t)} />
-                  <CopyTextButton
-                    hasCopiedTitle={t('license.hasCopiedTitle')}
-                    copyTitle={t('license.copyTitle')}
-                    stringToCopy={figureApa7CopyString(
-                      image.title,
-                      undefined,
-                      undefined,
-                      `/concepts/${conceptId}`,
-                      image.copyright,
-                      image.copyright?.license?.license,
-                      config.ndlaFrontendDomain,
-                      t,
-                      language,
-                    )}
-                  />
-                  <AnchorButton
-                    href={downloadUrl(image.src)}
-                    appearance="outline"
-                    download>
-                    {t('license.download')}
-                  </AnchorButton>
+                  {image.copyright?.license.license !== 'COPYRIGHTED' && (
+                    <>
+                      <CopyTextButton
+                        hasCopiedTitle={t('license.hasCopiedTitle')}
+                        copyTitle={t('license.copyTitle')}
+                        stringToCopy={figureApa7CopyString(
+                          image.title,
+                          undefined,
+                          undefined,
+                          `/concepts/${conceptId}`,
+                          image.copyright,
+                          image.copyright?.license?.license,
+                          config.ndlaFrontendDomain,
+                          t,
+                          language,
+                        )}
+                      />
+                      <AnchorButton
+                        href={downloadUrl(image.src)}
+                        appearance="outline"
+                        download>
+                        {t('license.download')}
+                      </AnchorButton>
+                    </>
+                  )}
                 </div>
               </MediaListItemActions>
             </MediaListItemBody>
