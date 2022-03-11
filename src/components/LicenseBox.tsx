@@ -362,6 +362,9 @@ LicenseBox.fragments = {
       image {
         src
         altText
+        copyright {
+          ...CopyrightInfo
+        }          
       }
       copyright {
         ...LicenseBoxConceptCopyright
