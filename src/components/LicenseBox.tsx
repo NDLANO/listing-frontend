@@ -364,7 +364,7 @@ LicenseBox.fragments = {
         altText
         copyright {
           ...CopyrightInfo
-        }          
+        }
       }
       copyright {
         ...LicenseBoxConceptCopyright
