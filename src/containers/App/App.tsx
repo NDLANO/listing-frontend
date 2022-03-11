@@ -69,7 +69,7 @@ const App = () => {
               }>,
             ) => (
               <ConceptPage
-                conceptId={routeProps.match.params.conceptId}
+                conceptId={parseInt(routeProps.match.params.conceptId)}
                 inModal={false}
                 language={
                   routeProps.match.params.selectedLanguage || i18n.language

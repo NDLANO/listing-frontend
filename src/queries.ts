@@ -8,83 +8,6 @@
 
 import { gql } from '@apollo/client';
 
-const imageLicenseFragment = gql`
-  fragment ImageLicenseInfo on ImageLicense {
-    title
-    src
-    altText
-    copyright {
-      license {
-        license
-      }
-      creators {
-        name
-        type
-      }
-      rightsholders {
-        name
-        type
-      }
-    }
-  }
-`;
-
-export const subjectInfoFragment = gql`
-  fragment SubjectInfo on Subject {
-    id
-    name
-    path
-  }
-`;
-
-export const listingPageQuery = gql`
-  query ListingPage($listingPageSubjects: String) {
-    listingPage(subjects: $listingPageSubjects) {
-      subjects {
-        ...SubjectInfo
-      }
-      tags
-    }
-  }
-  ${subjectInfoFragment}
-`;
-
-export const conceptSearchQuery = gql`
-  query ConceptSearch(
-    $query: String
-    $subjects: String
-    $tags: String
-    $page: String
-    $pageSize: String
-    $exactMatch: Boolean
-    $fallback: Boolean
-    $language: String
-  ) {
-    conceptSearch(
-      query: $query
-      subjects: $subjects
-      tags: $tags
-      page: $page
-      pageSize: $pageSize
-      exactMatch: $exactMatch
-      fallback: $fallback
-      language: $language
-    ) {
-      totalCount
-      concepts {
-        id
-        title
-        content
-        tags
-        metaImage {
-          url
-          alt
-        }
-      }
-    }
-  }
-`;
-
 const contributorInfoFragment = gql`
   fragment ContributorInfo on Contributor {
     name
@@ -92,7 +15,7 @@ const contributorInfoFragment = gql`
   }
 `;
 
-const copyrightInfoFragment = gql`
+export const copyrightInfoFragment = gql`
   ${contributorInfoFragment}
   fragment CopyrightInfo on Copyright {
     license {
@@ -112,86 +35,10 @@ const copyrightInfoFragment = gql`
   }
 `;
 
-export const detailedConceptQuery = gql`
-  query DetailedConcept($id: String) {
-    detailedConcept(id: $id) {
+export const conceptTitleQuery = gql`
+  query ConceptTitle($id: Int!) {
+    concept(id: $id) {
       title
-      id
-      content
-      created
-      subjectIds
-      subjectNames
-      copyright {
-        license {
-          license
-        }
-        creators {
-          name
-          type
-        }
-      }
-      source
-      image {
-        ...ImageLicenseInfo
-      }
-      articles {
-        id
-        title
-      }
-      visualElement {
-        title
-        resource
-        url
-        copyright {
-          ...CopyrightInfo
-        }
-        language
-        embed
-        brightcove {
-          videoid
-          player
-          account
-          caption
-          description
-          cover
-          src
-          download
-          iframe {
-            src
-            height
-            width
-          }
-          uploadDate
-          copyText
-        }
-        h5p {
-          src
-          thumbnail
-          copyText
-        }
-        oembed {
-          title
-          html
-          fullscreen
-        }
-        image {
-          resourceid
-          alt
-          caption
-          lowerRightX
-          lowerRightY
-          upperLeftX
-          upperLeftY
-          focalX
-          focalY
-          src
-          altText
-          contentType
-          copyText
-        }
-      }
     }
   }
-  ${imageLicenseFragment}
-  ${copyrightInfoFragment}
 `;

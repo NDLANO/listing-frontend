@@ -20,7 +20,7 @@
     "format-check": "node prettier.js lint",
     "check-all": "yarn format-check && yarn lint && yarn test",
     "get-gql-schema-local": "apollo schema:download --endpoint=http://localhost:4000/graphql-api/graphql src/gqlSchema.json",
-    "generate-gql-types": "graphql-codegen --config codegen.yml",
+    "generate-gql-types": "graphql-codegen --config codegen.yml && yarn format",
     "check-translations": "cross-env BABEL_ENV=test NODE_ENV=unittest jest src/phrases/__tests__/"
   },
   "jest": {

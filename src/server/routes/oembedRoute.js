@@ -10,8 +10,8 @@ import config from '../../config';
 import { isListeParamUrl, isListePathUrl } from '../../util/listingHelpers';
 import handleError from '../../util/handleError';
 import { createApolloClient } from '../../util/apiHelpers';
-import { detailedConceptQuery } from '../../queries';
 import { httpStatus } from '../../constants';
+import { conceptTitleQuery } from '../../queries';
 
 const getOembedObject = (req, title, html) => {
   return {
@@ -41,12 +41,12 @@ const getApolloClient = () => {
 const getConceptHTMLandTitle = async id => {
   const client = getApolloClient();
   const concept = await client.query({
-    query: detailedConceptQuery,
+    query: conceptTitleQuery,
     variables: {
       id,
     },
   });
-  const title = concept.title?.title;
+  const title = concept.data.detailedConcept?.title;
   return {
     title: title,
     html: `<iframe aria-label="${title}" src="${config.ndlaListingFrontendDomain}/concepts/${id}" frameborder="0" allowFullscreen="" />`,

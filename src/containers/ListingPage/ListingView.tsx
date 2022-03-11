@@ -13,6 +13,7 @@ import Downshift, {
   StateChangeOptions,
   ControllerStateAndHelpers,
 } from 'downshift';
+import { gql } from '@apollo/client';
 import styled from '@emotion/styled';
 import { css, SerializedStyles } from '@emotion/core';
 import { colors, fonts, spacing } from '@ndla/core';
@@ -38,7 +39,10 @@ import Footer from '../../components/Footer';
 import CopyTextButton from '../../components/CopyTextButton';
 import config from '../../config';
 import { Filter, ListItem } from '../../interfaces';
-import { GQLConcept, GQLSubjectInfoFragment } from '../../graphqlTypes';
+import {
+  GQLListingViewConceptFragment,
+  GQLListingViewSubjectFragment,
+} from '../../graphqlTypes';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
@@ -135,8 +139,8 @@ interface Props {
   filterListOpen: boolean;
   setFilterListOpen: (value: boolean) => void;
   totalCount: number;
-  concepts: GQLConcept[];
-  subjects: GQLSubjectInfoFragment[];
+  concepts: GQLListingViewConceptFragment[];
+  subjects: GQLListingViewSubjectFragment[];
   filters: Record<string, Filter>;
   selectedSubjects: string[];
   selectedFilters: string[];
@@ -396,7 +400,7 @@ const ListingView = ({
             selectedItem={
               selectedConcept ? (
                 <ConceptPage
-                  conceptId={selectedConcept}
+                  conceptId={parseInt(selectedConcept)}
                   language={locale}
                   inModal={true}
                   handleClose={handleSelectItem}
@@ -433,6 +437,26 @@ const ListingView = ({
       {!isOembed && <Footer />}
     </>
   );
+};
+
+ListingView.fragments = {
+  subject: gql`
+    fragment ListingViewSubject on Subject {
+      id
+      name
+    }
+  `,
+  concept: gql`
+    fragment ListingViewConcept on Concept {
+      id
+      title
+      content
+      tags
+      metaImage {
+        url
+      }
+    }
+  `,
 };
 
 export default ListingView;

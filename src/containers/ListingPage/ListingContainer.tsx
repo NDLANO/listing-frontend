@@ -7,26 +7,26 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import { Location } from 'history';
-import { useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 
 import { useTranslation } from 'react-i18next';
 import ListingView from './ListingView';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getTagsParameter } from '../../util/listingHelpers';
-import { conceptSearchQuery } from '../../queries';
 import { Filter, ListItem } from '../../interfaces';
 import {
-  GQLConceptSearchQuery,
-  GQLConceptSearchQueryVariables,
-  GQLConcept,
-  GQLSubjectInfoFragment,
+  GQLListingContainerConceptSearchQuery,
+  GQLListingContainerConceptSearchQueryVariables,
+  GQLListingContainerSubjectFragment,
 } from '../../graphqlTypes';
 
 const PAGE_SIZE = 100;
 
-interface Props {
+interface GQLProps {
+  subjects: GQLListingContainerSubjectFragment[];
+}
+interface Props extends GQLProps {
   isOembed: boolean;
-  subjects: GQLSubjectInfoFragment[];
   tags: string[];
   filters: Record<string, Filter>;
   location: Location;
@@ -44,7 +44,7 @@ const ListingContainer = ({
   tags,
   filters,
   location,
-}: Props): JSX.Element => {
+}: Props) => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [queryParams, setQueryParams] = useQueryParameter<QueryParams>({
@@ -67,14 +67,14 @@ const ListingContainer = ({
   const debouncedSearchVal = useDebounce(searchValue, 200);
 
   const { data, loading, fetchMore } = useQuery<
-    GQLConceptSearchQuery,
-    GQLConceptSearchQueryVariables
-  >(conceptSearchQuery, {
+    GQLListingContainerConceptSearchQuery,
+    GQLListingContainerConceptSearchQueryVariables
+  >(listingContainerConceptSearchQuery, {
     variables: {
       query: debouncedSearchVal,
       subjects: queryParams.subjects.join(),
       tags: getTagsParameter(tags, queryParams.filters),
-      pageSize: PAGE_SIZE.toString(),
+      pageSize: PAGE_SIZE,
       fallback: true,
       exactMatch: false,
       language: i18n.language,
@@ -145,7 +145,7 @@ const ListingContainer = ({
   }, [filters, handleRemoveFilter, queryParams.filters]);
 
   const totalCount = data?.conceptSearch?.totalCount;
-  const concepts: GQLConcept[] | undefined = data?.conceptSearch?.concepts;
+  const concepts = data?.conceptSearch?.concepts;
   const showLoadMore =
     concepts !== undefined && totalCount !== undefined
       ? concepts.length < totalCount
@@ -178,5 +178,50 @@ const ListingContainer = ({
     />
   );
 };
+
+ListingContainer.fragments = {
+  subjects: gql`
+    fragment ListingContainerSubject on Subject {
+      ...ListingViewSubject
+    }
+    ${ListingView.fragments.subject}
+  `,
+  concept: gql`
+    fragment ListingContainerConcept on Concept {
+      ...ListingViewConcept
+    }
+    ${ListingView.fragments.concept}
+  `,
+};
+
+const listingContainerConceptSearchQuery = gql`
+  query ListingContainerConceptSearch(
+    $query: String
+    $subjects: String
+    $tags: String
+    $page: Int
+    $pageSize: Int
+    $exactMatch: Boolean
+    $fallback: Boolean
+    $language: String
+  ) {
+    conceptSearch(
+      query: $query
+      subjects: $subjects
+      tags: $tags
+      page: $page
+      pageSize: $pageSize
+      exactMatch: $exactMatch
+      fallback: $fallback
+      language: $language
+    ) {
+      totalCount
+      concepts {
+        ...ListingContainerConcept
+      }
+    }
+  }
+  ${ListingContainer.fragments.concept}
+`;
 
 export default ListingContainer;
