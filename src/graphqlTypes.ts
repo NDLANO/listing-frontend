@@ -1253,7 +1253,13 @@ export type GQLLicenseBoxConceptFragment = {
   id: number;
   created: string;
   title: string;
-  image?: Maybe<{ __typename?: 'ImageLicense'; src: string; altText: string }>;
+  image?: Maybe<{
+    __typename?: 'ImageLicense';
+    src: string;
+    altText: string;
+    title: string;
+    copyright: { __typename?: 'Copyright' } & GQLCopyrightInfoFragment;
+  }>;
   copyright?: Maybe<
     { __typename?: 'ConceptCopyright' } & GQLLicenseBoxConceptCopyrightFragment
   >;
