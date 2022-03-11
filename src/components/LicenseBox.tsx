@@ -155,7 +155,7 @@ export const ImageContent = ({ images, conceptId }: ImageContentProps) => {
               <MediaListItemActions>
                 <div className="c-medialist__ref">
                   <MediaListItemMeta items={getLicenseItems(image, t)} />
-                  {image.copyright?.license.license !== 'COPYRIGHTED' && (
+                  {image.copyright?.license?.license !== 'COPYRIGHTED' && (
                     <>
                       <CopyTextButton
                         hasCopiedTitle={t('license.hasCopiedTitle')}
