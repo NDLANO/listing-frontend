@@ -9,7 +9,6 @@
 import PropTypes from 'prop-types';
 import { renderToString } from 'react-dom/server';
 import serialize from 'serialize-javascript';
-import Helmet from 'react-helmet';
 
 import config from '../../config';
 
@@ -49,9 +48,9 @@ const GoogleTagMangerScript = () => {
 };
 
 const Html = props => {
-  const { lang, className, component, state, data } = props;
+  const { lang, className, component, state, data, helmetContext} = props;
   const content = component ? renderToString(component) : '';
-  const head = Helmet.rewind();
+  const helmet = helmetContext.helmet;
 
   return (
     <html lang={lang} className={className}>
@@ -59,9 +58,9 @@ const Html = props => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        {head.title.toComponent()}
-        {head.meta.toComponent()}
-        {head.script.toComponent()}
+        {helmet.title.toComponent()}
+        {helmet.meta.toComponent()}
+        {helmet.script.toComponent()}
         {razzleAssets.client && razzleAssets.client.css && (
           <link
             rel="stylesheet"
@@ -108,6 +107,7 @@ Html.propTypes = {
   state: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
   data: PropTypes.object,
   className: PropTypes.string.isRequired,
+  helmetContext: PropTypes.object,
 };
 
 export default Html;

@@ -16,7 +16,7 @@ import {
   useHistory,
 } from 'react-router-dom';
 import styled from '@emotion/styled';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { PageContainer, Spinner } from '@ndla/ui';
 
 import { useTranslation } from 'react-i18next';
