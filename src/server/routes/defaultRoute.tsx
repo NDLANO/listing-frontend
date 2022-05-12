@@ -55,6 +55,10 @@ const renderHtmlString = async ({
   );
 };
 
+const disableSSR = (req: Request) => {
+  return __DISABLE_SSR__ || req.query['disableSSR'] === 'true';
+};
+
 export async function defaultRoute(req: Request, res: Response) {
   const paths = req.url.split('/');
   const { abbreviation: locale } = getLocaleObject(paths[1] ?? '');
@@ -66,7 +70,7 @@ export async function defaultRoute(req: Request, res: Response) {
 
   const client = createApolloClient(locale);
 
-  if (__DISABLE_SSR__) {
+  if (disableSSR(req)) {
     // eslint-disable-line no-underscore-dangle
     const htmlString = await renderHtmlString({
       locale,
