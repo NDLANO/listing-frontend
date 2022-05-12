@@ -6,7 +6,7 @@
  *
  */
 import { ChangeEvent, useState } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Remarkable } from 'remarkable';
 import { Location } from 'history';
 import Downshift, {

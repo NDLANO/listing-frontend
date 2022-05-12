@@ -7,7 +7,6 @@
  */
 
 import serialize from 'serialize-javascript';
-import Helmet from 'react-helmet';
 
 import config from '../../config';
 
@@ -55,20 +54,26 @@ interface Props {
     locale?: string;
   };
   data: any;
+  helmet: any;
 }
 
-const Html = ({ lang, className, content = '', initialProps, data }: Props) => {
-  const head = Helmet.rewind();
-
+const Html = ({
+  lang,
+  className,
+  content = '',
+  initialProps,
+  data,
+  helmet,
+}: Props) => {
   return (
     <html lang={lang} className={className}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        {head.title.toComponent()}
-        {head.meta.toComponent()}
-        {head.script.toComponent()}
+        {helmet.title.toComponent()}
+        {helmet.meta.toComponent()}
+        {helmet.script.toComponent()}
         {razzleAssets.client && razzleAssets.client.css && (
           <link
             rel="stylesheet"

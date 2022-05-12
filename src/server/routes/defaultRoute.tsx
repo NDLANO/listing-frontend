@@ -9,6 +9,7 @@ import { ReactElement } from 'react';
 import { renderToStringWithData } from '@apollo/client/react/ssr';
 import { Request, Response } from 'express';
 import { renderToString } from 'react-dom/server';
+import { HelmetProvider } from 'react-helmet-async';
 import { StaticRouter } from 'react-router';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { I18nextProvider } from 'react-i18next';
@@ -33,6 +34,7 @@ interface RenderHtmlProps {
   client: ApolloClient<any>;
   userAgentString?: string;
   initialProps?: InitialProps;
+  helmetContext: any;
 }
 
 const renderHtmlString = async ({
@@ -41,9 +43,11 @@ const renderHtmlString = async ({
   client,
   userAgentString,
   initialProps,
+  helmetContext,
 }: RenderHtmlProps) => {
   const content = component ? await renderToStringWithData(component) : '';
   const data = client.extract();
+  const helmet = helmetContext.helmet;
   return renderToString(
     <Html
       lang={locale}
@@ -51,6 +55,7 @@ const renderHtmlString = async ({
       content={content}
       className={getConditionalClassnames(userAgentString)}
       data={{ apolloState: data }}
+      helmet={helmet}
     />,
   );
 };
@@ -69,6 +74,7 @@ export async function defaultRoute(req: Request, res: Response) {
   }
 
   const client = createApolloClient(locale);
+  const helmetContext = {};
 
   if (disableSSR(req)) {
     // eslint-disable-line no-underscore-dangle
@@ -79,6 +85,7 @@ export async function defaultRoute(req: Request, res: Response) {
         locale,
       },
       client,
+      helmetContext,
     });
     res.send(`<!doctype html>\n${htmlString}`);
     return;
@@ -88,13 +95,18 @@ export async function defaultRoute(req: Request, res: Response) {
 
   const context: any = {};
   const component = (
-    <I18nextProvider i18n={i18nInstance}>
-      <ApolloProvider client={client}>
-        <StaticRouter basename={basename} location={req.url} context={context}>
-          <App />
-        </StaticRouter>
-      </ApolloProvider>
-    </I18nextProvider>
+    <HelmetProvider context={helmetContext}>
+      <I18nextProvider i18n={i18nInstance}>
+        <ApolloProvider client={client}>
+          <StaticRouter
+            basename={basename}
+            location={req.url}
+            context={context}>
+            <App />
+          </StaticRouter>
+        </ApolloProvider>
+      </I18nextProvider>
+    </HelmetProvider>
   );
 
   if (context.url) {
@@ -110,6 +122,7 @@ export async function defaultRoute(req: Request, res: Response) {
         initialProps: { locale },
         component,
         client,
+        helmetContext,
       });
       const status = context.status ?? 200;
       res.status(status).send(`<!doctype html>\n${htmlString}`);

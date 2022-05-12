@@ -7,6 +7,7 @@
  */
 
 import { useState, useRef, useEffect } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
@@ -68,13 +69,15 @@ const LanguageWrapper = () => {
 
 const renderApp = () =>
   ReactDOM.render(
-    <I18nextProvider i18n={i18nInstance}>
-      <ApolloProvider client={client}>
-        <BrowserRouter>
-          <LanguageWrapper />
-        </BrowserRouter>
-      </ApolloProvider>
-    </I18nextProvider>,
+    <HelmetProvider>
+      <I18nextProvider i18n={i18nInstance}>
+        <ApolloProvider client={client}>
+          <BrowserRouter>
+            <LanguageWrapper />
+          </BrowserRouter>
+        </ApolloProvider>
+      </I18nextProvider>
+    </HelmetProvider>,
     document.getElementById('root'),
   );
 
