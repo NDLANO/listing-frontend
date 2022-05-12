@@ -6,12 +6,11 @@
  *
  */
 
-import PropTypes from 'prop-types';
-import { renderToString } from 'react-dom/server';
 import serialize from 'serialize-javascript';
 
 import config from '../../config';
 
+//@ts-ignore
 const razzleAssets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
 
 const GoogleTagMangerNoScript = () => {
@@ -47,11 +46,25 @@ const GoogleTagMangerScript = () => {
   return null;
 };
 
-const Html = props => {
-  const { lang, className, component, state, data, helmetContext} = props;
-  const content = component ? renderToString(component) : '';
-  const helmet = helmetContext.helmet;
+interface Props {
+  lang: string;
+  className: string;
+  content?: string;
+  initialProps?: {
+    locale?: string;
+  };
+  data: any;
+  helmet: any;
+}
 
+const Html = ({
+  lang,
+  className,
+  content = '',
+  initialProps,
+  data,
+  helmet,
+}: Props) => {
   return (
     <html lang={lang} className={className}>
       <head>
@@ -80,7 +93,7 @@ const Html = props => {
         <div id="root" dangerouslySetInnerHTML={{ __html: content }} />
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.initialState = ${serialize(state)}`,
+            __html: `window.initialState = ${serialize(initialProps)}`,
           }}
         />
         <script
@@ -91,7 +104,7 @@ const Html = props => {
         <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
-            __html: `window.DATA = ${serialize(data)}; `,
+            __html: `window.DATA= ${serialize(data)}; `,
           }}
         />
         <script src={razzleAssets.client.js} />
@@ -99,15 +112,6 @@ const Html = props => {
       </body>
     </html>
   );
-};
-
-Html.propTypes = {
-  lang: PropTypes.string.isRequired,
-  component: PropTypes.node,
-  state: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
-  data: PropTypes.object,
-  className: PropTypes.string.isRequired,
-  helmetContext: PropTypes.object,
 };
 
 export default Html;

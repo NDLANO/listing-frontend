@@ -5,11 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-
+import { ReactElement } from 'react';
+import { renderToStringWithData } from '@apollo/client/react/ssr';
+import { Request, Response } from 'express';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { StaticRouter } from 'react-router';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
@@ -18,28 +20,53 @@ import { createApolloClient } from '../../util/apiHelpers';
 import { getLocaleObject, isValidLocale } from '../../i18n';
 import App from '../../containers/App/App';
 
-const renderHtmlString = (
+declare global {
+  let __DISABLE_SSR__: boolean;
+}
+
+interface InitialProps {
+  locale?: string;
+}
+
+interface RenderHtmlProps {
+  locale: string;
+  component?: ReactElement;
+  client: ApolloClient<any>;
+  userAgentString?: string;
+  initialProps?: InitialProps;
+  helmetContext: any;
+}
+
+const renderHtmlString = async ({
   locale,
+  component,
+  client,
   userAgentString,
-  state = {},
-  data = {},
-  component = undefined,
+  initialProps,
   helmetContext,
-) =>
-  renderToString(
+}: RenderHtmlProps) => {
+  const content = component ? await renderToStringWithData(component) : '';
+  const data = client.extract();
+  const helmet = helmetContext.helmet;
+  return renderToString(
     <Html
       lang={locale}
-      state={state}
-      component={component}
+      initialProps={initialProps}
+      content={content}
       className={getConditionalClassnames(userAgentString)}
-      data={data}
-      helmetContext={helmetContext}
+      data={{ apolloState: data }}
+      helmet={helmet}
     />,
   );
+};
 
-export function defaultRoute(req, res) {
+const disableSSR = (req: Request) => {
+  return __DISABLE_SSR__ || req.query['disableSSR'] === 'true';
+};
+
+export async function defaultRoute(req: Request, res: Response) {
   const paths = req.url.split('/');
-  const { abbreviation: locale } = getLocaleObject(paths[1]);
+  const { abbreviation: locale } = getLocaleObject(paths[1] ?? '');
   const userAgentString = req.headers['user-agent'];
   // Oembed-hack
   if (paths.find(p => p.includes('listing')) || paths.includes('concepts')) {
@@ -49,27 +76,24 @@ export function defaultRoute(req, res) {
   const client = createApolloClient(locale);
   const helmetContext = {};
 
-  if (__DISABLE_SSR__) {
+  if (disableSSR(req)) {
     // eslint-disable-line no-underscore-dangle
-    const apolloState = client.extract();
-    const htmlString = renderHtmlString(
+    const htmlString = await renderHtmlString({
       locale,
       userAgentString,
-      {
+      initialProps: {
         locale,
       },
-      <HelmetProvider context={helmetContext}>{''}</HelmetProvider>,
-      {
-        apolloState,
-      },
-    );
+      client,
+      helmetContext,
+    });
     res.send(`<!doctype html>\n${htmlString}`);
     return;
   }
 
-  const basename = isValidLocale(paths[1]) ? `${paths[1]}` : '';
+  const basename = isValidLocale(paths[1] ?? '') ? `${paths[1]}` : '';
 
-  const context = {};
+  const context: any = {};
   const component = (
     <HelmetProvider context={helmetContext}>
       <I18nextProvider i18n={i18nInstance}>
@@ -92,15 +116,14 @@ export function defaultRoute(req, res) {
     res.end();
   } else {
     try {
-      const apolloState = client.extract();
-      const htmlString = renderHtmlString(
+      const htmlString = await renderHtmlString({
         locale,
         userAgentString,
-        { locale },
-        { apolloState },
+        initialProps: { locale },
         component,
+        client,
         helmetContext,
-      );
+      });
       const status = context.status ?? 200;
       res.status(status).send(`<!doctype html>\n${htmlString}`);
     } catch (error) {
