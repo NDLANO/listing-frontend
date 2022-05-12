@@ -99,7 +99,7 @@ const Html = ({ lang, className, content = '', initialProps, data }: Props) => {
         <script
           type="text/javascript"
           dangerouslySetInnerHTML={{
-            __html: `window.__APOLLO_STATE__ = ${serialize(data)}; `,
+            __html: `window.DATA= ${serialize(data)}; `,
           }}
         />
         <script src={razzleAssets.client.js} />

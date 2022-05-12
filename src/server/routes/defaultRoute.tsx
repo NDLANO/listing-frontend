@@ -50,7 +50,7 @@ const renderHtmlString = async ({
       initialProps={initialProps}
       content={content}
       className={getConditionalClassnames(userAgentString)}
-      data={data}
+      data={{ apolloState: data }}
     />,
   );
 };
