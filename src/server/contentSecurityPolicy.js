@@ -83,10 +83,10 @@ const connectSrc = (() => {
 const fontSrc = (() => {
   const defaultFontSrc = [
     "'self'",
-    'data:',
-    'cdnjs.cloudflare.com',
+    'https://fonts.googleapis.com',
+    'https://fonts.gstatic.com',
     'https://*.hotjar.com',
-    'cdn.jsdelivr.net',
+    'data:',
   ];
   if (process.env.NODE_ENV === 'development') {
     return defaultFontSrc.concat('http://localhost:3001');
