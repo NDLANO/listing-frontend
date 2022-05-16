@@ -1594,6 +1594,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/source-sans-pro@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-pro/-/source-sans-pro-4.5.9.tgz#65f0897f4d601931afe4e8451303e9c7a8d177ec"
+  integrity sha512-N4nFZhIijG/Q1vb3vaMHbcJOVoXb6S8OJKBuoLKictAH+04rduuOyLihPbQe+o2hNYLcjmUpoPMNTDnSm5yzQw==
+
 "@graphql-codegen/cli@2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-2.2.0.tgz#84a909cb46f009cafc59aa719b816494b0ca222b"

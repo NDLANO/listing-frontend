@@ -86,6 +86,7 @@
     "@apollo/client": "3.3.16",
     "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
+    "@fontsource/source-sans-pro": "^4.5.9",
     "@ndla/article-scripts": "^2.2.1",
     "@ndla/button": "^2.2.0",
     "@ndla/core": "^2.1.1",

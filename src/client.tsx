@@ -15,6 +15,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider, useApolloClient } from '@apollo/client';
 import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
+import '@fontsource/source-sans-pro/index.css';
+import '@fontsource/source-sans-pro/400-italic.css';
+import '@fontsource/source-sans-pro/300.css';
+import '@fontsource/source-sans-pro/300-italic.css';
+import '@fontsource/source-sans-pro/600.css';
+import '@fontsource/source-sans-pro/700.css';
 
 import { initializeI18n, isValidLocale, supportedLanguages } from './i18n';
 import { createApolloClient } from './util/apiHelpers';

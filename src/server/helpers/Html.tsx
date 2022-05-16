@@ -81,10 +81,6 @@ const Html = ({
             href={razzleAssets.client.css}
           />
         )}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300italic,400,600,700|Signika:400,600,300,700"
-        />
         <link rel="icon" href={`/favicon.ico`} type="image/ico" />
       </head>
       <body>
