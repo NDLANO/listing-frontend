@@ -2160,10 +2160,10 @@
   resolved "https://registry.yarnpkg.com/@n1ru4l/graphql-live-query/-/graphql-live-query-0.8.1.tgz#2d6ca6157dafdc5d122a1aeb623b43e939c4b238"
   integrity sha512-x5SLY+L9/5s07OJprISXx4csNBPF74UZeTI01ZPSaxOtRz2Gljk652kSPf6OjMLtx5uATr35O0M3G0LYhHBLtg==
 
-"@ndla/article-scripts@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@ndla/article-scripts/-/article-scripts-2.2.1.tgz#92c08e3c0ec8769345cfab7e76f8c33354f29e57"
-  integrity sha512-tkJ2WAOVVbdOJLP/bFm7FQE+raKuMeGeyGebwrLx06twvuky/6Mupt+L4ijOoNW5vt6iUeWw/wErHx1/LH5ijA==
+"@ndla/article-scripts@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@ndla/article-scripts/-/article-scripts-2.5.0.tgz#2ca3318d20b6cb8aff45daadf61453b6339dcc34"
+  integrity sha512-EShB45JIty5s9zUFnqCKna3w9sk0wlzeU2FpBO0XNFK6lqKCwrqjsKTjWpiyk/TH8MWn4iYGCWmowADdxQAfwg==
   dependencies:
     "@ndla/util" "^3.0.0"
     focus-trap "^6.7.3"
@@ -2203,14 +2203,14 @@
     "@ndla/util" "^3.0.0"
     raven-js "^3.22.3"
 
-"@ndla/forms@^1.1.29":
-  version "1.1.29"
-  resolved "https://registry.yarnpkg.com/@ndla/forms/-/forms-1.1.29.tgz#9498f7b82e333e25d66159640117d41e41041a5e"
-  integrity sha512-KTuflupbB14D9jZYn1lR35qdNdnYlUxlJIdlffH0GcfEQJDnq/DE51t4hA3lFI7fs18+cYaLfVwKrx1xj3Tebg==
+"@ndla/forms@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@ndla/forms/-/forms-2.0.5.tgz#dba8e9078ae3ec34e6bf28deb34aa53ad7f11ac8"
+  integrity sha512-JIfE/+M3XLVXP6zS7KeaJNZRONVNYUyHOh1+CW2UPzSKqclhgWEYVEtPjIzkxenFmPLeO/0ryGlxty7oPVeaiw==
   dependencies:
     "@ndla/core" "^2.1.1"
     "@ndla/icons" "^1.7.0"
-    "@ndla/ui" "^10.0.0"
+    "@ndla/ui" "^11.1.3"
 
 "@ndla/hooks@^1.1.4":
   version "1.1.4"
@@ -2233,14 +2233,14 @@
     "@ndla/core" "^2.1.1"
     "@ndla/icons" "^1.7.0"
 
-"@ndla/listview@^1.1.28":
-  version "1.1.28"
-  resolved "https://registry.yarnpkg.com/@ndla/listview/-/listview-1.1.28.tgz#cb89b6ea82bfe4957159810aae37a7e3cfac02e0"
-  integrity sha512-8bMAomJYaHwvtrgTXmCIdqHQcd7r8NXWxdiK9oIK76Zy6N0Or7SFJSyPQm9zdHWfx8FXb1EASk6I+Ii3To0GEg==
+"@ndla/listview@^2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@ndla/listview/-/listview-2.0.5.tgz#cf734bc8d2597fb51883b6eda3c2e60efe1428b3"
+  integrity sha512-5abloOQC8qDKnchS6SfXdB2nxjhF4+D6H5tfOm7poj3p83Ym/TGDKepY1yMHYEwk7NPkpllw4FDSYCRr4NDbug==
   dependencies:
     "@ndla/core" "^2.1.1"
     "@ndla/icons" "^1.7.0"
-    "@ndla/ui" "^10.0.0"
+    "@ndla/ui" "^11.1.3"
 
 "@ndla/modal@^1.2.6":
   version "1.2.6"
@@ -2251,10 +2251,10 @@
     "@ndla/icons" "^1.7.0"
     "@reach/dialog" "^0.16.2"
 
-"@ndla/notion@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@ndla/notion/-/notion-3.0.1.tgz#31d318a0ad459f9e5000a403d37aa4c7a3f3b32c"
-  integrity sha512-fip9utDAZk4mtaCyWpB99gzj2Cfl5AZU4ZHtI/2ZotsUZv9C+DBA7/XnpWuVW9ZpHDhPhpGMnMUAdfWG8hisig==
+"@ndla/notion@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@ndla/notion/-/notion-3.1.2.tgz#a0e9861d6089e8d70d4e18d6a72b7c4a42164055"
+  integrity sha512-8+vHBzw+674JsO1wreVSjvBwWQyrBKVuZHuLRPq0ckgeWQLa3LAbE8yuHK4oxUJDUw7GiEfAztqtZgdv8FkBiA==
   dependencies:
     "@ndla/core" "^2.1.1"
     "@ndla/icons" "^1.7.0"
@@ -2320,10 +2320,10 @@
   dependencies:
     warning "^4.0.3"
 
-"@ndla/ui@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@ndla/ui/-/ui-10.0.0.tgz#2af7450686075727caa45697aa6c5cd36ffa3890"
-  integrity sha512-7DZEzYM6jCHPl/KzTUBbqgxCPiBgWKNXy0lJdoR/F9HB69AUgcKxW1RwOy25YwkchpokAiL0IFh33nx5/R0WHw==
+"@ndla/ui@^11.1.3":
+  version "11.1.3"
+  resolved "https://registry.yarnpkg.com/@ndla/ui/-/ui-11.1.3.tgz#16c0db2ffb6dd60cece859a1cbc403c6d65fc0de"
+  integrity sha512-DmALDgjuq5K/fZ1wkGGGB5HO98h2KLtKc5DOdGALTJDTxEZ0ttHrdPN6/xti1ALjO8vTd4apTOYPfjBtJtIvMA==
   dependencies:
     "@ndla/button" "^2.2.0"
     "@ndla/carousel" "^1.2.6"
@@ -2332,7 +2332,7 @@
     "@ndla/icons" "^1.7.0"
     "@ndla/licenses" "^4.1.0"
     "@ndla/modal" "^1.2.6"
-    "@ndla/notion" "^3.0.1"
+    "@ndla/notion" "^3.1.2"
     "@ndla/safelink" "^1.1.7"
     "@ndla/switch" "^0.1.5"
     "@ndla/tabs" "^1.1.5"

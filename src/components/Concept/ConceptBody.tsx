@@ -47,8 +47,10 @@ const ConceptBody = ({
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
-      {concept.subjectNames?.length && (
+      {concept.subjectNames?.length ? (
         <NotionDialogTags tags={concept.subjectNames} />
+      ) : (
+        undefined
       )}
       {concept?.articles && concept.articles.length > 0 && (
         <NotionDialogRelatedLinks
