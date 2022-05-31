@@ -1,0 +1,33 @@
+{
+  "builds": [
+    {
+      "src": "build/public/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "build/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/static/(.*)",
+      "destination": "build/public/static/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/build/server.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "s-maxage=1000"
+        }
+      ]
+    }
+  ]
+}
