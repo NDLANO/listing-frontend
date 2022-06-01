@@ -75,6 +75,11 @@ export async function defaultRoute(req: Request, res: Response) {
 
   const client = createApolloClient(locale);
   const helmetContext = {};
+  const clientComponent = (
+    <HelmetProvider context={helmetContext}>
+      <></>
+    </HelmetProvider>
+  );
 
   if (disableSSR(req)) {
     // eslint-disable-line no-underscore-dangle
@@ -84,6 +89,7 @@ export async function defaultRoute(req: Request, res: Response) {
       initialProps: {
         locale,
       },
+      component: clientComponent,
       client,
       helmetContext,
     });
