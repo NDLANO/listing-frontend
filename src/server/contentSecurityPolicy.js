@@ -81,6 +81,20 @@ const connectSrc = (() => {
   return defaultConnectSrc;
 })();
 
+const fontSrc = (() => {
+  const defaultFontSrc = [
+    "'self'",
+    'https://fonts.googleapis.com',
+    'https://fonts.gstatic.com',
+    'https://*.hotjar.com',
+    'data:',
+  ];
+  if (process.env.NODE_ENV === 'development') {
+    return defaultFontSrc.concat('http://localhost:3001');
+  }
+  return defaultFontSrc;
+})();
+
 const contentSecurityPolicy = {
   directives: {
     scriptSrc,
@@ -101,16 +115,9 @@ const contentSecurityPolicy = {
       "'unsafe-inline'",
       "'unsafe-eval'",
       'https://tagmanager.google.com',
-      'https://fonts.googleapis.com',
       'https://fonts.gstatic.com',
     ],
-    fontSrc: [
-      "'self'",
-      'https://fonts.googleapis.com',
-      'https://fonts.gstatic.com',
-      'https://*.hotjar.com',
-      'data:',
-    ],
+    fontSrc: fontSrc,
     imgSrc: [
       "'self'",
       'https://*.ndla.no',
