@@ -112,7 +112,6 @@
     "history": "^4.7.2",
     "i18next": "^20.3.5",
     "isomorphic-fetch": "^2.2.1",
-    "prop-types": "^15.6.0",
     "query-string": "^6.10.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

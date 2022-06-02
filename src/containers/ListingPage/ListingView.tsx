@@ -216,12 +216,12 @@ const ListingView = ({
       item.toLowerCase().startsWith(value.toLowerCase()),
     );
     setFilterSearchValue(value);
-    setCurrentListFilters(filteredFilters);
+    setCurrentListFilters(filteredFilters.sort());
   };
 
   const onFilterSearchFocus = (): void => {
     setFilterListOpen(true);
-    setCurrentListFilters(Object.keys(filters));
+    setCurrentListFilters(Object.keys(filters).sort());
   };
 
   const categoryFilterInputProps = {
