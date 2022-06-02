@@ -138,7 +138,7 @@ const phrases = {
     footerInfo: 'Nettstaden er utarbeida av NDLA med open kjeldekode.',
     footerEditiorInChief: 'Ansvarleg redaktør: ',
     footerManagingEditor: 'Utgåveansvarleg: ',
-    footerPrivacyLink: 'Personvernerklæring',
+    footerPrivacyLink: 'Personvernerklæring og cookies',
     socialMediaLinks: {
       facebook: 'NDLA på Facebook',
       newsletter: 'Meld deg på vårt nyheitsbrev',
