@@ -134,7 +134,7 @@ const phrases = {
     selectLanguage: 'Vel språk (language): ',
     vision:
       'NDLA sin visjon er å lage gode, opne digitale læremiddel for alle faga i vidaregåande opplæring og støtte opp om elevar og lærarar i aktivt og deltakande læringsarbeid.',
-    footerLinksHeader: 'Andre NDLA nettstader',
+    footerLinksHeader: 'Andre NDLA-nettstader',
     footerInfo: 'Nettstaden er utarbeida av NDLA med open kjeldekode.',
     footerEditiorInChief: 'Ansvarleg redaktør: ',
     footerManagingEditor: 'Utgåveansvarleg: ',
