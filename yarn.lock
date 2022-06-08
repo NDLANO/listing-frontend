@@ -2215,6 +2215,15 @@
     "@ndla/util" "^3.0.0"
     raven-js "^3.22.3"
 
+"@ndla/forms@^2.0.11":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@ndla/forms/-/forms-2.0.11.tgz#4e84854f89ed89efa0b1dbd2ab5b9e74e3565ca9"
+  integrity sha512-HO61PRkCGCmjfVHjb5+sZ3LgWJmODZbOB8RcP9CvGE/LA/WtxuA8ggpbj8Kr9ZZk7Vv/V3ZLlokmC4aaJcmQMw==
+  dependencies:
+    "@ndla/core" "^2.1.1"
+    "@ndla/icons" "^1.7.0"
+    "@ndla/ui" "^12.0.1"
+
 "@ndla/hooks@^1.1.4":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@ndla/hooks/-/hooks-1.1.4.tgz#8d812fae37942b35db423ad9656dcbd3521bb759"
