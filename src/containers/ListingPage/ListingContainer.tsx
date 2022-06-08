@@ -114,9 +114,7 @@ const ListingContainer = ({ isOembed, subjects, tags, filters }: Props) => {
     if (data?.conceptSearch?.concepts) {
       fetchMore({
         variables: {
-          page: `${Math.floor(
-            data.conceptSearch.concepts.length / PAGE_SIZE + 1,
-          )}`,
+          page: Math.floor(data.conceptSearch.concepts.length / PAGE_SIZE + 1),
         },
       });
     }
