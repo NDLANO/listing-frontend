@@ -10,15 +10,17 @@ import { renderToStringWithData } from '@apollo/client/react/ssr';
 import { Request, Response } from 'express';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
-import { StaticRouter } from 'react-router';
+import { StaticRouter } from 'react-router-dom/server.js';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
 import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
 import { createApolloClient } from '../../util/apiHelpers';
-import { getLocaleObject, isValidLocale } from '../../i18n';
+import { getValidLocale, initializeI18n, isValidLocale } from '../../i18n';
 import App from '../../containers/App/App';
+import { getDefaultLocale } from '../../config';
+import RedirectContext from '../../components/RedirectContext';
 
 declare global {
   let __DISABLE_SSR__: boolean;
@@ -66,12 +68,13 @@ const disableSSR = (req: Request) => {
 
 export async function defaultRoute(req: Request, res: Response) {
   const paths = req.url.split('/');
-  const { abbreviation: locale } = getLocaleObject(paths[1] ?? '');
+  const locale = getValidLocale(paths[1] ?? '');
   const userAgentString = req.headers['user-agent'];
   // Oembed-hack
   if (paths.find(p => p.includes('listing')) || paths.includes('concepts')) {
     res.removeHeader('X-Frame-Options');
   }
+  const i18n = initializeI18n(i18nInstance, locale ?? getDefaultLocale());
 
   const client = createApolloClient(locale);
   const helmetContext = {};
@@ -101,18 +104,17 @@ export async function defaultRoute(req: Request, res: Response) {
 
   const context: any = {};
   const component = (
-    <HelmetProvider context={helmetContext}>
-      <I18nextProvider i18n={i18nInstance}>
-        <ApolloProvider client={client}>
-          <StaticRouter
-            basename={basename}
-            location={req.url}
-            context={context}>
-            <App />
-          </StaticRouter>
-        </ApolloProvider>
-      </I18nextProvider>
-    </HelmetProvider>
+    <RedirectContext.Provider value={context}>
+      <HelmetProvider context={helmetContext}>
+        <I18nextProvider i18n={i18n}>
+          <ApolloProvider client={client}>
+            <StaticRouter basename={basename} location={req.url}>
+              <App />
+            </StaticRouter>
+          </ApolloProvider>
+        </I18nextProvider>
+      </HelmetProvider>
+    </RedirectContext.Provider>
   );
 
   if (context.url) {

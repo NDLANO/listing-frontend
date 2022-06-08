@@ -6,9 +6,15 @@
  *
  */
 
+import { useContext } from 'react';
 import Footer from '../../components/Footer';
+import RedirectContext from '../../components/RedirectContext';
 
 export default function NotFound() {
+  const redirectContext = useContext(RedirectContext);
+  if (redirectContext) {
+    redirectContext.status = 404;
+  }
   return (
     <div>
       <h2>404 - The page cannot be found</h2>

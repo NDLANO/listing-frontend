@@ -7,8 +7,8 @@
  */
 import { ChangeEvent, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import { Remarkable } from 'remarkable';
-import { Location } from 'history';
 import Downshift, {
   StateChangeOptions,
   ControllerStateAndHelpers,
@@ -31,8 +31,6 @@ import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/lib/common';
 import Button from '@ndla/button';
 import { useTranslation } from 'react-i18next';
-// @ts-ignore
-import { getLocaleUrls } from '../../util/localeHelpers';
 import { mapConceptToListItem } from '../../util/listingHelpers';
 import ConceptPage from '../../components/Concept/ConceptPage';
 import Footer from '../../components/Footer';
@@ -157,7 +155,6 @@ interface Props {
   handleRemoveFilter: () => void;
   handleChangeSubject: (values: string[]) => void;
   handleChangeFilters: (key: string, values: string[]) => void;
-  location: Location;
 }
 
 const ListingView = ({
@@ -182,14 +179,13 @@ const ListingView = ({
   handleRemoveFilter,
   handleChangeSubject,
   handleChangeFilters,
-  location,
 }: Props): JSX.Element => {
+  const location = useLocation();
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
   const [detailedItem, setDetailedItem] = useState(null);
   const [viewStyle, setViewStyle] = useState<ViewStyle>('grid');
   const { t, i18n } = useTranslation();
-  const locale = i18n.language;
 
   const handleStateChangeListFilter = (
     changes: StateChangeOptions<string>,
@@ -325,9 +321,9 @@ const ListingView = ({
                 </StyledEmbedCopyButton>
                 <StyledLanguageSelector>
                   <MastheadItem>
+                    {/* @ts-ignore */}
                     <LanguageSelector
-                      options={getLocaleUrls(locale, location)}
-                      currentLanguage={locale}
+                      currentLanguage={i18n.language}
                       alwaysVisible
                     />
                   </MastheadItem>
@@ -401,7 +397,6 @@ const ListingView = ({
               selectedConcept ? (
                 <ConceptPage
                   conceptId={parseInt(selectedConcept)}
-                  language={locale}
                   inModal={true}
                   handleClose={handleSelectItem}
                 />
