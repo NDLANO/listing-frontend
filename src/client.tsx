@@ -6,9 +6,8 @@
  *
  */
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { useHistory } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -23,51 +22,87 @@ import '@fontsource/source-sans-pro/600.css';
 import '@fontsource/source-sans-pro/700.css';
 
 import { initializeI18n, isValidLocale, supportedLanguages } from './i18n';
-import { createApolloClient } from './util/apiHelpers';
+import { createApolloClient, createApolloLinks } from './util/apiHelpers';
 import App from './containers/App/App';
+import config, { getDefaultLocale } from './config';
+const STORED_LANGUAGE_KEY = 'language';
 
 const paths = window.location.pathname.split('/');
 const basename = paths[1] && isValidLocale(paths[1]) ? `${paths[1]}` : '';
 
-const storedLanguage = window.localStorage.getItem('language');
-if (
-  basename === '' &&
-  storedLanguage &&
-  isValidLocale(storedLanguage) &&
-  storedLanguage !== 'nb'
-) {
-  const { pathname, search } = window.location;
-  window.location.href = `/${storedLanguage}${pathname}${search}`;
-} else if (storedLanguage !== basename && isValidLocale(basename)) {
-  window.localStorage.setItem('language', basename);
+const maybeStoredLanguage = window.localStorage.getItem(STORED_LANGUAGE_KEY);
+// Set storedLanguage to a sane value if non-existent
+if (maybeStoredLanguage === null || maybeStoredLanguage === undefined) {
+  window.localStorage.setItem(STORED_LANGUAGE_KEY, config.defaultLocale);
 }
+const storedLanguage = window.localStorage.getItem(STORED_LANGUAGE_KEY)!;
+const i18n = initializeI18n(i18nInstance, storedLanguage);
 
-const client = createApolloClient(i18nInstance.language);
+const client = createApolloClient(storedLanguage);
 
-const LanguageWrapper = () => {
-  const { i18n } = useTranslation();
-  const history = useHistory();
-  const client = useApolloClient();
-  const [lang, setLang] = useState(basename);
-  const firstRender = useRef(true);
-  initializeI18n(i18n, client, history);
+const constructNewPath = (newLocale?: string) => {
+  const regex = new RegExp(`\\/(${supportedLanguages.join('|')})($|\\/)`, '');
+  const path = window.location.pathname.replace(regex, '');
+  const fullPath = path.startsWith('/') ? path : `/${path}`;
+  const localePrefix = newLocale ? `/${newLocale}` : '';
+  return `${localePrefix}${fullPath}${window.location.search}`;
+};
 
+const useReactPath = () => {
+  const [path, setPath] = useState('');
+  const listenToPopstate = () => {
+    const winPath = window.location.pathname;
+    setPath(winPath);
+  };
   useEffect(() => {
+    window.addEventListener('popstate', listenToPopstate);
+    window.addEventListener('pushstate', listenToPopstate);
+    return () => {
+      window.removeEventListener('popstate', listenToPopstate);
+      window.removeEventListener('pushstate', listenToPopstate);
+    };
+  }, []);
+  return path;
+};
+
+const LanguageWrapper = ({ basename }: { basename?: string }) => {
+  const { i18n } = useTranslation();
+  const [base, setBase] = useState(basename ?? '');
+  const firstRender = useRef(true);
+  const client = useApolloClient();
+  const windowPath = useReactPath();
+
+  i18n.on('languageChanged', lang => {
+    client.resetStore();
+    client.setLink(createApolloLinks(lang));
+    window.localStorage.setItem(STORED_LANGUAGE_KEY, lang);
+    document.documentElement.lang = lang;
+  });
+
+  // handle path changes when the language is changed
+  useLayoutEffect(() => {
     if (firstRender.current) {
       firstRender.current = false;
-      return;
+    } else {
+      window.history.replaceState('', '', constructNewPath(i18n.language));
+      setBase(i18n.language);
     }
-    const regex = new RegExp(supportedLanguages.map(l => `/${l}/`).join('|'));
-    const paths = window.location.pathname.replace(regex, '').split('/');
-    const { search } = window.location;
-    const p = paths.slice().join('/');
-    const test = p.startsWith('/') ? p : `/${p}`;
-    history.replace(`/${i18n.language}${test}${search}`);
-    setLang(i18n.language); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language]);
 
+  // handle initial redirect if URL has wrong or missing locale prefix.
+  useLayoutEffect(() => {
+    const storedLanguage = window.localStorage.getItem(STORED_LANGUAGE_KEY)!;
+    if (storedLanguage === getDefaultLocale() && !base) return;
+    if (isValidLocale(storedLanguage) && storedLanguage === base) {
+      setBase(storedLanguage);
+    }
+    if (window.location.pathname.includes('/login/success')) return;
+    setBase(storedLanguage);
+    window.history.replaceState('', '', constructNewPath(storedLanguage));
+  }, [base, windowPath]);
+
   return (
-    <BrowserRouter basename={lang} key={lang}>
+    <BrowserRouter key={base} basename={base}>
       <App />
     </BrowserRouter>
   );
@@ -76,11 +111,9 @@ const LanguageWrapper = () => {
 const renderApp = () =>
   ReactDOM.render(
     <HelmetProvider>
-      <I18nextProvider i18n={i18nInstance}>
+      <I18nextProvider i18n={i18n}>
         <ApolloProvider client={client}>
-          <BrowserRouter>
-            <LanguageWrapper />
-          </BrowserRouter>
+          <LanguageWrapper basename={basename} />
         </ApolloProvider>
       </I18nextProvider>
     </HelmetProvider>,

@@ -6,7 +6,6 @@
  *
  */
 import { useState, useEffect, useCallback } from 'react';
-import { Location } from 'history';
 import { gql, useQuery } from '@apollo/client';
 
 import { useTranslation } from 'react-i18next';
@@ -29,7 +28,6 @@ interface Props extends GQLProps {
   isOembed: boolean;
   tags: string[];
   filters: Record<string, Filter>;
-  location: Location;
 }
 
 interface QueryParams {
@@ -38,13 +36,7 @@ interface QueryParams {
   concept?: string;
 }
 
-const ListingContainer = ({
-  isOembed,
-  subjects,
-  tags,
-  filters,
-  location,
-}: Props) => {
+const ListingContainer = ({ isOembed, subjects, tags, filters }: Props) => {
   const [filterListOpen, setFilterListOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [queryParams, setQueryParams] = useQueryParameter<QueryParams>({
@@ -122,9 +114,7 @@ const ListingContainer = ({
     if (data?.conceptSearch?.concepts) {
       fetchMore({
         variables: {
-          page: `${Math.floor(
-            data.conceptSearch.concepts.length / PAGE_SIZE + 1,
-          )}`,
+          page: Math.floor(data.conceptSearch.concepts.length / PAGE_SIZE + 1),
         },
       });
     }
@@ -174,7 +164,6 @@ const ListingContainer = ({
       handleRemoveFilter={handleRemoveFilter}
       handleChangeSubject={handleChangeSubject}
       handleChangeFilters={handleChangeFilters}
-      location={location}
     />
   );
 };

@@ -9,6 +9,7 @@
 import { useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { Remarkable } from 'remarkable';
+import { useParams } from 'react-router-dom';
 import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
@@ -24,10 +25,9 @@ import ConceptBody from './ConceptBody';
 import { LicenseBox } from '../LicenseBox';
 
 interface Props {
-  conceptId: number;
   handleClose?: (item: ListItem | null) => void;
   inModal?: boolean;
-  language: string;
+  conceptId?: number;
 }
 
 const conceptPageQuery = gql`
@@ -42,14 +42,22 @@ const conceptPageQuery = gql`
   ${ConceptBody.fragments.concept}
 `;
 
-const ConceptPage = ({ conceptId, handleClose, inModal, language }: Props) => {
-  const { t } = useTranslation();
+const ConceptPage = ({
+  handleClose,
+  inModal,
+  conceptId: conceptIdParam,
+}: Props) => {
+  const { t, i18n } = useTranslation();
   const [markdown, setMarkdown] = useState<Remarkable | null>(null);
+  const { selectedLanguage, conceptId: conceptIdUrlParam } = useParams();
+  const language = selectedLanguage ?? i18n.language;
+  const conceptId = conceptIdParam ?? parseInt(conceptIdUrlParam ?? '');
 
   const { data, loading } = useQuery<GQLConceptPageQuery>(conceptPageQuery, {
     variables: {
       id: conceptId,
     },
+    skip: !conceptId,
   });
 
   useEffect(() => {

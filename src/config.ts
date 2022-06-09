@@ -18,6 +18,7 @@ interface NDLAWindow {
 }
 
 interface ConfigType {
+  defaultLocale: string;
   host: string;
   port: string;
   redirectPort: string;
@@ -86,8 +87,13 @@ export const matomoDomain = () => {
   }
 };
 
+export const getDefaultLocale = () => {
+  return process.env.NDLA_DEFAULT_LOCALE ?? 'nb';
+};
+
 const config: ConfigType = Object.assign(
   {
+    defaultLocale: process.env.NDLA_DEFAULT_LOCALE || 'nb',
     host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
     port: process.env.NDLA_FRONTENTD_PORT || '3000',
     redirectPort: process.env.NDLA_REDIRECT_PORT || '3001',

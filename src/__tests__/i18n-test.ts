@@ -6,13 +6,13 @@
  *
  */
 
-import { getLocaleObject, isValidLocale } from '../i18n';
+import { getValidLocale, isValidLocale } from '../i18n';
 
 test('i18n getLocaleObject()', () => {
-  expect(getLocaleObject('en').abbreviation).toBe('en');
-  expect(getLocaleObject('nb').abbreviation).toBe('nb');
+  expect(getValidLocale('en')).toBe('en');
+  expect(getValidLocale('nb')).toBe('nb');
   // Defaults to nb if locale not found
-  expect(getLocaleObject('ru').abbreviation).toBe('nb');
+  expect(getValidLocale('ru')).toBe('nb');
 });
 
 test('i18n isValidLocale()', () => {

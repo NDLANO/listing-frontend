@@ -9,24 +9,17 @@
 // import before all other imports component to make sure it is loaded before any emotion stuff.
 import '../../style/index.css';
 
-import {
-  Route,
-  RouteComponentProps,
-  Switch,
-  useHistory,
-} from 'react-router-dom';
+import { Outlet, Route, Routes } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Helmet } from 'react-helmet-async';
-import { PageContainer, Spinner } from '@ndla/ui';
+import { PageContainer } from '@ndla/ui';
 
 import { useTranslation } from 'react-i18next';
 
-import { useApolloClient } from '@apollo/client';
 import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import { Matomo } from '../../components/Matomo';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import { initializeI18n } from '../../i18n';
 
 const StyledPageWrapper = styled.div`
   min-height: 100vh;
@@ -35,16 +28,8 @@ const StyledPageWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const App = () => {
-  const { t, i18n } = useTranslation();
-  const client = useApolloClient();
-  const history = useHistory();
-  initializeI18n(i18n, client, history);
-
-  if (!i18n.isInitialized) {
-    return <Spinner />;
-  }
-
+const Layout = () => {
+  const { t } = useTranslation();
   return (
     <PageContainer>
       <StyledPageWrapper>
@@ -52,42 +37,24 @@ const App = () => {
           title="NDLA"
           meta={[{ name: 'description', content: t('meta.description') }]}
         />
-        <Switch>
-          <Route
-            exact
-            path="/"
-            component={(routeProps: RouteComponentProps) => (
-              <ListingPage location={routeProps.location} isOembed={false} />
-            )}
-          />
-          <Route
-            path="/concepts/:conceptId/:selectedLanguage?"
-            component={(
-              routeProps: RouteComponentProps<{
-                conceptId: string;
-                selectedLanguage: string;
-              }>,
-            ) => (
-              <ConceptPage
-                conceptId={parseInt(routeProps.match.params.conceptId)}
-                inModal={false}
-                language={
-                  routeProps.match.params.selectedLanguage || i18n.language
-                }
-              />
-            )}
-          />
-          <Route
-            path="/listing"
-            component={(routeProps: RouteComponentProps) => (
-              <ListingPage isOembed={true} location={routeProps.location} />
-            )}
-          />
-          <Route component={NotFoundPage} />
-        </Switch>
+        <Outlet />
       </StyledPageWrapper>
       <Matomo />
     </PageContainer>
+  );
+};
+
+const App = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />} />
+      <Route index element={<ListingPage isOembed={false} />} />
+      <Route path="concepts/:conceptId" element={<ConceptPage />}>
+        <Route path=":selectedLanguage" element={<ConceptPage />} />
+      </Route>
+      <Route path="/listing" element={<ListingPage isOembed={true} />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 };
 
