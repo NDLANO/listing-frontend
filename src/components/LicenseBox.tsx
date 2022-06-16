@@ -242,11 +242,11 @@ export const OembedContent = ({ oembed }: OembedContentProps) => {
   const { t } = useTranslation();
   return (
     <>
-      <h2>{t('license.embedlink.heading')}</h2>
-      <p>{t('license.embedlink.description')}</p>
+      <h2>{t('license.concept.embedlink.heading')}</h2>
+      <p>{t('license.concept.embedlink.description')}</p>
       <CopyTextButton
-        copyTitle={t('license.embedlink.copyTitle')}
-        hasCopiedTitle={t('license.embedlink.hasCopiedTitle')}
+        copyTitle={t('license.concept.embedlink.copyTitle')}
+        hasCopiedTitle={t('license.concept.embedlink.hasCopiedTitle')}
         stringToCopy={oembed}
       />
     </>
