@@ -346,6 +346,8 @@ const ListingView = ({
                           // eslint-disable-next-line react/jsx-props-no-spreading
                           {...getInputProps(categoryFilterInputProps)}
                           data-testid={'dropdownInput'}
+                          idField={'id'}
+                          labelField={'label'}
                           iconRight={
                             filterListOpen ? (
                               <Search />
@@ -356,10 +358,17 @@ const ListingView = ({
                             )
                           }
                           values={
-                            selectedListFilter ? [selectedListFilter] : []
+                            selectedListFilter
+                              ? [
+                                  {
+                                    id: selectedListFilter,
+                                    label: selectedListFilter,
+                                  },
+                                ]
+                              : []
                           }
                           removeItem={handleRemoveFilter}
-                          customCSS={categoryFilterCSS({
+                          customCss={categoryFilterCSS({
                             hasValues: selectedListFilter,
                           })}
                         />
