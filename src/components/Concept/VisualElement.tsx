@@ -108,11 +108,7 @@ const VisualElement = ({
           />
         </ImageLink>
         <LicensesWrapper>
-          <LicenseByline
-            locale={language}
-            color="#fff"
-            licenseRights={rights}
-          />
+          <LicenseByline locale={language} licenseRights={rights} />
           {authors.map((author, i) => (
             <span key={`author-${i}`}>{author.name}</span>
           ))}
