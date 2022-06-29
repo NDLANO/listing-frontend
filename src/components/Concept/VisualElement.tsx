@@ -9,7 +9,7 @@
 import { gql } from '@apollo/client';
 import styled from '@emotion/styled';
 import { colors, spacing, fonts } from '@ndla/core';
-import { ImageCrop, ImageFocalPoint } from '@ndla/ui/lib/Image';
+import type { ImageCrop, ImageFocalPoint } from '@ndla/ui';
 import { Image, ImageLink } from '@ndla/ui';
 import { getLicenseByAbbreviation, LicenseByline } from '@ndla/licenses';
 import {
