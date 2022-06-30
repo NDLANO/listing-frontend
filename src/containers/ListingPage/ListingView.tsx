@@ -29,7 +29,7 @@ import {
 } from '@ndla/ui';
 // @ts-ignore
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
-import { ChevronDown, Search } from '@ndla/icons/lib/common';
+import { ChevronDown, Search } from '@ndla/icons/common';
 import Button from '@ndla/button';
 import { useTranslation } from 'react-i18next';
 import { mapConceptToListItem } from '../../util/listingHelpers';
