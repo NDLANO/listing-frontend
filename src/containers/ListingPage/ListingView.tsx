@@ -25,8 +25,8 @@ import {
   LanguageSelector,
   MastheadItem,
   CreatedBy,
-  Spinner,
 } from '@ndla/ui';
+import { Spinner } from '@ndla/icons';
 // @ts-ignore
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/common';
