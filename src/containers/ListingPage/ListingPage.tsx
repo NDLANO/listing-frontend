@@ -7,7 +7,7 @@
  */
 import { gql, useQuery } from '@apollo/client';
 import { useLocation } from 'react-router-dom';
-import { Spinner } from '@ndla/ui';
+import { Spinner } from '@ndla/icons';
 import qs from 'query-string';
 import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
 import ListingContainer from './ListingContainer';

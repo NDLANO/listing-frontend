@@ -14,7 +14,8 @@ import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
-import { CreatedBy, OneColumn, Spinner } from '@ndla/ui';
+import { CreatedBy, OneColumn } from '@ndla/ui';
+import { Spinner } from '@ndla/icons';
 import { useTranslation } from 'react-i18next';
 import config from '../../config';
 import PostResizeMessage from '../PostResizeMessage';
