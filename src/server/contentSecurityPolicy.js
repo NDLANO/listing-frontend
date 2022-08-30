@@ -46,6 +46,7 @@ const scriptSrc = (() => {
     'ws://*.hotjar.com',
     'wss://*.hotjar.com',
     'https://*.hotjar.com',
+    'https://*.clarity.ms',
   ];
   if (process.env.NODE_ENV === 'development') {
     return [...defaultScriptSrc, `http://localhost:${hmrPort}`];
@@ -68,6 +69,7 @@ const connectSrc = (() => {
     'ws://*.hotjar.com wss://*.hotjar.com',
     'https://*.hotjar.com',
     'https://*.hotjar.com:*',
+    'https://*.clarity.ms',
   ];
   if (process.env.NODE_ENV === 'development') {
     return [
@@ -87,6 +89,7 @@ const fontSrc = (() => {
     'https://fonts.googleapis.com',
     'https://fonts.gstatic.com',
     'https://*.hotjar.com',
+    'https://*.clarity.ms',
     'data:',
   ];
   if (process.env.NODE_ENV === 'development') {
@@ -108,6 +111,7 @@ const contentSecurityPolicy = {
       '*.ndla.no',
       '*.ndlah5p.com',
       'https://*.hotjar.com',
+      'https://*.clarity.ms',
     ],
     workerSrc: ["'self'", 'blob:'],
     styleSrc: [
@@ -130,6 +134,7 @@ const contentSecurityPolicy = {
       'https://httpsak-a.akamaihd.net',
       'https://www.nrk.no/',
       'https://*.hotjar.com',
+      'https://*.clarity.ms',
       'https://*.boltdns.net',
       ' data:',
     ],
