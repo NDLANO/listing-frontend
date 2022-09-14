@@ -4,9 +4,8 @@
 
 ## Requirements
 
-- Node.JS ~6.6
-- npm ~3.9
-- yarn ~0.18.0
+- Node.JS 16
+- yarn ~1.15.0
 - Docker (optional)
 
 ## Getting started
