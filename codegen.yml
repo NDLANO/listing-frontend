@@ -6,6 +6,9 @@ generates:
     plugins:
       - "typescript"
       - "typescript-operations"
+  src/schema.graphql:
+    plugins:
+      - schema-ast
 config:
   maybeValue: T
   typesPrefix: GQL
