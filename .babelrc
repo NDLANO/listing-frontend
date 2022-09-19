@@ -1,6 +1,7 @@
 {
   "presets": ["razzle/babel"],
   "plugins": [
+    "graphql-tag",
     ["emotion", { "sourceMap": true }],
     "@babel/plugin-proposal-optional-chaining"
   ]

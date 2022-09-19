@@ -135,7 +135,7 @@ export async function defaultRoute(req: Request, res: Response) {
       const status = context.status ?? 200;
       res.status(status).send(`<!doctype html>\n${htmlString}`);
     } catch (error) {
-      res.status(500).send(error.message);
+      res.status(500).send((error as any).message);
     }
   }
 

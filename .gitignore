@@ -14,3 +14,4 @@ scripts/.cache/
 .vscode/launch.json
 .vscode
 .env
+.vercel
