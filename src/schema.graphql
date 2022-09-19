@@ -587,7 +587,13 @@ type MovieTheme {
 
 type Mutation {
   addFolder(name: String!, parentId: String, status: String): Folder!
-  addFolderResource(folderId: String!, path: String!, resourceId: Int!, resourceType: String!, tags: [String!]): FolderResource!
+  addFolderResource(
+    folderId: String!
+    path: String!
+    resourceId: Int!
+    resourceType: String!
+    tags: [String!]
+  ): FolderResource!
   deleteFolder(id: String!): String!
   deleteFolderResource(folderId: String!, resourceId: String!): String!
   deletePersonalData: Boolean!
@@ -671,34 +677,112 @@ type PodcastSeriesWithEpisodes implements PodcastSeriesBase {
 type Query {
   alerts: [UptimeAlert]
   allFolderResources(size: Int): [FolderResource!]!
-  article(id: String!, isOembed: String, path: String, showVisualElement: String, subjectId: String): Article
+  article(
+    id: String!
+    isOembed: String
+    path: String
+    showVisualElement: String
+    subjectId: String
+  ): Article
   competenceGoal(code: String!, language: String): CompetenceGoal
-  competenceGoals(codes: [String], language: String, nodeId: String): [CompetenceGoal!]
+  competenceGoals(
+    codes: [String]
+    language: String
+    nodeId: String
+  ): [CompetenceGoal!]
   concept(id: Int!): Concept
-  conceptSearch(exactMatch: Boolean, fallback: Boolean, ids: [Int!], language: String, page: Int, pageSize: Int, query: String, subjects: String, tags: String): ConceptResult
+  conceptSearch(
+    exactMatch: Boolean
+    fallback: Boolean
+    ids: [Int!]
+    language: String
+    page: Int
+    pageSize: Int
+    query: String
+    subjects: String
+    tags: String
+  ): ConceptResult
   coreElement(code: String!, language: String): CoreElement
   coreElements(codes: [String], language: String): [CoreElement!]
   filmfrontpage: FilmFrontpage
-  folder(id: Int!, includeResources: Boolean, includeSubfolders: Boolean): Folder!
-  folderResourceMeta(resource: FolderResourceMetaSearchInput!): FolderResourceMeta!
-  folderResourceMetaSearch(resources: [FolderResourceMetaSearchInput!]!): [FolderResourceMeta!]!
+  folder(
+    id: Int!
+    includeResources: Boolean
+    includeSubfolders: Boolean
+  ): Folder!
+  folderResourceMeta(
+    resource: FolderResourceMetaSearchInput!
+  ): FolderResourceMeta!
+  folderResourceMetaSearch(
+    resources: [FolderResourceMetaSearchInput!]!
+  ): [FolderResourceMeta!]!
   folders(includeResources: Boolean, includeSubfolders: Boolean): [Folder!]!
   frontpage: Frontpage
   frontpageSearch(query: String): FrontpageSearch
-  groupSearch(aggregatePaths: [String!], contextTypes: String, fallback: String, grepCodes: String, language: String, levels: String, page: Int, pageSize: Int, query: String, resourceTypes: String, subjects: String): [GroupSearch!]
+  groupSearch(
+    aggregatePaths: [String!]
+    contextTypes: String
+    fallback: String
+    grepCodes: String
+    language: String
+    levels: String
+    page: Int
+    pageSize: Int
+    query: String
+    resourceTypes: String
+    subjects: String
+  ): [GroupSearch!]
   learningpath(pathId: String!): Learningpath
   listingPage(subjects: String): ListingPage
   podcast(id: Int!): AudioWithSeries
   podcastSearch(fallback: Boolean, page: Int!, pageSize: Int!): AudioSearch
   podcastSeries(id: Int!): PodcastSeriesWithEpisodes
-  podcastSeriesSearch(fallback: Boolean, page: Int!, pageSize: Int!): PodcastSeriesSearch
+  podcastSeriesSearch(
+    fallback: Boolean
+    page: Int!
+    pageSize: Int!
+  ): PodcastSeriesSearch
   resource(id: String!, subjectId: String, topicId: String): Resource
   resourceTypes: [ResourceTypeDefinition!]
-  search(aggregatePaths: [String!], contextFilters: String, contextTypes: String, fallback: String, grepCodes: String, ids: [Int!], language: String, languageFilter: String, levels: String, page: Int, pageSize: Int, query: String, relevance: String, resourceTypes: String, sort: String, subjects: String): Search
-  searchWithoutPagination(contextFilters: String, contextTypes: String, fallback: String, ids: [Int!], language: String, languageFilter: String, levels: String, query: String, relevance: String, resourceTypes: String, sort: String, subjects: String): SearchWithoutPagination
+  search(
+    aggregatePaths: [String!]
+    contextFilters: String
+    contextTypes: String
+    fallback: String
+    grepCodes: String
+    ids: [Int!]
+    language: String
+    languageFilter: String
+    levels: String
+    page: Int
+    pageSize: Int
+    query: String
+    relevance: String
+    resourceTypes: String
+    sort: String
+    subjects: String
+  ): Search
+  searchWithoutPagination(
+    contextFilters: String
+    contextTypes: String
+    fallback: String
+    ids: [Int!]
+    language: String
+    languageFilter: String
+    levels: String
+    query: String
+    relevance: String
+    resourceTypes: String
+    sort: String
+    subjects: String
+  ): SearchWithoutPagination
   subject(id: String!): Subject
   subjectpage(id: Int!): SubjectPage
-  subjects(filterVisible: Boolean, metadataFilterKey: String, metadataFilterValue: String): [Subject!]
+  subjects(
+    filterVisible: Boolean
+    metadataFilterKey: String
+    metadataFilterValue: String
+  ): [Subject!]
   topic(id: String!, subjectId: String): Topic
   topics(contentUri: String, filterVisible: Boolean): [Topic!]
 }
