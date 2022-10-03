@@ -15,7 +15,7 @@ import Downshift, {
 } from 'downshift';
 import { gql } from '@apollo/client';
 import styled from '@emotion/styled';
-import { css, SerializedStyles } from '@emotion/core';
+import { css, SerializedStyles } from '@emotion/react';
 import { colors, fonts, spacing } from '@ndla/core';
 import ListView from '@ndla/listview';
 import {
