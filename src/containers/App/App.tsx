@@ -6,9 +6,6 @@
  *
  */
 
-// import before all other imports component to make sure it is loaded before any emotion stuff.
-import '../../style/index.css';
-
 import { Outlet, Route, Routes } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Helmet } from 'react-helmet-async';
