@@ -144,7 +144,7 @@ export const ImageContent = ({ images, conceptId }: ImageContentProps) => {
         {images.map(image => (
           <MediaListItem key={image.src}>
             <MediaListItemImage>
-              <img src={image.src} alt={image.altText} />
+              <img src={`${image.src}?width=200`} alt={image.altText} />
             </MediaListItemImage>
             <MediaListItemBody
               license={image.copyright?.license?.license ?? ''}
