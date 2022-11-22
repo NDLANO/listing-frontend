@@ -19,7 +19,7 @@ import {
   GQLListingContainerSubjectFragment,
 } from '../../graphqlTypes';
 
-const PAGE_SIZE = 100;
+const PAGE_SIZE = 40;
 
 interface GQLProps {
   subjects: GQLListingContainerSubjectFragment[];
