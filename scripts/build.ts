@@ -8,8 +8,12 @@
 import chalk from 'chalk';
 import { rmSync } from 'fs';
 import { resolve } from 'path';
-import webpack, { Stats, StatsCompilation } from 'webpack';
-import { Configuration, StatsError } from 'webpack';
+import webpack, {
+  Stats,
+  StatsCompilation,
+  Configuration,
+  StatsError,
+} from 'webpack';
 import getConfig from '../webpack/getConfig';
 
 const configs: Configuration[] = getConfig('production');
@@ -26,7 +30,7 @@ const build = async (
   type: 'client' | 'server',
 ): Promise<void> => {
   try {
-    const build = await new Promise<BuildOutput>(async (resolve, reject) => {
+    const build = await new Promise<BuildOutput>((resolve, reject) => {
       // eslint-disable-next-line no-console
       console.log(`Compiling ${type} build...`);
       compile(
