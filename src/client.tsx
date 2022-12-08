@@ -125,7 +125,5 @@ const renderApp = () =>
 renderApp();
 
 if (module.hot) {
-  module.hot.accept('./containers/App/App', () => {
-    renderApp();
-  });
+  module.hot.accept();
 }
