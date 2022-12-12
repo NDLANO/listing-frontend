@@ -17,9 +17,15 @@ const StyledFooterWrapper = styled.div`
 
 const FooterWrapper = () => {
   const { t, i18n } = useTranslation();
+
+  const privacyLinks = [
+    { label: t('footer.privacyLink'), url: 'https://om.ndla.no/gdpr' },
+    { label: t('footer.cookiesLink'), url: 'https://om.ndla.no/cookies' },
+  ];
+
   return (
     <StyledFooterWrapper>
-      <Footer lang={i18n.language}>
+      <Footer lang={i18n.language} privacyLinks={privacyLinks}>
         <FooterText>
           <EditorName
             title={t('footer.editorInChief')}
