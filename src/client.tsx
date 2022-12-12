@@ -10,11 +10,10 @@
 import './style/index.css';
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, I18nextProvider } from 'react-i18next';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider, useApolloClient } from '@apollo/client';
-import { I18nextProvider } from 'react-i18next';
 import { i18nInstance } from '@ndla/ui';
 import '@fontsource/source-sans-pro/index.css';
 import '@fontsource/source-sans-pro/400-italic.css';
@@ -110,22 +109,17 @@ const LanguageWrapper = ({ basename }: { basename?: string }) => {
   );
 };
 
-const renderApp = () =>
-  ReactDOM.render(
-    <HelmetProvider>
-      <I18nextProvider i18n={i18n}>
-        <ApolloProvider client={client}>
-          <LanguageWrapper basename={basename} />
-        </ApolloProvider>
-      </I18nextProvider>
-    </HelmetProvider>,
-    document.getElementById('root'),
-  );
-
-renderApp();
+ReactDOM.render(
+  <HelmetProvider>
+    <I18nextProvider i18n={i18n}>
+      <ApolloProvider client={client}>
+        <LanguageWrapper basename={basename} />
+      </ApolloProvider>
+    </I18nextProvider>
+  </HelmetProvider>,
+  document.getElementById('root'),
+);
 
 if (module.hot) {
-  module.hot.accept('./containers/App/App', () => {
-    renderApp();
-  });
+  module.hot.accept();
 }

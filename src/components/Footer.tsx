@@ -22,10 +22,10 @@ const FooterWrapper = () => {
       <Footer lang={i18n.language}>
         <FooterText>
           <EditorName
-            title={t('footer.footerEditiorInChief')}
+            title={t('footer.editorInChief')}
             name="Sigurd Trageton"
           />
-          {t('footer.footerInfo')}
+          {t('footer.info')}
         </FooterText>
       </Footer>
     </StyledFooterWrapper>
