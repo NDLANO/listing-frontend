@@ -11,7 +11,9 @@ WORKDIR $APP_PATH
 RUN mkdir -p $APP_PATH/build && yarn
 
 # Copy necessary source files for server and client build
-COPY .babelrc razzle.config.js postcss.config.js tsconfig.json $APP_PATH/
+COPY .babelrc postcss.config.js tsconfig.json $APP_PATH/
+COPY webpack $APP_PATH/webpack
+COPY scripts $APP_PATH/scripts
 
 COPY src $APP_PATH/src
 COPY public $APP_PATH/public
