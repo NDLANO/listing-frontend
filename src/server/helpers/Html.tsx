@@ -74,11 +74,11 @@ const Html = ({
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
         {helmet.script.toComponent()}
-        {razzleAssets.client && razzleAssets.client.css && (
+        {razzleAssets['client.css'] && (
           <link
             rel="stylesheet"
             type="text/css"
-            href={razzleAssets.client.css}
+            href={razzleAssets['client.css']}
           />
         )}
         <link rel="icon" href={`/favicon.ico`} type="image/ico" />
@@ -103,7 +103,7 @@ const Html = ({
             __html: `window.DATA= ${serialize(data)}; `,
           }}
         />
-        <script src={razzleAssets.client.js} />
+        <script src={razzleAssets['client.js']} />
         {/* <script type="text/javascript" async src={`https://cdn.mathjax.org/mathjax/2.7-latest/MathJax.js?config=/assets/${assets['mathjaxConfig.js']}`} /> */}
       </body>
     </html>
