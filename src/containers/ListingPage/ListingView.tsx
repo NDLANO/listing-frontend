@@ -30,7 +30,7 @@ import { Spinner } from '@ndla/icons';
 // @ts-ignore
 import { DropdownInput, DropdownMenu } from '@ndla/forms';
 import { ChevronDown, Search } from '@ndla/icons/common';
-import Button from '@ndla/button';
+import { ButtonV2 } from '@ndla/button';
 import { useTranslation } from 'react-i18next';
 import { mapConceptToListItem } from '../../util/listingHelpers';
 import ConceptPage from '../../components/Concept/ConceptPage';
@@ -423,9 +423,9 @@ const ListingView = ({
               {loading ? (
                 <Spinner />
               ) : (
-                <Button onClick={onLoadMoreClick}>
+                <ButtonV2 onClick={onLoadMoreClick}>
                   {t('listingPage.loadMore')}
-                </Button>
+                </ButtonV2>
               )}
             </ButtonWrapper>
           )}

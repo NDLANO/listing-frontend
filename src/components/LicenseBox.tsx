@@ -22,7 +22,7 @@ import {
 } from '@ndla/ui';
 import { FileDocumentOutline } from '@ndla/icons/common';
 import { figureApa7CopyString, metaTypes } from '@ndla/licenses';
-import Button, { StyledButton } from '@ndla/button';
+import { StyledButton, ButtonV2 } from '@ndla/button';
 import CopyTextButton from './CopyTextButton';
 import { downloadUrl } from '../util/downloadHelpers';
 import formatDate from '../util/formatDate';
@@ -316,7 +316,9 @@ export const LicenseBox = ({ concept, language }: LicenseBoxProps) => {
   });
   return (
     <Modal
-      activateButton={<Button link>{t('article.useContent')}</Button>}
+      activateButton={
+        <ButtonV2 variant="link">{t('article.useContent')}</ButtonV2>
+      }
       size="medium">
       {onClose => (
         <>
