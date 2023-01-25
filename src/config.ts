@@ -76,17 +76,6 @@ const ndlaFrontendDomain = () => {
   }
 };
 
-export const matomoDomain = () => {
-  switch (ndlaEnvironment) {
-    case 'dev':
-      return 'https://analytics.test.ndla.no/';
-    case 'prod':
-      return 'https://analytics.ndla.no/';
-    default:
-      return `https://analytics.${ndlaEnvironment}.ndla.no/`;
-  }
-};
-
 export const getDefaultLocale = () => {
   return process.env.NDLA_DEFAULT_LOCALE ?? 'nb';
 };
@@ -104,7 +93,7 @@ const config: ConfigType = Object.assign(
       process.env.NDLA_LISTING_URL || ndlaListingFrontendDomain(),
     ndlaFrontendDomain: process.env.NDLA_FRONTEND_URL || ndlaFrontendDomain(),
     localGraphQLApi: process.env.LOCAL_GRAPHQL_API || false,
-    matomoUrl: process.env.MATOMO_URL || matomoDomain(),
+    matomoUrl: process.env.MATOMO_URL || 'https://tall.ndla.no/',
     matomoSiteId: process.env.MATOMO_SITE_ID || undefined,
   },
   environment,
