@@ -38,6 +38,7 @@ import Footer from '../../components/Footer';
 import CopyTextButton from '../../components/CopyTextButton';
 import config from '../../config';
 import { Filter, ListItem } from '../../interfaces';
+import { supportedLanguages } from '../../i18n';
 import {
   GQLListingViewConceptFragment,
   GQLListingViewSubjectFragment,
@@ -324,8 +325,8 @@ const ListingView = ({
                   <MastheadItem>
                     {/* @ts-ignore */}
                     <LanguageSelector
-                      currentLanguage={i18n.language}
-                      alwaysVisible
+                      locales={supportedLanguages}
+                      onSelect={i18n.changeLanguage}
                     />
                   </MastheadItem>
                 </StyledLanguageSelector>

@@ -21,6 +21,11 @@ const FooterWrapper = () => {
   const privacyLinks = [
     { label: t('footer.privacyLink'), url: 'https://om.ndla.no/gdpr' },
     { label: t('footer.cookiesLink'), url: 'https://om.ndla.no/cookies' },
+    {
+      label: t('footer.accessibilityLink'),
+      url:
+        'https://uustatus.no/nn/erklaringer/publisert/6a767f5d-1355-4067-8492-0af396c20b4d',
+    },
   ];
 
   return (

@@ -6,7 +6,8 @@
  *
  */
 
-export type LocaleType = 'nb' | 'nn' | 'en';
+export const LocaleValues = ['nb', 'nn', 'en'] as const;
+export type LocaleType = typeof LocaleValues[number];
 
 export interface Title {
   title: string;
