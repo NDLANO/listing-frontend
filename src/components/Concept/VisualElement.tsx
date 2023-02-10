@@ -9,7 +9,8 @@
 import { gql } from '@apollo/client';
 import styled from '@emotion/styled';
 import { colors, fonts, spacing } from '@ndla/core';
-import { getLicenseByAbbreviation, LicenseByline } from '@ndla/licenses';
+import { getLicenseByAbbreviation } from '@ndla/licenses';
+import { LicenseByline } from '@ndla/notion';
 import { Image, ImageCrop, ImageFocalPoint, ImageLink } from '@ndla/ui';
 import {
   GQLImageElement,
