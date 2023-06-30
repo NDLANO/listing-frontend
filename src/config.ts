@@ -31,6 +31,7 @@ interface ConfigType {
   localGraphQLApi: string | boolean;
   matomoUrl: string;
   matomoSiteId?: string;
+  isVercel: boolean;
 }
 
 const environment = {
@@ -95,6 +96,7 @@ const config: ConfigType = Object.assign(
     localGraphQLApi: process.env.LOCAL_GRAPHQL_API || false,
     matomoUrl: process.env.MATOMO_URL || 'https://tall.ndla.no/',
     matomoSiteId: process.env.MATOMO_SITE_ID || undefined,
+    isVercel: process.env.IS_VERCEL === 'true',
   },
   environment,
 );
