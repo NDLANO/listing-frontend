@@ -203,6 +203,7 @@ const listingContainerConceptSearchQuery = gql`
       exactMatch: $exactMatch
       fallback: $fallback
       language: $language
+      conceptType: "concept"
     ) {
       totalCount
       concepts {
