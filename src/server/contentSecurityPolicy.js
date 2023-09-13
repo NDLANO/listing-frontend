@@ -43,9 +43,6 @@ const scriptSrc = (() => {
     ' *.gallerysites.net',
     'ndla.no',
     '*.ndla.no',
-    'ws://*.hotjar.com',
-    'wss://*.hotjar.com',
-    'https://*.hotjar.com',
     'https://*.clarity.ms',
   ];
   if (process.env.NODE_ENV === 'development') {
@@ -66,9 +63,6 @@ const connectSrc = (() => {
     'https://hlsak-a.akamaihd.net',
     'https://*.google-analytics.com',
     'https://*.analytics.google.com',
-    'ws://*.hotjar.com wss://*.hotjar.com',
-    'https://*.hotjar.com',
-    'https://*.hotjar.com:*',
     'https://*.clarity.ms',
   ];
   if (process.env.NODE_ENV === 'development') {
@@ -88,7 +82,6 @@ const fontSrc = (() => {
     "'self'",
     'https://fonts.googleapis.com',
     'https://fonts.gstatic.com',
-    'https://*.hotjar.com',
     'https://*.clarity.ms',
     'data:',
   ];
@@ -110,7 +103,6 @@ const contentSecurityPolicy = {
       'ndla.no',
       '*.ndla.no',
       '*.ndlah5p.com',
-      'https://*.hotjar.com',
       'https://*.clarity.ms',
     ],
     workerSrc: ["'self'", 'blob:'],
@@ -133,7 +125,6 @@ const contentSecurityPolicy = {
       'http://metrics.brightcove.com',
       'https://httpsak-a.akamaihd.net',
       'https://www.nrk.no/',
-      'https://*.hotjar.com',
       'https://*.clarity.ms',
       'https://*.boltdns.net',
       ' data:',
