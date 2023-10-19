@@ -105,7 +105,7 @@
     "@ndla/listview": "^3.1.61",
     "@ndla/modal": "^2.2.12",
     "@ndla/notion": "^4.2.10",
-    "@ndla/pager": "^2.1.15",
+    "@ndla/pager": "^2.2.21",
     "@ndla/tabs": "^2.1.13",
     "@ndla/tracker": "^2.1.1",
     "@ndla/ui": "^35.0.10",
