@@ -118,7 +118,7 @@
     "graphql": "^15.5.0",
     "helmet": "^4.2.0",
     "i18next": "^21.9.2",
-    "isomorphic-fetch": "^2.2.1",
+    "node-fetch": "^2.6.7",
     "lodash": "^4.17.21",
     "process": "^0.11.10",
     "query-string": "^6.10.1",

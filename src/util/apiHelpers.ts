@@ -15,7 +15,7 @@ import {
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { onError } from '@apollo/client/link/error';
 import { setContext } from '@apollo/client/link/context';
-import fetch from 'isomorphic-fetch';
+import fetch from 'node-fetch';
 import handleError from './handleError';
 import config from '../config';
 
