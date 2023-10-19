@@ -91,7 +91,7 @@
     "yarn-deduplicate": "^6.0.0"
   },
   "dependencies": {
-    "@apollo/client": "3.6.9",
+    "@apollo/client": "3.8.4",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@fontsource/source-sans-pro": "^4.5.9",
