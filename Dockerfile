@@ -1,4 +1,4 @@
-FROM node:18.12-alpine as builder
+FROM node:18.18-alpine as builder
 
 ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
@@ -22,13 +22,12 @@ COPY public $APP_PATH/public
 RUN yarn run build
 
 # Run stage
-FROM node:18.12-alpine
+FROM node:18.18-alpine
 
 ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
 WORKDIR $APP_PATH
 
-RUN npm config set unsafe-perm true
 RUN npm install -g cross-env bunyan
 
 COPY --from=builder $APP_PATH/build build
