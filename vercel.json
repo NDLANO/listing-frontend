@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "builds": [
     {
       "src": "build/public/**",
@@ -9,26 +10,17 @@
       "use": "@vercel/node"
     }
   ],
-  "rewrites": [
+  "routes": [
     {
-      "source": "/static/(.*)",
-      "destination": "build/public/static/$1"
+      "src": "/static/(.*)",
+      "headers": { "cache-control": "s-maxage=86400" },
+      "dest": "build/public/static/$1"
     },
     {
-      "source": "/(.*)",
-      "destination": "/build/server.js"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/static/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "s-maxage=1000"
-        }
-      ]
-    }
+      "src": "/(.*.(png|jpg|svg|gif|ico))",
+      "dest": "build/public/$1"
+    },
+    { "src": "/(.*)", "dest": "/build/server.js" }
   ],
   "env": {
     "IS_VERCEL": "true"
