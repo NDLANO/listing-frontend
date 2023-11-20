@@ -9,7 +9,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
 import { useTranslation } from 'react-i18next';
-import ListingView from './ListingView';
+import ListingView, { ListItemType } from './ListingView';
 import useQueryParameter from '../../util/useQueryParameter';
 import { getTagsParameter } from '../../util/listingHelpers';
 import { Filter, ListItem } from '../../interfaces';
@@ -74,7 +74,7 @@ const ListingContainer = ({ isOembed, subjects, tags, filters }: Props) => {
     notifyOnNetworkStatusChange: true, // For spinner on load more
   });
 
-  const handleSelectItem = (value: ListItem | null): void => {
+  const handleSelectItem = (value: ListItemType | null): void => {
     setQueryParams({
       ...queryParams,
       concept: value?.id,

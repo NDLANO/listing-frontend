@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, ComponentProps, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 import { Remarkable } from 'remarkable';
@@ -132,6 +132,12 @@ const formatToSubjectFiltersQuery = (subjectFilters: string[]): string => {
 
 type ViewStyle = 'grid' | 'list';
 
+export type ListItemType = Parameters<
+  ComponentProps<typeof ListView>['onSelectItem']
+>[0];
+
+type FilterType = ComponentProps<typeof ListView>['filters'];
+
 interface Props {
   isOembed: boolean;
   loading: boolean;
@@ -149,7 +155,7 @@ interface Props {
   searchValue: string;
   setSearchValue: (value: string) => void;
   onLoadMoreClick: () => void;
-  handleSelectItem: (value: ListItem | null) => void;
+  handleSelectItem: (value: ListItemType | null) => void;
   handleChangeListFilter: (
     selectedItem: string | null,
     stateAndHelpers: ControllerStateAndHelpers<string>,
@@ -185,7 +191,6 @@ const ListingView = ({
   const location = useLocation();
   const [filterSearchValue, setFilterSearchValue] = useState('');
   const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
-  const [detailedItem, setDetailedItem] = useState(null);
   const [viewStyle, setViewStyle] = useState<ViewStyle>('grid');
   const { t, i18n } = useTranslation();
 
@@ -230,17 +235,19 @@ const ListingView = ({
     placeholder: t(`listview.filters.category.openFilter`),
   };
 
-  const getFilters = (): object[] => {
+  const getFilters = (): FilterType => {
     if (selectedListFilter) {
       const mainOptions = filters[selectedListFilter]?.main.map(filter => ({
         title: filter,
         value: filter,
         disabled: !listItems.some(item => item.filters.includes(filter)),
+        icon: () => null,
       }));
       const subOptions = filters[selectedListFilter]?.sub.map(filter => ({
         title: filter,
         value: filter,
         disabled: !listItems.some(item => item.filters.includes(filter)),
+        icon: () => null,
       }));
 
       return [
@@ -395,8 +402,6 @@ const ListingView = ({
             disableSearch={isOembed}
             disableViewOption={isOembed}
             items={listItems}
-            detailedItem={detailedItem}
-            selectCallback={setDetailedItem}
             viewStyle={viewStyle}
             onChangedViewStyle={(e: { viewStyle: ViewStyle }): void =>
               setViewStyle(e.viewStyle)
