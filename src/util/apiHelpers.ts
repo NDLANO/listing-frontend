@@ -22,7 +22,8 @@ import config from '../config';
 const __CLIENT__ = process.env.BUILD_TARGET === 'client'; //eslint-disable-line
 
 declare global {
-  let __SERVER__: boolean;
+  // eslint-disable-next-line no-var
+  var __SERVER__: boolean;
 }
 const NDLA_API_URL = global.__SERVER__
   ? config.ndlaApiUrl
