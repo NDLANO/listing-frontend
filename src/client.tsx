@@ -9,9 +9,9 @@
 // import before all other imports component to make sure it is loaded before any emotion stuff.
 import './style/index.css';
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import ReactDOM from 'react-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { useTranslation, I18nextProvider } from 'react-i18next';
-import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider, useApolloClient } from '@apollo/client';
 import { i18nInstance } from '@ndla/ui';
@@ -22,10 +22,10 @@ import '@fontsource/source-sans-pro/300-italic.css';
 import '@fontsource/source-sans-pro/600.css';
 import '@fontsource/source-sans-pro/700.css';
 
+import config, { getDefaultLocale } from './config';
+import App from './containers/App/App';
 import { initializeI18n, isValidLocale, supportedLanguages } from './i18n';
 import { createApolloClient, createApolloLinks } from './util/apiHelpers';
-import App from './containers/App/App';
-import config, { getDefaultLocale } from './config';
 const STORED_LANGUAGE_KEY = 'language';
 
 const paths = window.location.pathname.split('/');

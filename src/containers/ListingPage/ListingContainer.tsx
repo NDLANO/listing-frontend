@@ -6,18 +6,18 @@
  *
  */
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { gql, useQuery } from '@apollo/client';
 
-import { useTranslation } from 'react-i18next';
 import ListingView, { ListItemType } from './ListingView';
-import useQueryParameter from '../../util/useQueryParameter';
-import { getTagsParameter } from '../../util/listingHelpers';
-import { Filter, ListItem } from '../../interfaces';
 import {
   GQLListingContainerConceptSearchQuery,
   GQLListingContainerConceptSearchQueryVariables,
   GQLListingContainerSubjectFragment,
 } from '../../graphqlTypes';
+import { Filter, ListItem } from '../../interfaces';
+import { getTagsParameter } from '../../util/listingHelpers';
+import useQueryParameter from '../../util/useQueryParameter';
 
 const PAGE_SIZE = 40;
 

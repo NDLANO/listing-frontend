@@ -5,18 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { ChangeEvent, ComponentProps, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useLocation } from 'react-router-dom';
-import { Remarkable } from 'remarkable';
 import Downshift, {
   StateChangeOptions,
   ControllerStateAndHelpers,
 } from 'downshift';
+import { ChangeEvent, ComponentProps, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { Remarkable } from 'remarkable';
 import { gql } from '@apollo/client';
-import styled from '@emotion/styled';
 import { css, SerializedStyles } from '@emotion/react';
+import styled from '@emotion/styled';
+import { ButtonV2 } from '@ndla/button';
 import { colors, fonts, spacing } from '@ndla/core';
+import { DropdownInput, DropdownMenu } from '@ndla/forms';
+import { Spinner } from '@ndla/icons';
+import { ChevronDown, Search } from '@ndla/icons/common';
 import ListView from '@ndla/listview';
 import {
   OneColumn,
@@ -26,23 +31,18 @@ import {
   MastheadItem,
   CreatedBy,
 } from '@ndla/ui';
-import { Spinner } from '@ndla/icons';
 // @ts-ignore
-import { DropdownInput, DropdownMenu } from '@ndla/forms';
-import { ChevronDown, Search } from '@ndla/icons/common';
-import { ButtonV2 } from '@ndla/button';
-import { useTranslation } from 'react-i18next';
-import { mapConceptToListItem } from '../../util/listingHelpers';
 import ConceptPage from '../../components/Concept/ConceptPage';
-import Footer from '../../components/Footer';
 import CopyTextButton from '../../components/CopyTextButton';
+import Footer from '../../components/Footer';
 import config from '../../config';
-import { Filter, ListItem } from '../../interfaces';
-import { supportedLanguages } from '../../i18n';
 import {
   GQLListingViewConceptFragment,
   GQLListingViewSubjectFragment,
 } from '../../graphqlTypes';
+import { supportedLanguages } from '../../i18n';
+import { Filter, ListItem } from '../../interfaces';
+import { mapConceptToListItem } from '../../util/listingHelpers';
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
