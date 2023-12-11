@@ -3,6 +3,7 @@ module.exports = {
   env: {
     jest: true,
   },
+  ignorePatterns: ['graphqlTypes.ts'],
   rules: {
     'react/prop-types': [2, { ignore: ['children', 'className', 't'] }],
   },
