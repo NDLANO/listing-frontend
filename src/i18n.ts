@@ -1,9 +1,17 @@
+/**
+ * Copyright (c) 2022-present, NDLA.
+ *
+ * This source code is licensed under the GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
 import { i18n } from 'i18next';
-import nb from './phrases/phrases-nb';
-import nn from './phrases/phrases-nn';
-import en from './phrases/phrases-en';
 import { getDefaultLocale } from './config';
 import { LocaleType } from './interfaces';
+import en from './phrases/phrases-en';
+import nb from './phrases/phrases-nb';
+import nn from './phrases/phrases-nn';
 
 const appLocales = ['nb', 'en', 'nn'];
 

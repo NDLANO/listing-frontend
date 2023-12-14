@@ -6,14 +6,14 @@
  *
  */
 
+import bodyParser from 'body-parser';
+import compression from 'compression';
 import express from 'express';
 import helmet from 'helmet';
-import compression from 'compression';
-import bodyParser from 'body-parser';
-import config from '../config';
 import contentSecurityPolicy from './contentSecurityPolicy';
-import handleError from '../util/handleError';
+import config from '../config';
 import { httpStatus } from '../constants';
+import handleError from '../util/handleError';
 
 global.__CLIENT__ = false;
 global.__SERVER__ = true;

@@ -6,10 +6,9 @@
  *
  */
 
+import { useTranslation } from 'react-i18next';
 import styled from '@emotion/styled';
 import { Footer, FooterText, EditorName } from '@ndla/ui';
-
-import { useTranslation } from 'react-i18next';
 
 const StyledFooterWrapper = styled.div`
   margin-top: 52px;

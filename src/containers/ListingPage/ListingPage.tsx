@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { gql, useQuery } from '@apollo/client';
-import { useLocation } from 'react-router-dom';
-import { Spinner } from '@ndla/icons';
 import qs from 'query-string';
-import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
+import { useLocation } from 'react-router-dom';
+import { gql, useQuery } from '@apollo/client';
+import { Spinner } from '@ndla/icons';
 import ListingContainer from './ListingContainer';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import {
   GQLListingPageQuery,
   GQLListingPageQueryVariables,
 } from '../../graphqlTypes';
+import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 interface Props {
   isOembed: boolean;

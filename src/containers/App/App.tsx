@@ -6,16 +6,15 @@
  *
  */
 
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { Helmet } from 'react-helmet-async';
 import { PageContainer } from '@ndla/ui';
 
-import { useTranslation } from 'react-i18next';
-
-import ListingPage from '../ListingPage/ListingPage';
 import ConceptPage from '../../components/Concept';
 import { Matomo } from '../../components/Matomo';
+import ListingPage from '../ListingPage/ListingPage';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 const StyledPageWrapper = styled.div`

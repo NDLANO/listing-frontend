@@ -1,17 +1,20 @@
-/*
- *  Copyright (c) 2020-present, NDLA.
+/**
+ * Copyright (c) 2020-present, NDLA.
  *
- *  This source code is licensed under the GPLv3 license found in the
- *  LICENSE file in the root directory of this source tree.
+ * This source code is licensed under the GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  */
 
-import { ReactNode } from 'react';
 import { TFunction } from 'i18next';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { gql } from '@apollo/client';
+import { StyledButton, ButtonV2 } from '@ndla/button';
+import { FileDocumentOutline } from '@ndla/icons/common';
+import { figureApa7CopyString, metaTypes } from '@ndla/licenses';
 import Modal, { ModalBody, ModalCloseButton, ModalHeader } from '@ndla/modal';
 import Tabs from '@ndla/tabs';
-import { gql } from '@apollo/client';
 import {
   MediaList,
   MediaListItem,
@@ -20,12 +23,8 @@ import {
   MediaListItemImage,
   MediaListItemMeta,
 } from '@ndla/ui';
-import { FileDocumentOutline } from '@ndla/icons/common';
-import { figureApa7CopyString, metaTypes } from '@ndla/licenses';
-import { StyledButton, ButtonV2 } from '@ndla/button';
 import CopyTextButton from './CopyTextButton';
-import { downloadUrl } from '../util/downloadHelpers';
-import formatDate from '../util/formatDate';
+import config from '../config';
 import {
   GQLConceptCopyright,
   GQLCopyright,
@@ -34,8 +33,9 @@ import {
   GQLLicenseBoxConceptFragment,
   GQLVisualElement,
 } from '../graphqlTypes';
-import config from '../config';
 import { copyrightInfoFragment } from '../queries';
+import { downloadUrl } from '../util/downloadHelpers';
+import formatDate from '../util/formatDate';
 
 interface LicenseItemEntity {
   title?: string;

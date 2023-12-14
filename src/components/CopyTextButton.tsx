@@ -7,9 +7,9 @@
  */
 
 import { useEffect, useRef, useState } from 'react';
-import { copyTextToClipboard } from '@ndla/util';
-import { Code } from '@ndla/icons/editor';
 import Button from '@ndla/button';
+import { Code } from '@ndla/icons/editor';
+import { copyTextToClipboard } from '@ndla/util';
 
 interface Props {
   stringToCopy: string;

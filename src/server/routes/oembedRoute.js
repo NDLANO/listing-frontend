@@ -9,11 +9,11 @@
 // import before all other imports component to make sure it is loaded before any emotion stuff.
 import '../../style/index.css';
 import config from '../../config';
-import { isListeParamUrl, isListePathUrl } from '../../util/listingHelpers';
-import handleError from '../../util/handleError';
-import { createApolloClient } from '../../util/apiHelpers';
 import { httpStatus } from '../../constants';
 import { conceptTitleQuery } from '../../queries';
+import { createApolloClient } from '../../util/apiHelpers';
+import handleError from '../../util/handleError';
+import { isListeParamUrl, isListePathUrl } from '../../util/listingHelpers';
 
 const getOembedObject = (req, title, html) => {
   return {

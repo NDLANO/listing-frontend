@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2020-present, NDLA.
  *
  * This source code is licensed under the GPLv3 license found in the
@@ -7,23 +7,23 @@
  */
 
 import { useEffect, useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
-import { Remarkable } from 'remarkable';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import { Remarkable } from 'remarkable';
+import { gql, useQuery } from '@apollo/client';
+import { Spinner } from '@ndla/icons';
 import {
   NotionDialogWrapper,
   NotionHeaderWithoutExitButton,
 } from '@ndla/notion';
 import { CreatedBy, OneColumn } from '@ndla/ui';
-import { Spinner } from '@ndla/icons';
-import { useTranslation } from 'react-i18next';
+import ConceptBody from './ConceptBody';
 import config from '../../config';
-import PostResizeMessage from '../PostResizeMessage';
 import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
 import { GQLConceptPageQuery } from '../../graphqlTypes';
 import { ListItem } from '../../interfaces';
-import ConceptBody from './ConceptBody';
 import { LicenseBox } from '../LicenseBox';
+import PostResizeMessage from '../PostResizeMessage';
 
 interface Props {
   handleClose?: (item: ListItem | null) => void;

@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2020-present, NDLA.
+ *
+ * This source code is licensed under the GPLv3 license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+import qs from 'query-string';
 import { useState } from 'react';
 import {
   NavigateFunction,
@@ -5,7 +14,6 @@ import {
   useNavigate,
   Location,
 } from 'react-router-dom';
-import qs from 'query-string';
 
 const setQueryParameter = <T extends object>(
   state: T,

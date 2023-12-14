@@ -8,22 +8,22 @@
 
 // import before all other imports component to make sure it is loaded before any emotion stuff.
 import '../../style/index.css';
-import { ReactElement } from 'react';
-import { renderToStringWithData } from '@apollo/client/react/ssr';
 import { Request, Response } from 'express';
+import { ReactElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
+import { I18nextProvider } from 'react-i18next';
 import { StaticRouter } from 'react-router-dom/server.js';
 import { ApolloClient, ApolloProvider } from '@apollo/client';
-import { I18nextProvider } from 'react-i18next';
+import { renderToStringWithData } from '@apollo/client/react/ssr';
 import { i18nInstance } from '@ndla/ui';
+import RedirectContext from '../../components/RedirectContext';
+import { getDefaultLocale } from '../../config';
+import App from '../../containers/App/App';
+import { getValidLocale, initializeI18n, isValidLocale } from '../../i18n';
+import { createApolloClient } from '../../util/apiHelpers';
 import getConditionalClassnames from '../helpers/getConditionalClassnames';
 import Html from '../helpers/Html';
-import { createApolloClient } from '../../util/apiHelpers';
-import { getValidLocale, initializeI18n, isValidLocale } from '../../i18n';
-import App from '../../containers/App/App';
-import { getDefaultLocale } from '../../config';
-import RedirectContext from '../../components/RedirectContext';
 
 declare global {
   let __DISABLE_SSR__: boolean;
