@@ -6,19 +6,19 @@
  *
  */
 
-import { getValidLocale, isValidLocale } from '../i18n';
+import { getValidLocale, isValidLocale } from "../i18n";
 
-test('i18n getLocaleObject()', () => {
-  expect(getValidLocale('en')).toBe('en');
-  expect(getValidLocale('nb')).toBe('nb');
+test("i18n getLocaleObject()", () => {
+  expect(getValidLocale("en")).toBe("en");
+  expect(getValidLocale("nb")).toBe("nb");
   // Defaults to nb if locale not found
-  expect(getValidLocale('ru')).toBe('nb');
+  expect(getValidLocale("ru")).toBe("nb");
 });
 
-test('i18n isValidLocale()', () => {
-  expect(isValidLocale('nb')).toBe(true);
-  expect(isValidLocale('nn')).toBe(true);
-  expect(isValidLocale('en')).toBe(true);
-  expect(isValidLocale('aa')).toBe(false);
-  expect(isValidLocale('ub')).toBe(false);
+test("i18n isValidLocale()", () => {
+  expect(isValidLocale("nb")).toBe(true);
+  expect(isValidLocale("nn")).toBe(true);
+  expect(isValidLocale("en")).toBe(true);
+  expect(isValidLocale("aa")).toBe(false);
+  expect(isValidLocale("ub")).toBe(false);
 });

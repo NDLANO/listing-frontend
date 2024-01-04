@@ -6,9 +6,9 @@
  *
  */
 
-import { useContext } from 'react';
-import Footer from '../../components/Footer';
-import RedirectContext from '../../components/RedirectContext';
+import { useContext } from "react";
+import Footer from "../../components/Footer";
+import RedirectContext from "../../components/RedirectContext";
 
 export default function NotFound() {
   const redirectContext = useContext(RedirectContext);

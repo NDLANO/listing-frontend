@@ -6,24 +6,14 @@
  *
  */
 
-import ErrorReporter from '@ndla/error-reporter';
+import ErrorReporter from "@ndla/error-reporter";
 
-const log =
-  process.env.BUILD_TARGET === 'server' ? require('./logger') : undefined;
+const log = process.env.BUILD_TARGET === "server" ? require("./logger") : undefined;
 
-const handleError = (
-  error: string | object,
-  info?: string | object | string[] | object[],
-) => {
-  if (
-    process.env.NODE_ENV === 'production' &&
-    process.env.BUILD_TARGET === 'client'
-  ) {
+const handleError = (error: string | object, info?: string | object | string[] | object[]) => {
+  if (process.env.NODE_ENV === "production" && process.env.BUILD_TARGET === "client") {
     ErrorReporter.getInstance().captureError(error, info);
-  } else if (
-    process.env.NODE_ENV === 'production' &&
-    process.env.BUILD_TARGET === 'server'
-  ) {
+  } else if (process.env.NODE_ENV === "production" && process.env.BUILD_TARGET === "server") {
     log.error(error);
   } else {
     console.error(error); // eslint-disable-line no-console

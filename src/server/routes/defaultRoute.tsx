@@ -7,23 +7,23 @@
  */
 
 // import before all other imports component to make sure it is loaded before any emotion stuff.
-import '../../style/index.css';
-import { Request, Response } from 'express';
-import { ReactElement } from 'react';
-import { renderToString } from 'react-dom/server';
-import { HelmetProvider } from 'react-helmet-async';
-import { I18nextProvider } from 'react-i18next';
-import { StaticRouter } from 'react-router-dom/server.js';
-import { ApolloClient, ApolloProvider } from '@apollo/client';
-import { renderToStringWithData } from '@apollo/client/react/ssr';
-import { i18nInstance } from '@ndla/ui';
-import RedirectContext from '../../components/RedirectContext';
-import { getDefaultLocale } from '../../config';
-import App from '../../containers/App/App';
-import { getValidLocale, initializeI18n, isValidLocale } from '../../i18n';
-import { createApolloClient } from '../../util/apiHelpers';
-import getConditionalClassnames from '../helpers/getConditionalClassnames';
-import Html from '../helpers/Html';
+import "../../style/index.css";
+import { Request, Response } from "express";
+import { ReactElement } from "react";
+import { renderToString } from "react-dom/server";
+import { HelmetProvider } from "react-helmet-async";
+import { I18nextProvider } from "react-i18next";
+import { StaticRouter } from "react-router-dom/server.js";
+import { ApolloClient, ApolloProvider } from "@apollo/client";
+import { renderToStringWithData } from "@apollo/client/react/ssr";
+import { i18nInstance } from "@ndla/ui";
+import RedirectContext from "../../components/RedirectContext";
+import { getDefaultLocale } from "../../config";
+import App from "../../containers/App/App";
+import { getValidLocale, initializeI18n, isValidLocale } from "../../i18n";
+import { createApolloClient } from "../../util/apiHelpers";
+import getConditionalClassnames from "../helpers/getConditionalClassnames";
+import Html from "../helpers/Html";
 
 declare global {
   let __DISABLE_SSR__: boolean;
@@ -50,7 +50,7 @@ const renderHtmlString = async ({
   initialProps,
   helmetContext,
 }: RenderHtmlProps) => {
-  const content = component ? await renderToStringWithData(component) : '';
+  const content = component ? await renderToStringWithData(component) : "";
   const data = client.extract();
   const helmet = helmetContext.helmet;
   return renderToString(
@@ -66,16 +66,16 @@ const renderHtmlString = async ({
 };
 
 const disableSSR = (req: Request) => {
-  return __DISABLE_SSR__ || req.query['disableSSR'] === 'true';
+  return __DISABLE_SSR__ || req.query["disableSSR"] === "true";
 };
 
 export async function defaultRoute(req: Request, res: Response) {
-  const paths = req.url.split('/');
-  const locale = getValidLocale(paths[1] ?? '');
-  const userAgentString = req.headers['user-agent'];
+  const paths = req.url.split("/");
+  const locale = getValidLocale(paths[1] ?? "");
+  const userAgentString = req.headers["user-agent"];
   // Oembed-hack
-  if (paths.find(p => p.includes('listing')) || paths.includes('concepts')) {
-    res.removeHeader('X-Frame-Options');
+  if (paths.find((p) => p.includes("listing")) || paths.includes("concepts")) {
+    res.removeHeader("X-Frame-Options");
   }
   const i18n = initializeI18n(i18nInstance, locale ?? getDefaultLocale());
 
@@ -103,7 +103,7 @@ export async function defaultRoute(req: Request, res: Response) {
     return;
   }
 
-  const basename = isValidLocale(paths[1] ?? '') ? `${paths[1]}` : '';
+  const basename = isValidLocale(paths[1] ?? "") ? `${paths[1]}` : "";
 
   const context: any = {};
   const component = (

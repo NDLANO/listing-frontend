@@ -41,15 +41,15 @@ const environment = {
   production: {
     isProduction: true,
   },
-}[process.env.NODE_ENV || 'development'];
+}[process.env.NODE_ENV || "development"];
 
-const ndlaEnvironment = process.env.NDLA_ENVIRONMENT || 'test';
+const ndlaEnvironment = process.env.NDLA_ENVIRONMENT || "test";
 const apiDomain = () => {
   switch (process.env.NDLA_ENVIRONMENT) {
-    case 'local':
-      return 'http://api-gateway.ndla-local';
-    case 'prod':
-      return 'https://api.ndla.no';
+    case "local":
+      return "http://api-gateway.ndla-local";
+    case "prod":
+      return "https://api.ndla.no";
     default:
       return `https://api.${ndlaEnvironment}.ndla.no`;
   }
@@ -57,10 +57,10 @@ const apiDomain = () => {
 
 const ndlaListingFrontendDomain = () => {
   switch (process.env.NDLA_ENVIRONMENT) {
-    case 'local':
-      return 'http://localhost:30020';
-    case 'prod':
-      return 'https://liste.ndla.no';
+    case "local":
+      return "http://localhost:30020";
+    case "prod":
+      return "https://liste.ndla.no";
     default:
       return `https://liste.${ndlaEnvironment}.ndla.no`;
   }
@@ -68,44 +68,40 @@ const ndlaListingFrontendDomain = () => {
 
 const ndlaFrontendDomain = () => {
   switch (process.env.NDLA_ENVIRONMENT) {
-    case 'local':
-      return 'http://localhost:30020';
-    case 'prod':
-      return 'https://ndla.no';
+    case "local":
+      return "http://localhost:30020";
+    case "prod":
+      return "https://ndla.no";
     default:
       return `https://${ndlaEnvironment}.ndla.no`;
   }
 };
 
 export const getDefaultLocale = () => {
-  return process.env.NDLA_DEFAULT_LOCALE ?? 'nb';
+  return process.env.NDLA_DEFAULT_LOCALE ?? "nb";
 };
 
 const config: ConfigType = Object.assign(
   {
-    defaultLocale: process.env.NDLA_DEFAULT_LOCALE || 'nb',
-    host: process.env.NDLA_FRONTENTD_HOST || 'localhost',
-    port: process.env.NDLA_FRONTENTD_PORT || '3000',
-    redirectPort: process.env.NDLA_REDIRECT_PORT || '3001',
+    defaultLocale: process.env.NDLA_DEFAULT_LOCALE || "nb",
+    host: process.env.NDLA_FRONTENTD_HOST || "localhost",
+    port: process.env.NDLA_FRONTENTD_PORT || "3000",
+    redirectPort: process.env.NDLA_REDIRECT_PORT || "3001",
     googleTagMangerId: process.env.GOOGLE_TAG_MANGER_ID || undefined,
     disableSSR: process.env.DISABLE_SSR || false,
     ndlaApiUrl: process.env.NDLA_API_URL || apiDomain(),
-    ndlaListingFrontendDomain:
-      process.env.NDLA_LISTING_URL || ndlaListingFrontendDomain(),
+    ndlaListingFrontendDomain: process.env.NDLA_LISTING_URL || ndlaListingFrontendDomain(),
     ndlaFrontendDomain: process.env.NDLA_FRONTEND_URL || ndlaFrontendDomain(),
     localGraphQLApi: process.env.LOCAL_GRAPHQL_API || false,
-    matomoUrl: process.env.MATOMO_URL || 'https://tall.ndla.no/',
+    matomoUrl: process.env.MATOMO_URL || "https://tall.ndla.no/",
     matomoSiteId: process.env.MATOMO_SITE_ID || undefined,
-    isVercel: process.env.IS_VERCEL === 'true',
+    isVercel: process.env.IS_VERCEL === "true",
   },
   environment,
 );
 
 export function getUniversalConfig() {
-  return process.env.BUILD_TARGET === 'server' ||
-    process.env.NODE_ENV === 'unittest'
-    ? config
-    : window.config;
+  return process.env.BUILD_TARGET === "server" || process.env.NODE_ENV === "unittest" ? config : window.config;
 }
 
 export default getUniversalConfig();

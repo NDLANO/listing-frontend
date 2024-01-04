@@ -6,16 +6,13 @@
  *
  */
 
-const errorReporter = store => next => action => {
+const errorReporter = (store) => (next) => (action) => {
   if (action.error) {
     const err = action.payload;
     /* eslint-disable no-console */
     if (err.status) {
       const json = err.json;
-      console.error(
-        `${err.status} ${err.message}: ${json.code} ${json.description}. %o`,
-        json.messages,
-      );
+      console.error(`${err.status} ${err.message}: ${json.code} ${json.description}. %o`, json.messages);
     } else {
       console.error(action.payload, action, store.getState());
     }

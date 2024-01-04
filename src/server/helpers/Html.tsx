@@ -6,9 +6,9 @@
  *
  */
 
-import serialize from 'serialize-javascript';
+import serialize from "serialize-javascript";
 
-import config from '../../config';
+import config from "../../config";
 
 //@ts-ignore
 const razzleAssets = require(process.env.RAZZLE_ASSETS_MANIFEST); // eslint-disable-line import/no-dynamic-require
@@ -22,7 +22,7 @@ const GoogleTagMangerNoScript = () => {
           src={`//www.googletagmanager.com/ns.html?id=${config.googleTagMangerId}`}
           height="0"
           width="0"
-          style={{ display: 'none', visibility: 'hidden' }}
+          style={{ display: "none", visibility: "hidden" }}
         />
       </noscript>
     );
@@ -57,14 +57,7 @@ interface Props {
   helmet: any;
 }
 
-const Html = ({
-  lang,
-  className,
-  content = '',
-  initialProps,
-  data,
-  helmet,
-}: Props) => {
+const Html = ({ lang, className, content = "", initialProps, data, helmet }: Props) => {
   return (
     <html lang={lang} className={className}>
       <head>
@@ -74,32 +67,11 @@ const Html = ({
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
         {helmet.script.toComponent()}
-        {razzleAssets['client.css'] && (
-          <link
-            rel="stylesheet"
-            type="text/css"
-            href={razzleAssets['client.css']}
-          />
-        )}
+        {razzleAssets["client.css"] && <link rel="stylesheet" type="text/css" href={razzleAssets["client.css"]} />}
         <link rel="icon" href="/favicon.ico" type="image/ico" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link
-          rel="apple-touch-icon"
-          type="image/png"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/apple-touch-icon.png" />
       </head>
       <body>
         <GoogleTagMangerNoScript />
@@ -121,7 +93,7 @@ const Html = ({
             __html: `window.DATA= ${serialize(data)}; `,
           }}
         />
-        <script src={razzleAssets['client.js']} />
+        <script src={razzleAssets["client.js"]} />
         {/* <script type="text/javascript" async src={`https://cdn.mathjax.org/mathjax/2.7-latest/MathJax.js?config=/assets/${assets['mathjaxConfig.js']}`} /> */}
       </body>
     </html>

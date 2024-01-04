@@ -5,24 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import Downshift, {
-  StateChangeOptions,
-  ControllerStateAndHelpers,
-} from 'downshift';
-import { ChangeEvent, ComponentProps, useState } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
-import { Remarkable } from 'remarkable';
-import { gql } from '@apollo/client';
-import { css, SerializedStyles } from '@emotion/react';
-import styled from '@emotion/styled';
-import { ButtonV2 } from '@ndla/button';
-import { colors, fonts, spacing } from '@ndla/core';
-import { DropdownInput, DropdownMenu } from '@ndla/forms';
-import { Spinner } from '@ndla/icons';
-import { ChevronDown, Search } from '@ndla/icons/common';
-import ListView from '@ndla/listview';
+import Downshift, { StateChangeOptions, ControllerStateAndHelpers } from "downshift";
+import { ChangeEvent, ComponentProps, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
+import { Remarkable } from "remarkable";
+import { gql } from "@apollo/client";
+import { css, SerializedStyles } from "@emotion/react";
+import styled from "@emotion/styled";
+import { ButtonV2 } from "@ndla/button";
+import { colors, fonts, spacing } from "@ndla/core";
+import { DropdownInput, DropdownMenu } from "@ndla/forms";
+import { Spinner } from "@ndla/icons";
+import { ChevronDown, Search } from "@ndla/icons/common";
+import ListView from "@ndla/listview";
 import {
   OneColumn,
   // @ts-ignore
@@ -30,19 +27,16 @@ import {
   LanguageSelector,
   MastheadItem,
   CreatedBy,
-} from '@ndla/ui';
+} from "@ndla/ui";
 // @ts-ignore
-import ConceptPage from '../../components/Concept/ConceptPage';
-import CopyTextButton from '../../components/CopyTextButton';
-import Footer from '../../components/Footer';
-import config from '../../config';
-import {
-  GQLListingViewConceptFragment,
-  GQLListingViewSubjectFragment,
-} from '../../graphqlTypes';
-import { supportedLanguages } from '../../i18n';
-import { Filter, ListItem } from '../../interfaces';
-import { mapConceptToListItem } from '../../util/listingHelpers';
+import ConceptPage from "../../components/Concept/ConceptPage";
+import CopyTextButton from "../../components/CopyTextButton";
+import Footer from "../../components/Footer";
+import config from "../../config";
+import { GQLListingViewConceptFragment, GQLListingViewSubjectFragment } from "../../graphqlTypes";
+import { supportedLanguages } from "../../i18n";
+import { Filter, ListItem } from "../../interfaces";
+import { mapConceptToListItem } from "../../util/listingHelpers";
 
 const SubjectFilterWrapper = styled.div`
   margin-top: ${spacing.large};
@@ -79,20 +73,16 @@ const placeholderCSS = css`
   font-weight: initial;
   opacity: 0.5;
 `;
-const placeholderHasValuesCSS = (props: {
-  hasValues?: string;
-}): SerializedStyles =>
+const placeholderHasValuesCSS = (props: { hasValues?: string }): SerializedStyles =>
   !props.hasValues
     ? css`
         color: ${colors.brand.primary};
         font-weight: bold;
-        ${fonts.sizes('16px')};
+        ${fonts.sizes("16px")};
       `
     : placeholderCSS;
 
-const categoryFilterCSS = (props: {
-  hasValues?: string;
-}): SerializedStyles => css`
+const categoryFilterCSS = (props: { hasValues?: string }): SerializedStyles => css`
   border: 2px solid ${colors.brand.primary};
   min-height: auto;
   cursor: pointer;
@@ -112,7 +102,7 @@ const categoryFilterCSS = (props: {
 `;
 
 const markdown = new Remarkable();
-markdown.inline.ruler.enable(['sub', 'sup']);
+markdown.inline.ruler.enable(["sub", "sup"]);
 const renderMarkdown = (text: string): JSX.Element => {
   const rendered = markdown.render(text);
   return (
@@ -127,16 +117,14 @@ const formatToListFilterQuery = (listFilter: string): string => {
 };
 
 const formatToSubjectFiltersQuery = (subjectFilters: string[]): string => {
-  return `?subjects[]=${subjectFilters.join('&subjects[]=')}`;
+  return `?subjects[]=${subjectFilters.join("&subjects[]=")}`;
 };
 
-type ViewStyle = 'grid' | 'list';
+type ViewStyle = "grid" | "list";
 
-export type ListItemType = Parameters<
-  ComponentProps<typeof ListView>['onSelectItem']
->[0];
+export type ListItemType = Parameters<ComponentProps<typeof ListView>["onSelectItem"]>[0];
 
-type FilterType = ComponentProps<typeof ListView>['filters'];
+type FilterType = ComponentProps<typeof ListView>["filters"];
 
 interface Props {
   isOembed: boolean;
@@ -156,10 +144,7 @@ interface Props {
   setSearchValue: (value: string) => void;
   onLoadMoreClick: () => void;
   handleSelectItem: (value: ListItemType | null) => void;
-  handleChangeListFilter: (
-    selectedItem: string | null,
-    stateAndHelpers: ControllerStateAndHelpers<string>,
-  ) => void;
+  handleChangeListFilter: (selectedItem: string | null, stateAndHelpers: ControllerStateAndHelpers<string>) => void;
   handleRemoveFilter: () => void;
   handleChangeSubject: (values: string[]) => void;
   handleChangeFilters: (key: string, values: string[]) => void;
@@ -189,25 +174,23 @@ const ListingView = ({
   handleChangeFilters,
 }: Props): JSX.Element => {
   const location = useLocation();
-  const [filterSearchValue, setFilterSearchValue] = useState('');
+  const [filterSearchValue, setFilterSearchValue] = useState("");
   const [currentListFilters, setCurrentListFilters] = useState<string[]>([]);
-  const [viewStyle, setViewStyle] = useState<ViewStyle>('grid');
+  const [viewStyle, setViewStyle] = useState<ViewStyle>("grid");
   const { t, i18n } = useTranslation();
 
-  const handleStateChangeListFilter = (
-    changes: StateChangeOptions<string>,
-  ): void => {
+  const handleStateChangeListFilter = (changes: StateChangeOptions<string>): void => {
     const { isOpen, type } = changes;
 
     if (type === Downshift.stateChangeTypes.mouseUp) {
       setFilterListOpen(!!isOpen);
       if (!isOpen) {
-        setFilterSearchValue('');
+        setFilterSearchValue("");
       }
     }
 
     if (type === Downshift.stateChangeTypes.keyDownEnter) {
-      setFilterSearchValue('');
+      setFilterSearchValue("");
     }
   };
 
@@ -215,9 +198,7 @@ const ListingView = ({
     const {
       target: { value },
     } = e;
-    const filteredFilters = Object.keys(filters).filter(item =>
-      item.toLowerCase().startsWith(value.toLowerCase()),
-    );
+    const filteredFilters = Object.keys(filters).filter((item) => item.toLowerCase().startsWith(value.toLowerCase()));
     setFilterSearchValue(value);
     setCurrentListFilters(filteredFilters.sort());
   };
@@ -237,16 +218,16 @@ const ListingView = ({
 
   const getFilters = (): FilterType => {
     if (selectedListFilter) {
-      const mainOptions = filters[selectedListFilter]?.main.map(filter => ({
+      const mainOptions = filters[selectedListFilter]?.main.map((filter) => ({
         title: filter,
         value: filter,
-        disabled: !listItems.some(item => item.filters.includes(filter)),
+        disabled: !listItems.some((item) => item.filters.includes(filter)),
         icon: () => null,
       }));
-      const subOptions = filters[selectedListFilter]?.sub.map(filter => ({
+      const subOptions = filters[selectedListFilter]?.sub.map((filter) => ({
         title: filter,
         value: filter,
-        disabled: !listItems.some(item => item.filters.includes(filter)),
+        disabled: !listItems.some((item) => item.filters.includes(filter)),
         icon: () => null,
       }));
 
@@ -255,8 +236,8 @@ const ListingView = ({
           filterValues: selectedFilters,
           onChange: handleChangeFilters,
           isGroupedOptions: true,
-          key: 'default',
-          label: 'Filter',
+          key: "default",
+          label: "Filter",
           options: [mainOptions || [], subOptions || []],
         },
       ];
@@ -264,15 +245,13 @@ const ListingView = ({
     return [];
   };
 
-  const listItems: ListItem[] = concepts
-    ? concepts.map(concept => mapConceptToListItem(concept))
-    : [];
+  const listItems: ListItem[] = concepts ? concepts.map((concept) => mapConceptToListItem(concept)) : [];
 
   function getSubjectNamesByIds(subjectIds: string[]): string {
     return subjects
-      .filter(sub => subjectIds.includes(sub.id))
-      .map(sub => sub.name)
-      .join(', ');
+      .filter((sub) => subjectIds.includes(sub.id))
+      .map((sub) => sub.name)
+      .join(", ");
   }
 
   const getEmbedCode = (): string => {
@@ -280,10 +259,8 @@ const ListingView = ({
       ? formatToListFilterQuery(selectedListFilter)
       : formatToSubjectFiltersQuery(selectedSubjects);
 
-    const ariaLabel = `${t('listview.filters.default.filteredBy')} ${
-      selectedListFilter
-        ? selectedListFilter
-        : getSubjectNamesByIds(selectedSubjects)
+    const ariaLabel = `${t("listview.filters.default.filteredBy")} ${
+      selectedListFilter ? selectedListFilter : getSubjectNamesByIds(selectedSubjects)
     }`;
 
     return `<iframe aria-label="${ariaLabel}" src="${config.ndlaListingFrontendDomain}/listing${filterQuery}" frameborder="0" allowFullscreen="" />`;
@@ -301,7 +278,7 @@ const ListingView = ({
                   <FilterListPhone
                     preid="subject-list"
                     label={t(`listview.filters.subject.openFilter`)}
-                    options={subjects.map(item => ({
+                    options={subjects.map((item) => ({
                       title: item.name,
                       value: item.id,
                     }))}
@@ -320,8 +297,8 @@ const ListingView = ({
                 <StyledEmbedCopyButton>
                   {(selectedListFilter || selectedSubjects.length > 0) && (
                     <CopyTextButton
-                      copyTitle={t('listview.embedlink.copyTitle')}
-                      hasCopiedTitle={t('listview.embedlink.hasCopiedTitle')}
+                      copyTitle={t("listview.embedlink.copyTitle")}
+                      hasCopiedTitle={t("listview.embedlink.hasCopiedTitle")}
                       stringToCopy={getEmbedCode()}
                       timeout={5000}
                       ghostPill
@@ -331,10 +308,7 @@ const ListingView = ({
                 <StyledLanguageSelector>
                   <MastheadItem>
                     {/* @ts-ignore */}
-                    <LanguageSelector
-                      locales={supportedLanguages}
-                      onSelect={i18n.changeLanguage}
-                    />
+                    <LanguageSelector locales={supportedLanguages} onSelect={i18n.changeLanguage} />
                   </MastheadItem>
                 </StyledLanguageSelector>
               </HeaderWithLanguageWrapper>
@@ -342,21 +316,18 @@ const ListingView = ({
                 <Downshift
                   onSelect={handleChangeListFilter}
                   onStateChange={handleStateChangeListFilter}
-                  isOpen={filterListOpen}>
-                  {({
-                    getInputProps,
-                    getMenuProps,
-                    getItemProps,
-                  }): JSX.Element => {
+                  isOpen={filterListOpen}
+                >
+                  {({ getInputProps, getMenuProps, getItemProps }): JSX.Element => {
                     return (
                       <div>
                         <DropdownInput
                           multiSelect
                           // eslint-disable-next-line react/jsx-props-no-spreading
                           {...getInputProps(categoryFilterInputProps)}
-                          data-testid={'dropdownInput'}
-                          idField={'id'}
-                          labelField={'label'}
+                          data-testid={"dropdownInput"}
+                          idField={"id"}
+                          labelField={"label"}
                           iconRight={
                             filterListOpen ? (
                               <Search />
@@ -403,20 +374,12 @@ const ListingView = ({
             disableViewOption={isOembed}
             items={listItems}
             viewStyle={viewStyle}
-            onChangedViewStyle={(e: { viewStyle: ViewStyle }): void =>
-              setViewStyle(e.viewStyle)
-            }
+            onChangedViewStyle={(e: { viewStyle: ViewStyle }): void => setViewStyle(e.viewStyle)}
             searchValue={searchValue}
-            onChangedSearchValue={(e: ChangeEvent<HTMLInputElement>): void =>
-              setSearchValue(e.target.value)
-            }
+            onChangedSearchValue={(e: ChangeEvent<HTMLInputElement>): void => setSearchValue(e.target.value)}
             selectedItem={
               selectedConcept ? (
-                <ConceptPage
-                  conceptId={parseInt(selectedConcept)}
-                  inModal={true}
-                  handleClose={handleSelectItem}
-                />
+                <ConceptPage conceptId={parseInt(selectedConcept)} inModal={true} handleClose={handleSelectItem} />
               ) : null
             }
             onSelectItem={handleSelectItem}
@@ -426,22 +389,14 @@ const ListingView = ({
           />
           {showLoadMore && (
             <ButtonWrapper>
-              {loading ? (
-                <Spinner />
-              ) : (
-                <ButtonV2 onClick={onLoadMoreClick}>
-                  {t('listingPage.loadMore')}
-                </ButtonV2>
-              )}
+              {loading ? <Spinner /> : <ButtonV2 onClick={onLoadMoreClick}>{t("listingPage.loadMore")}</ButtonV2>}
             </ButtonWrapper>
           )}
           {isOembed && (
             <CreatedBy
-              name={t('createdBy.listing.content')}
-              description={t('createdBy.listing.text')}
-              url={`${config.ndlaListingFrontendDomain}/${decodeURIComponent(
-                location.search,
-              )}`}
+              name={t("createdBy.listing.content")}
+              description={t("createdBy.listing.text")}
+              url={`${config.ndlaListingFrontendDomain}/${decodeURIComponent(location.search)}`}
             />
           )}
         </>

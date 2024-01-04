@@ -6,10 +6,10 @@
  *
  */
 
-import { useEffect, useRef, useState } from 'react';
-import Button from '@ndla/button';
-import { Code } from '@ndla/icons/editor';
-import { copyTextToClipboard } from '@ndla/util';
+import { useEffect, useRef, useState } from "react";
+import Button from "@ndla/button";
+import { Code } from "@ndla/icons/editor";
+import { copyTextToClipboard } from "@ndla/util";
 
 interface Props {
   stringToCopy: string;
@@ -18,13 +18,7 @@ interface Props {
   timeout?: number;
   ghostPill?: boolean;
 }
-const CopyTextButton = ({
-  copyTitle,
-  hasCopiedTitle,
-  stringToCopy,
-  timeout,
-  ghostPill,
-}: Props) => {
+const CopyTextButton = ({ copyTitle, hasCopiedTitle, stringToCopy, timeout, ghostPill }: Props) => {
   const [hasCopied, setHasCopied] = useState(false);
   const buttonContainer = useRef<HTMLSpanElement | null>(null);
   let timer: ReturnType<typeof setTimeout>;
@@ -34,10 +28,7 @@ const CopyTextButton = ({
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClick = () => {
-    const success = copyTextToClipboard(
-      stringToCopy,
-      buttonContainer.current ?? undefined,
-    );
+    const success = copyTextToClipboard(stringToCopy, buttonContainer.current ?? undefined);
 
     if (success) {
       setHasCopied(true);
@@ -53,10 +44,11 @@ const CopyTextButton = ({
     <span ref={buttonContainer}>
       <Button
         outline={!ghostPill}
-        className={ghostPill ? '' : 'c-licenseToggle__button'}
+        className={ghostPill ? "" : "c-licenseToggle__button"}
         disabled={hasCopied}
         onClick={handleClick}
-        ghostPill={ghostPill}>
+        ghostPill={ghostPill}
+      >
         <Code /> {hasCopied ? hasCopiedTitle : copyTitle}
       </Button>
     </span>

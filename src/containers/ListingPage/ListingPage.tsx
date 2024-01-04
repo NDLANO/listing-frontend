@@ -5,48 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import qs from 'query-string';
-import { useLocation } from 'react-router-dom';
-import { gql, useQuery } from '@apollo/client';
-import { Spinner } from '@ndla/icons';
-import ListingContainer from './ListingContainer';
-import {
-  GQLListingPageQuery,
-  GQLListingPageQueryVariables,
-} from '../../graphqlTypes';
-import { mapTagsToFilters, filterTags } from '../../util/listingHelpers';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import qs from "query-string";
+import { useLocation } from "react-router-dom";
+import { gql, useQuery } from "@apollo/client";
+import { Spinner } from "@ndla/icons";
+import ListingContainer from "./ListingContainer";
+import { GQLListingPageQuery, GQLListingPageQueryVariables } from "../../graphqlTypes";
+import { mapTagsToFilters, filterTags } from "../../util/listingHelpers";
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
 
 interface Props {
   isOembed: boolean;
 }
 
-const getSubjectsString = (
-  subjects: string | string[] | number | boolean | undefined | null,
-) => {
-  if (
-    !subjects ||
-    typeof subjects === 'number' ||
-    typeof subjects === 'boolean'
-  ) {
+const getSubjectsString = (subjects: string | string[] | number | boolean | undefined | null) => {
+  if (!subjects || typeof subjects === "number" || typeof subjects === "boolean") {
     return;
   }
 
-  return typeof subjects === 'string' ? subjects : subjects.join(',');
+  return typeof subjects === "string" ? subjects : subjects.join(",");
 };
 
 const ListingPage = ({ isOembed }: Props): JSX.Element => {
   const location = useLocation();
-  const searchParams = qs.parse(location.search, { arrayFormat: 'bracket' });
-  const querySubjects = getSubjectsString(searchParams['subjects']);
-  const { data, loading, previousData } = useQuery<
-    GQLListingPageQuery,
-    GQLListingPageQueryVariables
-  >(listingPageQuery, {
-    variables: {
-      listingPageSubjects: querySubjects,
+  const searchParams = qs.parse(location.search, { arrayFormat: "bracket" });
+  const querySubjects = getSubjectsString(searchParams["subjects"]);
+  const { data, loading, previousData } = useQuery<GQLListingPageQuery, GQLListingPageQueryVariables>(
+    listingPageQuery,
+    {
+      variables: {
+        listingPageSubjects: querySubjects,
+      },
     },
-  });
+  );
 
   if (loading && !data && !previousData) return <Spinner />;
 
@@ -54,19 +45,13 @@ const ListingPage = ({ isOembed }: Props): JSX.Element => {
     return <NotFoundPage />;
   }
 
-  const filters = mapTagsToFilters(
-    data?.listingPage?.tags ?? previousData?.listingPage?.tags ?? [],
-  );
-  const filteredTags = filterTags(
-    data?.listingPage?.tags ?? previousData?.listingPage?.tags ?? [],
-  );
+  const filters = mapTagsToFilters(data?.listingPage?.tags ?? previousData?.listingPage?.tags ?? []);
+  const filteredTags = filterTags(data?.listingPage?.tags ?? previousData?.listingPage?.tags ?? []);
 
   return (
     <ListingContainer
       isOembed={isOembed}
-      subjects={
-        data?.listingPage?.subjects ?? previousData?.listingPage?.subjects ?? []
-      }
+      subjects={data?.listingPage?.subjects ?? previousData?.listingPage?.subjects ?? []}
       tags={filteredTags}
       filters={filters}
     />

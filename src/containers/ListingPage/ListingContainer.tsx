@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { useState, useEffect, useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
-import { gql, useQuery } from '@apollo/client';
+import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { gql, useQuery } from "@apollo/client";
 
-import ListingView, { ListItemType } from './ListingView';
+import ListingView, { ListItemType } from "./ListingView";
 import {
   GQLListingContainerConceptSearchQuery,
   GQLListingContainerConceptSearchQueryVariables,
   GQLListingContainerSubjectFragment,
-} from '../../graphqlTypes';
-import { Filter, ListItem } from '../../interfaces';
-import { getTagsParameter } from '../../util/listingHelpers';
-import useQueryParameter from '../../util/useQueryParameter';
+} from "../../graphqlTypes";
+import { Filter, ListItem } from "../../interfaces";
+import { getTagsParameter } from "../../util/listingHelpers";
+import useQueryParameter from "../../util/useQueryParameter";
 
 const PAGE_SIZE = 40;
 
@@ -38,7 +38,7 @@ interface QueryParams {
 
 const ListingContainer = ({ isOembed, subjects, tags, filters }: Props) => {
   const [filterListOpen, setFilterListOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [queryParams, setQueryParams] = useQueryParameter<QueryParams>({
     subjects: [],
     filters: [],
@@ -136,10 +136,7 @@ const ListingContainer = ({ isOembed, subjects, tags, filters }: Props) => {
 
   const totalCount = data?.conceptSearch?.totalCount;
   const concepts = data?.conceptSearch?.concepts;
-  const showLoadMore =
-    concepts !== undefined && totalCount !== undefined
-      ? concepts.length < totalCount
-      : true;
+  const showLoadMore = concepts !== undefined && totalCount !== undefined ? concepts.length < totalCount : true;
 
   return (
     <ListingView
