@@ -6,24 +6,21 @@
  *
  */
 
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { Remarkable } from 'remarkable';
-import { gql, useQuery } from '@apollo/client';
-import { Spinner } from '@ndla/icons';
-import {
-  NotionDialogWrapper,
-  NotionHeaderWithoutExitButton,
-} from '@ndla/notion';
-import { CreatedBy, OneColumn } from '@ndla/ui';
-import ConceptBody from './ConceptBody';
-import config from '../../config';
-import NotFoundPage from '../../containers/NotFoundPage/NotFoundPage';
-import { GQLConceptPageQuery } from '../../graphqlTypes';
-import { ListItem } from '../../interfaces';
-import { LicenseBox } from '../LicenseBox';
-import PostResizeMessage from '../PostResizeMessage';
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
+import { Remarkable } from "remarkable";
+import { gql, useQuery } from "@apollo/client";
+import { Spinner } from "@ndla/icons";
+import { NotionDialogWrapper, NotionHeaderWithoutExitButton } from "@ndla/notion";
+import { CreatedBy, OneColumn } from "@ndla/ui";
+import ConceptBody from "./ConceptBody";
+import config from "../../config";
+import NotFoundPage from "../../containers/NotFoundPage/NotFoundPage";
+import { GQLConceptPageQuery } from "../../graphqlTypes";
+import { ListItem } from "../../interfaces";
+import { LicenseBox } from "../LicenseBox";
+import PostResizeMessage from "../PostResizeMessage";
 
 interface Props {
   handleClose?: (item: ListItem | null) => void;
@@ -43,16 +40,12 @@ const conceptPageQuery = gql`
   ${ConceptBody.fragments.concept}
 `;
 
-const ConceptPage = ({
-  handleClose,
-  inModal,
-  conceptId: conceptIdParam,
-}: Props) => {
+const ConceptPage = ({ handleClose, inModal, conceptId: conceptIdParam }: Props) => {
   const { t, i18n } = useTranslation();
   const [markdown, setMarkdown] = useState<Remarkable | null>(null);
   const { selectedLanguage, conceptId: conceptIdUrlParam } = useParams();
   const language = selectedLanguage ?? i18n.language;
-  const conceptId = conceptIdParam ?? parseInt(conceptIdUrlParam ?? '');
+  const conceptId = conceptIdParam ?? parseInt(conceptIdUrlParam ?? "");
 
   const { data, loading } = useQuery<GQLConceptPageQuery>(conceptPageQuery, {
     variables: {
@@ -64,7 +57,7 @@ const ConceptPage = ({
   useEffect(() => {
     if (markdown === null) {
       const md = new Remarkable();
-      md.inline.ruler.enable(['sub', 'sup']);
+      md.inline.ruler.enable(["sub", "sup"]);
       setMarkdown(md);
     }
   }, [markdown]);
@@ -73,7 +66,7 @@ const ConceptPage = ({
   if (!data || !data.concept) return <NotFoundPage />;
 
   const renderMarkdown = (text: string | undefined) => {
-    const rendered = markdown?.render(text ?? '') ?? '';
+    const rendered = markdown?.render(text ?? "") ?? "";
     return (
       <>
         <span dangerouslySetInnerHTML={{ __html: rendered }} />
@@ -96,21 +89,19 @@ const ConceptPage = ({
     />
   );
   return (
-    <OneColumn cssModifier={'iframe'}>
+    <OneColumn cssModifier={"iframe"}>
       {inModal ? (
-        <NotionDialogWrapper
-          title={concept.title ?? ''}
-          closeCallback={() => handleClose?.(null)}>
+        <NotionDialogWrapper title={concept.title ?? ""} closeCallback={() => handleClose?.(null)}>
           {conceptBody}
         </NotionDialogWrapper>
       ) : (
         <>
           <PostResizeMessage />
-          <NotionHeaderWithoutExitButton title={concept.title ?? ''} />
+          <NotionHeaderWithoutExitButton title={concept.title ?? ""} />
           {conceptBody}
           <CreatedBy
-            name={t('createdBy.concept.content')}
-            description={t('createdBy.concept.text')}
+            name={t("createdBy.concept.content")}
+            description={t("createdBy.concept.text")}
             url={`${config.ndlaListingFrontendDomain}/?concept=${conceptId}`}
           />
         </>

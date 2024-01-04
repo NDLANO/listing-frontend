@@ -7,15 +7,12 @@
  */
 
 export default function getConditionalClassnames(userAgentString) {
-  if (userAgentString.indexOf('MSIE') >= 0) {
-    return 'ie lt-ie11';
-  } else if (userAgentString.indexOf('Trident/7.0; rv:11.0') >= 0) {
-    return 'ie gt-ie10';
-  } else if (
-    userAgentString.indexOf('Safari') >= 0 &&
-    userAgentString.indexOf('Chrome') < 0
-  ) {
-    return 'safari';
+  if (userAgentString.indexOf("MSIE") >= 0) {
+    return "ie lt-ie11";
+  } else if (userAgentString.indexOf("Trident/7.0; rv:11.0") >= 0) {
+    return "ie gt-ie10";
+  } else if (userAgentString.indexOf("Safari") >= 0 && userAgentString.indexOf("Chrome") < 0) {
+    return "safari";
   }
-  return '';
+  return "";
 }

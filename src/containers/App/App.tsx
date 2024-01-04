@@ -6,16 +6,16 @@
  *
  */
 
-import { Helmet } from 'react-helmet-async';
-import { useTranslation } from 'react-i18next';
-import { Outlet, Route, Routes } from 'react-router-dom';
-import styled from '@emotion/styled';
-import { PageContainer } from '@ndla/ui';
+import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
+import { Outlet, Route, Routes } from "react-router-dom";
+import styled from "@emotion/styled";
+import { PageContainer } from "@ndla/ui";
 
-import ConceptPage from '../../components/Concept';
-import { Matomo } from '../../components/Matomo';
-import ListingPage from '../ListingPage/ListingPage';
-import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import ConceptPage from "../../components/Concept";
+import { Matomo } from "../../components/Matomo";
+import ListingPage from "../ListingPage/ListingPage";
+import NotFoundPage from "../NotFoundPage/NotFoundPage";
 
 const StyledPageWrapper = styled.div`
   min-height: 100vh;
@@ -29,10 +29,7 @@ const Layout = () => {
   return (
     <PageContainer>
       <StyledPageWrapper>
-        <Helmet
-          title="NDLA"
-          meta={[{ name: 'description', content: t('meta.description') }]}
-        />
+        <Helmet title="NDLA" meta={[{ name: "description", content: t("meta.description") }]} />
         <Outlet />
       </StyledPageWrapper>
       <Matomo />

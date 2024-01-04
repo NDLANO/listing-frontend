@@ -6,12 +6,12 @@
  *
  */
 
-import express from 'express';
+import express from "express";
 
 const app = express();
 
-app.get('*', (req, res) => {
-  const hostname = req.get('Host');
+app.get("*", (req, res) => {
+  const hostname = req.get("Host");
   if (hostname === undefined || !hostname.match(/^(.+\.)?ndla\.no$/gi)) {
     res.send(400);
   }

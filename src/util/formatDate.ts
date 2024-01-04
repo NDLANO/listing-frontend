@@ -6,11 +6,11 @@
  *
  */
 
-import format from 'date-fns/format';
+import format from "date-fns/format";
 
 export default function formatDate(date: string, locale: string): string {
-  if (locale === 'nb' || locale === 'nn') {
-    return format(date, 'DD.MM.YYYY');
+  if (locale === "nb" || locale === "nn") {
+    return format(date, "DD.MM.YYYY");
   }
-  return format(date, 'MM/DD/YYYY');
+  return format(date, "MM/DD/YYYY");
 }

@@ -6,24 +6,24 @@
  *
  */
 
-import config from './config';
+import config from "./config";
 
-let app = require('./server/server').default;
+let app = require("./server/server").default;
 
 if (module.hot) {
-  module.hot.accept('./server/server', () => {
-    console.log('🔁  HMR Reloading `./server/server`...'); // eslint-disable-line no-console
+  module.hot.accept("./server/server", () => {
+    console.log("🔁  HMR Reloading `./server/server`..."); // eslint-disable-line no-console
     try {
-      app = require('./server/server').default;
+      app = require("./server/server").default;
     } catch (error) {
       console.error(error);
     }
   });
-  console.info('✅  Server-side HMR Enabled!'); // eslint-disable-line no-console
+  console.info("✅  Server-side HMR Enabled!"); // eslint-disable-line no-console
 }
 
 if (!config.isVercel) {
-  app.listen(config.port, err => {
+  app.listen(config.port, (err) => {
     if (err) {
       console.error(err);
       return;

@@ -6,9 +6,9 @@
  *
  */
 
-import { useTranslation } from 'react-i18next';
-import styled from '@emotion/styled';
-import { Footer, FooterText, EditorName } from '@ndla/ui';
+import { useTranslation } from "react-i18next";
+import styled from "@emotion/styled";
+import { Footer, FooterText, EditorName } from "@ndla/ui";
 
 const StyledFooterWrapper = styled.div`
   margin-top: 52px;
@@ -18,12 +18,11 @@ const FooterWrapper = () => {
   const { t, i18n } = useTranslation();
 
   const privacyLinks = [
-    { label: t('footer.privacyLink'), url: 'https://om.ndla.no/gdpr' },
-    { label: t('footer.cookiesLink'), url: 'https://om.ndla.no/cookies' },
+    { label: t("footer.privacyLink"), url: "https://om.ndla.no/gdpr" },
+    { label: t("footer.cookiesLink"), url: "https://om.ndla.no/cookies" },
     {
-      label: t('footer.availabilityLink'),
-      url:
-        'https://uustatus.no/nn/erklaringer/publisert/6a767f5d-1355-4067-8492-0af396c20b4d',
+      label: t("footer.availabilityLink"),
+      url: "https://uustatus.no/nn/erklaringer/publisert/6a767f5d-1355-4067-8492-0af396c20b4d",
     },
   ];
 
@@ -31,11 +30,8 @@ const FooterWrapper = () => {
     <StyledFooterWrapper>
       <Footer lang={i18n.language} privacyLinks={privacyLinks}>
         <FooterText>
-          <EditorName
-            title={t('footer.editorInChief')}
-            name="Sigurd Trageton"
-          />
-          {t('footer.info')}
+          <EditorName title={t("footer.editorInChief")} name="Sigurd Trageton" />
+          {t("footer.info")}
         </FooterText>
       </Footer>
     </StyledFooterWrapper>

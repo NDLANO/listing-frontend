@@ -6,47 +6,38 @@
  *
  */
 
-import fetch from 'node-fetch';
-import {
-  ApolloClient,
-  ApolloLink,
-  FieldFunctionOptions,
-  InMemoryCache,
-} from '@apollo/client';
-import { BatchHttpLink } from '@apollo/client/link/batch-http';
-import { setContext } from '@apollo/client/link/context';
-import { onError } from '@apollo/client/link/error';
-import handleError from './handleError';
-import config from '../config';
+import fetch from "node-fetch";
+import { ApolloClient, ApolloLink, FieldFunctionOptions, InMemoryCache } from "@apollo/client";
+import { BatchHttpLink } from "@apollo/client/link/batch-http";
+import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
+import handleError from "./handleError";
+import config from "../config";
 
-const __CLIENT__ = process.env.BUILD_TARGET === 'client'; //eslint-disable-line
+const __CLIENT__ = process.env.BUILD_TARGET === "client"; //eslint-disable-line
 
 declare global {
   // eslint-disable-next-line no-var
   var __SERVER__: boolean;
 }
-const NDLA_API_URL = global.__SERVER__
-  ? config.ndlaApiUrl
-  : window.config.ndlaApiUrl;
-const NDLA_API_KEY = global.__SERVER__
-  ? config.ndlaApiKey
-  : window.config.ndlaApiKey;
+const NDLA_API_URL = global.__SERVER__ ? config.ndlaApiUrl : window.config.ndlaApiUrl;
+const NDLA_API_KEY = global.__SERVER__ ? config.ndlaApiKey : window.config.ndlaApiKey;
 
-if (process.env.NODE_ENV === 'unittest') {
+if (process.env.NODE_ENV === "unittest") {
   global.__SERVER__ = false; //eslint-disable-line
 }
 
 export const defaultApiKey = (() => {
-  if (process.env.NODE_ENV === 'unittest') {
-    return 'ndlatestapikey';
+  if (process.env.NODE_ENV === "unittest") {
+    return "ndlatestapikey";
   }
 
   return NDLA_API_KEY;
 })();
 
 const apiBaseUrl = (() => {
-  if (process.env.NODE_ENV === 'unittest') {
-    return 'http://ndla-api';
+  if (process.env.NODE_ENV === "unittest") {
+    return "http://ndla-api";
   }
   return NDLA_API_URL;
 })();
@@ -57,11 +48,7 @@ export function apiResourceUrl(path: string) {
   return apiBaseUrl + path;
 }
 
-export function createErrorPayload(
-  status: number,
-  message: string,
-  json: Record<string, any>,
-) {
+export function createErrorPayload(status: number, message: string, json: Record<string, any>) {
   return Object.assign(new Error(message), { status, json });
 }
 
@@ -72,10 +59,8 @@ export function resolveJsonOrRejectWithError(res: Response) {
     }
     res
       .json()
-      .then(json => {
-        reject(
-          createErrorPayload(res.status, json.message ?? res.statusText, json),
-        );
+      .then((json) => {
+        reject(createErrorPayload(res.status, json.message ?? res.statusText, json));
       })
       .catch(reject);
   });
@@ -83,9 +68,9 @@ export function resolveJsonOrRejectWithError(res: Response) {
 
 const uri = (() => {
   if (config.localGraphQLApi) {
-    return 'http://localhost:4000/graphql-api/graphql';
+    return "http://localhost:4000/graphql-api/graphql";
   }
-  return apiResourceUrl('/graphql-api/graphql');
+  return apiResourceUrl("/graphql-api/graphql");
 })();
 
 interface ConceptResult {
@@ -97,19 +82,15 @@ interface ConceptResult {
 const initialConceptResult: ConceptResult = {
   totalCount: 0,
   concepts: [],
-  language: '',
+  language: "",
 };
 
 const typePolicies = {
   Query: {
     fields: {
       conceptSearch: {
-        keyArgs: ['query', 'subjects', 'tags'],
-        merge(
-          existing = initialConceptResult,
-          incoming: ConceptResult,
-          { args }: FieldFunctionOptions,
-        ) {
+        keyArgs: ["query", "subjects", "tags"],
+        merge(existing = initialConceptResult, incoming: ConceptResult, { args }: FieldFunctionOptions) {
           return {
             language: args?.language,
             totalCount: incoming.totalCount,
@@ -121,7 +102,7 @@ const typePolicies = {
   },
 };
 
-export const createApolloClient = (language = 'nb') => {
+export const createApolloClient = (language = "nb") => {
   const cache = __CLIENT__
     ? new InMemoryCache({ typePolicies }).restore(window.DATA.apolloState)
     : new InMemoryCache({ typePolicies });
@@ -139,16 +120,14 @@ export const createApolloLinks = (lang: string) => {
   const headersLink = setContext(async (_, { headers }) => ({
     headers: {
       ...headers,
-      'Accept-Language': lang,
+      "Accept-Language": lang,
     },
   }));
   return ApolloLink.from([
     onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
         graphQLErrors.map(({ message, locations, path }) =>
-          handleError(
-            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-          ),
+          handleError(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`),
         );
       }
       if (networkError) {

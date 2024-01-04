@@ -6,20 +6,20 @@
  *
  */
 
-import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { gql } from '@apollo/client';
-import styled from '@emotion/styled';
+import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+import { gql } from "@apollo/client";
+import styled from "@emotion/styled";
 import {
   NotionDialogContent,
   NotionDialogLicenses,
   NotionDialogRelatedLinks,
   NotionDialogTags,
   NotionDialogText,
-} from '@ndla/notion';
-import VisualElement from './VisualElement';
-import config from '../../config';
-import { GQLConceptBodyConceptFragment } from '../../graphqlTypes';
+} from "@ndla/notion";
+import VisualElement from "./VisualElement";
+import config from "../../config";
+import { GQLConceptBodyConceptFragment } from "../../graphqlTypes";
 
 const VisualElementWrapper = styled.div`
   flex-grow: 1;
@@ -34,35 +34,23 @@ interface Props {
   licenseBox: ReactNode;
 }
 
-const ConceptBody = ({
-  concept,
-  renderMarkdown,
-  language,
-  licenseBox,
-}: Props) => {
+const ConceptBody = ({ concept, renderMarkdown, language, licenseBox }: Props) => {
   const { t } = useTranslation();
   return (
     <>
       <NotionDialogContent>
         {concept.visualElement ? (
           <VisualElementWrapper>
-            <VisualElement
-              visualElement={concept.visualElement}
-              language={language}
-            />
+            <VisualElement visualElement={concept.visualElement} language={language} />
           </VisualElementWrapper>
         ) : null}
         <NotionDialogText>{renderMarkdown(concept.content)}</NotionDialogText>
       </NotionDialogContent>
-      {concept.subjectNames?.length ? (
-        <NotionDialogTags tags={concept.subjectNames} />
-      ) : (
-        undefined
-      )}
+      {concept.subjectNames?.length ? <NotionDialogTags tags={concept.subjectNames} /> : undefined}
       {concept?.articles && concept.articles.length > 0 && (
         <NotionDialogRelatedLinks
           label={t(`listview.relatedLinks.label`)}
-          links={concept.articles.map(article => ({
+          links={concept.articles.map((article) => ({
             label: article.title,
             href: `${config.ndlaFrontendDomain}/article/${article.id}`,
           }))}
@@ -71,9 +59,7 @@ const ConceptBody = ({
       <NotionDialogLicenses
         license={concept.copyright?.license?.license}
         source={renderMarkdown(concept.source)}
-        authors={
-          concept.copyright?.creators?.map(creator => creator?.name) || []
-        }
+        authors={concept.copyright?.creators?.map((creator) => creator?.name) || []}
         licenseBox={licenseBox}
       />
     </>

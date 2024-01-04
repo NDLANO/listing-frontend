@@ -8,11 +8,11 @@
 
 const phrases = {
   themePage: {
-    heading: 'NDLA Listing',
-    intro: 'This is NDLAs listing service. Choose a subject to start.',
-    chooseTheme: 'Choose theme',
-    toolTheme: 'Tools',
-    natureTheme: 'Nature',
+    heading: "NDLA Listing",
+    intro: "This is NDLAs listing service. Choose a subject to start.",
+    chooseTheme: "Choose theme",
+    toolTheme: "Tools",
+    natureTheme: "Nature",
   },
 };
 

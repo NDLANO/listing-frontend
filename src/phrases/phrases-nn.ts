@@ -8,12 +8,11 @@
 
 const phrases = {
   themePage: {
-    heading: 'NDLA Utlisting',
-    intro:
-      'Dette er utlistingstjenesten til NDLA. Vel eit område for å komma i gang.',
-    chooseTheme: 'Vel område',
-    toolTheme: 'Verktøy',
-    natureTheme: 'Naturbruk',
+    heading: "NDLA Utlisting",
+    intro: "Dette er utlistingstjenesten til NDLA. Vel eit område for å komma i gang.",
+    chooseTheme: "Vel område",
+    toolTheme: "Verktøy",
+    natureTheme: "Naturbruk",
   },
 };
 

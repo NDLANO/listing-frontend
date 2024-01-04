@@ -6,29 +6,22 @@
  *
  */
 
-import { gql } from '@apollo/client';
-import styled from '@emotion/styled';
-import { colors, fonts, spacing } from '@ndla/core';
-import { getLicenseByAbbreviation } from '@ndla/licenses';
-import { LicenseByline } from '@ndla/notion';
-import { Image, ImageCrop, ImageFocalPoint, ImageLink } from '@ndla/ui';
-import {
-  GQLImageElement,
-  GQLListingVisualElementFragment,
-} from '../../graphqlTypes';
+import { gql } from "@apollo/client";
+import styled from "@emotion/styled";
+import { colors, fonts, spacing } from "@ndla/core";
+import { getLicenseByAbbreviation } from "@ndla/licenses";
+import { LicenseByline } from "@ndla/notion";
+import { Image, ImageCrop, ImageFocalPoint, ImageLink } from "@ndla/ui";
+import { GQLImageElement, GQLListingVisualElementFragment } from "../../graphqlTypes";
 
-export const getIframeSrcFromHtmlString = (
-  html: string,
-): string | undefined => {
-  const el = document.createElement('html');
+export const getIframeSrcFromHtmlString = (html: string): string | undefined => {
+  const el = document.createElement("html");
   el.innerHTML = html;
-  const iframe = el.getElementsByTagName('iframe')[0];
-  return iframe?.getAttribute('src') || undefined;
+  const iframe = el.getElementsByTagName("iframe")[0];
+  return iframe?.getAttribute("src") || undefined;
 };
 
-const getFocalPoint = (
-  visualElement: GQLImageElement,
-): ImageFocalPoint | undefined => {
+const getFocalPoint = (visualElement: GQLImageElement): ImageFocalPoint | undefined => {
   if (visualElement.focalX && visualElement.focalY) {
     return { x: visualElement.focalX, y: visualElement.focalY };
   }
@@ -36,12 +29,7 @@ const getFocalPoint = (
 };
 
 const getCrop = (visualElement: GQLImageElement): ImageCrop | undefined => {
-  if (
-    visualElement.lowerRightX &&
-    visualElement.lowerRightY &&
-    visualElement.upperLeftX &&
-    visualElement.upperLeftY
-  ) {
+  if (visualElement.lowerRightX && visualElement.lowerRightY && visualElement.upperLeftX && visualElement.upperLeftY) {
     return {
       startX: visualElement.lowerRightX,
       startY: visualElement.lowerRightY,
@@ -64,7 +52,7 @@ const LicensesWrapper = styled.div`
   > span {
     margin-right: ${spacing.xsmall};
     color: ${colors.text.light};
-    ${fonts.sizes('14px', 1.1)};
+    ${fonts.sizes("14px", 1.1)};
     padding-bottom: ${spacing.xsmall};
     font-family: ${fonts.serif};
     padding-bottom: 3px;
@@ -82,19 +70,10 @@ interface Props {
   visualElement: GQLListingVisualElementFragment;
 }
 
-const VisualElement = ({
-  visualElement,
-  language,
-}: Props): JSX.Element | null => {
+const VisualElement = ({ visualElement, language }: Props): JSX.Element | null => {
   if (visualElement.image) {
-    const { rights } = getLicenseByAbbreviation(
-      visualElement.copyright?.license?.license || '',
-      'nb',
-    );
-    const authors =
-      visualElement.copyright?.creators ||
-      visualElement.copyright?.rightsholders ||
-      [];
+    const { rights } = getLicenseByAbbreviation(visualElement.copyright?.license?.license || "", "nb");
+    const authors = visualElement.copyright?.creators || visualElement.copyright?.rightsholders || [];
     const crop = getCrop(visualElement.image);
     return (
       <>

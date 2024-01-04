@@ -7,20 +7,20 @@
  */
 
 // import before all other imports component to make sure it is loaded before any emotion stuff.
-import '../../style/index.css';
-import config from '../../config';
-import { httpStatus } from '../../constants';
-import { conceptTitleQuery } from '../../queries';
-import { createApolloClient } from '../../util/apiHelpers';
-import handleError from '../../util/handleError';
-import { isListeParamUrl, isListePathUrl } from '../../util/listingHelpers';
+import "../../style/index.css";
+import config from "../../config";
+import { httpStatus } from "../../constants";
+import { conceptTitleQuery } from "../../queries";
+import { createApolloClient } from "../../util/apiHelpers";
+import handleError from "../../util/handleError";
+import { isListeParamUrl, isListePathUrl } from "../../util/listingHelpers";
 
 const getOembedObject = (req, title, html) => {
   return {
     data: {
-      type: 'rich',
-      providerName: 'NDLA Liste',
-      version: '1.0', // oEmbed version
+      type: "rich",
+      providerName: "NDLA Liste",
+      version: "1.0", // oEmbed version
       height: req.query.height || 600,
       width: req.query.width || 800,
       title,
@@ -40,7 +40,7 @@ const getApolloClient = () => {
   }
 };
 
-const getConceptHTMLandTitle = async id => {
+const getConceptHTMLandTitle = async (id) => {
   const client = getApolloClient();
   const concept = await client.query({
     query: conceptTitleQuery,
@@ -55,13 +55,13 @@ const getConceptHTMLandTitle = async id => {
   };
 };
 
-const getConceptId = url => {
+const getConceptId = (url) => {
   const decodedUrl = decodeURIComponent(url);
   if (isListeParamUrl(decodedUrl)) {
-    return decodedUrl.split('=').pop();
+    return decodedUrl.split("=").pop();
   }
   if (isListePathUrl(decodedUrl)) {
-    return decodedUrl.split('/').pop();
+    return decodedUrl.split("/").pop();
   }
   return undefined;
 };
@@ -71,7 +71,7 @@ const oembedConceptRoute = async (req, url) => {
   if (!id) {
     return {
       status: httpStatus.badRequest,
-      data: 'Bad request. Invalid url.',
+      data: "Bad request. Invalid url.",
     };
   }
 
@@ -83,7 +83,7 @@ const oembedConceptRoute = async (req, url) => {
     const status = error.status || httpStatus.internalServerError;
     return {
       status,
-      data: 'Internal server error',
+      data: "Internal server error",
     };
   }
 };
@@ -91,10 +91,8 @@ const oembedConceptRoute = async (req, url) => {
 const oembedListingRoute = (req, url) => {
   const decodedUrl = decodeURIComponent(url);
   // This currently only supports one filter
-  const filter = decodedUrl.split('filters[]=')[1];
-  const html = `<iframe aria-label="${'decodedTitle'}" src="${
-    config.ndlaListingFrontendDomain
-  }/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
+  const filter = decodedUrl.split("filters[]=")[1];
+  const html = `<iframe aria-label="${"decodedTitle"}" src="${config.ndlaListingFrontendDomain}/listing?filters[]=${filter}" frameborder="0" allowFullscreen="" />`;
 
   return getOembedObject(req, filter, html);
 };
@@ -102,10 +100,8 @@ const oembedListingRoute = (req, url) => {
 const oembedSubjectsRoute = (req, url) => {
   const decodedUrl = decodeURIComponent(url);
   // This currently only supports one subject
-  const subjects = decodedUrl.split('subjects[]=')[1];
-  const html = `<iframe aria-label="${'decodedTitle'}" src="${
-    config.ndlaListingFrontendDomain
-  }/listing?subjects[]=${subjects}" frameborder="0" allowFullscreen="" />`;
+  const subjects = decodedUrl.split("subjects[]=")[1];
+  const html = `<iframe aria-label="${"decodedTitle"}" src="${config.ndlaListingFrontendDomain}/listing?subjects[]=${subjects}" frameborder="0" allowFullscreen="" />`;
 
   return getOembedObject(req, subjects, html);
 };
@@ -116,20 +112,20 @@ export async function oembedRoute(req) {
   if (!url) {
     return {
       status: httpStatus.badRequest,
-      data: 'Bad request. Missing url param.',
+      data: "Bad request. Missing url param.",
     };
   }
 
-  if (url.includes('concept')) {
+  if (url.includes("concept")) {
     return await oembedConceptRoute(req, url);
-  } else if (url.includes('filters')) {
+  } else if (url.includes("filters")) {
     return oembedListingRoute(req, url);
-  } else if (url.includes('subjects')) {
+  } else if (url.includes("subjects")) {
     return oembedSubjectsRoute(req, url);
   } else {
     return {
       status: httpStatus.badRequest,
-      data: 'Bad request.',
+      data: "Bad request.",
     };
   }
 }

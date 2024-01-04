@@ -6,7 +6,7 @@
  *
  */
 
-import queryString from 'query-string';
+import queryString from "query-string";
 
 export const downloadUrl = (imageSrc: string) => {
   const urlObject = queryString.parseUrl(imageSrc);
