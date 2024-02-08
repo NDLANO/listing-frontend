@@ -18,8 +18,8 @@ const FooterWrapper = () => {
   const { t, i18n } = useTranslation();
 
   const privacyLinks = [
-    { label: t("footer.privacyLink"), url: "https://om.ndla.no/gdpr" },
-    { label: t("footer.cookiesLink"), url: "https://om.ndla.no/cookies" },
+    { label: t("footer.privacyLink"), url: "https://ndla.no/article/personvernerklaering" },
+    { label: t("footer.cookiesLink"), url: "https://ndla.no/article/erklaering-for-informasjonskapsler" },
     {
       label: t("footer.availabilityLink"),
       url: "https://uustatus.no/nn/erklaringer/publisert/6a767f5d-1355-4067-8492-0af396c20b4d",
