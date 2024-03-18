@@ -64,7 +64,7 @@ const ListingContainer = ({ isOembed, subjects, tags, filters }: Props) => {
   >(listingContainerConceptSearchQuery, {
     variables: {
       query: debouncedSearchVal,
-      subjects: queryParams.subjects.join(),
+      subjects: queryParams.subjects?.join() || undefined,
       tags: getTagsParameter(tags, queryParams.filters),
       pageSize: PAGE_SIZE,
       fallback: true,
