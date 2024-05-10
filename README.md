@@ -4,7 +4,7 @@
 
 ## Requirements
 
-- Node.JS > 20.6.0
+- Node.JS > 20.13.1
 - yarn ~1.15.0
 - Docker (optional)
 

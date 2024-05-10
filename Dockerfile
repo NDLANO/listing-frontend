@@ -1,4 +1,4 @@
-FROM node:20.9.0-alpine3.18 as builder
+FROM node:20.13.1-alpine3.18 as builder
 
 ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
@@ -22,7 +22,7 @@ COPY public $APP_PATH/public
 RUN yarn run build
 
 # Run stage
-FROM node:20.9.0-alpine3.18
+FROM node:20.13.1-alpine3.18
 
 ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
