@@ -4,11 +4,14 @@ ENV HOME=/home/app
 ENV APP_PATH=$HOME/listing-frontend
 
 # Copy necessary files for installing dependencies
-COPY yarn.lock package.json $APP_PATH/
+COPY yarn.lock package.json .yarnrc.yml $APP_PATH/
+
+# Enable yarn
+RUN corepack enable
 
 # Run yarn before src copy to enable better layer caching
 WORKDIR $APP_PATH
-RUN mkdir -p $APP_PATH/build && yarn
+RUN mkdir -p $APP_PATH/build && yarn install --immutable
 
 # Copy necessary source files for server and client build
 COPY .babelrc postcss.config.js tsconfig.json $APP_PATH/
