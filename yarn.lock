@@ -6009,11 +6009,11 @@ __metadata:
   linkType: hard
 
 "autolinker@npm:^3.11.0":
-  version: 3.14.3
-  resolution: "autolinker@npm:3.14.3"
+  version: 3.16.1
+  resolution: "autolinker@npm:3.16.1"
   dependencies:
-    tslib: "npm:^1.9.3"
-  checksum: 10c0/5085c0db74874f354f27216c7a14308863d717339231142c80ac68f3e2c82be1bdcd36e644d5a2e4a9cde7115fd60025fa65804ad4e6685cc159a26d3eb5de4b
+    tslib: "npm:^2.3.0"
+  checksum: 10c0/249136232416dae9c8e42fe9be9f6f5ddf32efe32510ed6b151fe281971d906cd552f41d1813f7d9fd1a8f8353fe8eacf6e38952e08905bec23648fcfd9b0bf1
   languageName: node
   linkType: hard
 
@@ -16950,7 +16950,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.9.0, tslib@npm:^1.9.3":
+"tslib@npm:^1.9.0":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 10c0/69ae09c49eea644bc5ebe1bca4fa4cc2c82b7b3e02f43b84bd891504edf66dbc6b2ec0eef31a957042de2269139e4acff911e6d186a258fb14069cd7f6febce2
