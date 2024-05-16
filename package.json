@@ -118,8 +118,8 @@
     "graphql": "^15.5.0",
     "helmet": "^4.2.0",
     "i18next": "^21.9.2",
-    "node-fetch": "^2.6.7",
     "lodash": "^4.17.21",
+    "node-fetch": "^2.6.7",
     "process": "^0.11.10",
     "query-string": "^6.10.1",
     "react": "^17.0.2",
@@ -140,5 +140,6 @@
   },
   "homepage": "https://github.com/NDLANO/listing-frontend",
   "author": "ndla@knowit.no",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "packageManager": "yarn@4.2.2"
 }
