@@ -12078,6 +12078,7 @@ __metadata:
     ts-jest: "npm:^29.0.3"
     ts-node: "npm:^10.9.1"
     typescript: "npm:^4.9.3"
+    vercel: "npm:^33.6.2"
     webpack: "npm:^5.76.0"
     webpack-dev-middleware: "npm:^6.0.1"
     webpack-dev-server: "npm:^4.11.0"
