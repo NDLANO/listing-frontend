@@ -14,6 +14,7 @@ const phrases = {
     toolTheme: "Tools",
     natureTheme: "Nature",
   },
+  alert: "This page will be discontinued in February 2025.",
 };
 
 export default phrases;
