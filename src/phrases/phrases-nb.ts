@@ -14,6 +14,7 @@ const phrases = {
     toolTheme: "Verktøy",
     natureTheme: "Naturbruk",
   },
+  alert: "Denne siden vil bli avviklet i løpet av februar 2025.",
 };
 
 export default phrases;

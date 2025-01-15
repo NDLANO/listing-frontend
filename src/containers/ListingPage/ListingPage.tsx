@@ -6,13 +6,23 @@
  *
  */
 import qs from "query-string";
+import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
+import styled from "@emotion/styled";
+import { colors, spacing } from "@ndla/core";
 import { Spinner } from "@ndla/icons";
 import ListingContainer from "./ListingContainer";
 import { GQLListingPageQuery, GQLListingPageQueryVariables } from "../../graphqlTypes";
 import { mapTagsToFilters, filterTags } from "../../util/listingHelpers";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
+
+const AlertBanner = styled.div`
+  text-align: center;
+  background-color: ${colors.support.yellow};
+  padding-block: ${spacing.nsmall};
+  padding-inline: ${spacing.normal};
+`;
 
 interface Props {
   isOembed: boolean;
@@ -27,6 +37,7 @@ const getSubjectsString = (subjects: string | string[] | number | boolean | unde
 };
 
 const ListingPage = ({ isOembed }: Props): JSX.Element => {
+  const { t } = useTranslation();
   const location = useLocation();
   const searchParams = qs.parse(location.search, { arrayFormat: "bracket" });
   const querySubjects = getSubjectsString(searchParams["subjects"]);
@@ -49,12 +60,15 @@ const ListingPage = ({ isOembed }: Props): JSX.Element => {
   const filteredTags = filterTags(data?.listingPage?.tags ?? previousData?.listingPage?.tags ?? []);
 
   return (
-    <ListingContainer
-      isOembed={isOembed}
-      subjects={data?.listingPage?.subjects ?? previousData?.listingPage?.subjects ?? []}
-      tags={filteredTags}
-      filters={filters}
-    />
+    <>
+      <AlertBanner>{t("alert")}</AlertBanner>
+      <ListingContainer
+        isOembed={isOembed}
+        subjects={data?.listingPage?.subjects ?? previousData?.listingPage?.subjects ?? []}
+        tags={filteredTags}
+        filters={filters}
+      />
+    </>
   );
 };
 
